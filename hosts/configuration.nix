@@ -214,6 +214,7 @@
     teams-for-linux
     telegram-desktop
     megasync
+    wpsoffice
     ] ++
 
     (with unstable; [
