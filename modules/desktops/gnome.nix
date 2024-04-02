@@ -93,7 +93,7 @@ with lib;
             "trayiconsreloaded@selfmade.pl"
             "blur-my-shell@aunetx"
             "drive-menu@gnome-shell-extensions.gcampax.github.com"
-            "user-theme@gnome-shell-extensions.gcampax.github.com"
+#            "user-theme@gnome-shell-extensions.gcampax.github.com"
 #            "dash-to-panel@jderose9.github.com"
             "just-perfection-desktop@just-perfection"
             "caffeine@patapon.info"
@@ -152,9 +152,9 @@ with lib;
           center-new-windows = true;
           edge-tiling = false;                          # Tiling
         };
-        "org/gnome/shell/extensions/gsconnect" = {
-          enabled = false;
-        };
+#        "org/gnome/shell/extensions/gsconnect" = {
+#          enabled = false;
+#        };
         "org/gnome/mutter/keybindings" = {
           toggle-tiled-left = ["<super>left"];         # Floating
           toggle-tiled-right = ["<super>right"];
