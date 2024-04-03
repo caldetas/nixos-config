@@ -156,6 +156,7 @@
       pavucontrol       # Audio Control
       pipewire          # Audio Server/Control
       pulseaudio        # Audio Server/Control
+      usbimager         # USB Writer
       vlc               # Media Player
 
       # Apps
