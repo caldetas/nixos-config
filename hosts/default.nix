@@ -133,24 +133,4 @@ in
       }
     ];
   };
-  work = lib.nixosSystem {                               #
-    inherit system;
-    specialArgs = {
-      inherit inputs system unstable hyprland vars;
-      host = {
-        hostName = "work";
-        mainMonitor = "eDP-1";
-        secondMonitor = "DP-6";
-        thirdMonitor = "DP-8";
-      };
-    };
-    modules = [
-      ./work
-      ./configuration.nix
-      home-manager.nixosModules.home-manager {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-      }
-    ];
-  };
 }
