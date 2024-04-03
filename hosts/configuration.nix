@@ -190,7 +190,7 @@
     python3
 
     # Apps
-    authy
+#    authy
     brave
     discord
     docker-compose
