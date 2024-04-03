@@ -25,7 +25,6 @@
 
   networking = {
     useDHCP = false;                        # Deprecated
-    hostName = hostName;
     networkmanager = {
         enable = true;
         plugins = [ pkgs.networkmanager-openvpn pkgs.networkmanager_strongswan];
