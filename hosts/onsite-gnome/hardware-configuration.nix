@@ -41,7 +41,7 @@
 
   networking = with host; {
     useDHCP = false;                        # Deprecated
-    hostName = hostName;
+#    hostName = hostName;
     networkmanager.enable = true;
     interfaces = {
       enp0s31f6 = {
