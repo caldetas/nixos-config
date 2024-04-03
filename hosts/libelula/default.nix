@@ -79,7 +79,7 @@
   #hyprland.enable = true;
 
   #VPN
-  surfshark.enable = true;
+#  surfshark.enable = true;
 
   environment.systemPackages = with pkgs; [
 
