@@ -37,9 +37,8 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with networking.interfaces.<interface>.useDHCP.
 
-  networking = with host; {
+  networking = {
       useDHCP = false;                        # Deprecated
-      hostName = hostName;
       networkmanager.enable = true;
       interfaces = {
         enp4s0f1 = {
