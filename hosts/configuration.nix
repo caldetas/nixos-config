@@ -213,12 +213,12 @@
     stremio
     strongswan
     teams-for-linux
-    telegram-desktop
     megasync
     wpsoffice
     ] ++
 
     (with unstable; [
+    telegram-desktop
     #CV creation with Latex
 #    texlive.combined.scheme-full
     ]);
