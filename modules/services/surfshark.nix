@@ -35,7 +35,6 @@ with host;
             installPhase = ''
               unzip $src
               find . -type f ! -name '*_udp.ovpn' -delete
-#              find . -type f -exec sed -i "s+auth-user-pass+auth-user-pass /home/caldetas/MEGAsync/encrypt/surfshark/pass.txt+" {} +
               find . -type f -exec sed -i "s+auth-user-pass+auth-user-pass /home/${vars.user}/.secrets/openVpnPass.txt+" {} + #file has only root rights
               find . -type f -exec sed -i "s+cipher+data-ciphers-fallback+" {} +
               rename 's/prod.surfshark.com_udp.//' *
