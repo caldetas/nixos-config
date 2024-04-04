@@ -362,6 +362,9 @@
                              else
                                 echo "not settings up scripts in zshrc";
                              fi
+
+                             #start netbird
+                             netbird up || true
                            '';
 
                          };
