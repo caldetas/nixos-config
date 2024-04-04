@@ -11,7 +11,6 @@
 #
 
 [
-  ./avahi.nix
   ./dunst.nix
   ./picom.nix
   ./polybar.nix

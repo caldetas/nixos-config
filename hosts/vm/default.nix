@@ -83,6 +83,8 @@ gnome.enable = true;                          # Window Manager
   environment = {
     systemPackages = with pkgs; [               # System Wide Packages
       hello             # Test Package
+      lolcat            # Test Package
+      cowsay            # Test Package
     ];
   };
 
@@ -91,6 +93,7 @@ gnome.enable = true;                          # Window Manager
       enable = true;
       resolutions = [
         { x = 1920; y = 1080; }
+        { x = 1920; y = 1200; }
 #        { x = 1600; y = 900; }
 #        { x = 3840; y = 2160; }
       ];

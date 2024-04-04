@@ -30,6 +30,8 @@
 #        name = "Catppuccin-Macchiato-Compact-Blue-Dark";
         name = "Orchis-Dark-Compact";
         package = pkgs.orchis-theme;
+#        name = "Flat-Remix-Orange-Dark";
+#        package = pkgs.flat-remix-gtk;
 #        package = pkgs.yaru-theme;
 #        package = pkgs.dracula-theme;
 #        package = pkgs.catppuccin-gtk.override {
@@ -42,6 +44,8 @@
       iconTheme = {
         name = "Papirus-Dark";
         package = pkgs.papirus-icon-theme;
+#        name = "Flat-Remix";
+#        package = pkgs.flat-remix-icon-theme;
 #        name = "cat-mocha-mauve";
 #       package = pkgs.catppuccin-papirus-folders.override {
 #           flavor = "mocha";

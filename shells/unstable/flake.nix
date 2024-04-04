@@ -2,12 +2,11 @@
 #  Example of a flake shell
 #  Can be run with "$ nix develop" or "$ nix develop </path/to/flake.nix>#<host>"
 #
-
 {
   description = "Use stable and unstable packages";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
   };
 

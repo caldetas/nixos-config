@@ -9,7 +9,7 @@
 #           └─ default.nix 
 #
 
-{ lib, inputs, nixpkgs, nixpkgs-stable, home-manager, nur, hyprland, plasma-manager, vars, ... }:
+{ lib, inputs, nixpkgs, nixpkgs-unstable, home-manager, nur, hyprland, plasma-manager, vars, ... }:
 
 let
   system = "x86_64-linux";                                  # System Architecture
@@ -19,7 +19,7 @@ let
     config.allowUnfree = true;                              # Allow Proprietary Software
   };
 
-  stable = import nixpkgs-stable {
+  unstable = import nixpkgs-unstable {
     inherit system;
     config.allowUnfree = true;
   };
@@ -30,7 +30,7 @@ in
   vm = lib.nixosSystem {                                    # VM Profile
     inherit system;
     specialArgs = {
-      inherit inputs system stable hyprland vars;
+      inherit inputs system unstable hyprland vars;
       host = {
         hostName = "vm";
         mainMonitor = "Virtual-1";
@@ -51,7 +51,7 @@ in
   libelula = lib.nixosSystem {                               #
     inherit system;
     specialArgs = {
-      inherit inputs system stable hyprland vars;
+      inherit inputs system unstable hyprland vars;
 #      inherit inputs system unstable vars;
       host = {
         hostName = "libelula";
@@ -76,7 +76,7 @@ in
   oldie = lib.nixosSystem {                               #
     inherit system;
     specialArgs = {
-      inherit inputs system stable hyprland vars;
+      inherit inputs system unstable hyprland vars;
       host = {
         hostName = "oldie";
         mainMonitor = "eDP-1-1";
@@ -96,7 +96,7 @@ in
   hypr-oldie = lib.nixosSystem {                               #
     inherit system;
     specialArgs = {
-      inherit inputs system stable hyprland vars;
+      inherit inputs system unstable hyprland vars;
       host = {
         hostName = "hypr-oldie";
         mainMonitor = "eDP-1-1";
@@ -116,7 +116,7 @@ in
   onsite-gnome = lib.nixosSystem {                               #
     inherit system;
     specialArgs = {
-      inherit inputs system stable hyprland vars;
+      inherit inputs system unstable hyprland vars;
       host = {
         hostName = "onsite-gnome";
         mainMonitor = "eDP-1";

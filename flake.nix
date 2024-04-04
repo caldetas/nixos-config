@@ -11,14 +11,14 @@
 
   inputs =                                                                  # References Used by Flake
     {
-      nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";                  # Unstable Nix Packages (Default)
-      nixpkgs-stable.url = "github:nixos/nixpkgs/release-23.11";            # Stable Nix Packages
+      nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";            # Stable Nix Packages
+      nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";                  # Unstable Nix Packages (Default)
       sops-nix.url = "github:Mic92/sops-nix";                        # Sops Nix Secure Secretes Manager
       sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 #      rust-overlay.url = "github:oxalica/rust-overlay";
 
       home-manager = {                                                      # User Environment Manager
-        url = "github:nix-community/home-manager";
+        url = "github:nix-community/home-manager/release-23.11";
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
@@ -33,7 +33,7 @@
 
       hyprland = {                                                          # Official Hyprland Flake
         url = "github:hyprwm/Hyprland";                                     # Requires "hyprland.nixosModules.default" to be added the host modules
-        inputs.nixpkgs.follows = "nixpkgs";
+        inputs.nixpkgs.follows = "nixpkgs-unstable";
       };
 
       plasma-manager = {                                                    # KDE Plasma User Settings Generator
@@ -43,7 +43,7 @@
       };
     };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-stable, home-manager, nur, nixgl, hyprland, plasma-manager, sops-nix, ... }:   # Function telling flake which inputs to use
+  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, home-manager, nur, nixgl, hyprland, plasma-manager, sops-nix, ... }:   # Function telling flake which inputs to use
     let
       vars = {                                                              # Variables Used In Flake
         user = "caldetas";
@@ -56,14 +56,14 @@
       nixosConfigurations = (                                               # NixOS Configurations
         import ./hosts {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-stable home-manager nur hyprland plasma-manager vars sops-nix;   # Inherit inputs
+          inherit inputs nixpkgs nixpkgs-unstable home-manager nur hyprland plasma-manager vars sops-nix;   # Inherit inputs
         }
       );
 
       homeConfigurations = (                                                # Nix Configurations
         import ./nix {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-stable home-manager nixgl vars sops-nix;
+          inherit inputs nixpkgs nixpkgs-unstable home-manager nixgl vars sops-nix;
         }
       );
     };

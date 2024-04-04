@@ -22,7 +22,7 @@
 #           └─ default.nix
 #
 
-{ config, lib, pkgs, stable, inputs, vars, sops-nix, ... }:
+{ config, lib, pkgs, unstable, inputs, vars, sops-nix, host, ... }:
 #let
 #     pkgsM = import (builtins.fetchGit {
 #         # Descriptive name to make the store path easier to identify
@@ -89,6 +89,11 @@
     keyMap = "sg";
   };
 
+    swapDevices = [{
+      device = "/swapfile";
+      size = 16 * 1024; # 16GB
+    }];
+
   security = {
     rtkit.enable = true;
     polkit.enable = true;
@@ -114,7 +119,7 @@
 
 #  networking.nameservers =  [ "1.1.1.1" "9.9.9.9"]; # privacy respecting nameserver for dns queries (cloudflare & quad9)
   networking.nameservers =  [ "162.252.172.57" "149.154.159.92"]; # Surfshark
-
+  networking.hostName = host.hostName; # Hostname
   environment = {
     variables = {                           # Environment Variables
       TERMINAL = "${vars.terminal}";
@@ -122,23 +127,26 @@
       VISUAL = "${vars.editor}";
     };
 
-    systemPackages = with stable; [           # System-Wide Packages
+    systemPackages = with pkgs; [           # System-Wide Packages
       # Terminal
       btop              # Resource Manager
       coreutils         # GNU Utilities
       git               # Version Control
+      glxinfo           # OpenGL
+      hwinfo            # Hardware Info
       killall           # Process Killer
+      lshw              # Hardware Info
       nano              # Text Editor
       nix-tree          # Browse Nix Store
       nixpkgs-fmt       # Formatter for nix files
       pciutils          # Manage PCI
+      psmisc            # A set of small useful utilities that use the proc filesystem (such as fuser, killall and pstree)
       ranger            # File Manager
       screen            # Deatach
       tldr              # Helper
       usbutils          # Manage USB
       wget              # Retriever
       xdg-utils         # Environment integration
-      psmisc            # A set of small useful utilities that use the proc filesystem (such as fuser, killall and pstree)
 
       # Video/Audio
       alsa-utils        # Audio Control
@@ -148,6 +156,7 @@
       pavucontrol       # Audio Control
       pipewire          # Audio Server/Control
       pulseaudio        # Audio Server/Control
+      usbimager         # USB Writer
       vlc               # Media Player
 
       # Apps
@@ -167,57 +176,51 @@
       zip               # Zip
 
       # Security
-      sops
+      sops              # Secrets Manager
 
 
-    htop
-    gparted
-    strongswan
-    git
-    lshw
-    glxinfo
-    hwinfo
-    nodejs_18
-    docker-compose
-    openvpn
-    qbittorrent
 
     #Java
+    (jetbrains.plugins.addPlugins jetbrains.idea-ultimate [ "github-copilot" ])
     gradle
+    jetbrains.datagrip
     jetbrains.jdk
+    jetbrains.pycharm-professional
+    jre17_minimal
+    python3
 
+    # Apps
+#    authy
+    brave
+    discord
+    docker-compose
+    firefox
+    gedit
+    git
+    gimp
+    gnome.gnome-remote-desktop
+    gnupg1orig
+    gparted
+    htop
+    netbird
+    netbird-ui
+    nodejs_18
+    openvpn
+    qbittorrent
+    remmina
+    spotify
+    steam
+    stremio
+    strongswan
+    teams-for-linux
+    telegram-desktop
+    megasync
+    wpsoffice
     ] ++
-    (with pkgs; [
-      # Apps
-      firefox           # Browser
-      authy
-      telegram-desktop
-      spotify
-      brave
-      discord
-      stremio
-      gimp
-      gedit
-      gnupg1orig
-      gnome.gnome-remote-desktop
-      netbird
-      netbird-ui
-      remmina
-      teams-for-linux
 
-
-#      jdk17
-      (jetbrains.plugins.addPlugins jetbrains.idea-ultimate [ "github-copilot" ])
-      jre17_minimal
-      jetbrains.pycharm-professional
-      jetbrains.datagrip
-      python3
-      steam
-
+    (with unstable; [
     #CV creation with Latex
 #    texlive.combined.scheme-full
-
-    megasync
     ]);
   };
 
@@ -319,6 +322,9 @@
             "video/x-matroska" = "vlc.desktop";
   };
 
+  environment.interactiveShellInit = ''
+    alias buildVm='echo cd ${vars.location} \&\& git pull \&\& sudo nixos-rebuild build-vm --flake ${vars.location}#vm --show-trace --update-input nixpkgs && cd ${vars.location} && git pull && sudo nixos-rebuild build-vm --flake ${vars.location}#vm --show-trace --update-input nixpkgs'
+    '';
 
   # SOPS Configuration Secrets
   sops.defaultSopsFile = ./../secrets/secrets.yaml;
@@ -338,7 +344,7 @@
                             echo $(cat ${config.sops.secrets.my-secret.path}) >> /home/${vars.user}/secretProof.txt
 
                             echo '
-                            My home-pathon this computer:' >> /home/${vars.user}/secretProof.txt
+                            My home-path on this computer:' >> /home/${vars.user}/secretProof.txt
                             echo $(cat ${config.sops.secrets.home-path.path}) >> /home/${vars.user}/secretProof.txt
 
                             #make openVpn surfshark login credential file
@@ -347,14 +353,14 @@
                             echo $(cat ${config.sops.secrets."surfshark/password".path}) >> /home/${vars.user}/.secrets/openVpnPass.txt
 
 
-                             # Set up automated scripts if not existing
-                             if [ grep -q 'MEGAsync/work/programs'  /home/${vars.user}/.zshrc ];
+                             # Set up automated scripts if not already set up. Abort if no script folder present.
+                             if ! grep -q 'MEGAsync/work/programs'  /home/${vars.user}/.zshrc && [[ -d "/home/${vars.user}/MEGAsync/work/programs" ]] ;
                              then
-                                echo "not settings up scripts in zshrc";
-                             else
-                                echo 'chmod +x ~/MEGAsync/work/programs/*
-                                export PATH=$PATH:/home/caldetas/MEGAsync/work/programs' >> /home/caldetas/.zshrc
+                                echo 'chmod +x ~/MEGAsync/work/programs/*' >> /home/caldetas/.zshrc
+                                echo 'export PATH=$PATH:/home/caldetas/MEGAsync/work/programs' >> /home/caldetas/.zshrc
                                 echo "set up scripts in zshrc";
+                             else
+                                echo "not settings up scripts in zshrc";
                              fi
                            '';
 
