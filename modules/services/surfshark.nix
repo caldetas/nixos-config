@@ -28,15 +28,15 @@ with host;
             name = "surfshark-config";
             src = pkgs.fetchurl {
               url = "https://my.surfshark.com/vpn/api/v1/server/configurations";
-              sha256 = "sha256-skS/wFnHr7+8km7jt7XbAK+E4jQwN66EED8OOaJomZE=";
+              sha256 = "sha256-z3FG5yBxnEQjnRSaQ2C9wbhxD0ZReQgQVFGQhHxruFY=";
             };
             phases = [ "installPhase" ];
             buildInputs = [ pkgs.unzip pkgs.rename ];
             installPhase = ''
               unzip $src
               find . -type f ! -name '*_udp.ovpn' -delete
-              find . -type f -exec sed -i "s+auth-user-pass+auth-user-pass \"/home/caldetas/MEGAsync/encrypt/surfshark/pass.txt\"+" {} +
-#             find . -type f -exec sed -i "s+auth-user-pass+auth-user-pass \"/home/${vars.user}/.secrets/openVpnPass.txt\"+" {} + #file has only root rights
+#              find . -type f -exec sed -i "s+auth-user-pass+auth-user-pass /home/caldetas/MEGAsync/encrypt/surfshark/pass.txt+" {} +
+              find . -type f -exec sed -i "s+auth-user-pass+auth-user-pass /home/${vars.user}/.secrets/openVpnPass.txt+" {} + #file has only root rights
               find . -type f -exec sed -i "s+cipher+data-ciphers-fallback+" {} +
               rename 's/prod.surfshark.com_udp.//' *
               mkdir -p $out

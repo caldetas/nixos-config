@@ -23,44 +23,17 @@
     };
 
 
-  networking = {
-    useDHCP = false;                        # Deprecated
-    networkmanager = {
-        enable = true;
-        plugins = [ pkgs.networkmanager-openvpn pkgs.networkmanager_strongswan];
-#        extraConfig =''
-##           supersede domain-name-servers 127.0.0.53;
-##            prepend domain-name-servers 208.67.222.222;
-#          '';
-        };
-     interfaces = {
-       lo = {
-         useDHCP = true;                     # For versatility sake, manually edit IP on nm-applet.
-         #ipv4.addresses = [ {
-         #    address = "192.168.0.51";
-         #    prefixLength = 24;
-         #} ];
-       };
-       wlp0s20f3 = {
-         useDHCP = true;
-         #ipv4.addresses = [ {
-         #  address = "192.168.0.51";
-         #  prefixLength = 24;
-         #} ];
-       };
-     };
- #    defaultGateway = "192.168.0.1";
- #    nameservers = [ "192.168.0.4" ];
-     firewall = {
-       enable = false;
-       allowedUDPPorts = [ 500 4500 3389 5900];
-       allowedTCPPorts = [ 500 4500 3389 5900];
-     };
-   };
-   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
-   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
+   # (the default) this is the recommended approach. When using systemd-networkd it's
+   # still possible to use this option, but it's recommended to use it in conjunction
+   # with explicit per-interface declarations with networking.interfaces.<interface>.useDHCP.
+   networking.useDHCP = lib.mkDefault true;
+   # networking.interfaces.wlp0s20f3.useDHCP = lib.mkDefault true;
 
-   services.resolved.enable = true;
-   services.openvpn.servers = {
-   };
+   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
+
+  services.resolved.enable = true;
+ # services.openvpn.servers = {};
 }
