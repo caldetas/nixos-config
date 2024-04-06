@@ -348,7 +348,10 @@
                             echo $(cat ${config.sops.secrets.home-path.path}) >> /home/${vars.user}/secretProof.txt
 
                             #make openVpn surfshark login credential file
+                            if [ ! -d /home/${vars.user}/.secrets ]; then
                             mkdir /home/${vars.user}/.secrets || true
+                            fi
+
                             echo $(cat ${config.sops.secrets."surfshark/user".path}) > /home/${vars.user}/.secrets/openVpnPass.txt
                             echo $(cat ${config.sops.secrets."surfshark/password".path}) >> /home/${vars.user}/.secrets/openVpnPass.txt
 

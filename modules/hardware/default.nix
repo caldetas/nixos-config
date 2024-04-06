@@ -12,6 +12,5 @@
 
 [
   ./bluetooth.nix
-  ./dslr.nix
   ./power.nix
 ]
