@@ -65,6 +65,7 @@ with host;
       };
       systemPackages = with pkgs; [
         grimblast       # Screenshot
+        hyprpaper       # Wallpaper
         light           # Brightness Control
         pamixer         # Volume Control
         swayidle        # Idle Daemon
@@ -475,6 +476,7 @@ bind = SUPER, ESCAPE, exec, fish -c wlogout_uniqe
         #exec-once=$HOME/.config/eww/scripts/eww        # When running eww as a bar
         exec-once=${pkgs.blueman}/bin/blueman-applet
         exec-once=${pkgs.swaynotificationcenter}/bin/swaync
+        exec-once="${pkgs.hyprpaper}/bin/hyprpaper
         ${execute}
       '';
     in
@@ -543,6 +545,10 @@ bind = SUPER, ESCAPE, exec, fish -c wlogout_uniqe
           '';
           executable = true;
         };
+          ".config/hypr/hyprpaper.conf".text = ''
+            preload = ~/.background-image
+            wallpaper = ,~/.background-image
+          '';
       };
     };
   };

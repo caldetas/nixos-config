@@ -84,25 +84,27 @@ with host;
             };
           };
 
-          output = if hostName == "desktop" then {
-            "*".bg = "~/.config/wall fill";#
-            "*".scale = "1";#
-            "${secondMonitor}" = {
-              mode = "1920x1080";
-              pos = "0 0";
-            };
-            "${mainMonitor}" = {
-              mode = "1920x1080";
-              pos = "1920 0";
-            };
-          } else if hostName == "libelula" || hostName == "oldie" || hostName == "laptop" then {
-            "*".bg = "~/.config/wall fill";
+          output = {
+#          if hostName == "desktop" then {
+#            "*".bg = "~/.config/wall fill";#
+#            "*".scale = "1";#
+#            "${secondMonitor}" = {
+#              mode = "1920x1080";
+#              pos = "0 0";
+#            };
+#            "${mainMonitor}" = {
+#              mode = "1920x1080";
+#              pos = "1920 0";
+#            };
+#          } else if hostName == "libelula" || hostName == "oldie" || hostName == "laptop" then {
+            "*".bg = "~/img.png fill";
             "*".scale = "1";
             "${mainMonitor}" = {
-              mode = "1920x108";
-              pos = "0 0";
+              mode = "1920x1080";
+              pos = "0 1080";
             };
-          } else {};
+#          } else {}
+            };
 
           workspaceOutputAssign = if hostName == "desktop" then [
             {output = mainMonitor; workspace = "1";}
