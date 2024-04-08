@@ -218,7 +218,6 @@
 
     (with unstable; [
     telegram-desktop
-    hyprland
     #CV creation with Latex
 #    texlive.combined.scheme-full
     ]);
