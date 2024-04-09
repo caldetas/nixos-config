@@ -181,7 +181,6 @@
 
 
     #Java
-    (jetbrains.plugins.addPlugins jetbrains.idea-ultimate [ "github-copilot" ])
     gradle
     jetbrains.datagrip
     jetbrains.jdk
@@ -217,6 +216,7 @@
     ] ++
 
     (with unstable; [
+    (jetbrains.plugins.addPlugins jetbrains.idea-ultimate [ "github-copilot" ])
     telegram-desktop
     #CV creation with Latex
 #    texlive.combined.scheme-full
