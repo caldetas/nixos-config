@@ -145,6 +145,7 @@
       ranger            # File Manager
       screen            # Deatach
       tldr              # Helper
+      tlp               # Power Management
       usbutils          # Manage USB
       wget              # Retriever
       xdg-utils         # Environment integration
