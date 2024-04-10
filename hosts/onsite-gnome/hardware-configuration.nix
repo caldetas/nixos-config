@@ -67,9 +67,9 @@
       allowedTCPPorts = [ 500 4500 3389 5900 ];
     };
   };
-#  powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
-#  hardware.cpu.intel.updateMicrocode = lib.mkDefault
-#  config.hardware.enableRedistributableFirmware;
+  powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault
+  config.hardware.enableRedistributableFirmware;
 
 /*
     #POWERSAVE?? thinkfan
