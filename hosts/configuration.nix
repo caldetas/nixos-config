@@ -296,6 +296,7 @@
 
   services.strongswan.enable = true;
   services.netbird.enable = true;
+  services.tlp.enable = true;
 
 
 
