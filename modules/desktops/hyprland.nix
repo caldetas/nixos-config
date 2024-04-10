@@ -166,6 +166,13 @@ with host;
           workspace=${toString mainMonitor},1
           workspace=${toString secondMonitor},2
           workspace=${toString thirdMonitor},3
+#            workspace=${toString mainMonitor},4
+            workspace=${toString secondMonitor},4
+            workspace=${toString thirdMonitor},5
+#            workspace=${toString mainMonitor},7
+            workspace=${toString secondMonitor},6
+            workspace=${toString thirdMonitor},7
+
 
           bindl=,switch:Lid Switch,exec,$HOME/.config/hypr/script/clamshell.sh
         '' else ''
@@ -476,7 +483,7 @@ bind = SUPER, ESCAPE, exec, fish -c wlogout_uniqe
         #exec-once=$HOME/.config/eww/scripts/eww        # When running eww as a bar
         exec-once=${pkgs.blueman}/bin/blueman-applet
         exec-once=${pkgs.swaynotificationcenter}/bin/swaync
-        exec-once="${pkgs.hyprpaper}/bin/hyprpaper
+        exec-once=${pkgs.hyprpaper}/bin/hyprpaper
         ${execute}
       '';
     in
@@ -546,8 +553,10 @@ bind = SUPER, ESCAPE, exec, fish -c wlogout_uniqe
           executable = true;
         };
           ".config/hypr/hyprpaper.conf".text = ''
-            preload = ~/.background-image
-            wallpaper = ,~/.background-image
+            preload = /home/${vars.user}/stars.jpeg
+            wallpaper = ${mainMonitor},/home/${vars.user}/stars.jpeg
+            wallpaper = ${secondMonitor},/home/${vars.user}/stars.jpeg
+            wallpaper = ${thirdMonitor},/home/${vars.user}/stars.jpeg
           '';
       };
     };

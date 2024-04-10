@@ -131,6 +131,7 @@
       # Terminal
       btop              # Resource Manager
       coreutils         # GNU Utilities
+      file              # File Type
       git               # Version Control
       glxinfo           # OpenGL
       hwinfo            # Hardware Info

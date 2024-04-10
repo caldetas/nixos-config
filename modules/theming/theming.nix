@@ -10,7 +10,7 @@
       file.".face".source = ./face;
       #      file.".config/wall.png".source = ./wall.png;
       #      file.".background-image".source = ./wall.jpg;
-      file.".background-image".source = ./stars.png;
+      file.".background-image".source = ./stars.jpeg;
       file.".config/wall.mp4".source = ./wall.mp4;
       pointerCursor = {
         # System-Wide Cursor

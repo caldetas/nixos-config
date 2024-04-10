@@ -77,8 +77,8 @@
   # Enable the GNOME Desktop Environment.
 #  services.xserver.displayManager.gdm.enable = true;
 #  services.xserver.desktopManager.gnome.enable = true;
-gnome.enable = true;
-#hyprland.enable = true;
+# gnome.enable = true;
+hyprland.enable = true;
 #  bspwm.enable = true;
 #laptop.enable = true;                     # Laptop Modules
 
