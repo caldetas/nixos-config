@@ -145,7 +145,6 @@
       ranger            # File Manager
       screen            # Deatach
       tldr              # Helper
-      tlp               # Power Management
       usbutils          # Manage USB
       wget              # Retriever
       xdg-utils         # Environment integration
@@ -296,7 +295,7 @@
 
   services.strongswan.enable = true;
   services.netbird.enable = true;
-  services.tlp.enable = true;
+  # services.tlp.enable = true;
 
 
 
