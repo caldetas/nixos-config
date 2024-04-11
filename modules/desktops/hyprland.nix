@@ -73,6 +73,7 @@ with host;
         wl-clipboard    # Clipboard
         wlr-randr       # Monitor Settings
         xfce.thunar     # File Manager
+        xorg.xrdb       # X Resources
         xorg.xrandr     # Monitor Settings
         xwayland        # X session
       ];

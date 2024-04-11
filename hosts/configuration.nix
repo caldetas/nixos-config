@@ -212,12 +212,12 @@
     stremio
     strongswan
     teams-for-linux
-    megasync
     wpsoffice
     ] ++
 
     (with unstable; [
     (jetbrains.plugins.addPlugins jetbrains.idea-ultimate [ "github-copilot" ])
+    megasync
     telegram-desktop
     #CV creation with Latex
 #    texlive.combined.scheme-full
