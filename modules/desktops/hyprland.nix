@@ -104,10 +104,10 @@ with host;
     };
 
     systemd.sleep.extraConfig = ''
-      AllowSuspend=yes
+      AllowSuspend=no
       AllowHibernation=no
       AllowSuspendThenHibernate=no
-      AllowHybridSleep=yes
+      AllowHybridSleep=no
     '';                                       # Clamshell Mode
 
     nix.settings = {
