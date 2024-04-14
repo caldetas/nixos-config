@@ -36,7 +36,6 @@ in
 
     # Modesetting is required.
     modesetting.enable = true;
-    nvidiaPersistenced = true;
     prime = {
      		offload = {
      			enable = true;
