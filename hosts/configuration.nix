@@ -303,6 +303,7 @@ services.tlp = {
       TLP_PERSISTENT_DEFAULT = 1;
     };
  };
+ services.power-profiles-daemon.enable = false; # Gnome Power Profiles conflict with TLP
 
 
     #Default Applications
