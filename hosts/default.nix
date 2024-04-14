@@ -56,7 +56,7 @@ in
       host = {
         hostName = "libelula";
         mainMonitor = "eDP-1";
-        secondMonitor = "HDMI-1";#"HDMI-1-1";
+        secondMonitor = "HDMI-A-1";#"HDMI-1-1";
         thirdMonitor = "";
       };
     };

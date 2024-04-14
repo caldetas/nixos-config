@@ -64,6 +64,7 @@ with host;
         MOZ_ENABLE_WAYLAND = "1";
       };
       systemPackages = with pkgs; [
+        brillo        # Brightness Control
         grimblast       # Screenshot
         hyprpaper       # Wallpaper
         light           # Brightness Control
@@ -71,6 +72,7 @@ with host;
         swayidle        # Idle Daemon
         swaylock-effects# Lock Screen
         wl-clipboard    # Clipboard
+        wlogout         # Logout
         wlr-randr       # Monitor Settings
         xfce.thunar     # File Manager
         xorg.xrdb       # X Resources
@@ -145,8 +147,8 @@ with host;
               ''
       else if secondMonitor != "" && thirdMonitor == ""
         then ''
-            monitor=${toString mainMonitor},1920x1080@60,1920x0,1
-            monitor=${toString secondMonitor},1920x1080@60,0x0,1
+            monitor=${toString mainMonitor},1920x1080@60,0x0,1
+            monitor=${toString secondMonitor},1920x1080@60,1920x0,1
         ''
         else
         ''
@@ -156,13 +158,14 @@ with host;
       monitors =
         if hostName == "desktop" || (hostName == "libelula" && secondMonitor != "") then ''
           workspace=${toString mainMonitor},1
-          workspace=${toString mainMonitor},2
+          workspace=${toString secondMonitor},2
           workspace=${toString mainMonitor},3
-          workspace=${toString mainMonitor},4
-          workspace=${toString secondMonitor},5
+          workspace=${toString secondMonitor},4
+          workspace=${toString mainMonitor},5
           workspace=${toString secondMonitor},6
-          workspace=${toString secondMonitor},7
+          workspace=${toString mainMonitor},7
           workspace=${toString secondMonitor},8
+          bindl=,switch:Lid Switch,exec,$HOME/.config/hypr/script/clamshell.sh
         '' else if hostName == "work" || hostName == "onsite-gnome" then ''
           workspace=${toString mainMonitor},1
           workspace=${toString secondMonitor},2
@@ -363,6 +366,7 @@ bindm=SUPER,mouse:272,movewindow
 bindm=SUPER,mouse:273,resizewindow
 
 bind=SUPER,Return,exec, kitty
+bind=SUPER,B,exec,brave
 bind=SUPER,Q,killactive,
 bind=ALT,F,killactive,
 #bind=SUPER,Escape,exit,
@@ -438,7 +442,7 @@ submap=reset
 
 bind = SUPER, S, exec, spotify
 bind = SUPER, Z, exec, pypr zoom
-bind = SUPER, ESCAPE, exec, fish -c wlogout_uniqe
+bind = SUPER, ESCAPE, exec, wlogout
 
         #bind=CTRL,right,resizeactive,20 0
         #bind=CTRL,left,resizeactive,-20 0
@@ -457,26 +461,24 @@ bind = SUPER, ESCAPE, exec, fish -c wlogout_uniqe
 #        bind=SUPER,Z,layoutmsg,togglesplit
 
         bind=,print,exec,${pkgs.grimblast}/bin/grimblast --notify --freeze --wait 1 copysave area ~/Pictures/$(date +%Y-%m-%dT%H%M%S).png
-        bind=,XF86AudioLowerVolume,exec,${pkgs.pamixer}/bin/pamixer -d 10
-        bind=,XF86AudioRaiseVolume,exec,${pkgs.pamixer}/bin/pamixer -i 10
+        bind=,XF86AudioLowerVolume,exec,${pkgs.pamixer}/bin/pamixer -d 5
+        bind=,XF86AudioRaiseVolume,exec,${pkgs.pamixer}/bin/pamixer -i 5
         bind=,XF86AudioMute,exec,${pkgs.pamixer}/bin/pamixer -t
-        bind=SUPER_L,c,exec,${pkgs.pamixer}/bin/pamixer --default-source -t
-        bind=CTRL,F10,exec,${pkgs.pamixer}/bin/pamixer -t
         bind=,XF86AudioMicMute,exec,${pkgs.pamixer}/bin/pamixer --default-source -t
-        bind=,XF86MonBrightnessDown,exec,${pkgs.light}/bin/light -U 10
-        bind=,XF86MonBrightnessUP,exec,${pkgs.light}/bin/light -A 10
+        bind=,XF86MonBrightnessDown,exec,sudo ${pkgs.brillo}/bin/brillo -q -U 5
+        bind=,XF86MonBrightnessUP,exec,sudo ${pkgs.brillo}/bin/brillo -q -A 5
 
         windowrulev2=float,title:^(Volume Control)$
-        windowrulev2 = keepaspectratio,class:^(firefox)$,title:^(Picture-in-Picture)$
-        windowrulev2 = noborder,class:^(firefox)$,title:^(Picture-in-Picture)$
+        windowrulev2 = keepaspectratio,class:^(brave)$,title:^(Picture-in-Picture)$
+        windowrulev2 = noborder,class:^(brave)$,title:^(Picture-in-Picture)$
         windowrulev2 = float, title:^(Picture-in-Picture)$
         windowrulev2 = size 24% 24%, title:(Picture-in-Picture)
         windowrulev2 = move 75% 75%, title:(Picture-in-Picture)
         windowrulev2 = pin, title:^(Picture-in-Picture)$
-        windowrulev2 = float, title:^(Firefox)$
-        windowrulev2 = size 24% 24%, title:(Firefox)
-        windowrulev2 = move 74% 74%, title:(Firefox)
-        windowrulev2 = pin, title:^(Firefox)$
+        windowrulev2 = float, title:^(brave)$
+        windowrulev2 = size 24% 24%, title:(brave)
+        windowrulev2 = move 74% 74%, title:(brave)
+        windowrulev2 = pin, title:^(brave)$
 
         exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
         exec-once=${pkgs.waybar}/bin/waybar

@@ -185,6 +185,11 @@ with lib;
           command = "nautilus";
           name = "open-file-browser";
         };
+        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
+          binding = "<super>b";
+          command = "brave";
+          name = "open-browser";
+        };
 
         "org/gnome/shell/extension/dash-to-panel" = {   # Set Manually
           panel-position = ''{"0":"top","1":"top"}'';
