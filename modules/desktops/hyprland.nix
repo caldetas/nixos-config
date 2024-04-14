@@ -107,10 +107,10 @@ with host;
     };
 
     systemd.sleep.extraConfig = ''
-      AllowSuspend=no
-      AllowHibernation=no
-      AllowSuspendThenHibernate=no
-      AllowHybridSleep=no
+      AllowSuspend=yes
+      AllowHibernation=yes
+      AllowSuspendThenHibernate=yes
+      AllowHybridSleep=yes
     '';                                       # Clamshell Mode
 
     nix.settings = {
@@ -548,7 +548,7 @@ bind = SUPER, ESCAPE, exec, wlogout
               if [[ `hyprctl monitors | grep "Monitor" | wc -l` != 1 ]]; then
                 ${config.programs.hyprland.package}/bin/hyprctl keyword monitor "${toString mainMonitor}, disable"
               else
-                ${pkgs.swaylock}/bin/swaylock -f
+                ${pkgs.swaylock-effects}/bin/swaylock -f
                 ${pkgs.systemd}/bin/systemctl suspend
               fi
             fi
