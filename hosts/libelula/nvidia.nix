@@ -30,7 +30,7 @@
      		};
      		# Make sure to use the correct Bus ID values for your system!
      		# You can find them by running `lshw -c display`.
-     		# Ask chatgpt: convert pci@0000:00:02.0 from hexadecimal to decimal. (Only write as int? not sure)
+     		# pci@0000:00:02.0 --> PCI:0:0:2
      		intelBusId = "PCI:0:0:2";
      		nvidiaBusId = "PCI:0:1:0";
      	};
@@ -54,6 +54,6 @@
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.production;
   };
 }
