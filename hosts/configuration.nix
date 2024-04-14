@@ -296,7 +296,13 @@
   services.strongswan.enable = true;
   services.netbird.enable = true;
   # services.tlp.enable = true;
-
+services.tlp = {
+    enable = true;
+    settings = {
+      TLP_DEFAULT_MODE = "BAT";
+      TLP_PERSISTENT_DEFAULT = 1;
+    };
+ };
 
 
     #Default Applications

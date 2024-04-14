@@ -102,6 +102,6 @@
       # BUS_MODULES for any required bus driver module (for example for I2C or SPI).
 
       HWMON_MODULES="coretemp"
-    '';
-    services.thinkfan.enable = true;*/
+    '';*/
+    services.thinkfan.enable = true;
 }
