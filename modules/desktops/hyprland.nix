@@ -3,7 +3,7 @@
 #  Enable with "hyprland.enable = true;"
 #
 
-{ config, lib, system, pkgs, hyprland, vars, host, ... }:
+{ config, lib, system, pkgs, unstable, hyprland, vars, host, ... }:
 
 let
   colors = import ../theming/colors.nix;
@@ -63,7 +63,7 @@ with host;
         WLR_NO_HARDWARE_CURSORS = "1";
         MOZ_ENABLE_WAYLAND = "1";
       };
-      systemPackages = with pkgs; [
+      systemPackages = with unstable; [
         brillo        # Brightness Control
         grimblast       # Screenshot
         hyprpaper       # Wallpaper
@@ -108,8 +108,8 @@ with host;
 
     systemd.sleep.extraConfig = ''
       AllowSuspend=yes
-      AllowHibernation=yes
-      AllowSuspendThenHibernate=yes
+      AllowHibernation=no
+      AllowSuspendThenHibernate=no
       AllowHybridSleep=yes
     '';                                       # Clamshell Mode
 
@@ -197,7 +197,7 @@ with host;
           exec-once=${pkgs.networkmanagerapplet}/bin/nm-applet --indicator
           #exec-once=${pkgs.google-drive-ocamlfuse}/bin/google-drive-ocamlfuse /GDrive
           exec-once=${pkgs.rclone}/bin/rclone mount --daemon gdrive: /GDrive
-          exec-once=${pkgs.swayidle}/bin/swayidle -w timeout 60 '${pkgs.swaylock}/bin/swaylock -f' timeout 600 '${pkgs.systemd}/bin/systemctl suspend' after-resume '${config.programs.hyprland.package}/bin/hyprctl dispatch dpms on' before-sleep '${pkgs.swaylock}/bin/swaylock -f && ${config.programs.hyprland.package}/bin/hyprctl dispatch dpms off'
+          exec-once=${pkgs.swayidle}/bin/swayidle -w timeout 60 '${pkgs.swaylock-effects}/bin/swaylock -f' timeout 600 '${pkgs.systemd}/bin/systemctl suspend' after-resume '${config.programs.hyprland.package}/bin/hyprctl dispatch dpms on' before-sleep '${pkgs.swaylock}/bin/swaylock -f && ${config.programs.hyprland.package}/bin/hyprctl dispatch dpms off'
         '' else ''
           exec-once=${pkgs.networkmanagerapplet}/bin/nm-applet --indicator
           exec-once=${pkgs.swayidle}/bin/swayidle -w timeout 600 '${pkgs.swaylock}/bin/swaylock -f' timeout 1200 '${pkgs.systemd}/bin/systemctl suspend' after-resume '${config.programs.hyprland.package}/bin/hyprctl dispatch dpms on' before-sleep '${pkgs.swaylock}/bin/swaylock -f && ${config.programs.hyprland.package}/bin/hyprctl dispatch dpms off'
@@ -367,6 +367,7 @@ bindm=SUPER,mouse:273,resizewindow
 
 bind=SUPER,Return,exec, kitty
 bind=SUPER,B,exec,brave
+bind=SUPER,I,exec,idea-ultimate
 bind=SUPER,Q,killactive,
 bind=ALT,F,killactive,
 #bind=SUPER,Escape,exit,
@@ -482,7 +483,7 @@ bind = SUPER, ESCAPE, exec, wlogout
 
         exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
         exec-once=${pkgs.waybar}/bin/waybar
-        exec-once=${pkgs.eww-wayland}/bin/eww daemon
+        exec-once=${pkgs.eww}/bin/eww daemon
         #exec-once=$HOME/.config/eww/scripts/eww        # When running eww as a bar
         exec-once=${pkgs.blueman}/bin/blueman-applet
         exec-once=${pkgs.swaynotificationcenter}/bin/swaync

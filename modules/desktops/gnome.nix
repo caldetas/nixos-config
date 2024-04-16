@@ -190,6 +190,11 @@ with lib;
           command = "brave";
           name = "open-browser";
         };
+        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4" = {
+          binding = "<super>i";
+          command = "idea-ultimate";
+          name = "open-intellij";
+        };
 
         "org/gnome/shell/extension/dash-to-panel" = {   # Set Manually
           panel-position = ''{"0":"top","1":"top"}'';

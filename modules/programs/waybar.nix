@@ -7,7 +7,7 @@
 with host;
 let
   output =
-    if hostName == "beelink" || hostName == "desktop" then [
+    if hostName == "libelula" || hostName == "desktop" then [
       mainMonitor
       secondMonitor
     ] else if hostName == "work" then [
@@ -147,7 +147,7 @@ in
             };
             "custom/menu" = {
               format = "<span font='16'></span>";
-              on-click = ''${pkgs.eww-wayland}/bin/eww open --toggle menu --screen 0'';
+              on-click = ''${pkgs.eww}/bin/eww open --toggle menu --screen 0'';
               on-click-right = "${pkgs.wofi}/bin/wofi --show drun";
               tooltip = false;
             };

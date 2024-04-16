@@ -127,7 +127,7 @@
       VISUAL = "${vars.editor}";
     };
 
-    systemPackages = with pkgs; [           # System-Wide Packages
+    systemPackages = with unstable; [           # System-Wide Packages
       # Terminal
       btop              # Resource Manager
       coreutils         # GNU Utilities
@@ -213,7 +213,6 @@
     strongswan
     teams-for-linux
     wpsoffice
-    megasync
     ] ++
 
     (with unstable; [
@@ -221,6 +220,10 @@
     telegram-desktop
     #CV creation with Latex
 #    texlive.combined.scheme-full
+    ])++
+
+    (with pkgs; [
+    megasync
     ]);
   };
 
@@ -295,15 +298,14 @@
 
   services.strongswan.enable = true;
   services.netbird.enable = true;
-  # services.tlp.enable = true;
-services.tlp = {
-    enable = true;
-    settings = {
-      TLP_DEFAULT_MODE = "BAT";
-      TLP_PERSISTENT_DEFAULT = 1;
-    };
- };
- services.power-profiles-daemon.enable = false; # Gnome Power Profiles conflict with TLP
+#services.tlp = {
+#    enable = true;
+#    settings = {
+#      TLP_DEFAULT_MODE = "BAT";
+#      TLP_PERSISTENT_DEFAULT = 1;
+#    };
+# };
+# services.power-profiles-daemon.enable = false; # Gnome Power Profiles conflict with TLP
 
 
     #Default Applications
