@@ -81,12 +81,11 @@
   #VPN
   surfshark.enable = true;
 
-  environment.systemPackages = with unstable; [
-
-  mesa #elden ring
-  directx-headers # elden ring
-  directx-shader-compiler #elden ring
-  ];
+#  environment.systemPackages = with unstable; [
+#  mesa #elden ring
+#  directx-headers # elden ring
+#  directx-shader-compiler #elden ring
+#  ];
 
 environment.interactiveShellInit = ''
   alias commit='echo cd ${vars.location} \&\& git pull \&\& sudo systemctl unmask  -- -.mount \&\& sudo systemctl daemon-reload \&\& sudo nixos-rebuild switch --flake ${vars.location}#libelula --show-trace --update-input nixpkgs --commit-lock-file && cd ${vars.location} && git pull && sudo systemctl unmask  -- -.mount && sudo systemctl daemon-reload && sudo nixos-rebuild switch --flake ${vars.location}#${host.hostName} --show-trace --update-input nixpkgs --commit-lock-file'
