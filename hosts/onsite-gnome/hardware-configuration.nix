@@ -68,8 +68,7 @@
     };
   };
   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault
-  config.hardware.enableRedistributableFirmware;
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
 /*
     #POWERSAVE?? thinkfan
@@ -102,6 +101,6 @@
       # BUS_MODULES for any required bus driver module (for example for I2C or SPI).
 
       HWMON_MODULES="coretemp"
-    '';*/
-    services.thinkfan.enable = true;
+    '';
+    services.thinkfan.enable = true;*/
 }

@@ -7,7 +7,7 @@
 with host;
 let
   output =
-    if hostName == "libelula" || hostName == "desktop" then [
+    if hostName == "libelula" || hostName == "onsite-gnome" then [
       mainMonitor
       secondMonitor
     ] else if hostName == "work" then [
@@ -179,7 +179,7 @@ in
             };
             clock = {
               format = "{:%b %d %H:%M}  ";
-              on-click = "${pkgs.eww-wayland}/bin/eww open --toggle calendar --screen 0";
+              on-click = "${pkgs.eww}/bin/eww open --toggle calendar --screen 0";
             };
             cpu = {
               format = " {usage}% <span font='11'></span> ";

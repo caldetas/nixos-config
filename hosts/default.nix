@@ -35,6 +35,7 @@ in
         hostName = "vm";
         mainMonitor = "Virtual-1";
         secondMonitor = "";
+        thirdMonitor = "";
       };
     };
     modules = [

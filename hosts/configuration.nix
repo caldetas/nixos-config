@@ -153,6 +153,7 @@
       alsa-utils        # Audio Control
       audacity          # Audio Editor
       feh               # Image Viewer
+      glmark2           # OpenGL Benchmark
       mpv               # Media Player
       pavucontrol       # Audio Control
       pipewire          # Audio Server/Control

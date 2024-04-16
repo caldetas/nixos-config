@@ -76,8 +76,8 @@ hyprland.enable = true;   #did not work on vm                      # Window Mana
         virtualisation.vmVariant = {
           # following configuration is added only when building VM with build-vm
           virtualisation = {
-            memorySize =  8192; # Use 8192 memory.
-            cores = 4;
+            memorySize =  16384; # memory.
+            cores = 1;
           };
       };
 
