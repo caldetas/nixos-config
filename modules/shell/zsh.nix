@@ -19,7 +19,7 @@
 
       ohMyZsh = {                               # Plug-ins
         enable = true;
-        plugins = [ "git" ];
+        plugins = [ "git" "thefuck"];
       };
 
       shellInit = ''
@@ -30,6 +30,7 @@
         #emulate zsh -c "$(direnv hook zsh)"
 
         #eval "$(direnv hook zsh)"
+        neofetch
       '';                                       # Theming
     };
   };

@@ -130,6 +130,7 @@
     systemPackages = with unstable; [           # System-Wide Packages
       # Terminal
       btop              # Resource Manager
+      ctop              # Container Manager
       coreutils         # GNU Utilities
       file              # File Type
       git               # Version Control
@@ -202,6 +203,7 @@
     gnupg1orig
     gparted
     htop
+    neofetch
     netbird
     netbird-ui
     nodejs_18
@@ -213,6 +215,7 @@
     stremio
     strongswan
     teams-for-linux
+    thefuck
     wpsoffice
     ] ++
 
