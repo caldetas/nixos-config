@@ -193,8 +193,6 @@ with host;
            '';
     in
     let
-
-
 hyprlandConf = ''
         ${workspaces}
         ${monitors}
