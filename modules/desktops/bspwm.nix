@@ -9,20 +9,17 @@ with lib;
 with host;
 let
   monitor =
-    if hostName == "beelink" then
-      "${pkgs.xorg.xrandr}/bin/xrandr --output ${secondMonitor} --mode 1920x1080 --pos 0x0 --rotate normal --output ${mainMonitor} --primary --mode 1920x1080 --pos 1920x0 --rotate normal"
-    else if hostName == "laptop" || hostName == "vm" then
-      "${pkgs.xorg.xrandr}/bin/xrandr --output ${mainMonitor} --mode 1920x1080 --pos 0x0 --rotate normal"
-    else if hostName == "libelula" || hostName == "oldie" then
-      "${pkgs.xorg.xrandr}/bin/xrandr --output ${mainMonitor} --mode 1920x1080 --pos 0x0 --rotate normal"
-    #    else "${pkgs.xorg.xrandr}/bin/xrandr --mode 1920x1080 --pos 0x0 --rotate normal";
+    if hostName == "libelula" then
+      "${pkgs.xorg.xrandr}/bin/xrandr --output ${secondMonitor} --mode 1920x1080 --pos 1920x0 --rotate normal --output ${mainMonitor} --primary --mode 1920x1080 --pos 0x0 --rotate normal"
+    else if hostName == "vm" || hostName == "probook" then
+      "${pkgs.xorg.xrandr}/bin/xrandr --mode 1920x1080 --pos 0x0 --rotate normal"
     else false;
 
   extra = ''
-    killall -q polybar &                            # Kill polybar
+    killall -q polybar &
     while pgrep -u $UID -x polybar >/dev/null; do sleep 1;done
 
-    WORKSPACES                                      # Workspace Tags
+    WORKSPACES
 
     bspc config border_width      3
     bspc config window_gaps      12
@@ -38,21 +35,21 @@ let
 
     #pgrep -x sxhkd > /dev/null || sxhkd &
 
-    feh --bg-tile $HOME/.config/wall                # Wallpaper
+    feh --bg-tile $HOME/.config/wall.jpeg
 
     polybar main & #2>~/log &
   '';
 
   extraConf = builtins.replaceStrings [ "WORKSPACES" ]
     [
-      (if hostName == "beelink" then ''
+      (if hostName == "libelula" then ''
         bspc monitor ${mainMonitor} -d 1 2 3 4 5
         bspc monitor ${secondMonitor} -d 6 7 8 9 0
         bspc wm -O ${mainMonitor} ${secondMonitor}
         polybar sec &
       ''
-      else if hostName == "oldie" || hostName == "libelula" || hostName == "laptop" || hostName == "vm" || hostName == "caldetas" then ''
-        bspc monitor ${toString mainMonitor} -d 1 2 3 4 5
+      else if hostName == "vm" || hostName == "probook" then ''
+        bspc monitor -d 1 2 3 4 5
       ''
       else false)
     ]
@@ -70,11 +67,12 @@ in
 
   config = mkIf (config.bspwm.enable)
     {
-      x11wm.enable = true; # X11 Window Manager
+      x11wm.enable = true;
 
       services = {
         xserver = {
           enable = true;
+
           layout = "ch";
           xkbOptions = "eurosign:e";
           libinput = {
@@ -87,9 +85,8 @@ in
               disableWhileTyping = true;
             };
           };
+
           displayManager = {
-            # Display Manager
-            #        gdm = {enable = true;};
             lightdm = {
               enable = true;
               background = pkgs.nixos-artwork.wallpapers.nineish-dark-gray.gnomeFilePath;
@@ -109,11 +106,8 @@ in
             };
             defaultSession = "none+bspwm";
           };
-          windowManager = {
-            bspwm = {
-              # Window Manager
-              enable = true;
-            };
+          windowManager.bspwm = {
+            enable = true;
           };
 
           displayManager.sessionCommands = monitor;
@@ -133,10 +127,9 @@ in
         };
       };
 
-      programs.zsh.enable = true; # Required for Default User
+      programs.zsh.enable = true;
 
       environment.systemPackages = with pkgs; [
-        # System-Wide Packages
         xclip # Clipboard
         xorg.xev # Event Viewer
         xorg.xkill # Process Killer
@@ -199,9 +192,7 @@ in
                   desktop = "5";
                 };
               };
-              extraConfig = ''
-                		logind-check-graphical=true
-                	'';
+              extraConfig = extraConf;
             };
           };
         };

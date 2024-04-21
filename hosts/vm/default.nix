@@ -54,7 +54,8 @@
   #  bspwm.enable = true;                          # Window Manager
   #  security.rtkit.enable = true;
   #gnome.enable = true;                          # Window Manager
-  hyprland.enable = true; #did not work on vm                      # Window Manager
+  #  hyprland.enable = true; #did not work on vm                      # Window Manager
+  bspwm.enable = true; # Window Manager
   #  laptop.enable = true;                          # Window Manager
 
   # Enable sound with pipewire.
