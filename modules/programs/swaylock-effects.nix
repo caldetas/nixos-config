@@ -2,7 +2,9 @@
 #  Bar
 #
 
-{ config, lib, pkgs, vars, ...}:
+{ config, lib, host, system, pkgs, vars, home, ...}:
+
+#{ config, lib, system, pkgs, unstable, hyprland, vars, host, ... }:
 let
 
     swaylockConf=''
@@ -42,9 +44,22 @@ let
     text-wrong-color=#1e2030
     '';
     in
+with lib;
+with host;
 {
+  options = {
+    swaylock = {
+      enable = mkOption {
+        type = types.bool;
+        default = false;
+      };
+    };
+  };
   config = lib.mkIf (config.swaylock.enable) {
-
-    xdg.configFile."swaylock/config".text = swaylockConf;
+  home-manager.users.${vars.user} = {
+          home.file = {
+            "swaylock/config".text = swaylockConf;
+            };
+       };
   };
 }

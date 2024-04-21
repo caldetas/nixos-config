@@ -156,7 +156,7 @@ with host;
         ''
         ;
       monitors =
-        if hostName == "desktop" || (hostName == "libelula" && secondMonitor != "") then ''
+        if (hostName == "libelula" && secondMonitor != "") then ''
           workspace=${toString mainMonitor},1
           workspace=${toString secondMonitor},2
           workspace=${toString mainMonitor},3
@@ -166,18 +166,14 @@ with host;
           workspace=${toString mainMonitor},7
           workspace=${toString secondMonitor},8
           bindl=,switch:Lid Switch,exec,$HOME/.config/hypr/script/clamshell.sh
-        '' else if hostName == "work" || hostName == "onsite-gnome" then ''
+        '' else if hostName == "onsite-gnome" then ''
           workspace=${toString mainMonitor},1
           workspace=${toString secondMonitor},2
           workspace=${toString thirdMonitor},3
-#            workspace=${toString mainMonitor},4
             workspace=${toString secondMonitor},4
             workspace=${toString thirdMonitor},5
-#            workspace=${toString mainMonitor},7
             workspace=${toString secondMonitor},6
             workspace=${toString thirdMonitor},7
-
-
           bindl=,switch:Lid Switch,exec,$HOME/.config/hypr/script/clamshell.sh
         '' else ''
                           workspace=${toString mainMonitor},1
@@ -191,14 +187,7 @@ with host;
                           bindl=,switch:Lid Switch,exec,$HOME/.config/hypr/script/clamshell.sh
                         '';
       execute =
-        if hostName == "desktop" || hostName == "beelink" then ''
-          exec-once=${pkgs.swayidle}/bin/swayidle -w timeout 600 '${pkgs.swaylock}/bin/swaylock -f' timeout 1200 '${pkgs.systemd}/bin/systemctl suspend' after-resume '${config.programs.hyprland.package}/bin/hyprctl dispatch dpms on' before-sleep '${pkgs.swaylock}/bin/swaylock -f && ${config.programs.hyprland.package}/bin/hyprctl dispatch dpms off'
-        '' else if hostName == "work" then ''
-          exec-once=${pkgs.networkmanagerapplet}/bin/nm-applet --indicator
-          #exec-once=${pkgs.google-drive-ocamlfuse}/bin/google-drive-ocamlfuse /GDrive
-          exec-once=${pkgs.rclone}/bin/rclone mount --daemon gdrive: /GDrive
-          exec-once=${pkgs.swayidle}/bin/swayidle -w timeout 60 '${pkgs.swaylock}/bin/swaylock -f' timeout 600 '${pkgs.systemd}/bin/systemctl suspend' after-resume '${config.programs.hyprland.package}/bin/hyprctl dispatch dpms on' before-sleep '${pkgs.swaylock}/bin/swaylock -f && ${config.programs.hyprland.package}/bin/hyprctl dispatch dpms off'
-        '' else ''
+          ''
           exec-once=${pkgs.networkmanagerapplet}/bin/nm-applet --indicator
           exec-once=${pkgs.swayidle}/bin/swayidle -w timeout 600 '${pkgs.swaylock}/bin/swaylock -f' timeout 1200 '${pkgs.systemd}/bin/systemctl suspend' after-resume '${config.programs.hyprland.package}/bin/hyprctl dispatch dpms on' before-sleep '${pkgs.swaylock}/bin/swaylock -f && ${config.programs.hyprland.package}/bin/hyprctl dispatch dpms off'
            '';
@@ -427,8 +416,6 @@ bind = SUPER, ESCAPE, exec, wlogout
     in
     {
       xdg.configFile."hypr/hyprland.conf".text = hyprlandConf;
-#      xdg.configFile."hypr/macchiato.conf".text = macchiato;
-#
 
       home.file = {
         ".config/hypr/script/clamshell.sh" = {
