@@ -3,10 +3,7 @@
 #
 
 { config, lib, host, system, pkgs, vars, home, ... }:
-
-#{ config, lib, system, pkgs, unstable, hyprland, vars, host, ... }:
 let
-
   swaylockConf = ''
     ignore-empty-password
     daemonize
@@ -47,18 +44,10 @@ in
 with lib;
 with host;
 {
-  options = {
-    swaylock = {
-      enable = mkOption {
-        type = types.bool;
-        default = false;
-      };
-    };
-  };
-  config = lib.mkIf (config.swaylock.enable) {
+  config = lib.mkIf (config.hyprland.enable) {
     home-manager.users.${vars.user} = {
       home.file = {
-        "swaylock/config".text = swaylockConf;
+        ".config/swaylock/config".text = swaylockConf;
       };
     };
   };
