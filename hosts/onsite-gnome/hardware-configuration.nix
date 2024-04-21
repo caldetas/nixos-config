@@ -16,36 +16,39 @@
 { config, lib, pkgs, modulesPath, host, ... }:
 
 {
-   imports =
-      [ (modulesPath + "/installer/scan/not-detected.nix")
-      ];
+  imports =
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
+    ];
 
-    boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "vmd" "nvme" "usbhid" "usb_storage" "sd_mod" ];
-    boot.initrd.kernelModules = [ ];
-    boot.kernelModules = [ "kvm-intel" ];
-    boot.extraModulePackages = [ ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "vmd" "nvme" "usbhid" "usb_storage" "sd_mod" ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
+  boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/e88d78aa-b5cc-451e-9fd6-c1d07f28c884";
+    {
+      device = "/dev/disk/by-uuid/e88d78aa-b5cc-451e-9fd6-c1d07f28c884";
       fsType = "ext4";
     };
 
   boot.initrd.luks.devices."luks-af764af7-bb34-42d3-b374-de472c168a27".device = "/dev/disk/by-uuid/af764af7-bb34-42d3-b374-de472c168a27";
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/1E60-6F1B";
+    {
+      device = "/dev/disk/by-uuid/1E60-6F1B";
       fsType = "vfat";
     };
 
-  swapDevices = [  ];
+  swapDevices = [ ];
 
   networking = with host; {
-    useDHCP = false;                        # Deprecated
-#    hostName = hostName;
+    useDHCP = false; # Deprecated
+    #    hostName = hostName;
     networkmanager.enable = true;
     interfaces = {
       enp0s31f6 = {
-        useDHCP = true;                     # For versatility sake, manually edit IP on nm-applet.
+        useDHCP = true; # For versatility sake, manually edit IP on nm-applet.
         #ipv4.addresses = [ {
         #    address = "192.168.0.51";
         #    prefixLength = 24;
@@ -59,8 +62,8 @@
         #} ];
       };
     };
-#    defaultGateway = "192.168.0.1";
-#    nameservers = [ "192.168.0.4" ];
+    #    defaultGateway = "192.168.0.1";
+    #    nameservers = [ "192.168.0.4" ];
     firewall = {
       enable = false;
       allowedUDPPorts = [ 500 4500 3389 5900 ];
@@ -70,7 +73,7 @@
   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-/*
+  /*
     #POWERSAVE?? thinkfan
     boot.initrd.kernelModules = [ "coretemp" ];
     hardware.cpu.intel.updateMicrocode = true;

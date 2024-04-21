@@ -5,19 +5,21 @@
 { config, lib, pkgs, vars, ... }:
 
 let
-  colors = import ../theming/colors.nix;                  # Import Colors
+  colors = import ../theming/colors.nix; # Import Colors
 in
 {
   home-manager.users.${vars.user} = {
-    home.packages = [ pkgs.libnotify ];                   # Dependency
+    home.packages = [ pkgs.libnotify ]; # Dependency
     services.dunst = {
       enable = true;
-      iconTheme = {                                       # Icons
+      iconTheme = {
+        # Icons
         name = "Papirus Dark";
         package = pkgs.papirus-icon-theme;
         size = "16x16";
       };
-      settings = with colors.scheme.doom; {               # Settings
+      settings = with colors.scheme.doom; {
+        # Settings
         global = {
           monitor = 0;
           # geometry [{width}x{height}][+/-{x}+/-{y}]
@@ -49,7 +51,8 @@ in
           # startup_notification = false;
           hide_duplicate_count = true;
         };
-        urgency_low = {                                   # Colors
+        urgency_low = {
+          # Colors
           background = "#${bg}";
           foreground = "#${text}";
           timeout = 4;

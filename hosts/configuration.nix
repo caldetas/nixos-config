@@ -50,32 +50,33 @@
     [
       inputs.sops-nix.nixosModules.sops
     ] ++ (
-              import ../modules/desktops ++
-              import ../modules/editors ++
-              import ../modules/hardware ++
-              import ../modules/programs ++
-              import ../modules/services ++
-              import ../modules/shell ++
-              import ../modules/theming
-              );
+      import ../modules/desktops ++
+      import ../modules/editors ++
+      import ../modules/hardware ++
+      import ../modules/programs ++
+      import ../modules/services ++
+      import ../modules/shell ++
+      import ../modules/theming
+    );
 
 
 
-      sops.secrets.home-path = { };
-      sops.secrets."surfshark/user" = { };
-      sops.secrets."surfshark/password" = { };
-      sops.secrets."my-secret" = {
-        owner = "${vars.user}";
-      };
-     users.groups.secrets = { };
+  sops.secrets.home-path = { };
+  sops.secrets."surfshark/user" = { };
+  sops.secrets."surfshark/password" = { };
+  sops.secrets."my-secret" = {
+    owner = "${vars.user}";
+  };
+  users.groups.secrets = { };
 
-  users.users.${vars.user} = {              # System User
+  users.users.${vars.user} = {
+    # System User
     isNormalUser = true;
     extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" "secrets" ];
   };
 
-#  time.timeZone = "America/Mexico_City";        # Time zone and Internationalisation
-  time.timeZone = "Europe/Zurich";        # Time zone and Internationalisation
+  #  time.timeZone = "America/Mexico_City";        # Time zone and Internationalisation
+  time.timeZone = "Europe/Zurich"; # Time zone and Internationalisation
   i18n = {
     defaultLocale = "en_US.UTF-8";
     extraLocaleSettings = {
@@ -89,10 +90,10 @@
     keyMap = "sg";
   };
 
-    swapDevices = [{
-      device = "/swapfile";
-      size = 16 * 1024; # 16GB
-    }];
+  swapDevices = [{
+    device = "/swapfile";
+    size = 16 * 1024; # 16GB
+  }];
 
   security = {
     rtkit.enable = true;
@@ -100,134 +101,138 @@
     sudo.wheelNeedsPassword = false;
   };
 
-  fonts.packages = with pkgs; [                # Fonts
-    carlito                                 # NixOS
-    vegur                                   # NixOS
+  fonts.packages = with pkgs; [
+    # Fonts
+    carlito # NixOS
+    vegur # NixOS
     source-code-pro
     jetbrains-mono
-    font-awesome                            # Icons
-    corefonts                               # MS
+    font-awesome # Icons
+    corefonts # MS
     ubuntu_font_family
-    (nerdfonts.override {                   # Nerdfont Icons override
+    (nerdfonts.override {
+      # Nerdfont Icons override
       fonts = [
         "FiraCode"
       ];
     })
   ];
-#  fonts.fontconfig.enable = true;
+  #  fonts.fontconfig.enable = true;
   fonts.fontconfig.enable = lib.mkForce true;
 
-#  networking.nameservers =  [ "1.1.1.1" "9.9.9.9"]; # privacy respecting nameserver for dns queries (cloudflare & quad9)
-  networking.nameservers =  [ "162.252.172.57" "149.154.159.92"]; # Surfshark
+  #  networking.nameservers =  [ "1.1.1.1" "9.9.9.9"]; # privacy respecting nameserver for dns queries (cloudflare & quad9)
+  networking.nameservers = [ "162.252.172.57" "149.154.159.92" ]; # Surfshark
   networking.hostName = host.hostName; # Hostname
   environment = {
-    variables = {                           # Environment Variables
+    variables = {
+      # Environment Variables
       TERMINAL = "${vars.terminal}";
       EDITOR = "${vars.editor}";
       VISUAL = "${vars.editor}";
     };
 
-    systemPackages = with unstable; [           # System-Wide Packages
+    systemPackages = with unstable; [
+      # System-Wide Packages
       # Terminal
-      btop              # Resource Manager
-      ctop              # Container Manager
-      coreutils         # GNU Utilities
-      file              # File Type
-      git               # Version Control
-      glxinfo           # OpenGL
-      hwinfo            # Hardware Info
-      killall           # Process Killer
-      lshw              # Hardware Info
-      nano              # Text Editor
-      nix-tree          # Browse Nix Store
-      nixpkgs-fmt       # Formatter for nix files
-      pciutils          # Manage PCI
-      psmisc            # A set of small useful utilities that use the proc filesystem (such as fuser, killall and pstree)
-      ranger            # File Manager
-      screen            # Deatach
-      tldr              # Helper
-      usbutils          # Manage USB
-      wget              # Retriever
-      xdg-utils         # Environment integration
+      btop # Resource Manager
+      ctop # Container Manager
+      coreutils # GNU Utilities
+      file # File Type
+      git # Version Control
+      glxinfo # OpenGL
+      hwinfo # Hardware Info
+      killall # Process Killer
+      lshw # Hardware Info
+      nano # Text Editor
+      nix-tree # Browse Nix Store
+      nixpkgs-fmt # Formatter for nix files
+      pciutils # Manage PCI
+      psmisc # A set of small useful utilities that use the proc filesystem (such as fuser, killall and pstree)
+      ranger # File Manager
+      screen # Deatach
+      tldr # Helper
+      usbutils # Manage USB
+      wget # Retriever
+      xdg-utils # Environment integration
 
       # Video/Audio
-      alsa-utils        # Audio Control
-      audacity          # Audio Editor
-      feh               # Image Viewer
-      glmark2           # OpenGL Benchmark
-      mpv               # Media Player
-      pavucontrol       # Audio Control
-      pipewire          # Audio Server/Control
-      pulseaudio        # Audio Server/Control
-      usbimager         # USB Writer
-      vlc               # Media Player
+      alsa-utils # Audio Control
+      audacity # Audio Editor
+      feh # Image Viewer
+      glmark2 # OpenGL Benchmark
+      mpv # Media Player
+      pavucontrol # Audio Control
+      pipewire # Audio Server/Control
+      pulseaudio # Audio Server/Control
+      usbimager # USB Writer
+      vlc # Media Player
 
       # Apps
-      appimage-run      # Runs AppImages on NixOS
-      google-chrome     # Browser
-      libreoffice       # OpenOffice
+      appimage-run # Runs AppImages on NixOS
+      google-chrome # Browser
+      libreoffice # OpenOffice
 
 
       # File Management
       gnome.file-roller # Archive Manager
-      okular            # PDF Viewer
-      pcmanfm           # File Browser
-      p7zip             # Zip Encryption
-      rsync             # Syncer - $ rsync -r dir1/ dir2/
-      unzip             # Zip Files
-      unrar             # Rar Files
-      zip               # Zip
+      okular # PDF Viewer
+      pcmanfm # File Browser
+      p7zip # Zip Encryption
+      rsync # Syncer - $ rsync -r dir1/ dir2/
+      unzip # Zip Files
+      unrar # Rar Files
+      zip # Zip
 
       # Security
-      sops              # Secrets Manager
+      sops # Secrets Manager
 
 
 
-    #Java
-    gradle
-    jetbrains.datagrip
-    jetbrains.jdk
-    jetbrains.pycharm-professional
-    jre17_minimal
-    python3
+      #Java
+      gradle
+      jetbrains.datagrip
+      jetbrains.jdk
+      jetbrains.pycharm-professional
+      jre17_minimal
+      python3
 
-    # Apps
-    brave
-    discord
-    docker-compose
-    firefox
-    gedit
-    git
-    gimp
-    gnome.gnome-remote-desktop
-    gnupg1orig
-    gparted
-    htop
-    neofetch
-    netbird
-    netbird-ui
-    nodejs_18
-    openvpn
-    qbittorrent
-    remmina
-    spotify
-    steam
-    stremio
-    strongswan
-    teams-for-linux
-    thefuck
-    wpsoffice
+      # Apps
+      brave
+      discord
+      docker-compose
+      firefox
+      gedit
+      git
+      gimp
+      gnome.gnome-remote-desktop
+      gnupg1orig
+      gparted
+      htop
+      neofetch
+      netbird
+      netbird-ui
+      nodejs_18
+      openvpn
+      qbittorrent
+      remmina
+      spotify
+      steam
+      stremio
+      strongswan
+      teams-for-linux
+      thefuck
+      wpsoffice
     ] ++
 
     (with unstable; [
-    (jetbrains.plugins.addPlugins jetbrains.idea-ultimate [ "github-copilot" ])
-    telegram-desktop
-    #CV creation with Latex
-#    texlive.combined.scheme-full
-    ])++
+      (jetbrains.plugins.addPlugins jetbrains.idea-ultimate [ "github-copilot" ])
+      telegram-desktop
+      #CV creation with Latex
+      #    texlive.combined.scheme-full
+    ]) ++
 
     (with pkgs; [
-    megasync
+      megasync
     ]);
   };
 
@@ -236,13 +241,14 @@
     java.enable = true;
   };
 
-    nixpkgs.config.permittedInsecurePackages = [
-               "freeimage-unstable-2021-11-01"
-            ];
+  nixpkgs.config.permittedInsecurePackages = [
+    "freeimage-unstable-2021-11-01"
+  ];
   hardware.pulseaudio.enable = false;
   services = {
     printing.enable = true;
-    pipewire = {                            # Sound
+    pipewire = {
+      # Sound
       enable = true;
       alsa = {
         enable = true;
@@ -251,25 +257,28 @@
       pulse.enable = true;
       jack.enable = true;
     };
-    openssh = {                             # SSH
+    openssh = {
+      # SSH
       enable = true;
-      allowSFTP = true;                     # SFTP
+      allowSFTP = true; # SFTP
       extraConfig = ''
         HostKeyAlgorithms +ssh-rsa
       '';
     };
   };
 
-  nix = {                                   # Nix Package Manager Settings
-    settings ={
+  nix = {
+    # Nix Package Manager Settings
+    settings = {
       auto-optimise-store = true;
     };
-    gc = {                                  # Garbage Collection
+    gc = {
+      # Garbage Collection
       automatic = true;
       dates = "weekly";
       options = "--delete-older-than 7d";
     };
-    package = pkgs.nixVersions.unstable;    # Enable Flakes
+    package = pkgs.nixVersions.unstable; # Enable Flakes
     registry.nixpkgs.flake = inputs.nixpkgs;
     extraOptions = ''
       experimental-features = nix-command flakes
@@ -277,13 +286,15 @@
       keep-derivations      = true
     '';
   };
-  nixpkgs.config.allowUnfree = true;        # Allow Proprietary Software.
+  nixpkgs.config.allowUnfree = true; # Allow Proprietary Software.
 
-  system = {                                # NixOS Settings
+  system = {
+    # NixOS Settings
     stateVersion = "23.11";
   };
 
-  home-manager.users.${vars.user} = {       # Home-Manager Settings
+  home-manager.users.${vars.user} = {
+    # Home-Manager Settings
     home = {
       stateVersion = "23.11";
     };
@@ -292,60 +303,62 @@
     };
   };
   flatpak.enable = true;
-    flatpak = {                                   # Flatpak Packages (see module options)
-      extraPackages = [
-        "com.github.tchx84.Flatseal"
-        "io.github.mimbrero.WhatsAppDesktop"
-        "org.signal.Signal"
-      ];
-    };
+  flatpak = {
+    # Flatpak Packages (see module options)
+    extraPackages = [
+      "com.github.tchx84.Flatseal"
+      "io.github.mimbrero.WhatsAppDesktop"
+      "org.signal.Signal"
+    ];
+  };
 
   services.strongswan.enable = true;
   services.netbird.enable = true;
-#services.tlp = {
-#    enable = true;
-#    settings = {
-#      TLP_DEFAULT_MODE = "BAT";
-#      TLP_PERSISTENT_DEFAULT = 1;
-#    };
-# };
-# services.power-profiles-daemon.enable = false; # Gnome Power Profiles conflict with TLP
+  #services.tlp = {
+  #    enable = true;
+  #    settings = {
+  #      TLP_DEFAULT_MODE = "BAT";
+  #      TLP_PERSISTENT_DEFAULT = 1;
+  #    };
+  # };
+  # services.power-profiles-daemon.enable = false; # Gnome Power Profiles conflict with TLP
 
 
-    #Default Applications
-    xdg.mime.defaultApplications = {
-            "image/jpeg" = ["image-roll.desktop" "feh.desktop"];
-            "image/png" = ["image-roll.desktop" "feh.desktop"];
-            "text/plain" = "org.gnome.gedit.desktop";
-            "text/html" = "brave-browser.desktop";
-            "text/csv" = "org.gnome.gedit.desktop";
-            "application/pdf" =  "brave-browser.desktop";
-            "application/zip" = "org.gnome.FileRoller.desktop";
-            "application/x-tar" = "org.gnome.FileRoller.desktop";
-            "application/x-bzip2" = "org.gnome.FileRoller.desktop";
-            "application/x-gzip" = "org.gnome.FileRoller.desktop";
-            "x-scheme-handler/http" = ["brave-browser.desktop" "firefox.desktop"];
-            "x-scheme-handler/https" = ["brave-browser.desktop" "firefox.desktop"];
-            "x-scheme-handler/about" = ["brave-browser.desktop" "firefox.desktop"];
-            "x-scheme-handler/unknown" = ["brave-browser.desktop" "firefox.desktop"];
-            "x-scheme-handler/mailto" = ["brave-browser.desktop"];
-            "audio/mp3" = "vlc.desktop";
-            "audio/x-matroska" = "vlc.desktop";
-            "video/webm" = "vlc.desktop";
-            "video/mp4" = "vlc.desktop";
-            "video/x-matroska" = "vlc.desktop";
+  #Default Applications
+  xdg.mime.defaultApplications = {
+    "image/jpeg" = [ "image-roll.desktop" "feh.desktop" ];
+    "image/png" = [ "image-roll.desktop" "feh.desktop" ];
+    "text/plain" = "org.gnome.gedit.desktop";
+    "text/html" = "brave-browser.desktop";
+    "text/csv" = "org.gnome.gedit.desktop";
+    "application/pdf" = "brave-browser.desktop";
+    "application/zip" = "org.gnome.FileRoller.desktop";
+    "application/x-tar" = "org.gnome.FileRoller.desktop";
+    "application/x-bzip2" = "org.gnome.FileRoller.desktop";
+    "application/x-gzip" = "org.gnome.FileRoller.desktop";
+    "x-scheme-handler/http" = [ "brave-browser.desktop" "firefox.desktop" ];
+    "x-scheme-handler/https" = [ "brave-browser.desktop" "firefox.desktop" ];
+    "x-scheme-handler/about" = [ "brave-browser.desktop" "firefox.desktop" ];
+    "x-scheme-handler/unknown" = [ "brave-browser.desktop" "firefox.desktop" ];
+    "x-scheme-handler/mailto" = [ "brave-browser.desktop" ];
+    "audio/mp3" = "vlc.desktop";
+    "audio/x-matroska" = "vlc.desktop";
+    "video/webm" = "vlc.desktop";
+    "video/mp4" = "vlc.desktop";
+    "video/x-matroska" = "vlc.desktop";
   };
 
   environment.interactiveShellInit = ''
     alias buildVm='echo cd ${vars.location} \&\& git pull \&\& sudo nixos-rebuild build-vm --flake ${vars.location}#vm --show-trace --update-input nixpkgs && cd ${vars.location} && git pull && sudo nixos-rebuild build-vm --flake ${vars.location}#vm --show-trace --update-input nixpkgs'
-    '';
+  '';
 
   # SOPS Configuration Secrets
   sops.defaultSopsFile = ./../secrets/secrets.yaml;
   sops.defaultSopsFormat = "yaml";
   sops.age.keyFile = "/home/${vars.user}/MEGAsync/encrypt/nixos/keys.txt";
-  system.activationScripts = { text =
-                           ''
+  system.activationScripts = {
+    text =
+      ''
 
                             # Check if sops encryption is working
                             echo '
@@ -381,5 +394,5 @@
                              fi
                            '';
 
-                         };
+  };
 }

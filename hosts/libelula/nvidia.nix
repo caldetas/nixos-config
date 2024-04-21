@@ -17,23 +17,23 @@
   };
 
   # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.nvidia = {
 
     # Modesetting is required.
     modesetting.enable = true;
     prime = {
-     		offload = {
-     			enable = true;
-     			enableOffloadCmd = true;
-     		};
-     		# Make sure to use the correct Bus ID values for your system!
-     		# You can find them by running `lshw -c display`.
-     		# pci@0000:00:02.0 --> PCI:0:0:2
-     		intelBusId = "PCI:0:0:2";
-     		nvidiaBusId = "PCI:0:1:0";
-     	};
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
+      # Make sure to use the correct Bus ID values for your system!
+      # You can find them by running `lshw -c display`.
+      # pci@0000:00:02.0 --> PCI:0:0:2
+      intelBusId = "PCI:0:0:2";
+      nvidiaBusId = "PCI:0:1:0";
+    };
     # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
     powerManagement.enable = false;
     # Fine-grained power management. Turns off GPU when not in use.
@@ -50,7 +50,7 @@
     open = true;
 
     # Enable the Nvidia settings menu,
-	# accessible via `nvidia-settings`.
+    # accessible via `nvidia-settings`.
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.

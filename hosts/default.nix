@@ -12,11 +12,11 @@
 { lib, inputs, nixpkgs, nixpkgs-unstable, home-manager, nur, hyprland, plasma-manager, vars, ... }:
 
 let
-  system = "x86_64-linux";                                  # System Architecture
+  system = "x86_64-linux"; # System Architecture
 
   pkgs = import nixpkgs {
     inherit system;
-    config.allowUnfree = true;                              # Allow Proprietary Software
+    config.allowUnfree = true; # Allow Proprietary Software
   };
 
   unstable = import nixpkgs-unstable {
@@ -27,7 +27,8 @@ let
   lib = nixpkgs.lib;
 in
 {
-  vm = lib.nixosSystem {                                    # VM Profile
+  vm = lib.nixosSystem {
+    # VM Profile
     inherit system;
     specialArgs = {
       inherit inputs system unstable hyprland vars;
@@ -42,22 +43,24 @@ in
       ./vm
       ./configuration.nix
 
-      home-manager.nixosModules.home-manager {
+      home-manager.nixosModules.home-manager
+      {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
       }
     ];
   };
 
-  libelula = lib.nixosSystem {                               #
+  libelula = lib.nixosSystem {
+    #
     inherit system;
     specialArgs = {
       inherit inputs system unstable hyprland vars;
-#      inherit inputs system unstable vars;
+      #      inherit inputs system unstable vars;
       host = {
         hostName = "libelula";
         mainMonitor = "eDP-1";
-        secondMonitor = "HDMI-A-1";#"HDMI-1-1";
+        secondMonitor = "HDMI-A-1"; #"HDMI-1-1";
         thirdMonitor = "";
       };
     };
@@ -66,7 +69,8 @@ in
       ./libelula
       ./configuration.nix
 
-      home-manager.nixosModules.home-manager {
+      home-manager.nixosModules.home-manager
+      {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.users.${vars.user}.imports = [
@@ -74,7 +78,8 @@ in
       }
     ];
   };
-  oldie = lib.nixosSystem {                               #
+  oldie = lib.nixosSystem {
+    #
     inherit system;
     specialArgs = {
       inherit inputs system unstable hyprland vars;
@@ -88,13 +93,15 @@ in
     modules = [
       ./oldie
       ./configuration.nix
-      home-manager.nixosModules.home-manager {
+      home-manager.nixosModules.home-manager
+      {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
       }
     ];
   };
-  hypr-oldie = lib.nixosSystem {                               #
+  hypr-oldie = lib.nixosSystem {
+    #
     inherit system;
     specialArgs = {
       inherit inputs system unstable hyprland vars;
@@ -108,13 +115,15 @@ in
     modules = [
       ./hypr-oldie
       ./configuration.nix
-      home-manager.nixosModules.home-manager {
+      home-manager.nixosModules.home-manager
+      {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
       }
     ];
   };
-  onsite-gnome = lib.nixosSystem {                               #
+  onsite-gnome = lib.nixosSystem {
+    #
     inherit system;
     specialArgs = {
       inherit inputs system unstable hyprland vars;
@@ -128,7 +137,8 @@ in
     modules = [
       ./onsite-gnome
       ./configuration.nix
-      home-manager.nixosModules.home-manager {
+      home-manager.nixosModules.home-manager
+      {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
       }

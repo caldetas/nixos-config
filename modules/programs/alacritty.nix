@@ -15,10 +15,10 @@
             bold = { style = "Regular"; };
             size = 11;
           };
-#          offset = {
-#            x = -1;
-#            y = 0;
-#          };
+          #          offset = {
+          #            x = -1;
+          #            y = 0;
+          #          };
         };
       };
     };

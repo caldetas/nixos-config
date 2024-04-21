@@ -17,9 +17,10 @@
       enableCompletion = true;
       histSize = 100000;
 
-      ohMyZsh = {                               # Plug-ins
+      ohMyZsh = {
+        # Plug-ins
         enable = true;
-        plugins = [ "git" "thefuck"];
+        plugins = [ "git" "thefuck" ];
       };
 
       shellInit = ''
@@ -31,7 +32,7 @@
 
         #eval "$(direnv hook zsh)"
         neofetch
-      '';                                       # Theming
+      ''; # Theming
     };
   };
 }

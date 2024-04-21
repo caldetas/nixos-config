@@ -63,10 +63,10 @@
     };
   };
   programs.dconf.enable = true;
-#            xdg.configFile =  {
-#              #https://discourse.nixos.org/t/setting-nautiilus-gtk-theme/38958/5
-#              "gtk-4.0/assets".source = "/nix/store/i0ccfby0kx0md6jbbpkklifzdxmm0f4i-orchis-theme-2023-10-20/share/themes/Orchis-Dark-Compact/gtk-4.0/assets";
-#              "gtk-4.0/gtk.css".source = "/nix/store/i0ccfby0kx0md6jbbpkklifzdxmm0f4i-orchis-theme-2023-10-20/share/themes/Orchis-Dark-Compact/gtk-4.0/gtk.css";
-#              "gtk-4.0/gtk-dark.css".source = "/nix/store/i0ccfby0kx0md6jbbpkklifzdxmm0f4i-orchis-theme-2023-10-20/share/themes/Orchis-Dark-Compact/gtk-4.0/gtk-dark.css";
-#            };
+  #            xdg.configFile =  {
+  #              #https://discourse.nixos.org/t/setting-nautiilus-gtk-theme/38958/5
+  #              "gtk-4.0/assets".source = "/nix/store/i0ccfby0kx0md6jbbpkklifzdxmm0f4i-orchis-theme-2023-10-20/share/themes/Orchis-Dark-Compact/gtk-4.0/assets";
+  #              "gtk-4.0/gtk.css".source = "/nix/store/i0ccfby0kx0md6jbbpkklifzdxmm0f4i-orchis-theme-2023-10-20/share/themes/Orchis-Dark-Compact/gtk-4.0/gtk.css";
+  #              "gtk-4.0/gtk-dark.css".source = "/nix/store/i0ccfby0kx0md6jbbpkklifzdxmm0f4i-orchis-theme-2023-10-20/share/themes/Orchis-Dark-Compact/gtk-4.0/gtk-dark.css";
+  #            };
 }

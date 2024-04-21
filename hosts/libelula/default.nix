@@ -18,25 +18,26 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./nvidia.nix
       ../../modules/desktops/virtualisation/docker.nix
     ] ++
-    ( import ../../modules/desktops ++
-                      import ../../modules/editors ++
-                      import ../../modules/hardware ++
-                      import ../../modules/programs ++
-                      import ../../modules/services ++
-                      import ../../modules/shell ++
-                      import ../../modules/theming );
+    (import ../../modules/desktops ++
+    import ../../modules/editors ++
+    import ../../modules/hardware ++
+    import ../../modules/programs ++
+    import ../../modules/services ++
+    import ../../modules/shell ++
+    import ../../modules/theming);
 
   # Bootloader.
   # boot.loader.systemd-boot.enable = true;
   # boot.loader.efi.canTouchEfiVariables = true;
   # boot.loader.grub.useOSProber = true;
 
-#  boot.kernelParams = [ "psmouse.synaptics_intertouch=0" ];
+  #  boot.kernelParams = [ "psmouse.synaptics_intertouch=0" ];
   boot.loader = {
     grub = {
       enable = true;
@@ -45,7 +46,7 @@
       device = "nodev";
       useOSProber = true;
       configurationLimit = 20;
-      default=0;
+      default = 0;
     };
     efi = {
       canTouchEfiVariables = true;
@@ -53,7 +54,7 @@
     };
   };
 
-#  networking.hostName = hostname; # Define your hostname.
+  #  networking.hostName = hostname; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
 
@@ -69,29 +70,29 @@
   networking.networkmanager.enableStrongSwan = true;
 
   # Enable the X11 windowing system. (gnome?)
-#  services.xserver.enable = true;
+  #  services.xserver.enable = true;
 
 
 
 
   # Enable the GNOME Desktop Environment.
-#  gnome.enable = true;
+  #  gnome.enable = true;
   hyprland.enable = true;
 
   #VPN
   surfshark.enable = true;
 
-#  environment.systemPackages = with unstable; [
-#  mesa #elden ring
-#  directx-headers # elden ring
-#  directx-shader-compiler #elden ring
-#  ];
+  #  environment.systemPackages = with unstable; [
+  #  mesa #elden ring
+  #  directx-headers # elden ring
+  #  directx-shader-compiler #elden ring
+  #  ];
 
-environment.interactiveShellInit = ''
-  alias commit='echo cd ${vars.location} \&\& git pull \&\& sudo systemctl unmask  -- -.mount \&\& sudo systemctl daemon-reload \&\& sudo nixos-rebuild switch --flake ${vars.location}#libelula --show-trace --update-input nixpkgs --commit-lock-file && cd ${vars.location} && git pull && sudo systemctl unmask  -- -.mount && sudo systemctl daemon-reload && sudo nixos-rebuild switch --flake ${vars.location}#${host.hostName} --show-trace --update-input nixpkgs --commit-lock-file'
-  alias update='echo cd ${vars.location} \&\& git pull \&\& sudo systemctl unmask  -- -.mount \&\& sudo systemctl daemon-reload \&\& sudo nixos-rebuild switch --flake ${vars.location}#libelula --show-trace --update-input nixpkgs && cd ${vars.location} && git pull && sudo systemctl unmask  -- -.mount && sudo systemctl daemon-reload && sudo nixos-rebuild switch --flake ${vars.location}#${host.hostName} --show-trace --update-input nixpkgs'
-  alias rebuild='echo cd ${vars.location} \&\& git pull \&\& sudo systemctl unmask  -- -.mount \&\& sudo systemctl daemon-reload \&\& sudo nixos-rebuild switch --flake ${vars.location}#libelula --show-trace && cd ${vars.location} && git pull && sudo systemctl unmask  -- -.mount && sudo systemctl daemon-reload && sudo nixos-rebuild switch --flake ${vars.location}#${host.hostName} --show-trace'
-  alias remminaResetRDP='rm -fr ~/.config/remmina && rm -f ~/.config/freerdp/known_hosts2'
+  environment.interactiveShellInit = ''
+    alias commit='echo cd ${vars.location} \&\& git pull \&\& sudo systemctl unmask  -- -.mount \&\& sudo systemctl daemon-reload \&\& sudo nixos-rebuild switch --flake ${vars.location}#libelula --show-trace --update-input nixpkgs --commit-lock-file && cd ${vars.location} && git pull && sudo systemctl unmask  -- -.mount && sudo systemctl daemon-reload && sudo nixos-rebuild switch --flake ${vars.location}#${host.hostName} --show-trace --update-input nixpkgs --commit-lock-file'
+    alias update='echo cd ${vars.location} \&\& git pull \&\& sudo systemctl unmask  -- -.mount \&\& sudo systemctl daemon-reload \&\& sudo nixos-rebuild switch --flake ${vars.location}#libelula --show-trace --update-input nixpkgs && cd ${vars.location} && git pull && sudo systemctl unmask  -- -.mount && sudo systemctl daemon-reload && sudo nixos-rebuild switch --flake ${vars.location}#${host.hostName} --show-trace --update-input nixpkgs'
+    alias rebuild='echo cd ${vars.location} \&\& git pull \&\& sudo systemctl unmask  -- -.mount \&\& sudo systemctl daemon-reload \&\& sudo nixos-rebuild switch --flake ${vars.location}#libelula --show-trace && cd ${vars.location} && git pull && sudo systemctl unmask  -- -.mount && sudo systemctl daemon-reload && sudo nixos-rebuild switch --flake ${vars.location}#${host.hostName} --show-trace'
+    alias remminaResetRDP='rm -fr ~/.config/remmina && rm -f ~/.config/freerdp/known_hosts2'
   '';
 }
 

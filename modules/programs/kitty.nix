@@ -4,7 +4,7 @@
 
 { pkgs, vars, ... }:
 let
-  colors = import ../theming/colors.nix;                  # Import Colors
+  colors = import ../theming/colors.nix; # Import Colors
 in
 {
   home-manager.users.${vars.user} = {

@@ -2,12 +2,12 @@
 #  Bar
 #
 
-{ config, lib, host, system, pkgs, vars, home, ...}:
+{ config, lib, host, system, pkgs, vars, home, ... }:
 
 #{ config, lib, system, pkgs, unstable, hyprland, vars, host, ... }:
 let
 
-    swaylockConf=''
+  swaylockConf = ''
     ignore-empty-password
     daemonize
     indicator
@@ -42,8 +42,8 @@ let
     inside-wrong-color=#ee99a0
     ring-wrong-color=#ed8796
     text-wrong-color=#1e2030
-    '';
-    in
+  '';
+in
 with lib;
 with host;
 {
@@ -56,10 +56,10 @@ with host;
     };
   };
   config = lib.mkIf (config.swaylock.enable) {
-  home-manager.users.${vars.user} = {
-          home.file = {
-            "swaylock/config".text = swaylockConf;
-            };
-       };
+    home-manager.users.${vars.user} = {
+      home.file = {
+        "swaylock/config".text = swaylockConf;
+      };
+    };
   };
 }

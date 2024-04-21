@@ -16,29 +16,31 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../modules/desktops/virtualisation/docker.nix
     ] ++
-    ( import ../../modules/desktops ++
-                      import ../../modules/editors ++
-                      import ../../modules/hardware ++
-                      import ../../modules/programs ++
-                      import ../../modules/services ++
-                      import ../../modules/shell ++
-                      import ../../modules/theming
-                      );
+    (import ../../modules/desktops ++
+    import ../../modules/editors ++
+    import ../../modules/hardware ++
+    import ../../modules/programs ++
+    import ../../modules/services ++
+    import ../../modules/shell ++
+    import ../../modules/theming
+    );
 
-#  users.users.${vars.user} = {              # System User
-#    extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" ];
-#  };
-  users.users.nixosvmtest.isSystemUser = true ;
+  #  users.users.${vars.user} = {              # System User
+  #    extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" ];
+  #  };
+  users.users.nixosvmtest.isSystemUser = true;
   users.users.nixosvmtest.initialPassword = "test";
   users.users.${vars.user}.initialPassword = "test";
   users.users.nixosvmtest.group = "nixosvmtest";
-  users.groups.nixosvmtest = {};
+  users.groups.nixosvmtest = { };
 
-  boot = {                                      # Boot Options
+  boot = {
+    # Boot Options
     loader = {
       grub = {
         enable = true;
@@ -48,12 +50,12 @@
     };
     kernelPackages = pkgs.linuxPackages_latest;
   };
-#hyprland.enable = true;
-#  bspwm.enable = true;                          # Window Manager
-#  security.rtkit.enable = true;
-#gnome.enable = true;                          # Window Manager
-hyprland.enable = true;   #did not work on vm                      # Window Manager
-#  laptop.enable = true;                          # Window Manager
+  #hyprland.enable = true;
+  #  bspwm.enable = true;                          # Window Manager
+  #  security.rtkit.enable = true;
+  #gnome.enable = true;                          # Window Manager
+  hyprland.enable = true; #did not work on vm                      # Window Manager
+  #  laptop.enable = true;                          # Window Manager
 
   # Enable sound with pipewire.
   sound.enable = true;
@@ -73,19 +75,20 @@ hyprland.enable = true;   #did not work on vm                      # Window Mana
     # media-session.enable = true;
   };
 
-        virtualisation.vmVariant = {
-          # following configuration is added only when building VM with build-vm
-          virtualisation = {
-            memorySize =  16384; # memory.
-            cores = 1;
-          };
-      };
+  virtualisation.vmVariant = {
+    # following configuration is added only when building VM with build-vm
+    virtualisation = {
+      memorySize = 16384; # memory.
+      cores = 1;
+    };
+  };
 
   environment = {
-    systemPackages = with pkgs; [               # System Wide Packages
-      hello             # Test Package
-      lolcat            # Test Package
-      cowsay            # Test Package
+    systemPackages = with pkgs; [
+      # System Wide Packages
+      hello # Test Package
+      lolcat # Test Package
+      cowsay # Test Package
     ];
   };
 
@@ -95,8 +98,8 @@ hyprland.enable = true;   #did not work on vm                      # Window Mana
       resolutions = [
         { x = 1920; y = 1080; }
         { x = 1920; y = 1200; }
-#        { x = 1600; y = 900; }
-#        { x = 3840; y = 2160; }
+        #        { x = 1600; y = 900; }
+        #        { x = 3840; y = 2160; }
       ];
     };
   };

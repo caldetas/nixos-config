@@ -21,31 +21,32 @@
   boot.initrd.availableKernelModules = [ "ata_piix" "xhci_pci" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.blacklistedKernelModules = [ "nouveau" "nvidia" ];
-#  boot.kernelParams = [ "i915.enable_guc=2" ];
+  #  boot.kernelParams = [ "i915.enable_guc=2" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/vda";
+    {
+      device = "/dev/vda";
       fsType = "ext4";
     };
 
   swapDevices = [ ];
 
-    hardware.opengl = {
-      enable = true;
-      driSupport = true;
-      extraPackages = with pkgs; [
-        intel-compute-runtime
-        intel-media-driver # LIBVA_DRIVER_NAME=iHD
-        vaapiIntel         # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
-        vaapiVdpau
-        libvdpau-va-gl
-      ];
-    };
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    extraPackages = with pkgs; [
+      intel-compute-runtime
+      intel-media-driver # LIBVA_DRIVER_NAME=iHD
+      vaapiIntel # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
+      vaapiVdpau
+      libvdpau-va-gl
+    ];
+  };
 
   networking = with host; {
-    useDHCP = false;                        # Deprecated
+    useDHCP = false; # Deprecated
     hostName = hostName;
     interfaces = {
       enp0s3.useDHCP = true;

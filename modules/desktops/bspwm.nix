@@ -15,7 +15,7 @@ let
       "${pkgs.xorg.xrandr}/bin/xrandr --output ${mainMonitor} --mode 1920x1080 --pos 0x0 --rotate normal"
     else if hostName == "libelula" || hostName == "oldie" then
       "${pkgs.xorg.xrandr}/bin/xrandr --output ${mainMonitor} --mode 1920x1080 --pos 0x0 --rotate normal"
-#    else "${pkgs.xorg.xrandr}/bin/xrandr --mode 1920x1080 --pos 0x0 --rotate normal";
+    #    else "${pkgs.xorg.xrandr}/bin/xrandr --mode 1920x1080 --pos 0x0 --rotate normal";
     else false;
 
   extra = ''
@@ -44,19 +44,19 @@ let
   '';
 
   extraConf = builtins.replaceStrings [ "WORKSPACES" ]
-  [
-    (if hostName == "beelink" then ''
-      bspc monitor ${mainMonitor} -d 1 2 3 4 5
-      bspc monitor ${secondMonitor} -d 6 7 8 9 0
-      bspc wm -O ${mainMonitor} ${secondMonitor}
-      polybar sec &
-    ''
-    else if hostName == "oldie" || hostName == "libelula" || hostName == "laptop" || hostName == "vm" || hostName == "caldetas" then ''
-      bspc monitor ${toString mainMonitor} -d 1 2 3 4 5
-    ''
-    else false)
-  ]
-  "${extra}";
+    [
+      (if hostName == "beelink" then ''
+        bspc monitor ${mainMonitor} -d 1 2 3 4 5
+        bspc monitor ${secondMonitor} -d 6 7 8 9 0
+        bspc wm -O ${mainMonitor} ${secondMonitor}
+        polybar sec &
+      ''
+      else if hostName == "oldie" || hostName == "libelula" || hostName == "laptop" || hostName == "vm" || hostName == "caldetas" then ''
+        bspc monitor ${toString mainMonitor} -d 1 2 3 4 5
+      ''
+      else false)
+    ]
+    "${extra}";
 in
 {
   options = {
@@ -69,137 +69,142 @@ in
   };
 
   config = mkIf (config.bspwm.enable)
-  {
-    x11wm.enable = true;                            # X11 Window Manager
+    {
+      x11wm.enable = true; # X11 Window Manager
 
-    services = {
-      xserver = {
-        enable = true;
-        layout = "ch";
-        xkbOptions = "eurosign:e";
-        libinput = {
+      services = {
+        xserver = {
           enable = true;
-          touchpad = {
-            tapping = true;
-            scrollMethod = "twofinger";
-            naturalScrolling = true;
-            accelProfile = "adaptive";
-            disableWhileTyping = true;
-          };
-        };
-        displayManager = {                          # Display Manager
-#        gdm = {enable = true;};
-          lightdm = {
+          layout = "ch";
+          xkbOptions = "eurosign:e";
+          libinput = {
             enable = true;
-            background = pkgs.nixos-artwork.wallpapers.nineish-dark-gray.gnomeFilePath;
-            greeters = {
-              gtk = {
-                theme = {
-                  name = "Dracula";
-                  package = pkgs.dracula-theme;
-                };
-                cursorTheme = {
-                  name = "Dracula-cursors";
-                  package = pkgs.dracula-theme;
-                  size = 16;
+            touchpad = {
+              tapping = true;
+              scrollMethod = "twofinger";
+              naturalScrolling = true;
+              accelProfile = "adaptive";
+              disableWhileTyping = true;
+            };
+          };
+          displayManager = {
+            # Display Manager
+            #        gdm = {enable = true;};
+            lightdm = {
+              enable = true;
+              background = pkgs.nixos-artwork.wallpapers.nineish-dark-gray.gnomeFilePath;
+              greeters = {
+                gtk = {
+                  theme = {
+                    name = "Dracula";
+                    package = pkgs.dracula-theme;
+                  };
+                  cursorTheme = {
+                    name = "Dracula-cursors";
+                    package = pkgs.dracula-theme;
+                    size = 16;
+                  };
                 };
               };
             };
+            defaultSession = "none+bspwm";
           };
-          defaultSession = "none+bspwm";
-        };
-        windowManager= {
-          bspwm = {                                 # Window Manager
-            enable = true;
-          };
-        };
-
-        displayManager.sessionCommands = monitor;
-
-        serverFlagsSection = ''
-          Option "BlankTime" "0"
-          Option "StandbyTime" "0"
-          Option "SuspendTime" "0"
-          Option "OffTime" "0"
-        '';                                         # Disable Sleep
-
-        resolutions = [
-          { x = 1920; y = 1080; }
-#          { x = 1600; y = 900; }
-#          { x = 3840; y = 2160; }
-        ];
-      };
-    };
-
-    programs.zsh.enable = true;                     # Required for Default User
-
-    environment.systemPackages = with pkgs; [       # System-Wide Packages
-      xclip             # Clipboard
-      xorg.xev          # Event Viewer
-      xorg.xkill        # Process Killer
-      xorg.xrandr       # Monitor Settings
-      xterm             # Terminal
-    ];
-
-    home-manager.users.${vars.user} = {
-      xsession = {
-        enable = true;
-        numlock.enable = true;
-        windowManager = {
-          bspwm = {
-            enable = true;
-            monitors = if hostName == "beelink" then {
-              ${mainMonitor} = [ "1" "2" "3" "4" "5" ];
-              ${secondMonitor} = [ "6" "7" "8" "9" "0" ];
-            } else { ${mainMonitor} = [ "1" "2" "3" "4" "5" ];};
-            rules = {                               # Window Rules (xprop)
-              "Emacs" = {
-                desktop = "3";
-                follow = true;
-                state = "tiled";
-              };
-              ".blueman-manager-wrapped" = {
-                state = "floating";
-                sticky = true;
-              };
-              "libreoffice" = {
-                desktop = "3";
-                follow = true;
-              };
-              "Lutris" = {
-                desktop = "5";
-                follow = true;
-              };
-              "Pavucontrol" = {
-                state = "floating";
-                sticky = true;
-              };
-              "Pcmanfm" = {
-                state = "floating";
-              };
-              "plexmediaplayer" = {
-                desktop = "4";
-                follow= true;
-                state = "fullscreen";
-              };
-              "*:*:Picture in picture" = {
-                state = "floating";
-                sticky = true;
-              };
-              "*:*:Picture-in-Picture" = {
-                state = "floating";
-                sticky = true;
-              };
-              "Steam" = {
-                desktop = "5";
-              };
+          windowManager = {
+            bspwm = {
+              # Window Manager
+              enable = true;
             };
-            extraConfig =  ''
-                          		logind-check-graphical=true
-                          	'';
+          };
+
+          displayManager.sessionCommands = monitor;
+
+          serverFlagsSection = ''
+            Option "BlankTime" "0"
+            Option "StandbyTime" "0"
+            Option "SuspendTime" "0"
+            Option "OffTime" "0"
+          ''; # Disable Sleep
+
+          resolutions = [
+            { x = 1920; y = 1080; }
+            #          { x = 1600; y = 900; }
+            #          { x = 3840; y = 2160; }
+          ];
+        };
+      };
+
+      programs.zsh.enable = true; # Required for Default User
+
+      environment.systemPackages = with pkgs; [
+        # System-Wide Packages
+        xclip # Clipboard
+        xorg.xev # Event Viewer
+        xorg.xkill # Process Killer
+        xorg.xrandr # Monitor Settings
+        xterm # Terminal
+      ];
+
+      home-manager.users.${vars.user} = {
+        xsession = {
+          enable = true;
+          numlock.enable = true;
+          windowManager = {
+            bspwm = {
+              enable = true;
+              monitors =
+                if hostName == "beelink" then {
+                  ${mainMonitor} = [ "1" "2" "3" "4" "5" ];
+                  ${secondMonitor} = [ "6" "7" "8" "9" "0" ];
+                } else { ${mainMonitor} = [ "1" "2" "3" "4" "5" ]; };
+              rules = {
+                # Window Rules (xprop)
+                "Emacs" = {
+                  desktop = "3";
+                  follow = true;
+                  state = "tiled";
+                };
+                ".blueman-manager-wrapped" = {
+                  state = "floating";
+                  sticky = true;
+                };
+                "libreoffice" = {
+                  desktop = "3";
+                  follow = true;
+                };
+                "Lutris" = {
+                  desktop = "5";
+                  follow = true;
+                };
+                "Pavucontrol" = {
+                  state = "floating";
+                  sticky = true;
+                };
+                "Pcmanfm" = {
+                  state = "floating";
+                };
+                "plexmediaplayer" = {
+                  desktop = "4";
+                  follow = true;
+                  state = "fullscreen";
+                };
+                "*:*:Picture in picture" = {
+                  state = "floating";
+                  sticky = true;
+                };
+                "*:*:Picture-in-Picture" = {
+                  state = "floating";
+                  sticky = true;
+                };
+                "Steam" = {
+                  desktop = "5";
+                };
+              };
+              extraConfig = ''
+                		logind-check-graphical=true
+                	'';
+            };
           };
         };
       };
     };
-  };
 }

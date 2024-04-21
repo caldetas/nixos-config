@@ -12,8 +12,8 @@
 {
   home = {
     packages = [
-      (import nixgl { inherit pkgs; }).nixGLIntel       # OpenGL for GUI apps
-                                     #.nixVulkanIntel
+      (import nixgl { inherit pkgs; }).nixGLIntel # OpenGL for GUI apps
+      #.nixVulkanIntel
       pkgs.hello
     ];
 
@@ -21,8 +21,10 @@
     #  alias alacritty="nixGLIntel ${pkgs.alacritty}/bin/alacritty"
     #'';                                                # Aliases for package using openGL (nixGL). home.shellAliases does not work
 
-    activation = {                                      # Rebuild Script
-      linkDesktopApplications = {                       # Add Packages To System Menu
+    activation = {
+      # Rebuild Script
+      linkDesktopApplications = {
+        # Add Packages To System Menu
         after = [ "writeBoundary" "createXdgUserDirectories" ];
         before = [ ];
         data = "sudo /usr/bin/update-desktop-database"; # Updates Database
@@ -30,16 +32,18 @@
     };
   };
 
-  xdg = {                                               # Add Nix Packages to XDG_DATA_DIRS
+  xdg = {
+    # Add Nix Packages to XDG_DATA_DIRS
     enable = true;
     systemDirs.data = [ "/home/${vars.user}/.nix-profile/share" ];
   };
 
-  nix = {                                               # Nix Package Manager Settings
-    settings ={
+  nix = {
+    # Nix Package Manager Settings
+    settings = {
       auto-optimise-store = true;
     };
-    package = pkgs.nixFlakes;                           # Enable Flakes
+    package = pkgs.nixFlakes; # Enable Flakes
     registry.nixpkgs.flake = inputs.nixpkgs;
     extraOptions = ''
       experimental-features = nix-command flakes
@@ -47,5 +51,5 @@
       keep-derivations      = true
     '';
   };
-  nixpkgs.config.allowUnfree = true;                    # Allow Proprietary Software.
+  nixpkgs.config.allowUnfree = true; # Allow Proprietary Software.
 }

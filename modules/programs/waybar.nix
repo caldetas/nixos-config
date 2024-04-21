@@ -2,7 +2,7 @@
 #  Bar
 #
 
-{ config, lib, pkgs, vars, host, ...}:
+{ config, lib, pkgs, vars, host, ... }:
 
 with host;
 let
@@ -19,23 +19,48 @@ let
     ];
   modules-left = with config.programs;
     if hyprland.enable == true then [
-      "custom/menu" "hyprland/workspaces"
+      "custom/menu"
+      "hyprland/workspaces"
     ] else if sway.enable == true then [
-      "sway/workspaces" "sway/window" "sway/mode"
-    ] else [];
+      "sway/workspaces"
+      "sway/window"
+      "sway/mode"
+    ] else [ ];
 
   modules-right =
     if hostName == "beelink" || hostName == "desktop" then [
-      "custom/ds4" "custom/mouse" "custom/kb" "custom/pad" "network" "cpu" "memory" "custom/pad" "pulseaudio" "custom/sink" "custom/pad" "clock" "tray"
+      "custom/ds4"
+      "custom/mouse"
+      "custom/kb"
+      "custom/pad"
+      "network"
+      "cpu"
+      "memory"
+      "custom/pad"
+      "pulseaudio"
+      "custom/sink"
+      "custom/pad"
+      "clock"
+      "tray"
     ] else [
-      "cpu" "memory" "custom/pad" "battery" "custom/pad" "backlight" "custom/pad" "pulseaudio" "custom/pad" "clock" "tray"
+      "cpu"
+      "memory"
+      "custom/pad"
+      "battery"
+      "custom/pad"
+      "backlight"
+      "custom/pad"
+      "pulseaudio"
+      "custom/pad"
+      "clock"
+      "tray"
     ];
 
-  sinkBuiltIn="Built-in Audio Analog Stereo";
-  sinkVideocard=''Ellesmere HDMI Audio \[Radeon RX 470\/480 \/ 570\/580\/590\] Digital Stereo \(HDMI 3\)'';
-  sinkBluetooth="S10 Bluetooth Speaker";
-  headset=sinkBuiltIn;
-  speaker=sinkBluetooth;
+  sinkBuiltIn = "Built-in Audio Analog Stereo";
+  sinkVideocard = ''Ellesmere HDMI Audio \[Radeon RX 470\/480 \/ 570\/580\/590\] Digital Stereo \(HDMI 3\)'';
+  sinkBluetooth = "S10 Bluetooth Speaker";
+  headset = sinkBuiltIn;
+  speaker = sinkBluetooth;
 in
 {
   config = lib.mkIf (config.wlwm.enable) {
@@ -47,7 +72,7 @@ in
       programs.waybar = {
         enable = true;
         package = pkgs.waybar;
-        systemd ={
+        systemd = {
           enable = true;
           target = "sway-session.target";
         };
@@ -154,19 +179,19 @@ in
             "sway/workspaces" = {
               format = "<span font='12'>{icon}</span>";
               format-icons = {
-                "1"="";
-                "2"="";
-                "3"="";
-                "4"="";
-                "5"="";
+                "1" = "";
+                "2" = "";
+                "3" = "";
+                "4" = "";
+                "5" = "";
               };
               all-outputs = true;
               persistent_workspaces = {
-                 "1" = [];
-                 "2" = [];
-                 "3" = [];
-                 "4" = [];
-                 "5" = [];
+                "1" = [ ];
+                "2" = [ ];
+                "3" = [ ];
+                "4" = [ ];
+                "5" = [ ];
               };
             };
             "wlr/workspaces" = {
@@ -196,8 +221,8 @@ in
             };
             backlight = {
               device = "intel_backlight";
-              format= "{percent}% <span font='11'>{icon}</span>";
-              format-icons = ["" ""];
+              format = "{percent}% <span font='11'>{icon}</span>";
+              format-icons = [ "" "" ];
               on-scroll-down = "${pkgs.light}/bin/light -U 5";
               on-scroll-up = "${pkgs.light}/bin/light -A 5";
             };
@@ -209,7 +234,7 @@ in
               };
               format = "{capacity}% <span font='11'>{icon}</span>";
               format-charging = "{capacity}% <span font='11'></span>";
-              format-icons = ["" "" "" "" ""];
+              format-icons = [ "" "" "" "" "" ];
               max-length = 25;
             };
             network = {
