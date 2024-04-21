@@ -15,9 +15,8 @@
   ./eww.nix
   ./flatpak.nix
   ./kitty.nix
-#  ./obs.nix
   ./rofi.nix
+  ./swaylock-effects.nix
   ./waybar.nix
   ./wofi.nix
-  ./games.nix
 ]

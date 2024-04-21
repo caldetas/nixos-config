@@ -204,73 +204,7 @@ with host;
            '';
     in
     let
-swaylockConf=''
-ignore-empty-password
-daemonize
-indicator
-clock
-screenshots
 
-effect-blur=11x11
-effect-compose=1110,-170;40%x-1;${vars.location}/modules/theming/rani.png
-effect-compose=120,-100;${vars.location}/modules/theming/warrior.png
-font=JetBrains Mono
-indicator-radius=80
-indicator-thickness=8
-timestr=%I:%M %p
-datestr=%F
-
-inside-color=#181926
-ring-color=#8bd5ca
-key-hl-color=#a6da95
-text-color=#cad3f5
-layout-text-color=#cad3f5
-layout-bg-color=#181926
-text-caps-lock-color=#cad3f5
-
-inside-clear-color=#f4dbd6
-ring-clear-color=#f0c6c6
-text-clear-color=#1e2030
-
-inside-ver-color=#91d7e3
-ring-ver-color=#7dc4e4
-text-ver-color=#1e2030
-
-inside-wrong-color=#ee99a0
-ring-wrong-color=#ed8796
-text-wrong-color=#1e2030
-'';
-macchiato= ''
-$rosewater = 0xfff4dbd6
-$flamingo  = 0xfff0c6c6
-$pink      = 0xfff5bde6
-$mauve     = 0xffc6a0f6
-$red       = 0xffed8796
-$maroon    = 0xffee99a0
-$peach     = 0xfff5a97f
-$green     = 0xffa6da95
-$teal      = 0xff8bd5ca
-$sky       = 0xff91d7e3
-$sapphire  = 0xff7dc4e4
-$blue      = 0xff8aadf4
-$lavender  = 0xffb7bdf8
-
-$text      = 0xffcad3f5
-$subtext1  = 0xffb8c0e0
-$subtext0  = 0xffa5adcb
-
-$overlay2  = 0xff939ab7s
-$overlay1  = 0xff8087a2
-$overlay0  = 0xff6e738d
-
-$surface2  = 0xff5b6078
-$surface1  = 0xff494d64
-$surface0  = 0xff363a4f
-
-$base      = 0xff24273a
-$mantle    = 0xff1e2030
-$crust     = 0xff181926
-'';
 
 hyprlandConf = ''
         ${workspaces}
@@ -495,49 +429,7 @@ bind = SUPER, ESCAPE, exec, wlogout
       xdg.configFile."hypr/hyprland.conf".text = hyprlandConf;
 #      xdg.configFile."hypr/macchiato.conf".text = macchiato;
 #
-      xdg.configFile."swaylock/config".text = swaylockConf;
-      programs.swaylock.settings = {
-#ignore-empty-password
-#daemonize
-#indicator
-#clock
-#screenshots
-#          ignore-empty-password = "true";
-#          daemonize = "true";
-#          indicator = "true";
-#          clock = "true";
-#          screenshots = "true";
-#
-#          effect-blur = "11x11";
-#          effect-compose = "1110,-170;40%x-1;${vars.location}/hosts/hypr-oldie/home-configs-to-copy/.config/swaylock/rani.png";
-#          effect-compose = "120,-100;${vars.location}/hosts/hypr-oldie/home-configs-to-copy/.config/swaylock/warrior.png";
-#          effect-compose = "120,-100;${vars.location}/hosts/hypr-oldie/home-configs-to-copy/.config/swaylock/warrior.png";
-#          font = "JetBrains Mono";
-          indicator-radius = 50;
-          indicator-thickness = 1;
-#          timestr = "%I:%M %p";
-#          datestr = "%F";
-#
-#          inside-color = "181926";
-#          ring-color = "8bd5ca";
-#          key-hl-color = "a6da95";
-#          text-color = "cad3f5";
-#          layout-text-color = "cad3f5";
-#          layout-bg-color = "181926";
-#          text-caps-lock-color = "cad3f5";
-#
-#          inside-clear-color = "f4dbd6";
-#          ring-clear-color = "f0c6c6";
-#          text-clear-color = "1e2030";
-#
-#          inside-ver-color = "91d7e3";
-#          ring-ver-color = "7dc4e4";
-#          text-ver-color = "1e2030";
-#
-#          inside-wrong-color = "ee99a0";
-#          ring-wrong-color = "ed8796";
-#          text-wrong-color = "1e2030";
-      };
+
       home.file = {
         ".config/hypr/script/clamshell.sh" = {
           text = ''

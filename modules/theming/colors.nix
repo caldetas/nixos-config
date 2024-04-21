@@ -89,24 +89,24 @@
     };
 
     doom = {
-      scheme    = "Doom One Dark";
-      black     = "000000";
-      red       = "ff6c6b";
-      orange    = "da8548";
-      yellow    = "ecbe7b";
-      green     = "95be65";
-      teal      = "4db5bd";
-      blue      = "6eaafb";
+      scheme = "Doom One Dark";
+      black = "000000";
+      red = "ff6c6b";
+      orange = "da8548";
+      yellow = "ecbe7b";
+      green = "95be65";
+      teal = "4db5bd";
+      blue = "6eaafb";
       dark-blue = "2257a0";
-      magenta   = "c678dd";
-      violet    = "a9a1e1";
-      cyan      = "6cdcf7";
+      magenta = "c678dd";
+      violet = "a9a1e1";
+      cyan = "6cdcf7";
       dark-cyan = "5699af";
-      emphasis  = "50536b";
-      text      = "dfdfdf";
-      text-alt  = "b2b2b2";
-      fg        = "abb2bf";
-      bg        = "282c34";
+      emphasis = "50536b";
+      text = "dfdfdf";
+      text-alt = "b2b2b2";
+      fg = "abb2bf";
+      bg = "282c34";
     };
 
     dracula = {
@@ -128,5 +128,37 @@
       base0E = "b45bcf";
       base0F = "00f769";
     };
+
+    macchiato = ''
+      $rosewater = 0xfff4dbd6
+      $flamingo  = 0xfff0c6c6
+      $pink      = 0xfff5bde6
+      $mauve     = 0xffc6a0f6
+      $red       = 0xffed8796
+      $maroon    = 0xffee99a0
+      $peach     = 0xfff5a97f
+      $green     = 0xffa6da95
+      $teal      = 0xff8bd5ca
+      $sky       = 0xff91d7e3
+      $sapphire  = 0xff7dc4e4
+      $blue      = 0xff8aadf4
+      $lavender  = 0xffb7bdf8
+
+      $text      = 0xffcad3f5
+      $subtext1  = 0xffb8c0e0
+      $subtext0  = 0xffa5adcb
+
+      $overlay2  = 0xff939ab7s
+      $overlay1  = 0xff8087a2
+      $overlay0  = 0xff6e738d
+
+      $surface2  = 0xff5b6078
+      $surface1  = 0xff494d64
+      $surface0  = 0xff363a4f
+
+      $base      = 0xff24273a
+      $mantle    = 0xff1e2030
+      $crust     = 0xff181926
+    '';
   };
 }
