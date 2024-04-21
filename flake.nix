@@ -40,6 +40,25 @@
         inputs.nixpkgs.follows = "nixpkgs-unstable";
       };
 
+      # Hyprlock
+      hyprlock = {
+        url = "github:hyprwm/hyprlock";
+        inputs.nixpkgs.follows = "nixpkgs-unstable";
+      };
+
+      # Hypridle
+      hypridle = {
+        url = "github:hyprwm/hypridle";
+        inputs.nixpkgs.follows = "nixpkgs-unstable";
+      };
+
+      # Hyprspace
+      hyprspace = {
+        url = "github:KZDKM/Hyprspace";
+        inputs.hyprland.follows = "hyprland";
+        inputs.nixpkgs.follows = "nixpkgs-unstable";
+      };
+
       plasma-manager = {
         # KDE Plasma User Settings Generator
         url = "github:pjones/plasma-manager";
@@ -48,7 +67,7 @@
       };
     };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, home-manager, nur, nixgl, hyprland, plasma-manager, sops-nix, ... }: # Function telling flake which inputs to use
+  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, home-manager, nur, nixgl, hyprland, hyprlock, hypridle, hyprspace, plasma-manager, sops-nix, ... }: # Function telling flake which inputs to use
     let
       vars = {
         # Variables Used In Flake
@@ -63,7 +82,7 @@
         # NixOS Configurations
         import ./hosts {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-unstable home-manager nur hyprland plasma-manager vars sops-nix; # Inherit inputs
+          inherit inputs nixpkgs nixpkgs-unstable home-manager nur hyprland hyprlock hypridle hyprspace plasma-manager vars sops-nix; # Inherit inputs
         }
       );
 

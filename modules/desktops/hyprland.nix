@@ -3,7 +3,7 @@
 #  Enable with "hyprland.enable = true;"
 #
 
-{ config, lib, system, pkgs, unstable, hyprland, vars, host, ... }:
+{ config, lib, system, pkgs, unstable, hyprland, hyprlock, hypridle, hyprspace, vars, host, ... }:
 
 let
   colors = import ../theming/colors.nix;
@@ -127,17 +127,17 @@ with host;
           enable = true;
           package = hyprland.packages.${pkgs.system}.hyprland;
           xwayland.enable = true;
-          #          plugins = [
-          #            hyprspace.packages.${pkgs.system}.Hyprspace
-          #          ];
+          #                    plugins = [
+          #                      hyprspace.packages.${pkgs.system}.Hyprspace
+          #                    ];
           # plugin settings
-          extraConfig = ''
-            bind=SUPER,Tab,overview:toggle
-            plugin:overview:panelHeight=150
-            plugin:overview:drawActiveWorkspace=false
-            plugin:overview:gapsIn=3
-            plugin:overview:gapsOut=6
-          '';
+          #          extraConfig = ''
+          #            bind=SUPER,Tab,overview:toggle
+          #            plugin:overview:panelHeight=150
+          #            plugin:overview:drawActiveWorkspace=false
+          #            plugin:overview:gapsIn=3
+          #            plugin:overview:gapsOut=6
+          #          '';
           settings = {
             general = {
               border_size = 2;
@@ -159,8 +159,8 @@ with host;
             monitor = [
               ",preferred,auto,1,mirror,${toString mainMonitor}"
             ] ++ (if hostName == "libelula" then [
-              "${toString mainMonitor},1920x1080@60,1920x0,1"
-              "${toString secondMonitor},1920x1080@60,0x0,1"
+              "${toString mainMonitor},1920x1080@60,0x0,1"
+              "${toString secondMonitor},1920x1080@60,1920x0,1"
             ] else if hostName == "onsite-gnome" then [
               "${toString mainMonitor},1920x1080@60,0x0,1"
               "${toString secondMonitor},1920x1200@60,1920x0,1"
@@ -169,7 +169,7 @@ with host;
               "${toString mainMonitor},1920x1080@60,0x0,1"
             ]);
             workspace =
-              if (hostName == "libelula" && secondMonitor != "") then ''
+              if (hostName == "libelula" && secondMonitor != "") then [
                 "1, monitor:${toString mainMonitor}"
                 "2, monitor:${toString secondMonitor}"
                 "3, monitor:${toString mainMonitor}"
@@ -178,15 +178,15 @@ with host;
                 "6, monitor:${toString secondMonitor}"
                 "7, monitor:${toString mainMonitor}"
                 "8, monitor:${toString secondMonitor}"
-              '' else if hostName == "onsite-gnome" then ''
-                                "1, monitor:${toString mainMonitor}"
+              ] else if hostName == "onsite-gnome" then [
+                "1, monitor:${toString mainMonitor}"
                 "2, monitor:${toString secondMonitor}"
                 "3, monitor:${toString thirdMonitor}"
                 "4, monitor:${toString secondMonitor}"
                 "5, monitor:${toString thirdMonitor}"
                 "6, monitor:${toString secondMonitor}"
                 "7, monitor:${toString thirdMonitor}"
-              '' else ''
+              ] else [
                 "1, monitor:${toString mainMonitor}"
                 "2, monitor:${toString mainMonitor}"
                 "3, monitor:${toString mainMonitor}"
@@ -195,7 +195,7 @@ with host;
                 "6, monitor:${toString mainMonitor}"
                 "7, monitor:${toString mainMonitor}"
                 "8, monitor:${toString mainMonitor}"
-              '';
+              ];
 
             animations = {
               enabled = false;
@@ -288,30 +288,53 @@ with host;
               "SUPERSHIFT,right,movewindow,r"
               "SUPERSHIFT,up,movewindow,u"
               "SUPERSHIFT,down,movewindow,d"
-              "ALT,1,workspace,1"
-              "ALT,2,workspace,2"
-              "ALT,3,workspace,3"
-              "ALT,4,workspace,4"
-              "ALT,5,workspace,5"
-              "ALT,6,workspace,6"
-              "ALT,7,workspace,7"
-              "ALT,8,workspace,8"
-              "ALT,9,workspace,9"
-              "ALT,0,workspace,10"
-              "ALT,right,workspace,+1"
-              "ALT,left,workspace,-1"
-              "ALTSHIFT,1,movetoworkspace,1"
-              "ALTSHIFT,2,movetoworkspace,2"
-              "ALTSHIFT,3,movetoworkspace,3"
-              "ALTSHIFT,4,movetoworkspace,4"
-              "ALTSHIFT,5,movetoworkspace,5"
-              "ALTSHIFT,6,movetoworkspace,6"
-              "ALTSHIFT,7,movetoworkspace,7"
-              "ALTSHIFT,8,movetoworkspace,8"
-              "ALTSHIFT,9,movetoworkspace,9"
-              "ALTSHIFT,0,movetoworkspace,10"
-              "ALTSHIFT,right,movetoworkspace,+1"
-              "ALTSHIFT,left,movetoworkspace,-1"
+              "SUPER,Tab,cyclenext,"
+              "SUPER,Tab,bringactivetotop,"
+              "CTRLALTSHIFT,1,movetoworkspace,1"
+              "CTRLALTSHIFT,2,movetoworkspace,2"
+              "CTRLALTSHIFT,3,movetoworkspace,3"
+              "CTRLALTSHIFT,4,movetoworkspace,4"
+              "CTRLALTSHIFT,5,movetoworkspace,5"
+              "CTRLALTSHIFT,6,movetoworkspace,6"
+              "CTRLALTSHIFT,7,movetoworkspace,7"
+              "CTRLALTSHIFT,8,movetoworkspace,8"
+              "CTRLALTSHIFT,9,movetoworkspace,9"
+              "CTRLALTSHIFT,0,movetoworkspace,10"
+              "CTRLALT,1,movetoworkspacesilent,1"
+              "CTRLALT,2,movetoworkspacesilent,2"
+              "CTRLALT,3,movetoworkspacesilent,3"
+              "CTRLALT,4,movetoworkspacesilent,4"
+              "CTRLALT,5,movetoworkspacesilent,5"
+              "CTRLALT,6,movetoworkspacesilent,6"
+              "CTRLALT,7,movetoworkspacesilent,7"
+              "CTRLALT,8,movetoworkspacesilent,8"
+              "CTRLALT,9,movetoworkspacesilent,9"
+              "CTRLALT,0,movetoworkspacesilent,10"
+              "SUPERSHIFT,1,movetoworkspace,1"
+              "SUPERSHIFT,2,movetoworkspace,2"
+              "SUPERSHIFT,3,movetoworkspace,3"
+              "SUPERSHIFT,4,movetoworkspace,4"
+              "SUPERSHIFT,5,movetoworkspace,5"
+              "SUPERSHIFT,6,movetoworkspace,6"
+              "SUPERSHIFT,7,movetoworkspace,7"
+              "SUPERSHIFT,8,movetoworkspace,8"
+              "SUPERSHIFT,9,movetoworkspace,9"
+              "SUPERSHIFT,0,movetoworkspace,10"
+              "SUPERSHIFT,1,movetoworkspacesilent,1"
+              "SUPERSHIFT,2,movetoworkspacesilent,2"
+              "SUPERSHIFT,3,movetoworkspacesilent,3"
+              "SUPERSHIFT,4,movetoworkspacesilent,4"
+              "SUPERSHIFT,5,movetoworkspacesilent,5"
+              "SUPERSHIFT,6,movetoworkspacesilent,6"
+              "SUPERSHIFT,7,movetoworkspacesilent,7"
+              "SUPERSHIFT,8,movetoworkspacesilent,8"
+              "SUPERSHIFT,9,movetoworkspacesilent,9"
+              "SUPERSHIFT,0,movetoworkspacesilent,10"
+              "CTRLALT,RIGHT,workspace,+1"
+              "CTRLALT,LEFT,workspace,-1"
+              "CTRLALTSHIFT,RIGHT,movetoworkspace,+1"
+              "CTRLALTSHIFT,LEFT,movetoworkspace,-1"
+
 
               "SUPER,Z,layoutmsg,togglesplit"
               ",print,exec,${pkgs.grimblast}/bin/grimblast --notify --freeze --wait 1 copysave area ~/Pictures/$(date +%Y-%m-%dT%H%M%S).png"

@@ -9,7 +9,7 @@
 #           └─ default.nix 
 #
 
-{ lib, inputs, nixpkgs, nixpkgs-unstable, home-manager, nur, hyprland, plasma-manager, vars, ... }:
+{ lib, inputs, nixpkgs, nixpkgs-unstable, home-manager, nur, hyprland, hyprlock, hypridle, hyprspace, plasma-manager, vars, ... }:
 
 let
   system = "x86_64-linux"; # System Architecture
@@ -31,7 +31,7 @@ in
     # VM Profile
     inherit system;
     specialArgs = {
-      inherit inputs system unstable hyprland vars;
+      inherit inputs system unstable hyprland hyprlock hypridle hyprspace vars;
       host = {
         hostName = "vm";
         mainMonitor = "Virtual-1";
@@ -55,7 +55,7 @@ in
     #
     inherit system;
     specialArgs = {
-      inherit inputs system unstable hyprland vars;
+      inherit inputs system unstable hyprland hyprlock hypridle hyprspace vars;
       #      inherit inputs system unstable vars;
       host = {
         hostName = "libelula";
@@ -82,7 +82,7 @@ in
     #
     inherit system;
     specialArgs = {
-      inherit inputs system unstable hyprland vars;
+      inherit inputs system unstable hyprland hyprlock hypridle hyprspace vars;
       host = {
         hostName = "oldie";
         mainMonitor = "eDP-1-1";
@@ -104,7 +104,7 @@ in
     #
     inherit system;
     specialArgs = {
-      inherit inputs system unstable hyprland vars;
+      inherit inputs system unstable hyprland hyprlock hypridle hyprspace vars;
       host = {
         hostName = "hypr-oldie";
         mainMonitor = "eDP-1-1";
@@ -126,7 +126,7 @@ in
     #
     inherit system;
     specialArgs = {
-      inherit inputs system unstable hyprland vars;
+      inherit inputs system unstable hyprland hyprlock hypridle hyprspace vars;
       host = {
         hostName = "onsite-gnome";
         mainMonitor = "eDP-1";
