@@ -77,8 +77,8 @@
 
   # Enable the GNOME Desktop Environment.
   #  bspwm.enable = true;
-  #  gnome.enable = true;
-  hyprland.enable = true;
+  gnome.enable = true;
+  #  hyprland.enable = true;
 
   #VPN
   surfshark.enable = true;

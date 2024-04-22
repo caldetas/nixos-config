@@ -3,7 +3,7 @@
 #  Enable with "hyprland.enable = true;"
 #
 
-{ config, lib, system, pkgs, unstable, hyprland, hyprlock, hypridle, hyprspace, vars, host, ... }:
+{ config, lib, system, pkgs, unstable, hyprland, vars, host, ... }:
 
 let
   colors = import ../theming/colors.nix;
@@ -275,6 +275,7 @@ with host;
               "SUPER,H,togglefloating,"
               "SUPER,Space,exec,pkill wofi || ${pkgs.wofi}/bin/wofi --show drun"
               "SUPER,SUPER_L,exec,pkill wofi || ${pkgs.wofi}/bin/wofi --show drun"
+              "SUPER,Escape,exec,wlogout"
               "SUPER,P,pseudo,"
               "SUPER,F,fullscreen,"
               "SUPER,R,forcerendererreload"
