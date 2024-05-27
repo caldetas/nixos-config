@@ -305,7 +305,7 @@ with lib;
         blur-my-shell
         removable-drive-menu
         #        dash-to-panel
-        battery-indicator-upower
+        #        battery-indicator-upower
         just-perfection
         caffeine
         clipboard-indicator

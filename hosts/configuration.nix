@@ -249,7 +249,7 @@
     printing.enable = true;
     avahi = {
       enable = true;
-      nssmdns = true;
+      nssmdns4 = true;
       openFirewall = true;
     };
     pipewire = {
@@ -283,7 +283,7 @@
       dates = "weekly";
       options = "--delete-older-than 7d";
     };
-    package = pkgs.nixVersions.unstable; # Enable Flakes
+    package = pkgs.nixVersions.latest; # Enable Flakes
     registry.nixpkgs.flake = inputs.nixpkgs;
     extraOptions = ''
       experimental-features = nix-command flakes
@@ -295,13 +295,13 @@
 
   system = {
     # NixOS Settings
-    stateVersion = "23.11";
+    stateVersion = "24.05";
   };
 
   home-manager.users.${vars.user} = {
     # Home-Manager Settings
     home = {
-      stateVersion = "23.11";
+      stateVersion = "24.05";
     };
     programs = {
       home-manager.enable = true;
