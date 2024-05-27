@@ -18,3 +18,9 @@ pre-commit file:
         git add $file
         fi
         done
+
+add forked branch:
+
+        git remote add matthias https://github.com/MatthiasBenaets/nixos-config.git -t master
+        git fetch matthias
+        git checkout matthias
