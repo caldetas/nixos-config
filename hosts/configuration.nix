@@ -247,11 +247,11 @@
   hardware.pulseaudio.enable = false;
   services = {
     printing.enable = true;
-      avahi = {
-        enable = true;
-        nssmdns = true;
-        openFirewall = true;
-      };
+    avahi = {
+      enable = true;
+      nssmdns = true;
+      openFirewall = true;
+    };
     pipewire = {
       # Sound
       enable = true;
