@@ -225,7 +225,6 @@
     ] ++
 
     (with unstable; [
-
       (jetbrains.plugins.addPlugins jetbrains.idea-ultimate [ "github-copilot" ])
       telegram-desktop
       #CV creation with Latex
@@ -234,7 +233,6 @@
 
     (with pkgs; [
       megasync
-      (lib.getDev pkgs.pcre) #kde pkgs
     ]);
   };
 
@@ -354,7 +352,6 @@
     "video/mp4" = "vlc.desktop";
     "video/x-matroska" = "vlc.desktop";
   };
-
 
   environment.interactiveShellInit = ''
     alias buildVm='echo cd ${vars.location} \&\& git pull \&\& sudo nixos-rebuild build-vm --flake ${vars.location}#vm --show-trace --update-input nixpkgs && cd ${vars.location} && git pull && sudo nixos-rebuild build-vm --flake ${vars.location}#vm --show-trace --update-input nixpkgs'

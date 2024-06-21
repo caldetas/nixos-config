@@ -65,9 +65,8 @@ in
     };
   };
 
-  config = mkIf false #(config.bspwm.enable)
+  config = mkIf (config.bspwm.enable)
     {
-      xdg.portal.config.common.default = "*";
       x11wm.enable = true;
 
       services = {
