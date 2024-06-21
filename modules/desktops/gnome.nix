@@ -35,12 +35,12 @@ with lib;
           #            variant = "de_nodeadkeys";
           #            options = "compose:ralt";
         };
-        libinput.enable = true;
 
         displayManager.gdm.enable = true; # Display Manager
         desktopManager.gnome.enable = true; # Desktop Environment
 
       };
+      libinput.enable = true;
 
       #XRDP settings for remmina
       xrdp.enable = true;

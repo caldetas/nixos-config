@@ -48,10 +48,10 @@ let
         bspc wm -O ${mainMonitor} ${secondMonitor}
         polybar sec &
       ''
-      else if hostName == "vm" || hostName == "probook" then ''
+      else ''
         bspc monitor -d 1 2 3 4 5
       ''
-      else false)
+      )
     ]
     "${extra}";
 in
