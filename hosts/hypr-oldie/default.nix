@@ -91,11 +91,12 @@
 
 
 
-  gnome.enable = true;
-  #  programs.hyprland.enable = true;
-  #  programs.hyprland.nvidiaPatches = true;
-  #  programs.hyprland.xwayland.enable = true;
-  #
+
+  # Enable Desktop Environment.
+  #    bspwm.enable = true;
+  #    gnome.enable = true;
+  kde.enable = true;
+  #  hyprland.enable = true;
 
   #VPN
   #  surfshark.enable = true;

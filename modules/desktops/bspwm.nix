@@ -67,25 +67,28 @@ in
 
   config = mkIf (config.bspwm.enable)
     {
+      xdg.portal.config.common.default = "*";
       x11wm.enable = true;
 
       services = {
+        displayManager = {
+          defaultSession = "none+bspwm";
+        };
+        libinput = {
+          enable = true;
+          touchpad = {
+            tapping = true;
+            scrollMethod = "twofinger";
+            naturalScrolling = true;
+            accelProfile = "adaptive";
+            disableWhileTyping = true;
+          };
+        };
         xserver = {
           enable = true;
-
-          layout = "ch";
-          xkbOptions = "eurosign:e";
-          libinput = {
-            enable = true;
-            touchpad = {
-              tapping = true;
-              scrollMethod = "twofinger";
-              naturalScrolling = true;
-              accelProfile = "adaptive";
-              disableWhileTyping = true;
-            };
-          };
-
+          #      libinput = {
+          #                  enable = true;
+          #                  };
           displayManager = {
             lightdm = {
               enable = true;
@@ -104,8 +107,13 @@ in
                 };
               };
             };
-            defaultSession = "none+bspwm";
           };
+          xkb = {
+
+            layout = "ch";
+            #          xkbOptions = "eurosign:e";
+          };
+
           windowManager.bspwm = {
             enable = true;
           };
