@@ -20,10 +20,10 @@ with lib;
   config = mkIf (config.kde.enable) {
     programs = {
       zsh.enable = true;
-      kdeconnect = {
-        enable = true;
-        package = pkgs.gnomeExtensions.gsconnect;
-      };
+      #      kdeconnect = {
+      #        enable = true;
+      #        package = pkgs.gnomeExtensions.gsconnect;
+      #      };
     };
     services.xserver.enable = true;
     # You may need to comment out "services.displayManager.gdm.enable = true;"
