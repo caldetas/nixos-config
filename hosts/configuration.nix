@@ -225,6 +225,7 @@
     ] ++
 
     (with unstable; [
+
       (jetbrains.plugins.addPlugins jetbrains.idea-ultimate [ "github-copilot" ])
       telegram-desktop
       #CV creation with Latex
@@ -233,6 +234,7 @@
 
     (with pkgs; [
       megasync
+      (lib.getDev pkgs.pcre) #kde pkgs
     ]);
   };
 
