@@ -25,10 +25,34 @@ with lib;
   config = mkIf (config.flatpak.enable)
     {
       xdg.portal.enable = true;
-      xdg.portal.extraPortals = mkIf (config.wlwm.enable || config.x11wm.enable) [
-        #or is is !gnome.enable?
-        pkgs.xdg-desktop-portal-gtk
-      ];
+      xdg.portal.config =
+        {
+          common = {
+            default = [
+              "gtk"
+            ];
+          };
+          pantheon = {
+            default = [
+              "pantheon"
+              "gtk"
+            ];
+            "org.freedesktop.impl.portal.Secret" = [
+              "gnome-keyring"
+            ];
+          };
+          x-cinnamon = {
+            default = [
+              "xapp"
+              "gtk"
+            ];
+          };
+        };
+      xdg.portal.extraPortals = #mkIf (config.wlwm.enable || config.x11wm.enable || config.kde.enable)
+        [
+          #or is is !gnome.enable?
+          pkgs.xdg-desktop-portal-gtk
+        ];
 
       services.flatpak.enable = true;
 
