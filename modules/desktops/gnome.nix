@@ -19,11 +19,11 @@ with lib;
   config = mkIf (config.gnome.enable) {
     programs = {
       zsh.enable = true;
-      kdeconnect = {
-        # GSConnect
-        enable = true;
-        package = pkgs.gnomeExtensions.gsconnect;
-      };
+      #      kdeconnect = {
+      #        # GSConnect
+      #        enable = true;
+      #        package = pkgs.gnomeExtensions.gsconnect;
+      #      };
     };
 
     services = {
