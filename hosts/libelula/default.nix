@@ -78,7 +78,7 @@
   # Enable Desktop Environment.
   #    bspwm.enable = true;
   gnome.enable = true;
-  #kde.enable = true;
+  #  kde.enable = true;
   #  hyprland.enable = true;
 
   #VPN

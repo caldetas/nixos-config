@@ -86,9 +86,6 @@ in
         };
         xserver = {
           enable = true;
-          #      libinput = {
-          #                  enable = true;
-          #                  };
           displayManager = {
             lightdm = {
               enable = true;
