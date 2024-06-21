@@ -21,37 +21,34 @@ with lib;
     programs = {
       zsh.enable = true;
       kdeconnect = {
-        # For GSConnect
         enable = true;
         package = pkgs.gnomeExtensions.gsconnect;
       };
     };
 
     services = {
+      displayManager = {
+        sddm.enable = true;
+        defaultSession = "plasmawayland";
+      };
+      libinput.enable = true;
       xserver = {
         enable = true;
         xkb = {
           layout = "ch";
-          options = "eurosign:e";
+          #          options = "eurosign:e";
         };
-        libinput.enable = true;
         modules = [ pkgs.xf86_input_wacom ];
         wacom.enable = true;
 
-        displayManager = {
-          sddm.enable = true; # Display Manager
-          defaultSession = "plasmawayland";
-        };
         desktopManager.plasma5 = {
-          enable = true; # Desktop Environment
-          #          bigscreen.enable = true; # Bigscreen Environment
+          enable = true;
         };
       };
     };
 
     environment = {
       systemPackages = with pkgs.libsForQt5; [
-        # System-Wide Packages
         bismuth # Dynamic Tiling
         packagekit-qt # Package Updater
       ];
