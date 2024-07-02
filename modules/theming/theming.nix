@@ -17,7 +17,7 @@
         # System-Wide Cursor
         gtk.enable = true;
         #        name = "Dracula-cursors";
-        name = "Catppuccin-Mocha-Dark-Cursors";
+        name = "catppuccin-mocha-dark-cursors";
         #        package = pkgs.dracula-theme;
         package = pkgs.catppuccin-cursors.mochaDark;
         size = 16;
