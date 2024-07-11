@@ -215,7 +215,7 @@
       neofetch
       netbird
       netbird-ui
-      nodejs_22
+      nodejs_20
       openvpn
       qbittorrent
       remmina
