@@ -215,7 +215,7 @@
       neofetch
       netbird
       netbird-ui
-      nodejs_18
+      nodejs_22
       openvpn
       qbittorrent
       remmina
@@ -226,6 +226,7 @@
       teams-for-linux
       thefuck
       wpsoffice
+      yarn
     ] ++
 
     (with unstable; [
