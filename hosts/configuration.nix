@@ -217,6 +217,7 @@
       netbird-ui
       nodejs_20
       openvpn
+      pdftk
       qbittorrent
       remmina
       spotify
