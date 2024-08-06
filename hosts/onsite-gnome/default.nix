@@ -84,6 +84,8 @@
   #laptop.enable = true;                     # Laptop Modules
 
 
+  #VPN
+  surfshark.enable = true;
 
   #  # Enable CUPS to print documents.
   #  services.printing.enable = true;

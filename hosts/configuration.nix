@@ -203,7 +203,6 @@
       # Apps
       brave
       discord
-      docker-compose
       firefox
       gedit
       git
