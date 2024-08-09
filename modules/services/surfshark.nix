@@ -28,7 +28,7 @@ with host;
           name = "surfshark-config";
           src = pkgs.fetchurl {
             url = "https://my.surfshark.com/vpn/api/v1/server/configurations";
-            sha256 = "sha256-97FF3+La732OuJFYy8mD3MdpYtKknHlZI/K+hkFuhkw=";
+            sha256 = "sha256-BCcvQmDx4fJqOI+9dqptCkYczVISDSkTEbCKQvayxIM=";
           };
           phases = [ "installPhase" ];
           buildInputs = [ pkgs.unzip pkgs.rename ];
