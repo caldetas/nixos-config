@@ -110,7 +110,6 @@
   };
   hardware.opengl = {
     enable = true;
-    driSupport = true;
     extraPackages = with pkgs; [
       libsForQt5.qt5ct
       libva

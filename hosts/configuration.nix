@@ -233,7 +233,7 @@
       (jetbrains.plugins.addPlugins jetbrains.idea-ultimate [ "github-copilot" ])
       telegram-desktop
       #CV creation with Latex
-      texlive.combined.scheme-full
+      #      texlive.combined.scheme-full #latex
     ]) ++
 
     (with pkgs; [
