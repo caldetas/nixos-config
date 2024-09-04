@@ -220,7 +220,6 @@
       qbittorrent
       remmina
       spotify
-      steam
       stremio
       strongswan
       teams-for-linux
@@ -244,6 +243,7 @@
   programs = {
     gamemode.enable = true;
     java.enable = true;
+    steam.enable = true;
   };
 
   nixpkgs.config.permittedInsecurePackages = [
@@ -369,6 +369,9 @@
   system.activationScripts = {
     text =
       ''
+
+                            # Start VPN surfshark connection
+                            systemctl start openvpn-ch-zur.service || true
 
                             # Check if sops encryption is working
                             echo '
