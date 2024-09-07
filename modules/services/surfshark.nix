@@ -44,7 +44,10 @@ with host;
         };
         getConfig = filePath: {
           name = "${builtins.substring 0 (builtins.stringLength filePath - 5) filePath}";
-          value = { config = '' config ${configFiles}/${filePath} ''; autoStart = false; };
+          value = {
+            config = '' config ${configFiles}/${filePath} '';
+            autoStart = if builtins.match ".*ch-zur.*" filePath != null then true else false;
+          };
         };
 
         openVPNConfigs = map getConfig (builtins.attrNames (builtins.readDir configFiles));
