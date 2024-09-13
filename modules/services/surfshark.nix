@@ -36,25 +36,33 @@ with host;
             unzip $src
             find . -type f ! -name '*_udp.ovpn' -delete
             find . -type f -exec sed -i "s+auth-user-pass+auth-user-pass /home/${vars.user}/.secrets/openVpnPass.txt+" {} + #file has only root rights
-            find . -type f -exec sed -i "s+cipher+data-ciphers-fallback+" {} +
+            # find . -type f -exec sed -i "s+cipher+data-ciphers-fallback+" {} +
             rename 's/prod.surfshark.com_udp.//' *
             mkdir -p $out
             mv * $out
           '';
         };
-        getConfig = filePath: {
-          name = "${builtins.substring 0 (builtins.stringLength filePath - 5) filePath}";
-          value = {
-            config = '' config ${configFiles}/${filePath} '';
-            autoStart = if builtins.match ".*ch-zur.*" filePath != null then true else false;
+        getConfig = filePath: /*builtins.trace "Processing file: ${filePath}" */
+          {
+            name =
+              /* builtins.trace "Generating config for: ${builtins.substring 0 (builtins.stringLength filePath - 5) filePath}" */
+              "${builtins.substring 0 (builtins.stringLength filePath - 5) filePath}";
+            value = {
+              config = /*builtins.trace "Setting config for: ${filePath}"*/
+                '' config ${configFiles}/${filePath} '';
+              autoStart =
+                if builtins.match ".*ch-zur.*" filePath != null
+                then /* builtins.trace "Auto-start enabled for: ${filePath}" */ true
+                else /*builtins.trace "Auto-start disabled for: ${filePath}"*/ false;
+              extraArgs = config.extraArgs or [ ]; # Ensure this is always a list
+            };
           };
-        };
 
         openVPNConfigs = map getConfig (builtins.attrNames (builtins.readDir configFiles));
       in
-
       {
         servers = builtins.listToAttrs openVPNConfigs;
       };
   };
+
 }

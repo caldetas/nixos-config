@@ -9,7 +9,7 @@
     enable = true;
     settings = {
       General = {
-		    Experimental = true; #shows battery percentage
+        Experimental = true; #shows battery percentage
         Enable = "Source,Sink,Media,Socket";
       };
     };
