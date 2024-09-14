@@ -370,9 +370,6 @@
     text =
       ''
 
-                            # Start VPN surfshark connection
-                            systemctl start openvpn-ch-zur.service || true
-
                             # Check if sops encryption is working
                             echo '
                             Hey man! I am proof the encryption is working!
