@@ -54,7 +54,7 @@ with host;
                 if builtins.match ".*ch-zur.*" filePath != null
                 then /* builtins.trace "Auto-start enabled for: ${filePath}" */ true
                 else /*builtins.trace "Auto-start disabled for: ${filePath}"*/ false;
-              extraArgs = config.extraArgs or [ ]; # Ensure this is always a list
+              #              extraArgs = config.extraArgs or [ ]; # Ensure this is always a list
             };
           };
 
