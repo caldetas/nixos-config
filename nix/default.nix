@@ -26,7 +26,7 @@ in
           username = "${vars.user}";
           homeDirectory = "/home/${vars.user}";
           packages = [ pkgs.home-manager ];
-          stateVersion = "22.05"; # do not change
+          stateVersion = "24.05"; # do not change
         };
       }
     ];

@@ -14,8 +14,6 @@
       nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable"; # Stable Nix Packages
       nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable"; # Unstable Nix Packages (Default)
       sops-nix.url = "github:Mic92/sops-nix"; # Sops Nix Secure Secretes Manager
-      sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-      #      rust-overlay.url = "github:oxalica/rust-overlay";
 
       home-manager = {
         # User Environment Manager
@@ -36,8 +34,7 @@
 
       hyprland = {
         # Official Hyprland Flake
-        url = "github:hyprwm/Hyprland"; # Requires "hyprland.nixosModules.default" to be added the host modules
-        inputs.nixpkgs.follows = "nixpkgs-unstable";
+        url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
       };
 
       plasma-manager = {

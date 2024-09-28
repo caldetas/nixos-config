@@ -3,7 +3,7 @@
 #  Enable with "hyprland.enable = true;"
 #
 
-{ config, lib, system, pkgs, unstable, hyprland, vars, host, ... }:
+{ config, lib, system, pkgs, unstable, hyprland, inputs, vars, host, ... }:
 
 let
   colors = import ../theming/colors.nix;
@@ -40,6 +40,8 @@ with host;
           XDG_CURRENT_DESKTOP = "Hyprland";
           XDG_SESSION_TYPE = "wayland";
           XDG_SESSION_DESKTOP = "Hyprland";
+          XCURSOR = "Catppuccin-Mocha-Dark-Cursors";
+          XCURSOR_SIZE = 24;
         };
         sessionVariables =
           if hostName == "work" then {
@@ -64,20 +66,14 @@ with host;
             WLR_NO_HARDWARE_CURSORS = "1";
             MOZ_ENABLE_WAYLAND = "1";
           };
-        systemPackages = with unstable; [
-          brillo # Brightness Control
+        systemPackages = with pkgs; [
           grimblast # Screenshot
+          hyprcursor # Cursor
           hyprpaper # Wallpaper
-          light # Brightness Control
-          pamixer # Volume Control
-          swayidle # Idle Daemon
+          nwg-look # Theme
           swaylock-effects # Lock Screen
           wl-clipboard # Clipboard
-          wlogout # Logout
           wlr-randr # Monitor Settings
-          xfce.thunar # File Manager
-          xorg.xrdb # X Resources
-          xorg.xrandr # Monitor Settings
           xwayland # X session
         ];
       };
@@ -103,7 +99,10 @@ with host;
     programs = {
       hyprland = {
         enable = true;
-        package = hyprland.packages.${pkgs.system}.hyprland;
+        # set the flake package
+        package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+        # make sure to also set the portal package, so that they are in sync
+        portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
       };
     };
 
@@ -216,6 +215,9 @@ with host;
                 "workspaces, 1, 4, default"
                 "borderangle, 1, 20, rotate, loop"
               ];
+            };
+            cursor = {
+              no_hardware_cursors = true;
             };
             input = {
               kb_layout = "ch";
@@ -344,8 +346,8 @@ with host;
               ",XF86AudioMute,exec,${pkgs.pamixer}/bin/pamixer -t"
               "SUPER_L,c,exec,${pkgs.pamixer}/bin/pamixer --default-source -t"
               ",XF86AudioMicMute,exec,${pkgs.pamixer}/bin/pamixer --default-source -t"
-              ",XF86MonBrightnessDown,exec,${pkgs.light}/bin/light -U 5"
-              ",XF86MonBrightnessUP,exec,${pkgs.light}/bin/light -A 5"
+              ",XF86MonBrightnessDown,exec,sudo ${pkgs.light}/bin/light -U 5"
+              ",XF86MonBrightnessUP,exec,sudo ${pkgs.light}/bin/light -A 5"
             ];
             binde = [
               "SUPERCTRL,right,resizeactive,60 0"
@@ -382,7 +384,7 @@ with host;
               #                              ${execute}
               "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
               "${pkgs.waybar}/bin/waybar"
-              "${pkgs.eww-wayland}/bin/eww daemon"
+              "${pkgs.eww}/bin/eww daemon"
               # "$HOME/.config/eww/scripts/eww" # When running eww as a bar
               "${pkgs.blueman}/bin/blueman-applet"
               "${pkgs.swaynotificationcenter}/bin/swaync"
