@@ -73,6 +73,7 @@ with host;
           nwg-look # Theme
           swaylock-effects # Lock Screen
           wl-clipboard # Clipboard
+          wlogout # Logout
           wlr-randr # Monitor Settings
           xwayland # X session
         ];
