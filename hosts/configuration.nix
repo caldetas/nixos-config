@@ -300,13 +300,13 @@
 
   system = {
     # NixOS Settings
-    stateVersion = "24.11";
+    stateVersion = "22.05"; # do not change
   };
 
   home-manager.users.${vars.user} = {
     # Home-Manager Settings
     home = {
-      stateVersion = "24.11";
+      stateVersion = "22.05"; # do not change
     };
     programs = {
       home-manager.enable = true;
