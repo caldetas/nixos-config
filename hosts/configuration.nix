@@ -151,6 +151,7 @@
       nix-tree # Browse Nix Store
       nixpkgs-fmt # Formatter for nix files
       pciutils # Manage PCI
+      powertop # Power Manager
       psmisc # A set of small useful utilities that use the proc filesystem (such as fuser, killall and pstree)
       ranger # File Manager
       screen # Deatach
@@ -211,6 +212,7 @@
       gnupg1orig
       gparted
       htop
+      (jetbrains.plugins.addPlugins jetbrains.idea-ultimate [ "github-copilot" ])
       neofetch
       netbird
       netbird-ui
@@ -222,6 +224,7 @@
       spotify
       stremio
       strongswan
+      telegram-desktop
       teams-for-linux
       thefuck
       wpsoffice
@@ -229,14 +232,13 @@
     ] ++
 
     (with unstable; [
-      (jetbrains.plugins.addPlugins jetbrains.idea-ultimate [ "github-copilot" ])
-      telegram-desktop
       #CV creation with Latex
       #      texlive.combined.scheme-full #latex
     ]) ++
 
     (with pkgs; [
       megasync
+      steam
     ]);
   };
 
