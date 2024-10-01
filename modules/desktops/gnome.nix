@@ -252,8 +252,9 @@ with lib;
           stick = true;
         };
         "org/gnome/shell/extensions/forge" = {
-          window-gap-size = 8;
           dnd-center-layout = "stacked";
+          tiling-mode-enabled = true;
+          window-gap-size = 8;
         };
         "org/gnome/shell/extensions" = {
           user-theme = "Orchis-Dark-Compact";
