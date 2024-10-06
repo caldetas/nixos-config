@@ -79,9 +79,14 @@
   time.timeZone = "Europe/Zurich"; # Time zone and Internationalisation
   i18n = {
     defaultLocale = "en_US.UTF-8";
+    supportedLocales = [
+      "en_US.UTF-8/UTF-8"
+      "de_CH.UTF-8/UTF-8"
+      "es_MX.UTF-8/UTF-8"
+    ];
     extraLocaleSettings = {
-      LC_TIME = "en_US.UTF-8";
-      LC_MONETARY = "en_US.UTF-8";
+      LC_TIME = "de_CH.UTF-8";
+      LC_MONETARY = "de_CH.UTF-8";
     };
   };
 
