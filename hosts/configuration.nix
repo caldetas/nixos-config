@@ -382,32 +382,32 @@ if [ -f /home/${vars.user}/MEGAsync/encrypt/nixos/keys.txt ] && [ ! -f /home/${v
     echo 'Copying sops keys to user folder';
     mkdir -p /home/${vars.user}/.config/sops/age || true
     cp /home/${vars.user}/MEGAsync/encrypt/nixos/keys.txt /home/${vars.user}/.config/sops/age/keys.txt || true
+
+    # Check if sops encryption is working
+    echo '
+    Hey man! I am proof the encryption is working!
+
+    My secret is here:
+    ${config.sops.secrets.my-secret.path}
+
+    My secret value is not readable, only in a shell environment:'  > /home/${vars.user}/secretProof.txt
+    echo $(cat ${config.sops.secrets.my-secret.path}) >> /home/${vars.user}/secretProof.txt
+
+    echo '
+    My home-path on this computer:' >> /home/${vars.user}/secretProof.txt
+    echo $(cat ${config.sops.secrets.home-path.path}) >> /home/${vars.user}/secretProof.txt
+
+    #make openVpn surfshark login credential file
+    if [ ! -d /home/${vars.user}/.secrets ]; then
+    mkdir /home/${vars.user}/.secrets || true
+    fi
+
+    echo $(cat ${config.sops.secrets."surfshark/user".path}) > /home/${vars.user}/.secrets/openVpnPass.txt
+    echo $(cat ${config.sops.secrets."surfshark/password".path}) >> /home/${vars.user}/.secrets/openVpnPass.txt
+
 else
     echo 'not copying sops keys to user folder, already present';
 fi;
-
-# Check if sops encryption is working
-echo '
-Hey man! I am proof the encryption is working!
-
-My secret is here:
-${config.sops.secrets.my-secret.path}
-
-My secret value is not readable, only in a shell environment:'  > /home/${vars.user}/secretProof.txt
-echo $(cat ${config.sops.secrets.my-secret.path}) >> /home/${vars.user}/secretProof.txt
-
-echo '
-My home-path on this computer:' >> /home/${vars.user}/secretProof.txt
-echo $(cat ${config.sops.secrets.home-path.path}) >> /home/${vars.user}/secretProof.txt
-
-#make openVpn surfshark login credential file
-if [ ! -d /home/${vars.user}/.secrets ]; then
-mkdir /home/${vars.user}/.secrets || true
-fi
-
-echo $(cat ${config.sops.secrets."surfshark/user".path}) > /home/${vars.user}/.secrets/openVpnPass.txt
-echo $(cat ${config.sops.secrets."surfshark/password".path}) >> /home/${vars.user}/.secrets/openVpnPass.txt
-
 
 # Set up automated scripts if not already set up. Abort if no script folder present.
 if ! grep -q 'MEGAsync/work/programs'  /home/${vars.user}/.zshrc && [[ -d "/home/${vars.user}/MEGAsync/work/programs" ]] ;

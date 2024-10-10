@@ -235,7 +235,7 @@ with host;
               accel_profile = "flat";
               sensitivity = 0.8;
               touchpad =
-                if hostName == "libelula" || hostName == "onsite-gnome" || hostName == "oldie" then {
+                if hostName == "libelula" || hostName == "onsite-gnome" then {
                   natural_scroll = true;
                   scroll_factor = 0.2;
                   middle_button_emulation = true;
@@ -243,7 +243,7 @@ with host;
                 } else { };
             };
             gestures =
-              if hostName == "libelula" || hostName == "onsite-gnome" || hostName == "oldie" then {
+              if hostName == "libelula" || hostName == "onsite-gnome" then {
                 workspace_swipe = true;
                 workspace_swipe_fingers = 3;
                 workspace_swipe_distance = 100;
@@ -360,7 +360,7 @@ with host;
               "SUPERCTRL,down,resizeactive,0 60"
             ];
             bindl =
-              if hostName == "libelula" || hostName == "onsite-gnome" || hostName == "oldie" then [
+              if hostName == "libelula" || hostName == "onsite-gnome" then [
                 ",switch:Lid Switch,exec,$HOME/.config/hypr/script/clamshell.sh"
               ] else [ ];
             windowrulev2 = [

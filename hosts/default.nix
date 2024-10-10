@@ -78,50 +78,6 @@ in
       }
     ];
   };
-  oldie = lib.nixosSystem {
-    #
-    inherit system;
-    specialArgs = {
-      inherit inputs system unstable hyprland vars;
-      host = {
-        hostName = "oldie";
-        mainMonitor = "eDP-1-1";
-        secondMonitor = "";
-        thirdMonitor = "";
-      };
-    };
-    modules = [
-      ./oldie
-      ./configuration.nix
-      home-manager.nixosModules.home-manager
-      {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-      }
-    ];
-  };
-  hypr-oldie = lib.nixosSystem {
-    #
-    inherit system;
-    specialArgs = {
-      inherit inputs system unstable hyprland vars;
-      host = {
-        hostName = "hypr-oldie";
-        mainMonitor = "eDP-1-1";
-        secondMonitor = "";
-        thirdMonitor = "";
-      };
-    };
-    modules = [
-      ./hypr-oldie
-      ./configuration.nix
-      home-manager.nixosModules.home-manager
-      {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-      }
-    ];
-  };
   onsite-gnome = lib.nixosSystem {
     #
     inherit system;
