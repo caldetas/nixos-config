@@ -91,10 +91,8 @@
   #  ];
 
   environment.interactiveShellInit = ''
-    alias commit='echo cd ${vars.location} \&\& git pull \&\& sudo systemctl unmask  -- -.mount \&\& sudo systemctl daemon-reload \&\& sudo nixos-rebuild switch --flake ${vars.location}#libelula --show-trace --update-input nixpkgs --commit-lock-file && cd ${vars.location} && git pull && sudo systemctl unmask  -- -.mount && sudo systemctl daemon-reload && sudo nixos-rebuild switch --flake ${vars.location}#${host.hostName} --show-trace --update-input nixpkgs --commit-lock-file'
-    alias update='echo cd ${vars.location} \&\& git pull \&\& sudo systemctl unmask  -- -.mount \&\& sudo systemctl daemon-reload \&\& sudo nixos-rebuild switch --flake ${vars.location}#libelula --show-trace --update-input nixpkgs && cd ${vars.location} && git pull && sudo systemctl unmask  -- -.mount && sudo systemctl daemon-reload && sudo nixos-rebuild switch --flake ${vars.location}#${host.hostName} --show-trace --update-input nixpkgs'
-    alias rebuild='echo cd ${vars.location} \&\& git pull \&\& sudo systemctl unmask  -- -.mount \&\& sudo systemctl daemon-reload \&\& sudo nixos-rebuild switch --flake ${vars.location}#libelula --show-trace && cd ${vars.location} && git pull && sudo systemctl unmask  -- -.mount && sudo systemctl daemon-reload && sudo nixos-rebuild switch --flake ${vars.location}#${host.hostName} --show-trace'
-    alias remminaResetRDP='rm -fr ~/.config/remmina && rm -f ~/.config/freerdp/known_hosts2'
+    alias update='echo "cd ${vars.location} \&\& git pull \&\& sudo nix flake update --flake ${vars.location} \&\& sudo nixos-rebuild switch --flake ${vars.location}#${host.hostName} --show-trace" && cd ${vars.location} && git pull && sudo nix flake update --flake ${vars.location} && sudo nixos-rebuild switch --flake ${vars.location}#${host.hostName} --show-trace'
+    alias rebuild='echo "cd ${vars.location} \&\& git pull \&\& sudo nixos-rebuild switch --flake ${vars.location}#${host.hostName} --show-trace" && cd ${vars.location} && sudo nixos-rebuild switch --flake ${vars.location}#${host.hostName} --show-trace'
   '';
 }
 

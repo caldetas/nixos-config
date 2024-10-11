@@ -50,13 +50,13 @@ with lib;
       gnome.gnome-remote-desktop.enable = true;
 
       udev.packages = with pkgs; [
-        gnome.gnome-settings-daemon
+        gnome-settings-daemon
       ];
     };
 
 
     environment = {
-      systemPackages = with pkgs.gnome; [
+      systemPackages = with pkgs; [
         # System-Wide Packages
         adwaita-icon-theme
         dconf-editor
@@ -65,14 +65,13 @@ with lib;
       ];
       gnome.excludePackages = (with pkgs; [
         # Ignored Packages
-        gnome-tour
-      ]) ++ (with pkgs.gnome; [
         atomix
         epiphany
         geary
         gnome-characters
         gnome-contacts
         gnome-initial-setup
+        gnome-tour
         hitori
         iagno
         tali

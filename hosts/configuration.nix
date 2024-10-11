@@ -184,7 +184,7 @@
 
 
       # File Management
-      gnome.file-roller # Archive Manager
+      file-roller # Archive Manager
       okular # PDF Viewer
       pcmanfm # File Browser
       p7zip # Zip Encryption
@@ -213,7 +213,6 @@
       gedit
       git
       gimp
-      gnome.gnome-remote-desktop
       gnupg1orig
       gparted
       htop
@@ -366,7 +365,7 @@
   };
 
   environment.interactiveShellInit = ''
-    alias buildVm='echo cd ${vars.location} \&\& git pull \&\& sudo nixos-rebuild build-vm --flake ${vars.location}#vm --show-trace --update-input nixpkgs && cd ${vars.location} && git pull && sudo nixos-rebuild build-vm --flake ${vars.location}#vm --show-trace --update-input nixpkgs'
+    alias buildVm='echo cd ${vars.location} \&\& git pull \&\& sudo nixos-rebuild build-vm --flake ${vars.location}#vm --show-trace && cd ${vars.location} && git pull && sudo nixos-rebuild build-vm --flake ${vars.location}#vm --show-trace'
   '';
 
   # SOPS Configuration Secrets
