@@ -108,21 +108,10 @@
 
   fonts.packages = with pkgs; [
     # Fonts
-    carlito # NixOS
-    vegur # NixOS
-    source-code-pro
     jetbrains-mono
     font-awesome # Icons
-    corefonts # MS
     ubuntu_font_family
-    (nerdfonts.override {
-      # Nerdfont Icons override
-      fonts = [
-        "FiraCode"
-      ];
-    })
   ];
-  #  fonts.fontconfig.enable = true;
   fonts.fontconfig.enable = lib.mkForce true;
 
   #  RSPI4 installer

@@ -172,6 +172,7 @@ with lib;
             "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
             "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/"
             "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/"
+            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/"
           ];
         };
         "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
@@ -198,6 +199,11 @@ with lib;
           binding = "<super>i";
           command = "idea-ultimate";
           name = "open-intellij";
+        };
+        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5" = {
+          binding = "<super>r";
+          command = "sh -c 'flatpak run io.github.mimbrero.WhatsAppDesktop & telegram-desktop &'";
+          name = "open-messaging-apps";
         };
 
         "org/gnome/shell/extension/dash-to-panel" = {
@@ -311,7 +317,7 @@ with lib;
         just-perfection
         caffeine
         clipboard-indicator
-        workspace-indicator-2
+        #        workspace-indicator-2
         bluetooth-quick-connect
         gsconnect
         pip-on-top
