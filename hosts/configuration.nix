@@ -211,6 +211,7 @@
       netbird-ui
       nodejs_20
       openvpn
+      pandoc
       pdftk
       qbittorrent
       remmina
@@ -238,6 +239,7 @@
   programs = {
     gamemode.enable = true;
     java.enable = true;
+    obs-studio.enable = true;
     steam.enable = true;
   };
 

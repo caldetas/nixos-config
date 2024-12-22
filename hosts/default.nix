@@ -65,7 +65,7 @@ in
       };
     };
     modules = [
-      nur.nixosModules.nur #todo delete?
+      nur.modules.nixos.default
       ./libelula
       ./configuration.nix
 
