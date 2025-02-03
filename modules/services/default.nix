@@ -12,10 +12,11 @@
 
 [
   ./dunst.nix
+  ./gnupg.nix
   ./picom.nix
   ./polybar.nix
   ./surfshark.nix
   ./sxhkd.nix
-  ./udiskie.nix
+  #  ./udiskie.nix
 ]
 

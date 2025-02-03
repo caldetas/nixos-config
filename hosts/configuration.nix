@@ -202,7 +202,6 @@
       gedit
       git
       gimp
-      gnupg1orig
       gparted
       htop
       (jetbrains.plugins.addPlugins jetbrains.idea-ultimate [ "github-copilot" ])
@@ -246,7 +245,7 @@
   nixpkgs.config.permittedInsecurePackages = [
     "freeimage-unstable-2021-11-01"
   ];
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   services = {
     printing.enable = true;
     avahi = {
