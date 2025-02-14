@@ -90,9 +90,5 @@
   #  directx-shader-compiler #elden ring
   #  ];
 
-  environment.interactiveShellInit = ''
-    alias update='echo "cd ${vars.location} \&\& git pull \&\& sudo nix flake update --flake ${vars.location} \&\& sudo nixos-rebuild switch --flake ${vars.location}#${host.hostName} --show-trace" && cd ${vars.location} && git pull && sudo nix flake update --flake ${vars.location} && sudo nixos-rebuild switch --flake ${vars.location}#${host.hostName} --show-trace'
-    alias rebuild='echo "cd ${vars.location} \&\& git pull \&\& sudo nixos-rebuild switch --flake ${vars.location}#${host.hostName} --show-trace" && cd ${vars.location} && sudo nixos-rebuild switch --flake ${vars.location}#${host.hostName} --show-trace'
-  '';
 }
 

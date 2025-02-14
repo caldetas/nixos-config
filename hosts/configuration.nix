@@ -356,6 +356,27 @@
 
   environment.interactiveShellInit = ''
     alias buildVm='echo cd ${vars.location} \&\& git pull \&\& sudo nixos-rebuild build-vm --flake ${vars.location}#vm --show-trace && cd ${vars.location} && git pull && sudo nixos-rebuild build-vm --flake ${vars.location}#vm --show-trace'
+    alias update='
+      echo "Updating system..."
+      echo "Commands:"
+      echo "  git -C ${vars.location} pull"
+      echo "  sudo nix flake update --flake ${vars.location}"
+      echo "  sudo nixos-rebuild switch --flake ${vars.location}#${host.hostName} --show-trace"
+
+      git -C ${vars.location} pull
+      sudo nix flake update --flake ${vars.location}
+      sudo nixos-rebuild switch --flake ${vars.location}#${host.hostName} --show-trace
+    '
+
+    alias rebuild='
+      echo "Rebuilding system..."
+      echo "Commands:"
+      echo "  git -C ${vars.location} pull"
+      echo "  sudo nixos-rebuild switch --flake ${vars.location}#${host.hostName} --show-trace"
+
+      git -C ${vars.location} pull
+      sudo nixos-rebuild switch --flake ${vars.location}#${host.hostName} --show-trace
+    '
   '';
 
   # SOPS Configuration Secrets
