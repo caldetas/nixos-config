@@ -21,6 +21,11 @@ with host;
   # systemctl stop openvpn-ch-zur.service
 
   config = mkIf (config.surfshark.enable) {
+    services.resolved = {
+      enable = true;
+      dnssec = "allow-downgrade"; # Optional: Enables DNSSEC if supported
+      domains = [ "~." ]; # Ensures all DNS goes through VPN
+    };
     services.openvpn =
       #variables are defined here due to crash upon unssuccessful connection behind firewall
       let
