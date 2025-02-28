@@ -174,7 +174,6 @@
 
       # File Management
       file-roller # Archive Manager
-      okular # PDF Viewer
       pcmanfm # File Browser
       p7zip # Zip Encryption
       rsync # Syncer - $ rsync -r dir1/ dir2/
@@ -211,6 +210,7 @@
       nodejs_20
       openvpn
       pandoc
+      pinentry
       pdftk
       qbittorrent
       remmina
@@ -270,6 +270,13 @@
       extraConfig = ''
         HostKeyAlgorithms +ssh-rsa
       '';
+    };
+  };
+  # Disable the tty1 getty so that GDM isn’t interfered with at login https://discourse.nixos.org/t/gnome-keyring-slow-start/58364/6
+  systemd = {
+    services = {
+      "getty@tty1".enable = false;
+      "autovt@tty1".enable = false;
     };
   };
 
