@@ -317,16 +317,16 @@
       home-manager.enable = true;
     };
   };
-  flatpak.enable = true;
-  flatpak = {
-    # Flatpak Packages (see module options)
-    extraPackages = [
-      #        "com.github.tchx84.Flatseal"
-      #        "io.github.mimbrero.WhatsAppDesktop"
-      #        "org.signal.Signal"
-      #        "ro.go.hmlendea.DL-Desktop"
-    ];
-  };
+  #  flatpak.enable = true;
+  #  flatpak = {
+  #    # Flatpak Packages (see module options)
+  #    extraPackages = [
+  #              "com.github.tchx84.Flatseal"
+  #              "io.github.mimbrero.WhatsAppDesktop"
+  #              "org.signal.Signal"
+  #              "ro.go.hmlendea.DL-Desktop"
+  #    ];
+  #  };
   #
   #  services.strongswan.enable = true;
   #  services.netbird.enable = true;
