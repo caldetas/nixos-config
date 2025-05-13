@@ -100,4 +100,26 @@ in
       }
     ];
   };
+  nixos = lib.nixosSystem {
+    #
+    inherit system;
+    specialArgs = {
+      inherit inputs system unstable hyprland vars;
+      host = {
+        hostName = "nixos";
+        mainMonitor = "";
+        secondMonitor = "";
+        thirdMonitor = "";
+      };
+    };
+    modules = [
+      ./nixos
+      ./configuration.nix
+      home-manager.nixosModules.home-manager
+      {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+      }
+    ];
+  };
 }
