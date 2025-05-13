@@ -27,21 +27,21 @@
   # boot.loader.grub.useOSProber = true;
 
   #  boot.kernelParams = [ "psmouse.synaptics_intertouch=0" ];
-  boot.loader = {
-    grub = {
-      enable = true;
-      efiSupport = true;
-      enableCryptodisk = true;
-      device = "nodev";
-      useOSProber = true;
-      configurationLimit = 20;
-      default = 0;
-    };
-    efi = {
-      canTouchEfiVariables = true;
-      efiSysMountPoint = "/boot";
-    };
-  };
+  #  boot.loader = {
+  #    grub = {
+  #      enable = true;
+  #      efiSupport = true;
+  #      enableCryptodisk = true;
+  #      device = "nodev";
+  #      useOSProber = true;
+  #      configurationLimit = 20;
+  #      default = 0;
+  #    };
+  #    efi = {
+  #      canTouchEfiVariables = true;
+  #      efiSysMountPoint = "/boot";
+  #    };
+  #  };
 
   #  networking.hostName = hostname; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
