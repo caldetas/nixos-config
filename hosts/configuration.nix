@@ -303,30 +303,30 @@
   #  };
   #  nixpkgs.config.allowUnfree = true; # Allow Proprietary Software.
   #
-  #  system = {
-  #    # NixOS Settings
-  #    stateVersion = "24.05"; # do not change
-  #  };
+  system = {
+    # NixOS Settings
+    stateVersion = "24.05"; # do not change
+  };
   #
-  #  home-manager.users.${vars.user} = {
-  #    # Home-Manager Settings
-  #    home = {
-  #      stateVersion = "24.05"; # do not change
-  #    };
-  #    programs = {
-  #      home-manager.enable = true;
-  #    };
-  #  };
-  #  flatpak.enable = true;
-  #  flatpak = {
-  #    # Flatpak Packages (see module options)
-  #    extraPackages = [
-  #      "com.github.tchx84.Flatseal"
-  #      "io.github.mimbrero.WhatsAppDesktop"
-  #      "org.signal.Signal"
-  #      "ro.go.hmlendea.DL-Desktop"
-  #    ];
-  #  };
+  home-manager.users.${vars.user} = {
+    # Home-Manager Settings
+    home = {
+      stateVersion = "24.05"; # do not change
+    };
+    programs = {
+      home-manager.enable = true;
+    };
+  };
+  flatpak.enable = true;
+  flatpak = {
+    # Flatpak Packages (see module options)
+    extraPackages = [
+      #        "com.github.tchx84.Flatseal"
+      #        "io.github.mimbrero.WhatsAppDesktop"
+      #        "org.signal.Signal"
+      #        "ro.go.hmlendea.DL-Desktop"
+    ];
+  };
   #
   #  services.strongswan.enable = true;
   #  services.netbird.enable = true;
