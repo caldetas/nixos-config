@@ -206,7 +206,7 @@
       #      gimp
       #      gparted
       htop
-      #      neofetch
+      neofetch
       #      netbird
       #      netbird-ui
       #      nodejs_20
@@ -221,8 +221,8 @@
       #      strongswan
       #      telegram-desktop
       #      teams-for-linux
-      #      thefuck
-      #      wpsoffice
+      thefuck
+      #       wpsoffice
       #      yarn
     ] ++
 
