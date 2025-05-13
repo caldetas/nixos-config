@@ -61,12 +61,12 @@
 
 
 
-  sops.secrets.home-path = { };
-  sops.secrets."surfshark/user" = { };
-  sops.secrets."surfshark/password" = { };
-  sops.secrets."my-secret" = {
-    owner = "${vars.user}";
-  };
+  #  sops.secrets.home-path = { };
+  #  sops.secrets."surfshark/user" = { };
+  #  sops.secrets."surfshark/password" = { };
+  #  sops.secrets."my-secret" = {
+  #    owner = "${vars.user}";
+  #  };
   users.groups.secrets = { };
 
   users.users.${vars.user} = {
@@ -390,7 +390,7 @@
   #  '';
   #
   # SOPS Configuration Secrets
-  sops.defaultSopsFile = ./../secrets/secrets.yaml;
+  #  sops.defaultSopsFile = ./../secrets/secrets.yaml;
   sops.defaultSopsFormat = "yaml";
   sops.age.keyFile = "/home/${vars.user}/MEGAsync/encrypt/nixos/keys.txt";
   #  system.activationScripts = {
