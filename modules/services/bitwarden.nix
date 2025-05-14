@@ -72,7 +72,7 @@ in
 
     security.acme = {
       acceptTerms = true;
-      email = "info@${vars.domain}"; # Replace if needed
+      defaults.email = "info@${vars.domain}"; # Replace if needed
     };
   };
 }
