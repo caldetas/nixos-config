@@ -20,8 +20,6 @@ with lib;
       enable = true;
 
       virtualHosts."mail.${vars.domain}" = {
-        forceSSL = pkgs.lib.strings.hasInfix "." vars.domain;
-        enableACME = pkgs.lib.strings.hasInfix "." vars.domain;
 
         locations."/" = {
           proxyPass = "http://127.0.0.1:8088";
