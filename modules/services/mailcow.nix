@@ -4,8 +4,8 @@
 
 { config, lib, pkgs, vars, ... }:
 with lib;
-with host;
 {
+
   options = {
     mailcow = {
       enable = mkOption {
