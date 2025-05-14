@@ -19,7 +19,7 @@ with lib;
     services.nginx = {
       enable = true;
 
-      irtualHosts."webmail.${vars.domain}" = {
+      virtualHosts."webmail.${vars.domain}" = {
         forceSSL = pkgs.lib.strings.hasInfix "." vars.domain;
         enableACME = pkgs.lib.strings.hasInfix "." vars.domain;
 
