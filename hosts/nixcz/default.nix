@@ -87,7 +87,7 @@
 
   networking.hostName = "nixcz";
   services.getty.enable = true;
-  services.getty.autoLogin.user = ${vars.user};
+  services.getty.autoLogin.user = "${vars.user}";
 
   # We use the dhcpcd daemon to automatically configure your network. For IPv6 we need to make sure
   # that no temporary addresses (or privacy extensions) are used. Your server is required to use the
@@ -123,6 +123,7 @@
   #  mailcow.enable = true;
 
 }
+
 
 
 
