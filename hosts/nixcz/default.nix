@@ -116,8 +116,7 @@
   services.cron.enable = true;
 
   # Please remove the hardcoded password from the configuration and set
-  # the password using the "
-  passwd " command after the first boot.
+  # the password using the " passwd " command after the first boot.
 
   #  bitwarden.enable = true;
   #  mailcow.enable = true;
