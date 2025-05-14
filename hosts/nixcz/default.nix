@@ -87,7 +87,7 @@
 
   networking.hostName = "nixcz";
   services.getty.enable = true;
-  services.getty.autoLogin.user = vars.user;
+  services.getty.autoLogin.user = ${vars.user};
 
   # We use the dhcpcd daemon to automatically configure your network. For IPv6 we need to make sure
   # that no temporary addresses (or privacy extensions) are used. Your server is required to use the
@@ -97,8 +97,7 @@
   #  networking.dhcpcd.IPv6rs = true;
   #  networking.dhcpcd.persistent = true;
   #  networking.tempAddresses = " disabled ";
-  #  networking.interfaces.ens3.tempAddress = "
-  disabled ";
+  #  networking.interfaces.ens3.tempAddress = " disabled ";
 
   # To allow you to properly use and access your VPS via SSH, we enable the OpenSSH server and
   # grant you root access. This is just our default configuration, you are free to remove root
@@ -107,23 +106,24 @@
   services.openssh.enable = true;
   services.openssh.settings.PermitRootLogin = "
   yes ";
-    networking.firewall.allowedTCPPorts = [ 22 80 443 ];
+  networking.firewall.allowedTCPPorts = [ 22 80 443 ];
 
-    # Under normal circumstances we would listen to your server's cloud-init callback and mark the server
-    # as installed at this point. As we don't deliver cloud-init with NixOS we have to use a workaround
-    # to indicate that your server is successfully installed. You can remove the cronjob after the server
-    # has been started the first time. It's no longer needed.
+  # Under normal circumstances we would listen to your server's cloud-init callback and mark the server
+  # as installed at this point. As we don't deliver cloud-init with NixOS we have to use a workaround
+  # to indicate that your server is successfully installed. You can remove the cronjob after the server
+  # has been started the first time. It's no longer needed.
 
-    services.cron.enable = true;
+  services.cron.enable = true;
 
-    # Please remove the hardcoded password from the configuration and set
-    # the password using the "
+  # Please remove the hardcoded password from the configuration and set
+  # the password using the "
   passwd " command after the first boot.
 
   #  bitwarden.enable = true;
   #  mailcow.enable = true;
 
 }
+
 
 
 
