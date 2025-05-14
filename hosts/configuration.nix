@@ -61,12 +61,12 @@
 
 
 
-  #  sops.secrets.home-path = { };
-  #  sops.secrets."surfshark/user" = { };
-  #  sops.secrets."surfshark/password" = { };
-  #  sops.secrets."my-secret" = {
-  #    owner = "${vars.user}";
-  #  };
+  sops.secrets.home-path = { };
+  sops.secrets."surfshark/user" = { };
+  sops.secrets."surfshark/password" = { };
+  sops.secrets."my-secret" = {
+    owner = "${vars.user}";
+  };
   users.groups.secrets = { };
 
   users.users.${vars.user} = {
@@ -390,7 +390,7 @@
   #  '';
   #
   # SOPS Configuration Secrets
-  #  sops.defaultSopsFile = ./../secrets/secrets.yaml;
+  sops.defaultSopsFile = ./../secrets/secrets.yaml;
   sops.defaultSopsFormat = "yaml";
   sops.age.keyFile = "/home/${vars.user}/MEGAsync/encrypt/nixos/keys.txt";
   #  system.activationScripts = {
@@ -452,4 +452,15 @@
   #    };
   #    installPhase = "cp -r customize/nixos $out";
   #  };
+
+  services.vaultwarden = {
+    enable = true;
+    environmentFile = "/etc/vaultwarden.env";
+    config = {
+      DOMAIN = "https://vault.185.189.151.24"; # ← replace with your domain
+      SIGNUPS_ALLOWED = false; # set to true if you want open signups
+      ROCKET_PORT = 8222; # optional, default is 80
+      WEBSOCKET_ENABLED = true;
+    };
+  };
 }

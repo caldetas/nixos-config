@@ -11,6 +11,7 @@
 #
 
 [
+  ./bitwarden.nix
   ./dunst.nix
   ./gnupg.nix
   ./picom.nix
