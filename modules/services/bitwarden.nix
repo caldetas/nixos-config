@@ -59,7 +59,7 @@ in
       };
     };
 
-    networking.firewall.allowedTCPPorts = [ 80 443 8222 ];
+    #    networking.firewall.allowedTCPPorts = [ 80 443 8222 ];
 
     systemd.services.vaultwarden.serviceConfig = {
       Restart = "always";
