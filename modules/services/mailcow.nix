@@ -19,9 +19,18 @@ with lib;
     services.nginx = {
       enable = true;
 
-      virtualHosts."webmail.${vars.domain}" = {
+      services.nginx.virtualHosts."webmail.${vars.domain}" = {
         forceSSL = pkgs.lib.strings.hasInfix "." vars.domain;
         enableACME = pkgs.lib.strings.hasInfix "." vars.domain;
+
+        listen = [
+          { addr = "0.0.0.0"; port = 80; ssl = false; }
+          { addr = "0.0.0.0"; port = 443; ssl = true; }
+        ];
+
+        root = "/var/www/empty"; # Required for ACME HTTP challenge
+
+        serverAliases = [ "mail.${vars.domain}" ];
 
         locations."/" = {
           proxyPass = "http://127.0.0.1:8088";
