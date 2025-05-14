@@ -37,8 +37,12 @@ in
       };
     };
 
+    systemd.tmpfiles.rules = [
+      "d /var/lib/bitwarden_rs 0750 vaultwarden vaultwarden -"
+    ];
+
     environment.etc."vaultwarden.env".text = ''
-      DATABASE_URL=data/vaultwarden.db
+      DATABASE_URL=/var/lib/bitwarden_rs/vaultwarden.db
       ADMIN_TOKEN=${adminToken}
     '';
 
