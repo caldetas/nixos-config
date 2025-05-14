@@ -10,47 +10,63 @@ let
   adminToken = builtins.hashString "sha256" "vaultwarden-${vars.domain}";
 in
 {
-  services.vaultwarden = {
-    enable = true;
-    environmentFile = "/etc/vaultwarden.env";
-    config = {
-      DOMAIN = "http://${vars.domain}";
-      SIGNUPS_ALLOWED = false;
-      WEBSOCKET_ENABLED = true;
-      ROCKET_PORT = 8222;
-    };
-  };
-
-  environment.etc."vaultwarden.env".text = ''
-    DATABASE_URL=data/vaultwarden.db
-    ADMIN_TOKEN=${adminToken}
-  '';
-
-  services.nginx = {
-    enable = true;
-    virtualHosts."${vars.domain}" = {
-      forceSSL = pkgs.lib.strings.hasInfix "." vars.domain; # Use SSL only for real domain
-      enableACME = pkgs.lib.strings.hasInfix "." vars.domain;
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:8222";
-        proxyWebsockets = true;
+  options = {
+    bitwarden = {
+      enable = mkOption {
+        type = types.bool;
+        default = false;
       };
     };
   };
 
-  networking.firewall.allowedTCPPorts = [ 80 443 8222 ];
+  ## Activate SURFSHARK VPN
+  # systemctl start openvpn-ch-zur.service
+  # systemctl status openvpn-ch-zur.service
+  # systemctl stop openvpn-ch-zur.service
 
-  systemd.services.vaultwarden.serviceConfig = {
-    Restart = "always";
-    RestartSec = "5s";
-  };
+  config = mkIf (config.bitwarden.enable) {
+    services.vaultwarden = {
+      enable = true;
+      environmentFile = "/etc/vaultwarden.env";
+      config = {
+        DOMAIN = "http://${vars.domain}";
+        SIGNUPS_ALLOWED = false;
+        WEBSOCKET_ENABLED = true;
+        ROCKET_PORT = 8222;
+      };
+    };
 
-  systemd.services.vaultwarden.preStart = ''
-    echo "Vaultwarden admin token: ${adminToken}"
-  '';
+    environment.etc."vaultwarden.env".text = ''
+      DATABASE_URL=data/vaultwarden.db
+      ADMIN_TOKEN=${adminToken}
+    '';
 
-  security.acme = {
-    acceptTerms = true;
-    email = "info@${vars.domain}"; # Replace if needed
+    services.nginx = {
+      enable = true;
+      virtualHosts."${vars.domain}" = {
+        forceSSL = pkgs.lib.strings.hasInfix "." vars.domain; # Use SSL only for real domain
+        enableACME = pkgs.lib.strings.hasInfix "." vars.domain;
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:8222";
+          proxyWebsockets = true;
+        };
+      };
+    };
+
+    networking.firewall.allowedTCPPorts = [ 80 443 8222 ];
+
+    systemd.services.vaultwarden.serviceConfig = {
+      Restart = "always";
+      RestartSec = "5s";
+    };
+
+    systemd.services.vaultwarden.preStart = ''
+      echo "Vaultwarden admin token: ${adminToken}"
+    '';
+
+    security.acme = {
+      acceptTerms = true;
+      email = "info@${vars.domain}"; # Replace if needed
+    };
   };
 }

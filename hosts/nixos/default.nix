@@ -123,5 +123,7 @@
     password = "1234";
   };
 
+  bitwarden.enable = true;
+
 }
 
