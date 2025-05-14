@@ -128,7 +128,7 @@ in
     specialArgs = {
       inherit inputs system unstable hyprland vars;
       host = {
-        hostName = "nixos";
+        hostName = "nixcz";
         mainMonitor = "";
         secondMonitor = "";
         thirdMonitor = "";
