@@ -457,7 +457,7 @@
     enable = true;
     environmentFile = "/etc/vaultwarden.env";
     config = {
-      DOMAIN = "https://vault.185.189.151.24"; # ← replace with your domain
+      DOMAIN = "https://vault.${vars.domain}"; # ← replace with your domain
       SIGNUPS_ALLOWED = false; # set to true if you want open signups
       ROCKET_PORT = 8222; # optional, default is 80
       WEBSOCKET_ENABLED = true;
