@@ -24,7 +24,7 @@ in
   # systemctl status openvpn-ch-zur.service
   # systemctl stop openvpn-ch-zur.service
 
-  config = mkIf (config.bitwarden.enable) {
+  config = lib.mkIf (config.bitwarden.enable) {
     services.vaultwarden = {
       enable = true;
       environmentFile = "/etc/vaultwarden.env";
