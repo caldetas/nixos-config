@@ -122,20 +122,20 @@ in
       }
     ];
   };
-  nixoscz = lib.nixosSystem {
+  nixcz = lib.nixosSystem {
     #
     inherit system;
     specialArgs = {
       inherit inputs system unstable hyprland vars;
       host = {
-        hostName = "nixoscz";
+        hostName = "nixcz";
         mainMonitor = "";
         secondMonitor = "";
         thirdMonitor = "";
       };
     };
     modules = [
-      ./nixoscz
+      ./nixcz
       ./configuration.nix
       home-manager.nixosModules.home-manager
       {
