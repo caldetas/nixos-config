@@ -6,6 +6,7 @@
 
 
 let
+  inherit (lib) mkIf mkOption;
   # Create a deterministic admin token
   adminToken = builtins.hashString "sha256" "vaultwarden-${vars.domain}";
 in
@@ -24,7 +25,7 @@ in
   # systemctl status openvpn-ch-zur.service
   # systemctl stop openvpn-ch-zur.service
 
-  config = lib.mkIf (config.bitwarden.enable) {
+  config = mkIf (config.bitwarden.enable) {
     services.vaultwarden = {
       enable = true;
       environmentFile = "/etc/vaultwarden.env";
