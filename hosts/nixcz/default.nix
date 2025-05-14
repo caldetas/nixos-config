@@ -102,7 +102,7 @@
   # access, create your own users and further secure your server.
 
   services.openssh.enable = true;
-  services.openssh.settings.PermitRootLogin = " yes ";
+  services.openssh.settings.PermitRootLogin = "no";
   networking.firewall.allowedTCPPorts = [ 22 80 443 ];
 
   # Under normal circumstances we would listen to your server's cloud-init callback and mark the server
