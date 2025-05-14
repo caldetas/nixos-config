@@ -31,7 +31,7 @@ in
       environmentFile = "/etc/vaultwarden.env";
       config = {
         DOMAIN = "http://${vars.domain}";
-        SIGNUPS_ALLOWED = true;
+        SIGNUPS_ALLOWED = false;
         WEBSOCKET_ENABLED = true;
         ROCKET_PORT = 8222;
       };
@@ -49,7 +49,7 @@ in
 
     services.nginx = {
       enable = true;
-      virtualHosts."vault.${vars.domain}" = {
+      virtualHosts."${vars.domain}" = {
         forceSSL = pkgs.lib.strings.hasInfix "." vars.domain; # Use SSL only for real domain
         enableACME = pkgs.lib.strings.hasInfix "." vars.domain;
         locations."/" = {
