@@ -85,17 +85,17 @@
 
   # This is the server's hostname you chose during the order process. Feel free to change it.
 
-  networking.hostName = "nixcz";
+  #  networking.hostName = "nixcz";
 
   # We use the dhcpcd daemon to automatically configure your network. For IPv6 we need to make sure
   # that no temporary addresses (or privacy extensions) are used. Your server is required to use the
   # network data that is displayed in the Network tab in our client portal, otherwise your server will
   # loose internet access due to network filters that are in place.
 
-  networking.dhcpcd.IPv6rs = true;
-  networking.dhcpcd.persistent = true;
-  networking.tempAddresses = "disabled";
-  networking.interfaces.ens3.tempAddress = "disabled";
+  #  networking.dhcpcd.IPv6rs = true;
+  #  networking.dhcpcd.persistent = true;
+  #  networking.tempAddresses = "disabled";
+  #  networking.interfaces.ens3.tempAddress = "disabled";
 
   # To allow you to properly use and access your VPS via SSH, we enable the OpenSSH server and
   # grant you root access. This is just our default configuration, you are free to remove root
