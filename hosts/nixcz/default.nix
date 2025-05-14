@@ -85,7 +85,7 @@
 
   # This is the server's hostname you chose during the order process. Feel free to change it.
 
-  networking.hostName = "nixcz";
+  networking.hostName = "nixos";
 
   # We use the dhcpcd daemon to automatically configure your network. For IPv6 we need to make sure
   # that no temporary addresses (or privacy extensions) are used. Your server is required to use the
