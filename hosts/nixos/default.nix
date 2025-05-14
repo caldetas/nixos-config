@@ -124,6 +124,7 @@
   };
 
   bitwarden.enable = true;
+  mailcow.enable = true;
 
 }
 
