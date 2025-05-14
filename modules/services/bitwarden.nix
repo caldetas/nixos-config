@@ -6,7 +6,7 @@
 
 
 let
-  inherit (lib) mkIf mkOption;
+  inherit (lib) mkIf mkOption types;
   # Create a deterministic admin token
   adminToken = builtins.hashString "sha256" "vaultwarden-${vars.domain}";
 in
