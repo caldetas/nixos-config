@@ -15,20 +15,20 @@ with lib;
     };
   };
 
-  config = mkIf (config.bitwarden.enable) {
+  config = mkIf (config.mailcow.enable) {
     services.nginx = {
       enable = true;
 
       virtualHosts."webmail.${vars.domain}" = {
         forceSSL = pkgs.lib.strings.hasInfix "." vars.domain;
-        enableACME = pkgs.lib.strings.hasInfix "." vars.domain;
+        #        enableACME = pkgs.lib.strings.hasInfix "." vars.domain;
 
         listen = [
           { addr = "0.0.0.0"; port = 80; ssl = false; }
           { addr = "0.0.0.0"; port = 443; ssl = true; }
         ];
 
-        root = "/var/www/empty"; # Required for ACME HTTP challenge
+        #        root = "/var/www/empty"; # Required for ACME HTTP challenge
 
         serverAliases = [ "mail.${vars.domain}" ];
 

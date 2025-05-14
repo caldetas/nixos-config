@@ -51,7 +51,7 @@ in
       enable = true;
       virtualHosts."vault.${vars.domain}" = {
         forceSSL = pkgs.lib.strings.hasInfix "." vars.domain; # Use SSL only for real domain
-        enableACME = pkgs.lib.strings.hasInfix "." vars.domain;
+        #        enableACME = pkgs.lib.strings.hasInfix "." vars.domain;
         locations."/" = {
           proxyPass = "http://127.0.0.1:8222";
           proxyWebsockets = true;
@@ -70,9 +70,9 @@ in
       echo "Vaultwarden admin token: ${adminToken}"
     '';
 
-    security.acme = {
-      acceptTerms = true;
-      defaults.email = "info@${vars.domain}"; # Replace if needed
-    };
+    #    security.acme = {
+    #      acceptTerms = true;
+    #      defaults.email = "info@${vars.domain}"; # Replace if needed
+    #    };
   };
 }
