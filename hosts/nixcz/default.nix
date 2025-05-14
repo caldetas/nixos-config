@@ -80,8 +80,8 @@
 
   # You should only edit the lines below if you know what you are doing.
 
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
+  #  boot.loader.grub.enable = true;
+  #  boot.loader.grub.device = "/dev/sda";
 
   # This is the server's hostname you chose during the order process. Feel free to change it.
 
