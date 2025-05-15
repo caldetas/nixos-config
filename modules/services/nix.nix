@@ -2,7 +2,7 @@
 #  System Notifications
 #
 
-{ config, lib, pkgs, vars, sops-nix, ... }:
+{ config, lib, pkgs, vars, inputs, ... }:
 with lib;
 {
   nix = {
