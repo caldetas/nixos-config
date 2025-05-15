@@ -31,7 +31,11 @@
         #emulate zsh -c "$(direnv hook zsh)"
 
         #eval "$(direnv hook zsh)"
-        neofetch
+
+        #only run interactive
+        if [[ $- == *i* ]]; then
+          neofetch
+        fi
       ''; # Theming
     };
   };
