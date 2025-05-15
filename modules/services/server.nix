@@ -3,7 +3,7 @@
 #
 
 { config, lib, pkgs, vars, ... }:
-
+with lib;
 {
   options = {
     server = {
