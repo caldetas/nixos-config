@@ -2,7 +2,7 @@
 #  Shell
 #
 
-{ pkgs, vars, ... }:
+{ pkgs, vars, config, ... }:
 
 {
   users.users.${vars.user} = {
@@ -20,7 +20,8 @@
       ohMyZsh = {
         # Plug-ins
         enable = true;
-        plugins = [ "git" "thefuck" ];
+        plugins = [ "git" "thefuck" "neofetch-autoload" ]; # your custom plugin name
+        custom = "$HOME/.config/oh-my-zsh/custom";
       };
 
       shellInit = ''
@@ -31,12 +32,15 @@
         #emulate zsh -c "$(direnv hook zsh)"
 
         #eval "$(direnv hook zsh)"
-
-        #only run interactive
-        if [[ $- == *i* ]]; then
-          neofetch
-        fi
-      ''; # Theming
+      '';
     };
+  };
+
+  home-manager.users.${vars.user} = {
+    home.file.".config/oh-my-zsh/custom/plugins/neofetch-autoload/neofetch-autoload.plugin.zsh".text = ''
+      if [[ $- == *i* ]]; then
+        neofetch
+      fi
+    '';
   };
 }
