@@ -20,8 +20,7 @@
       ohMyZsh = {
         # Plug-ins
         enable = true;
-        plugins = [ "git" "thefuck" "neofetch-autoload" ]; # your custom plugin name
-        custom = "$HOME/.config/oh-my-zsh/custom";
+        plugins = [ "git" "thefuck" ];
       };
 
       shellInit = ''
@@ -30,17 +29,12 @@
         autoload -U promptinit; promptinit
         # Hook direnv
         #emulate zsh -c "$(direnv hook zsh)"
-
         #eval "$(direnv hook zsh)"
+        # Only run neofetch in truly interactive, login-ish shells
+        if [[ $- == *i* ]] && [[ -z "$SSH_ORIGINAL_COMMAND" ]] && [[ -z "$RSYNC_CALL" ]]; then
+          neofetch
+        fi
       '';
     };
-  };
-
-  home-manager.users.${vars.user} = {
-    home.file.".config/oh-my-zsh/custom/plugins/neofetch-autoload/neofetch-autoload.plugin.zsh".text = ''
-      if [[ $- == *i* ]]; then
-        neofetch
-      fi
-    '';
   };
 }
