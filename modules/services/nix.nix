@@ -3,7 +3,7 @@
 #
 
 { config, lib, pkgs, vars, sops-nix, ... }:
-with lib
+with lib;
 {
   nix = {
     # Nix Package Manager Settings

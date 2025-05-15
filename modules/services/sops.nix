@@ -3,7 +3,7 @@
 #
 
 { config, lib, pkgs, vars, sops-nix, ... }:
-with lib
+with lib;
 {
   config = mkIf (!config.server.enable) {
 

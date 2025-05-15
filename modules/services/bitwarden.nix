@@ -4,10 +4,10 @@
 
 { config, lib, pkgs, vars, ... }:
 
-with lib
+with lib;
 let
-# Create a deterministic admin token
-adminToken = builtins.hashString "sha256" "vaultwarden-${vars.domain}";
+  # Create a deterministic admin token
+  adminToken = builtins.hashString "sha256" "vaultwarden-${vars.domain}";
 in
 {
   options = {
