@@ -1,104 +1,86 @@
 #
-#  Main system configuration. More information available in configuration.nix(5) man page.
-#
-#  flake.nix
-#   ├─ ./hosts
-#   │   ├─ default.nix
-#   │   └─ configuration.nix *
-#   └─ ./modules
-#       ├─ ./desktops
-#       │   └─ default.nix
-#       ├─ ./editors
-#       │   └─ default.nix
-#       ├─ ./hardware
-#       │   └─ default.nix
-#       ├─ ./programs
-#       │   └─ default.nix
-#       ├─ ./services
-#       │   └─ default.nix
-#       ├─ ./shell
-#       │   └─ default.nix
-#       └─ ./theming
-#           └─ default.nix
+#  Main system configuration.
 #
 
 { config, lib, pkgs, unstable, inputs, vars, sops-nix, host, ... }:
+
 with lib;
-{
-  imports =
-    [
-      inputs.sops-nix.nixosModules.sops
-    ] ++ (
-      import ../modules/desktops ++
-      import ../modules/editors ++
-      import ../modules/hardware ++
-      import ../modules/programs ++
-      import ../modules/services ++
-      import ../modules/shell ++
-      import ../modules/theming
-    );
 
-  users.users.${vars.user} = {
-    # System User
-    isNormalUser = true;
-    extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" "secrets" ];
-  };
+mkMerge [
+  # Always-active base configuration
+  {
+    imports =
+      [
+        inputs.sops-nix.nixosModules.sops
+      ] ++ (
+        import ../modules/desktops ++
+        import ../modules/editors ++
+        import ../modules/hardware ++
+        import ../modules/programs ++
+        import ../modules/services ++
+        import ../modules/shell ++
+        import ../modules/theming
+      );
 
-  #  time.timeZone = "America/Mexico_City";        # Time zone and Internationalisation
-  time.timeZone = "Europe/Zurich"; # Time zone and Internationalisation
-  i18n = {
-    defaultLocale = "en_US.UTF-8";
-    supportedLocales = [
-      "en_US.UTF-8/UTF-8"
-      "de_CH.UTF-8/UTF-8"
-      "es_MX.UTF-8/UTF-8"
+    users.users.${vars.user} = {
+      # System User
+      isNormalUser = true;
+      extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" "secrets" ];
+    };
+
+    #  time.timeZone = "America/Mexico_City";        # Time zone and Internationalisation
+    time.timeZone = "Europe/Zurich"; # Time zone and Internationalisation
+    i18n = {
+      defaultLocale = "en_US.UTF-8";
+      supportedLocales = [
+        "en_US.UTF-8/UTF-8"
+        "de_CH.UTF-8/UTF-8"
+        "es_MX.UTF-8/UTF-8"
+      ];
+      extraLocaleSettings = {
+        LC_TIME = "de_CH.UTF-8";
+        LC_MONETARY = "de_CH.UTF-8";
+      };
+    };
+
+    console = {
+      font = "Lat2-Terminus16";
+      keyMap = "sg";
+    };
+
+    swapDevices = [{
+      device = "/swapfile";
+      size = 16 * 1024; # 16GB
+    }];
+
+    security = {
+      rtkit.enable = true;
+      polkit.enable = true;
+      sudo.wheelNeedsPassword = false;
+    };
+
+    fonts.packages = with pkgs; [
+      # Fonts
+      jetbrains-mono
+      font-awesome # Icons
+      ubuntu_font_family
     ];
-    extraLocaleSettings = {
-      LC_TIME = "de_CH.UTF-8";
-      LC_MONETARY = "de_CH.UTF-8";
-    };
-  };
-
-  console = {
-    font = "Lat2-Terminus16";
-    keyMap = "sg";
-  };
-
-  swapDevices = [{
-    device = "/swapfile";
-    size = 16 * 1024; # 16GB
-  }];
-
-  security = {
-    rtkit.enable = true;
-    polkit.enable = true;
-    sudo.wheelNeedsPassword = false;
-  };
-
-  fonts.packages = with pkgs; [
-    # Fonts
-    jetbrains-mono
-    font-awesome # Icons
-    ubuntu_font_family
-  ];
-  fonts.fontconfig.enable = lib.mkForce true;
-
-  #  #  RSPI4 installer
-  #  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+    fonts.fontconfig.enable = lib.mkForce true;
 
 
-  #  networking.nameservers =  [ "1.1.1.1" "9.9.9.9"]; # privacy respecting nameserver for dns queries (cloudflare & quad9)
-  networking.nameservers = [ "162.252.172.57" "149.154.159.92" ]; # Surfshark
-  networking.hostName = host.hostName; # Hostname
-  environment = {
-    variables = {
-      # Environment Variables
-      TERMINAL = "${vars.terminal}";
-      EDITOR = "${vars.editor}";
-      VISUAL = "${vars.editor}";
+    networking = {
+      #    nameservers =  [ "1.1.1.1" "9.9.9.9"]; # privacy respecting nameserver for dns queries (cloudflare & quad9)
+      nameservers = [ "162.252.172.57" "149.154.159.92" ]; # Surfshark
+      hostName = host.hostName;
     };
 
-    systemPackages = with unstable; [
+    environment.variables = {
+      TERMINAL = vars.terminal;
+      EDITOR = vars.editor;
+      VISUAL = vars.editor;
+    };
+
+    environment.systemPackages = with unstable; [
       # System-Wide Packages
       # Terminal
       btop # Resource Manager
@@ -154,114 +136,81 @@ with lib;
       thefuck
     ];
 
-    # Desktop programs
-    config = mkIf (!config.server.enable) {
-      systemPackages = with unstable; [
-
-        # Apps
-        appimage-run # Runs AppImages on NixOS
-        google-chrome # Browser
-        libreoffice # OpenOffice
-
-        # Security
-        sops # Secrets Manager
-
-
-
-        #Java
-        #      gradle
-        #      jetbrains.datagrip
-        jetbrains.idea-ultimate #      (jetbrains.plugins.addPlugins jetbrains.idea-ultimate [ "github-copilot" ])
-        #      jetbrains.jdk
-        #      jetbrains.pycharm-professional
-        #      jre17_minimal
-
-        # Apps
-        brave
-        calibre
-        discord
-        firefox
-        gedit
-        ghostscript #pdf compression
-        git
-        gimp
-        gparted
-        netbird
-        netbird-ui
-        nodejs_20
-        openvpn
-        pandoc
-        pinentry
-        pdftk
-        qbittorrent
-        remmina
-        spotify
-        stremio
-        strongswan
-        telegram-desktop
-        teams-for-linux
-        thefuck
-        wpsoffice
-        yarn
-      ] ++
-
-      (with unstable; [
-        #CV creation with Latex
-        #            texlive.combined.scheme-full #latex
-      ]) ++
-
-      (with pkgs; [
-        megasync
-        steam
-      ]);
+    home-manager.users.${vars.user} = {
+      home.stateVersion = "24.05";
+      programs.home-manager.enable = true;
     };
-  };
+
+    system.stateVersion = "24.05";
+
+    environment.interactiveShellInit = ''
+      alias buildVm='echo cd ${vars.location} && git pull && sudo nixos-rebuild build-vm --flake ${vars.location}#vm --show-trace'
+      alias update='echo Updating system... && git -C ${vars.location} pull && sudo nix flake update --flake ${vars.location} && sudo nixos-rebuild switch --flake ${vars.location}#${host.hostName} --show-trace'
+      alias rebuild='echo Rebuilding system... && git -C ${vars.location} pull && sudo nixos-rebuild switch --flake ${vars.location}#${host.hostName} --show-trace'
+    '';
+  }
+
+  # Conditional configuration for Desktop- User
+  (mkIf (!config.server.enable) {
+    environment.systemPackages = with unstable; [
+
+      # Apps
+      appimage-run # Runs AppImages on NixOS
+      google-chrome # Browser
+      libreoffice # OpenOffice
+
+      # Security
+      sops # Secrets Manager
 
 
 
-  system = {
-    # NixOS Settings
-    stateVersion = "24.05"; # do not change
-  };
-  #
-  home-manager.users.${vars.user} = {
-    # Home-Manager Settings
-    home = {
-      stateVersion = "24.05"; # do not change
-    };
-    programs = {
-      home-manager.enable = true;
-    };
-  };
+      #Java
+      #      gradle
+      #      jetbrains.datagrip
+      jetbrains.idea-ultimate #      (jetbrains.plugins.addPlugins jetbrains.idea-ultimate [ "github-copilot" ])
+      #      jetbrains.jdk
+      #      jetbrains.pycharm-professional
+      #      jre17_minimal
 
+      # Apps
+      brave
+      calibre
+      discord
+      firefox
+      gedit
+      ghostscript #pdf compression
+      git
+      gimp
+      gparted
+      netbird
+      netbird-ui
+      nodejs_20
+      openvpn
+      pandoc
+      pinentry
+      pdftk
+      qbittorrent
+      remmina
+      spotify
+      stremio
+      strongswan
+      telegram-desktop
+      teams-for-linux
+      thefuck
+      wpsoffice
+      yarn
+    ] ++
 
-  environment.interactiveShellInit = ''
-    alias buildVm='echo cd ${vars.location} \&\& git pull \&\& sudo nixos-rebuild build-vm --flake ${vars.location}#vm --show-trace && cd ${vars.location} && git pull && sudo nixos-rebuild build-vm --flake ${vars.location}#vm --show-trace'
-    alias update='
-      echo "Updating system..."
-      echo "Commands:"
-      echo "  git -C ${vars.location} pull"
-      echo "  sudo nix flake update --flake ${vars.location}"
-      echo "  sudo nixos-rebuild switch --flake ${vars.location}#${host.hostName} --show-trace"
+    (with unstable; [
+      #CV creation with Latex
+      #            texlive.combined.scheme-full #latex
+    ]) ++
 
-      git -C ${vars.location} pull
-      sudo nix flake update --flake ${vars.location}
-      sudo nixos-rebuild switch --flake ${vars.location}#${host.hostName} --show-trace
-    '
+    (with pkgs; [
+      megasync
+      steam
+    ]);
 
-    alias rebuild='
-      echo "Rebuilding system..."
-      echo "Commands:"
-      echo "  git -C ${vars.location} pull"
-      echo "  sudo nixos-rebuild switch --flake ${vars.location}#${host.hostName} --show-trace"
-
-      git -C ${vars.location} pull
-      sudo nixos-rebuild switch --flake ${vars.location}#${host.hostName} --show-trace
-    '
-  '';
-
-  # Desktop config
-  config = mkIf (!config.server.enable) {
     boot.loader.grub.theme = pkgs.stdenv.mkDerivation {
       pname = "distro-grub-themes";
       version = "3.1";
@@ -273,9 +222,9 @@ with lib;
       };
       installPhase = "cp -r customize/nixos $out";
     };
-    flatpak.enable = true;
+
     flatpak = {
-      # Flatpak Packages (see module options)
+      enable = true;
       extraPackages = [
         "com.github.tchx84.Flatseal"
         "io.github.mimbrero.WhatsAppDesktop"
@@ -284,8 +233,7 @@ with lib;
       ];
     };
 
-
-    #Default Applications
+    #    Default Applications
     xdg.mime.defaultApplications = {
       "image/jpeg" = [ "image-roll.desktop" "feh.desktop" ];
       "image/png" = [ "image-roll.desktop" "feh.desktop" ];
@@ -316,9 +264,9 @@ with lib;
       steam.enable = true;
     };
 
-    services.pulseaudio.enable = false;
     services = {
       printing.enable = true;
+      pulseaudio.enable = false;
       avahi = {
         enable = true;
         nssmdns4 = true;
@@ -327,28 +275,22 @@ with lib;
       pipewire = {
         # Sound
         enable = true;
-        alsa = {
-          enable = true;
-          support32Bit = true;
-        };
+        alsa.enable = true;
+        alsa.support32Bit = true;
         pulse.enable = true;
         jack.enable = true;
       };
       openssh = {
         # SSH
         enable = true;
-        allowSFTP = true; # SFTP
+        allowSFTP = true;
         extraConfig = ''
           HostKeyAlgorithms +ssh-rsa
         '';
       };
     };
     # Disable the tty1 getty so that GDM isn’t interfered with at login https://discourse.nixos.org/t/gnome-keyring-slow-start/58364/6
-    systemd = {
-      services = {
-        "getty@tty1".enable = false;
-        "autovt@tty1".enable = false;
-      };
-    };
-  };
-}
+    systemd.services."getty@tty1".enable = false;
+    systemd.services."autovt@tty1".enable = false;
+  })
+]
