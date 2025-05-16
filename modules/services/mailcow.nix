@@ -15,7 +15,7 @@ with lib;
     };
   };
 
-  config = mkIf (config.bitwarden.enable) {
+  config = mkIf (config.mailcow.enable) {
     services.nginx = {
       enable = true;
 
@@ -46,4 +46,19 @@ with lib;
       };
     };
   };
+
+  ##  MIGRATION
+  ## On old server
+  #docker-compose down
+  #sudo tar czf mailcow-volumes.tar.gz -C /var/lib/docker/volumes $(docker volume ls -q | grep mailcowdockerized_)
+  #sudo tar czf mailcow-config.tar.gz mailcow-dockerized/
+  #
+  ## Transfer files
+  #scp *.tar.gz newserver:
+  #
+  ## On new server
+  #tar xzf mailcow-config.tar.gz
+  #sudo tar xzf mailcow-volumes.tar.gz -C /var/lib/docker/volumes
+  #cd mailcow-dockerized && docker-compose up -d
+
 }
