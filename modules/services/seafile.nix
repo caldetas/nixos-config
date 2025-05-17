@@ -69,10 +69,28 @@ with lib;
         Type = "oneshot";
         ExecStart = pkgs.writeShellScript "patch-seafile-csrf" ''
           set -e
-          ${pkgs.docker}/bin/docker exec seafile bash -c '
+
+          SEAFILE_CONTAINER=seafile
+          DOCKER=${pkgs.docker}/bin/docker
+
+          # Wait for container to exist (up to 60 seconds)
+          for i in {1..30}; do
+            if $DOCKER ps -a --format '{{.Names}}' | grep -q "^$SEAFILE_CONTAINER$"; then
+              break
+            fi
+            echo "Waiting for Seafile container..."
+            sleep 2
+          done
+
+          if ! $DOCKER ps --format '{{.Names}}' | grep -q "^$SEAFILE_CONTAINER$"; then
+            echo "Container $SEAFILE_CONTAINER not running"
+            exit 1
+          fi
+
+          $DOCKER exec $SEAFILE_CONTAINER bash -c '
             SETTINGS=/opt/seafile/seafile-server-latest/seahub/seahub/settings.py
             if ! grep -q CSRF_TRUSTED_ORIGINS "$SETTINGS"; then
-              echo "CSRF_TRUSTED_ORIGINS = ['https://seafile.${vars.domain}']" >> "$SETTINGS"
+              echo "CSRF_TRUSTED_ORIGINS = [\"https://seafile.${vars.domain}\"]" >> "$SETTINGS"
               /opt/seafile/seafile-server-latest/seahub.sh restart
             fi
           '
