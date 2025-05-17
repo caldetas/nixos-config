@@ -6,6 +6,15 @@
 with lib;
 {
 
+  options = {
+    services.seafile.enable = {
+      enable = mkOption {
+        type = types.bool;
+        default = true;
+      };
+    };
+  };
+
   config = mkIf (config.server.enable) {
 
     # Persistent data directories
@@ -46,9 +55,6 @@ with lib;
           depends_on:
             - db
     '';
-
-    # ensure start of setup service
-    systemd.services.seafile.wantedBy = [ "multi-user.target" ];
 
     systemd.services.seafile = {
       description = "Seafile via Docker Compose";
