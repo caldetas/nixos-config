@@ -53,14 +53,13 @@ with lib;
       after = [ "docker.service" ];
       wants = [ "docker.service" ];
       wantedBy = [ "multi-user.target" ];
-      restart = "always";
+      Restart = "always";
+      RestartSec = 5;
 
       serviceConfig = {
         WorkingDirectory = "/etc/seafile";
         ExecStart = "${pkgs.docker-compose}/bin/docker-compose up -d";
         ExecStop = "${pkgs.docker-compose}/bin/docker-compose down";
-        Restart = "always";
-        RestartSec = 5;
 
         # Run CSRF fix *after* containers have been started
         ExecStartPost = pkgs.writeShellScript "patch-seafile-csrf" ''
