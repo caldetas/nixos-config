@@ -38,7 +38,7 @@ with lib;
             - DB_HOST=db
             - DB_ROOT_PASSWD=seafile_root_pw
             - SEAFILE_ADMIN_EMAIL=admin@${vars.domain}
-            - SEAFILE_ADMIN_PASSWORD=password
+            - SEAFILE_ADMIN_PASSWORD=admin_pw
           volumes:
             - /var/lib/seafile/seafile-data:/shared
           depends_on:
