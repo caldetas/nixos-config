@@ -58,7 +58,7 @@ with lib;
         WorkingDirectory = "/etc/seafile";
         ExecStart = "${pkgs.docker-compose}/bin/docker-compose up -d";
         ExecStop = "${pkgs.docker-compose}/bin/docker-compose down";
-        Restart = "always";
+        #        Restart = "always";
       };
     };
     systemd.services.seafile-csrf-fix = {
