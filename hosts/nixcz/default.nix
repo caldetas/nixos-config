@@ -25,6 +25,9 @@
 
   networking.hostName = "nixcz";
 
+  #NAS storage mount
+  environment.systemPackages = with pkgs; [ nfs-utils ];
+  services.nfs.client.enable = true;
 
   # To allow you to properly use and access your VPS via SSH, we enable the OpenSSH server and
   # grant you root access. This is just our default configuration, you are free to remove root
