@@ -18,6 +18,7 @@
   ./nix.nix
   ./picom.nix
   ./polybar.nix
+  ./seafile.nix
   ./server.nix
   ./sops.nix
   ./surfshark.nix
