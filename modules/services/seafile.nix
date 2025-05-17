@@ -6,15 +6,6 @@
 with lib;
 {
 
-  options = {
-    services.seafile.enable = {
-      enable = mkOption {
-        type = types.bool;
-        default = true;
-      };
-    };
-  };
-
   config = mkIf (config.server.enable) {
 
     # Persistent data directories
@@ -57,15 +48,19 @@ with lib;
     '';
 
     systemd.services.seafile = {
+      enable = true;
       description = "Seafile via Docker Compose";
       after = [ "docker.service" ];
       wants = [ "docker.service" ];
       wantedBy = [ "multi-user.target" ];
+      restart = "always";
 
       serviceConfig = {
         WorkingDirectory = "/etc/seafile";
         ExecStart = "${pkgs.docker-compose}/bin/docker-compose up -d";
         ExecStop = "${pkgs.docker-compose}/bin/docker-compose down";
+        Restart = "always";
+        RestartSec = 5;
 
         # Run CSRF fix *after* containers have been started
         ExecStartPost = pkgs.writeShellScript "patch-seafile-csrf" ''
