@@ -16,7 +16,6 @@ with lib;
 
     # Docker Compose file
     environment.etc."seafile/docker-compose.yml".text = ''
-      version: '3'
 
       services:
         db:
