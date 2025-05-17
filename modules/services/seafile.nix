@@ -43,10 +43,17 @@ with lib;
           Restart = "on-failure";
         };
       };
-
-      environment.systemPackages = with pkgs; [ docker docker-compose ];
-
-      virtualisation.docker.enable = true;
+    };
+  };
+  services.nginx = {
+    enable = true;
+    virtualHosts."seafile.${vars.domain}" = {
+      forceSSL = pkgs.lib.strings.hasInfix "." vars.domain; # Use SSL only for real domain
+      enableACME = pkgs.lib.strings.hasInfix "." vars.domain;
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:8000";
+        proxyWebsockets = true;
+      };
     };
   };
 }
