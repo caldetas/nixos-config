@@ -40,7 +40,7 @@ with lib;
             - SEAFILE_ADMIN_EMAIL=admin@${vars.domain}
             - SEAFILE_ADMIN_PASSWORD=admin_pw
             - SEAFILE_SERVER_HOSTNAME=seafile.${vars.domain}
-            - SERVICE_URL=http://seafile.${vars.domain}
+            - SERVICE_URL=https://seafile.${vars.domain}
           volumes:
             - /var/lib/seafile/seafile-data:/shared
           depends_on:
