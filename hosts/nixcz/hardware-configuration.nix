@@ -53,4 +53,9 @@ with lib;
     unitConfig.ConditionPathExists = "/ifcfg.add";
     restartIfChanged = false;
   };
+
+  fileSystems."/mnt/nas" = {
+    device = "172.16.129.73:/nas/6223";
+    fsType = "nfs";
+  };
 }
