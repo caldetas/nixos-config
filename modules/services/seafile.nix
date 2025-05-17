@@ -6,54 +6,74 @@
 with lib;
 {
 
-  #  config = mkIf (config.server.enable) {
-  packages.default = pkgs.writeShellScriptBin "start-seafile" ''
-    docker run -d \
-      --name seafile-mysql \
-      -e MYSQL_ROOT_PASSWORD=db_root_password \
-      -e MYSQL_DATABASE=seafile_db \
-      -e MYSQL_USER=seafile \
-      -e MYSQL_PASSWORD=seafile_pw \
-      -v /var/lib/seafile/mysql-data:/var/lib/mysql \
-      mariadb:10.5
+  config = mkIf (config.server.enable) {
 
-    docker run -d \
-      --name seafile \
-      --link seafile-mysql:db \
-      -e DB_HOST=db \
-      -e DB_ROOT_PASSWD=db_root_password \
-      -e SEAFILE_ADMIN_EMAIL=admin@example.com \
-      -e SEAFILE_ADMIN_PASSWORD=admin_password \
-      -v /var/lib/seafile/seafile-data:/shared \
-      -p 8000:80 \
-      seafileltd/seafile-mc:latest
-  '';
+    # Persistent data directories
+    systemd.tmpfiles.rules = [
+      "d /var/lib/seafile/seafile-data 0755 root root -"
+      "d /var/lib/seafile/mysql-data 0755 root root -"
+    ];
 
-  # For use as a NixOS module
-  nixosModules.seafile = { config, pkgs, ... }: {
+    # Docker Compose file
+    environment.etc."seafile/docker-compose.yml".text = ''
+      version: '3'
+
+      services:
+        db:
+          image: mariadb:10.5
+          container_name: seafile-mysql
+          environment:
+            - MYSQL_ROOT_PASSWORD=seafile_root_pw
+            - MYSQL_DATABASE=seafile_db
+            - MYSQL_USER=seafile
+            - MYSQL_PASSWORD=seafile_pw
+          volumes:
+            - /var/lib/seafile/mysql-data:/var/lib/mysql
+
+        seafile:
+          image: seafileltd/seafile-mc:latest
+          container_name: seafile
+          ports:
+            - "8000:80"
+          environment:
+            - DB_HOST=db
+            - DB_ROOT_PASSWD=seafile_root_pw
+            - SEAFILE_ADMIN_EMAIL=admin@${vars.domain}
+            - SEAFILE_ADMIN_PASSWORD=admin_pw
+          volumes:
+            - /var/lib/seafile/seafile-data:/shared
+          depends_on:
+            - db
+    '';
+
+    # Systemd service for docker-compose
     systemd.services.seafile = {
-      description = "Seafile Docker Service";
-      wantedBy = [ "multi-user.target" ];
+      description = "Seafile via Docker Compose";
       after = [ "docker.service" ];
-      requires = [ "docker.service" ];
+      wants = [ "docker.service" ];
+      wantedBy = [ "multi-user.target" ];
+
       serviceConfig = {
-        ExecStart = "${pkgs.docker}/bin/docker compose -f /var/lib/seafile/docker-compose.yml up -d";
-        ExecStop = "${pkgs.docker}/bin/docker compose -f /var/lib/seafile/docker-compose.yml down";
-        WorkingDirectory = "/var/lib/seafile";
-        Restart = "on-failure";
+        WorkingDirectory = "/etc/seafile";
+        ExecStart = "${pkgs.docker-compose}/bin/docker-compose up -d";
+        ExecStop = "${pkgs.docker-compose}/bin/docker-compose down";
+        Restart = "always";
       };
     };
-  }; /*
-  };
-  services.nginx = {
-  enable = true;
-  virtualHosts."seafile.${vars.domain}" = {
-      forceSSL = pkgs.lib.strings.hasInfix "." vars.domain; # Use SSL only for real domain
-      enableACME = pkgs.lib.strings.hasInfix "." vars.domain;
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:8000";
-        proxyWebsockets = true;
+    services.nginx = {
+      enable = true;
+      virtualHosts."seafile.${vars.domain}" = {
+        forceSSL = pkgs.lib.strings.hasInfix "." vars.domain;
+        enableACME = pkgs.lib.strings.hasInfix "." vars.domain;
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:8000";
+        };
       };
-    };*/
-  #  };
+    };
+
+    security.acme = {
+      acceptTerms = true;
+      defaults.email = "info@${vars.domain}";
+    };
+  };
 }
