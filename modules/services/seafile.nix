@@ -45,6 +45,14 @@ with lib;
             - /var/lib/seafile/seafile-data:/shared
           depends_on:
             - db
+            - db
+          command: >
+            sh -c "
+              SETTINGS=/opt/seafile/seafile-server-latest/seahub/seahub/settings.py &&
+              grep -q CSRF_TRUSTED_ORIGINS $$SETTINGS || \
+              echo 'CSRF_TRUSTED_ORIGINS = [\"https://seafile.${vars.domain}\"]' >> $$SETTINGS &&
+              /scripts/enterpoint.sh
+            "
     '';
 
     # Systemd service for docker-compose
@@ -77,4 +85,7 @@ with lib;
       defaults.email = "info@${vars.domain}";
     };
   };
+
+  # Reinstall run this command
+  #  cd /etc/seafile && sudo systemctl stop seafile && docker compose down && cd && sudo  rm -fr /var/lib/seafile && sudo rm -fr /etc/seafile
 }
