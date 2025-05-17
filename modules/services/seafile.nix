@@ -45,7 +45,6 @@ with lib;
             - /var/lib/seafile/seafile-data:/shared
           depends_on:
             - db
-            - db
           command: >
             sh -c "
               SETTINGS=/opt/seafile/seafile-server-latest/seahub/seahub/settings.py &&
