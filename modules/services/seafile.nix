@@ -37,7 +37,7 @@ with lib;
           environment:
             - DB_HOST=db
             - DB_ROOT_PASSWD=seafile_root_pw
-            - SEAFILE_ADMIN_EMAIL=admin
+            - SEAFILE_ADMIN_EMAIL=admin@${vars.domain}
             - SEAFILE_ADMIN_PASSWORD=password
           volumes:
             - /var/lib/seafile/seafile-data:/shared
