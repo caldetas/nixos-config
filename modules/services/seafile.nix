@@ -47,6 +47,9 @@ with lib;
             - db
     '';
 
+    # ensure start of setup service
+    systemd.services.seafile.wantedBy = [ "multi-user.target" ];
+
     systemd.services.seafile = {
       description = "Seafile via Docker Compose";
       after = [ "docker.service" ];
