@@ -39,6 +39,7 @@ with lib;
             - DB_ROOT_PASSWD=seafile_root_pw
             - SEAFILE_ADMIN_EMAIL=admin@${vars.domain}
             - SEAFILE_ADMIN_PASSWORD=admin_pw
+            - SERVICE_URL=http://seafile.${vars.domain}
           volumes:
             - /var/lib/seafile/seafile-data:/shared
           depends_on:
