@@ -73,17 +73,31 @@ with lib;
           SEAFILE_CONTAINER=seafile
           DOCKER=${pkgs.docker}/bin/docker
 
-          # Wait for container to exist (up to 60 seconds)
+          # Wait for container to exist and run
           for i in {1..30}; do
-            if $DOCKER ps -a --format '{{.Names}}' | grep -q "^$SEAFILE_CONTAINER$"; then
+            if $DOCKER ps --format '{{.Names}}' | grep -q "^$SEAFILE_CONTAINER$"; then
               break
             fi
-            echo "Waiting for Seafile container..."
+            echo "Waiting for Seafile container to start..."
             sleep 2
           done
 
           if ! $DOCKER ps --format '{{.Names}}' | grep -q "^$SEAFILE_CONTAINER$"; then
-            echo "Container $SEAFILE_CONTAINER not running"
+            echo "Container $SEAFILE_CONTAINER is not running"
+            exit 1
+          fi
+
+          # Wait for settings.py to exist inside the container
+          for i in {1..30}; do
+            if $DOCKER exec $SEAFILE_CONTAINER test -f /opt/seafile/seafile-server-latest/seahub/seahub/settings.py; then
+              break
+            fi
+            echo "Waiting for settings.py to appear inside the container..."
+            sleep 2
+          done
+
+          if ! $DOCKER exec $SEAFILE_CONTAINER test -f /opt/seafile/seafile-server-latest/seahub/seahub/settings.py; then
+            echo "settings.py not found after waiting"
             exit 1
           fi
 
