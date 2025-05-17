@@ -45,13 +45,6 @@ with lib;
             - /var/lib/seafile/seafile-data:/shared
           depends_on:
             - db
-          command: >
-            sh -c "
-              SETTINGS=/opt/seafile/seafile-server-latest/seahub/seahub/settings.py &&
-              grep -q CSRF_TRUSTED_ORIGINS $$SETTINGS || \
-              echo 'CSRF_TRUSTED_ORIGINS = [\"https://seafile.${vars.domain}\"]' >> $$SETTINGS &&
-              /scripts/enterpoint.sh
-            "
     '';
 
     # Systemd service for docker-compose
@@ -65,7 +58,7 @@ with lib;
         WorkingDirectory = "/etc/seafile";
         ExecStart = "${pkgs.docker-compose}/bin/docker-compose up -d";
         ExecStop = "${pkgs.docker-compose}/bin/docker-compose down";
-        #        Restart = "always";
+        Restart = "always";
       };
     };
     systemd.services.seafile-csrf-fix = {
@@ -76,7 +69,7 @@ with lib;
         Type = "oneshot";
         ExecStart = pkgs.writeShellScript "patch-seafile-csrf" ''
           set -e
-          docker exec seafile bash -c '
+          ${pkgs.docker}/bin/docker exec seafile bash -c '
             SETTINGS=/opt/seafile/seafile-server-latest/seahub/seahub/settings.py
             if ! grep -q CSRF_TRUSTED_ORIGINS "$SETTINGS"; then
               echo "CSRF_TRUSTED_ORIGINS = ['https://seafile.${vars.domain}']" >> "$SETTINGS"
