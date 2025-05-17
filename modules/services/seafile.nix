@@ -47,7 +47,6 @@ with lib;
             - db
     '';
 
-    # Systemd service for docker-compose
     systemd.services.seafile = {
       description = "Seafile via Docker Compose";
       after = [ "docker.service" ];
@@ -58,22 +57,14 @@ with lib;
         WorkingDirectory = "/etc/seafile";
         ExecStart = "${pkgs.docker-compose}/bin/docker-compose up -d";
         ExecStop = "${pkgs.docker-compose}/bin/docker-compose down";
-        #        Restart = "always";
-      };
-    };
-    systemd.services.seafile-csrf-fix = {
-      description = "Patch CSRF_TRUSTED_ORIGINS into settings.py";
-      after = [ "seafile.service" ];
-      wantedBy = [ "multi-user.target" ];
-      serviceConfig = {
-        Type = "oneshot";
-        ExecStart = pkgs.writeShellScript "patch-seafile-csrf" ''
+
+        # Run CSRF fix *after* containers have been started
+        ExecStartPost = pkgs.writeShellScript "patch-seafile-csrf" ''
           set -e
-
-          SEAFILE_CONTAINER=seafile
           DOCKER=${pkgs.docker}/bin/docker
+          SEAFILE_CONTAINER=seafile
 
-          # Wait for container to exist and run
+          # Wait for container to be running
           for i in {1..30}; do
             if $DOCKER ps --format '{{.Names}}' | grep -q "^$SEAFILE_CONTAINER$"; then
               break
@@ -82,22 +73,17 @@ with lib;
             sleep 2
           done
 
-          if ! $DOCKER ps --format '{{.Names}}' | grep -q "^$SEAFILE_CONTAINER$"; then
-            echo "Container $SEAFILE_CONTAINER is not running"
-            exit 1
-          fi
-
           # Wait for settings.py to exist inside the container
           for i in {1..30}; do
             if $DOCKER exec $SEAFILE_CONTAINER test -f /opt/seafile/seafile-server-latest/seahub/seahub/settings.py; then
               break
             fi
-            echo "Waiting for settings.py to appear inside the container..."
+            echo "Waiting for settings.py to appear..."
             sleep 2
           done
 
           if ! $DOCKER exec $SEAFILE_CONTAINER test -f /opt/seafile/seafile-server-latest/seahub/seahub/settings.py; then
-            echo "settings.py not found after waiting"
+            echo "❌ settings.py not found after waiting"
             exit 1
           fi
 
