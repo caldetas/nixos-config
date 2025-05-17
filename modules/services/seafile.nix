@@ -65,22 +65,6 @@ with lib;
         WorkingDirectory = "/etc/seafile";
         ExecStart = "${pkgs.docker-compose}/bin/docker-compose up -d";
         ExecStop = "${pkgs.docker-compose}/bin/docker-compose down";
-        serviceConfig = {
-          Type = "oneshot";
-          # trusted domain fix
-          # https://github.com/haiwen/seafile/issues/2118#issuecomment-537282437
-          #          ExecStart = pkgs.writeShellScript "patch-seafile-csrf" ''
-          #            set -e
-          #            docker exec seafile bash -c '
-          #              SETTINGS=/opt/seafile/seafile-server-latest/seahub/seahub/settings.py
-          #              if ! grep -q CSRF_TRUSTED_ORIGINS "$SETTINGS"; then
-          #                echo "CSRF_TRUSTED_ORIGINS = ['https://seafile.${vars.domain}']" >> "$SETTINGS"
-          #                /opt/seafile/seafile-server-latest/seahub.sh restart
-          #              fi
-          #            '
-          #          '';
-
-        };
         #        Restart = "always";
       };
     };
@@ -90,11 +74,16 @@ with lib;
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         Type = "oneshot";
-        ExecStart = lib.mkForce (pkgs.writeShellScript "patch-seafile-csrf" ''
+        ExecStart = pkgs.writeShellScript "patch-seafile-csrf" ''
           set -e
-          SETTINGS=/opt/seafile/seafile-server-latest/seahub/seahub/settings.py
-          docker exec seafile bash -c "grep -q CSRF_TRUSTED_ORIGINS $SETTINGS || { echo \"CSRF_TRUSTED_ORIGINS = ['https://seafile.${vars.domain}']\" >> $SETTINGS && /opt/seafile/seafile-server-latest/seahub.sh restart; }"
-        '');
+          docker exec seafile bash -c '
+            SETTINGS=/opt/seafile/seafile-server-latest/seahub/seahub/settings.py
+            if ! grep -q CSRF_TRUSTED_ORIGINS "$SETTINGS"; then
+              echo "CSRF_TRUSTED_ORIGINS = ['https://seafile.${vars.domain}']" >> "$SETTINGS"
+              /opt/seafile/seafile-server-latest/seahub.sh restart
+            fi
+          '
+        '';
       };
     };
 
