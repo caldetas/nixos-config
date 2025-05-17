@@ -65,6 +65,17 @@ with lib;
         WorkingDirectory = "/etc/seafile";
         ExecStart = "${pkgs.docker-compose}/bin/docker-compose up -d";
         ExecStop = "${pkgs.docker-compose}/bin/docker-compose down";
+        serviceConfig = {
+          Type = "oneshot";
+          # trusted domain fix
+          # https://github.com/haiwen/seafile/issues/2118#issuecomment-537282437
+          ExecStart = "${pkgs.docker}/bin/docker exec seafile bash -c '
+      SETTINGS=/opt/seafile/seafile-server-latest/seahub/seahub/settings.py &&
+      grep -q CSRF_TRUSTED_ORIGINS \"$SETTINGS\" || {
+        echo \"CSRF_TRUSTED_ORIGINS = [\\\"https://seafile.${vars.domain}\\\"]\" >> \"$SETTINGS\"
+        /opt/seafile/seafile-server-latest/seahub.sh restart
+      }'";
+        };
         #        Restart = "always";
       };
     };
