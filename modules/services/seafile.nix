@@ -91,7 +91,10 @@ with lib;
             SETTINGS=/opt/seafile/seafile-server-latest/seahub/seahub/settings.py
             if ! grep -q CSRF_TRUSTED_ORIGINS "$SETTINGS"; then
               echo "CSRF_TRUSTED_ORIGINS = [\"https://seafile.${vars.domain}\"]" >> "$SETTINGS"
-              /opt/seafile/seafile-server-latest/seahub.sh restart
+              echo "Restarting Seahub..."
+              /opt/seafile/seafile-server-latest/seahub.sh restart || echo "⚠️ Seahub restart failed or unnecessary, continuing anyway"
+            else
+              echo "CSRF_TRUSTED_ORIGINS already present, no restart needed"
             fi
           '
         '';
