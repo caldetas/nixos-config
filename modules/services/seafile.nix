@@ -96,11 +96,12 @@ with lib;
             SETTINGS=/opt/seafile/seafile-server-latest/seahub/seahub/settings.py
             if ! grep -q CSRF_TRUSTED_ORIGINS "$SETTINGS"; then
               echo "CSRF_TRUSTED_ORIGINS = [\"https://seafile.${vars.domain}\"]" >> "$SETTINGS"
-              echo "Restarting Seahub..."
-              /opt/seafile/seafile-server-latest/seahub.sh restart || echo "⚠️ Seahub restart failed or unnecessary, continuing anyway"
-            else
-              echo "CSRF_TRUSTED_ORIGINS already present, no restart needed"
             fi
+            if ! grep -q FILE_SERVER_ROOT "$SETTINGS"; then
+              echo "FILE_SERVER_ROOT = \"https://seafile.${vars.domain}/seafhttp\"" >> "$SETTINGS"
+            fi
+            echo "Restarting Seahub..."
+            /opt/seafile/seafile-server-latest/seahub.sh restart || echo "⚠️ Seahub restart failed or unnecessary, continuing anyway"
           '
         '';
       };
@@ -114,6 +115,9 @@ with lib;
         locations = {
           "/" = {
             proxyPass = "http://127.0.0.1:8000";
+            extraConfig = ''
+              client_max_body_size 2000m;
+            '';
           };
           "/seafhttp/" = {
             proxyPass = "http://127.0.0.1:8000/seafhttp/";
@@ -122,6 +126,8 @@ with lib;
               proxy_set_header X-Real-IP $remote_addr;
               proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
               proxy_set_header X-Forwarded-Host $server_name;
+              proxy_connect_timeout 36000;
+              proxy_read_timeout 36000;
             '';
           };
         };
