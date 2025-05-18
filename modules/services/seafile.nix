@@ -100,7 +100,7 @@ with lib;
                     '
 
                     echo "🚀 Ensuring Seafile backend is running..."
-                    $DOCKER exec $SEAFILE_CONTAINER "$SEAFILE_PATH/seafile.sh" start
+                    $DOCKER exec $SEAFILE_CONTAINER bash -c "$SEAFILE_PATH/seafile.sh start"
 
           #          echo "🧾 Creating admin user if needed..."
           #          $DOCKER exec $SEAFILE_CONTAINER sh -c '
