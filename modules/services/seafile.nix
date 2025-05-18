@@ -65,53 +65,50 @@ with lib;
 
         # Run CSRF fix *after* containers have been started
         ExecStartPost = pkgs.writeShellScript "patch-seafile-csrf" ''
-                    set -e
-                    DOCKER=${pkgs.docker}/bin/docker
-                    SEAFILE_CONTAINER=seafile
-                    ADMIN_EMAIL="admin@${vars.domain}"
-                    ADMIN_PASSWORD="admin_pw"
+          set -e
+          DOCKER=${pkgs.docker}/bin/docker
+          SEAFILE_CONTAINER=seafile
+          ADMIN_EMAIL="admin@${vars.domain}"
+          ADMIN_PASSWORD="admin_pw"
 
-                    echo "⏳ Waiting for container '$SEAFILE_CONTAINER' to start..."
-                    for i in {1..30}; do
-                      if $DOCKER ps --format '{{.Names}}' | grep -q "^$SEAFILE_CONTAINER$"; then
-                        break
-                      fi
-                      sleep 2
-                    done
+          echo "⏳ Waiting for container '$SEAFILE_CONTAINER' to start..."
+          for i in {1..30}; do
+            if $DOCKER ps --format '{{.Names}}' | grep -q "^$SEAFILE_CONTAINER$"; then
+              break
+            fi
+            sleep 2
+          done
 
-                    echo "🔍 Detecting Seafile path inside container..."
-                    SEAFILE_PATH=$($DOCKER exec $SEAFILE_CONTAINER sh -c 'ls -d /opt/seafile/seafile-server-* | sort -r | head -n1')
-                    echo "📂 Using SEAFILE_PATH: $SEAFILE_PATH"
+          echo "🔍 Detecting Seafile path inside container..."
+          SEAFILE_PATH=$($DOCKER exec $SEAFILE_CONTAINER sh -c 'ls -d /opt/seafile/seafile-server-* | sort -r | head -n1') || {
+            echo "⚠️ Failed to detect SEAFILE_PATH, continuing anyway"
+            exit 0
+          }
+          echo "📂 Using SEAFILE_PATH: $SEAFILE_PATH"
 
-                    echo "⏳ Waiting for settings.py to appear..."
-                    for i in {1..30}; do
-                      if $DOCKER exec $SEAFILE_CONTAINER test -f "$SEAFILE_PATH/seahub/seahub/settings.py"; then
-                        break
-                      fi
-                      sleep 2
-                    done
+          echo "⏳ Waiting for settings.py to appear..."
+          for i in {1..30}; do
+            if $DOCKER exec $SEAFILE_CONTAINER test -f "$SEAFILE_PATH/seahub/seahub/settings.py"; then
+              break
+            fi
+            sleep 2
+          done
 
-                    echo "⚙️ Patching settings.py if needed..."
-                    $DOCKER exec $SEAFILE_CONTAINER sh -c '
-                      set -e
-                      SETTINGS="'$SEAFILE_PATH'/seahub/seahub/settings.py"
-                      grep -q CSRF_TRUSTED_ORIGINS "$SETTINGS" || echo "CSRF_TRUSTED_ORIGINS = [\"https://seafile.${vars.domain}\"]" >> "$SETTINGS"
-                      grep -q FILE_SERVER_ROOT "$SETTINGS" || echo "FILE_SERVER_ROOT = \"https://seafile.${vars.domain}/seafhttp\"" >> "$SETTINGS"
-                    '
+          if ! $DOCKER exec $SEAFILE_CONTAINER test -f "$SEAFILE_PATH/seahub/seahub/settings.py"; then
+            echo "⚠️ settings.py not found, skipping patch."
+            exit 0
+          fi
 
-                    echo "🚀 Ensuring Seafile backend is running..."
-                    $DOCKER exec $SEAFILE_CONTAINER bash -c "$SEAFILE_PATH/seafile.sh start"
+          echo "⚙️ Patching settings.py if needed..."
+          $DOCKER exec $SEAFILE_CONTAINER sh -c '
+            set -e
+            SETTINGS="'$SEAFILE_PATH'/seahub/seahub/settings.py"
+            grep -q CSRF_TRUSTED_ORIGINS "$SETTINGS" || echo "CSRF_TRUSTED_ORIGINS = [\"https://seafile.${vars.domain}\"]" >> "$SETTINGS"
+            grep -q FILE_SERVER_ROOT "$SETTINGS" || echo "FILE_SERVER_ROOT = \"https://seafile.${vars.domain}/seafhttp\"" >> "$SETTINGS"
+          '
 
-          #          echo "🧾 Creating admin user if needed..."
-          #          $DOCKER exec $SEAFILE_CONTAINER sh -c '
-          #            export SEAFILE_PATH="'$SEAFILE_PATH'"
-          #            cd "$SEAFILE_PATH"
-          #            if ! ./seahub.sh start-fastcgi --admin_email '"$ADMIN_EMAIL"' --admin_password '"$ADMIN_PASSWORD"' 2>&1 | tee /tmp/seahub.log | grep -q "created successfully"; then
-          #              echo "Admin user may already exist or creation failed, continuing..."
-          #            fi
-          #          '
-
-                    echo "✅ Patch complete."
+          echo "✅ Patch complete."
+          exit 0
         '';
       };
     };
