@@ -125,14 +125,16 @@ with lib;
             };
           };
         };
-      };
 
-      security.acme = {
-        acceptTerms = true;
-        defaults.email = "info@${vars.domain}";
       };
     };
 
-    # Reinstall run this command
-    #  cd /etc/seafile && sudo systemctl stop seafile && docker compose down && cd && sudo  rm -fr /var/lib/seafile && sudo rm -fr /etc/seafile
-  }
+    security.acme = {
+      acceptTerms = true;
+      defaults.email = "info@${vars.domain}";
+    };
+  };
+
+  # Reinstall run this command
+  #  cd /etc/seafile && sudo systemctl stop seafile && docker compose down && cd && sudo  rm -fr /var/lib/seafile && sudo rm -fr /etc/seafile
+}
