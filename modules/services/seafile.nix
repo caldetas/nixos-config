@@ -102,19 +102,23 @@ with lib;
           fi
 
           echo "⚙️ Patching settings.py if needed..."
-          $DOCKER exec $SEAFILE_CONTAINER sh -c '
+
+          $DOCKER exec $SEAFILE_CONTAINER sh -c "
             set -e
-            SETTINGS="'$SEAFILE_PATH'/seahub/seahub/settings.py"
-            grep -q CSRF_TRUSTED_ORIGINS "$SETTINGS" || echo "CSRF_TRUSTED_ORIGINS = [\"https://seafile.${vars.domain}\"]" >> "$SETTINGS"
+            SETTINGS=\"$SEAFILE_PATH/seahub/seahub/settings.py\"
+
+            grep -q CSRF_TRUSTED_ORIGINS \"\$SETTINGS\" || echo \"CSRF_TRUSTED_ORIGINS = [\\\"https://seafile.${vars.domain}\\\"]\" >> \"\$SETTINGS\"
 
             # Remove existing FILE_SERVER_ROOT lines
             sed -i '/^FILE_SERVER_ROOT\s*=.*/d' \"\$SETTINGS\"
 
             # Append correct value
-            echo \"FILE_SERVER_ROOT = 'https://seafile.${vars.domain}/seafhttp'\" >> \"\$SETTINGS\"
+            echo \"FILE_SERVER_ROOT = \\\"https://seafile.${vars.domain}/seafhttp\\\"\" >> \"\$SETTINGS\"
 
             # Optional: remove INNER_FILE_SERVER_ROOT as well
             sed -i '/^INNER_FILE_SERVER_ROOT\s*=.*/d' \"\$SETTINGS\"
+          "
+
           '
 
           echo "✅ Patch complete."
