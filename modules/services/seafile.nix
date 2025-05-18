@@ -99,7 +99,7 @@ with lib;
             fi
 
             echo "Ensuring Seafile backend is running..."
-            "$SEAFILE_PATH/seafile.sh" start
+            "$SEAFILE_PATH/seafile.sh" start || echo "Seafile backend may already be running."
 
             echo "Restarting Seahub..."
             "$SEAFILE_PATH/seahub.sh" restart || echo "⚠️ Seahub restart failed or unnecessary, continuing anyway"
