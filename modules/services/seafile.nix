@@ -105,40 +105,41 @@ with lib;
           '
         '';
       };
+    };
 
-      services.nginx = {
-        enable = true;
-        virtualHosts."seafile.${vars.domain}" = {
-          forceSSL = pkgs.lib.strings.hasInfix "." vars.domain;
-          enableACME = pkgs.lib.strings.hasInfix "." vars.domain;
-          locations = {
-            "/" = {
-              proxyPass = "http://127.0.0.1:8000";
-              extraConfig = ''
-                client_max_body_size 2000m;
-              '';
-            };
-            "/seafhttp/" = {
-              proxyPass = "http://127.0.0.1:8000/seafhttp/";
-              extraConfig = ''
-                proxy_set_header Host $host;
-                proxy_set_header X-Real-IP $remote_addr;
-                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                proxy_set_header X-Forwarded-Host $server_name;
-                proxy_connect_timeout 36000;
-                proxy_read_timeout 36000;
-              '';
-            };
+    services.nginx = {
+      enable = true;
+      virtualHosts."seafile.${vars.domain}" = {
+        forceSSL = pkgs.lib.strings.hasInfix "." vars.domain;
+        enableACME = pkgs.lib.strings.hasInfix "." vars.domain;
+        locations = {
+          "/" = {
+            proxyPass = "http://127.0.0.1:8000";
+            extraConfig = ''
+              client_max_body_size 2000m;
+            '';
+          };
+          "/seafhttp/" = {
+            proxyPass = "http://127.0.0.1:8000/seafhttp/";
+            extraConfig = ''
+              proxy_set_header Host $host;
+              proxy_set_header X-Real-IP $remote_addr;
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              proxy_set_header X-Forwarded-Host $server_name;
+              proxy_connect_timeout 36000;
+              proxy_read_timeout 36000;
+            '';
           };
         };
       };
-
-      security.acme = {
-        acceptTerms = true;
-        defaults.email = "info@${vars.domain}";
-      };
     };
 
-    # Reinstall run this command
-    #  cd /etc/seafile && sudo systemctl stop seafile && docker compose down && cd && sudo  rm -fr /var/lib/seafile && sudo rm -fr /etc/seafile
-  }
+    security.acme = {
+      acceptTerms = true;
+      defaults.email = "info@${vars.domain}";
+    };
+  };
+
+  # Reinstall run this command
+  #  cd /etc/seafile && sudo systemctl stop seafile && docker compose down && cd && sudo  rm -fr /var/lib/seafile && sudo rm -fr /etc/seafile
+}
