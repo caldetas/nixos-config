@@ -71,7 +71,7 @@ with lib;
           SEAFILE_CONTAINER=seafile
           ADMIN_EMAIL="admin@${vars.domain}"
           ADMIN_PASSWORD="admin_pw"
-          FILE_SERVER_ROOT = "https://seafile.${vars.domain}/seafhttp"
+          FILE_SERVER_ROOT="https://seafile.${vars.domain}/seafhttp"
 
           echo "⏳ Waiting for container '$SEAFILE_CONTAINER' to start..."
           for i in {1..30}; do
