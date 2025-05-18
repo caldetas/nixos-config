@@ -78,76 +78,67 @@ with lib;
             sleep 2
           done
 
-          # Determine SEAFILE_PATH inside the container
-          SEAFILE_PATH=$($DOCKER exec $SEAFILE_CONTAINER bash -c 'ls -d /opt/seafile/seafile-server-* 2>/dev/null | tail -n1')
-
-          if [ -z "$SEAFILE_PATH" ]; then
-            echo "❌ Failed to detect Seafile installation directory inside container."
-            exit 1
-          fi
-
-          # Wait for settings.py to appear
+          # Wait for settings.py to appear inside the container
           for i in {1..30}; do
-            if $DOCKER exec $SEAFILE_CONTAINER test -f "$SEAFILE_PATH/seahub/seahub/settings.py"; then
+            if $DOCKER exec $SEAFILE_CONTAINER sh -c 'ls /opt/seafile/seafile-server-*/seahub/seahub/settings.py 1>/dev/null 2>&1'; then
               break
             fi
             echo "Waiting for settings.py to appear..."
             sleep 2
           done
 
-          if ! $DOCKER exec $SEAFILE_CONTAINER test -f $SEAFILE_PATH/seahub/seahub/settings.py; then
-            echo "❌ settings.py not found after waiting"
-            exit 1
-          fi
-
           $DOCKER exec $SEAFILE_CONTAINER bash -c '
-            SETTINGS=$SEAFILE_PATH/seahub/seahub/settings.py
+            set -e
+            SEAFILE_PATH=$(ls -d /opt/seafile/seafile-server-* | tail -n1)
+            SETTINGS="$SEAFILE_PATH/seahub/seahub/settings.py"
+            echo "Using SEAFILE_PATH: $SEAFILE_PATH"
+
             if ! grep -q CSRF_TRUSTED_ORIGINS "$SETTINGS"; then
               echo "CSRF_TRUSTED_ORIGINS = [\"https://seafile.${vars.domain}\"]" >> "$SETTINGS"
             fi
             if ! grep -q FILE_SERVER_ROOT "$SETTINGS"; then
               echo "FILE_SERVER_ROOT = \"https://seafile.${vars.domain}/seafhttp\"" >> "$SETTINGS"
             fi
+
             echo "Restarting Seahub..."
-            $SEAFILE_PATH/seahub.sh restart || echo "⚠️ Seahub restart failed or unnecessary, continuing anyway"
+            "$SEAFILE_PATH/seahub.sh" restart || echo "⚠️ Seahub restart failed or unnecessary, continuing anyway"
           '
         '';
       };
-    };
 
-    services.nginx = {
-      enable = true;
-      virtualHosts."seafile.${vars.domain}" = {
-        forceSSL = pkgs.lib.strings.hasInfix "." vars.domain;
-        enableACME = pkgs.lib.strings.hasInfix "." vars.domain;
-        locations = {
-          "/" = {
-            proxyPass = "http://127.0.0.1:8000";
-            extraConfig = ''
-              client_max_body_size 2000m;
-            '';
-          };
-          "/seafhttp/" = {
-            proxyPass = "http://127.0.0.1:8000/seafhttp/";
-            extraConfig = ''
-              proxy_set_header Host $host;
-              proxy_set_header X-Real-IP $remote_addr;
-              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-              proxy_set_header X-Forwarded-Host $server_name;
-              proxy_connect_timeout 36000;
-              proxy_read_timeout 36000;
-            '';
+      services.nginx = {
+        enable = true;
+        virtualHosts."seafile.${vars.domain}" = {
+          forceSSL = pkgs.lib.strings.hasInfix "." vars.domain;
+          enableACME = pkgs.lib.strings.hasInfix "." vars.domain;
+          locations = {
+            "/" = {
+              proxyPass = "http://127.0.0.1:8000";
+              extraConfig = ''
+                client_max_body_size 2000m;
+              '';
+            };
+            "/seafhttp/" = {
+              proxyPass = "http://127.0.0.1:8000/seafhttp/";
+              extraConfig = ''
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Host $server_name;
+                proxy_connect_timeout 36000;
+                proxy_read_timeout 36000;
+              '';
+            };
           };
         };
       };
+
+      security.acme = {
+        acceptTerms = true;
+        defaults.email = "info@${vars.domain}";
+      };
     };
 
-    security.acme = {
-      acceptTerms = true;
-      defaults.email = "info@${vars.domain}";
-    };
-  };
-
-  # Reinstall run this command
-  #  cd /etc/seafile && sudo systemctl stop seafile && docker compose down && cd && sudo  rm -fr /var/lib/seafile && sudo rm -fr /etc/seafile
-}
+    # Reinstall run this command
+    #  cd /etc/seafile && sudo systemctl stop seafile && docker compose down && cd && sudo  rm -fr /var/lib/seafile && sudo rm -fr /etc/seafile
+  }
