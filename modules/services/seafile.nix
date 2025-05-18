@@ -82,20 +82,20 @@ with lib;
 
           # Wait for settings.py to exist inside the container
           for i in {1..30}; do
-            if $DOCKER exec $SEAFILE_CONTAINER test -f ${SEAFILE_PATH}/seahub/seahub/settings.py; then
+            if $DOCKER exec $SEAFILE_CONTAINER test -f $SEAFILE_PATH/seahub/seahub/settings.py; then
               break
             fi
             echo "Waiting for settings.py to appear..."
             sleep 2
           done
 
-          if ! $DOCKER exec $SEAFILE_CONTAINER test -f ${SEAFILE_PATH}/seahub/seahub/settings.py; then
+          if ! $DOCKER exec $SEAFILE_CONTAINER test -f $SEAFILE_PATH/seahub/seahub/settings.py; then
             echo "❌ settings.py not found after waiting"
             exit 1
           fi
 
           $DOCKER exec $SEAFILE_CONTAINER bash -c '
-            SETTINGS=${SEAFILE_PATH}/seahub/seahub/settings.py
+            SETTINGS=$SEAFILE_PATH/seahub/seahub/settings.py
             if ! grep -q CSRF_TRUSTED_ORIGINS "$SETTINGS"; then
               echo "CSRF_TRUSTED_ORIGINS = [\"https://seafile.${vars.domain}\"]" >> "$SETTINGS"
             fi
@@ -103,7 +103,7 @@ with lib;
               echo "FILE_SERVER_ROOT = \"https://seafile.${vars.domain}/seafhttp\"" >> "$SETTINGS"
             fi
             echo "Restarting Seahub..."
-            ${SEAFILE_PATH}/seahub.sh restart || echo "⚠️ Seahub restart failed or unnecessary, continuing anyway"
+            $SEAFILE_PATH/seahub.sh restart || echo "⚠️ Seahub restart failed or unnecessary, continuing anyway"
           '
         '';
       };
