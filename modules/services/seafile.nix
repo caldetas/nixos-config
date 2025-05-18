@@ -60,8 +60,8 @@ with lib;
         ExecStart = "${pkgs.docker-compose}/bin/docker-compose up -d";
         ExecStop = "${pkgs.docker-compose}/bin/docker-compose down";
         RemainAfterExit = true;
-        #        Restart = "always";
-        #        RestartSec = 5;
+        Restart = "always";
+        RestartSec = 5;
 
         # Run CSRF fix *after* containers have been started
         ExecStartPost = pkgs.writeShellScript "patch-seafile-csrf" ''
