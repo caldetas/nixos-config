@@ -78,11 +78,17 @@ with lib;
             sleep 2
           done
 
-          SEAFILE_PATH=$(docker exec seafile ls -d /opt/seafile/seafile-server-* | tail -n1)
+          # Determine SEAFILE_PATH inside the container
+          SEAFILE_PATH=$($DOCKER exec $SEAFILE_CONTAINER bash -c 'ls -d /opt/seafile/seafile-server-* 2>/dev/null | tail -n1')
 
-          # Wait for settings.py to exist inside the container
+          if [ -z "$SEAFILE_PATH" ]; then
+            echo "❌ Failed to detect Seafile installation directory inside container."
+            exit 1
+          fi
+
+          # Wait for settings.py to appear
           for i in {1..30}; do
-            if $DOCKER exec $SEAFILE_CONTAINER test -f $SEAFILE_PATH/seahub/seahub/settings.py; then
+            if $DOCKER exec $SEAFILE_CONTAINER test -f "$SEAFILE_PATH/seahub/seahub/settings.py"; then
               break
             fi
             echo "Waiting for settings.py to appear..."
