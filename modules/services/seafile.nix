@@ -34,7 +34,7 @@ with lib;
           container_name: seafile
           ports:
             - "8000:80"
-            - "8082:8082"
+#            - "8082:8082"
           environment:
             - DB_HOST=db
             - DB_ROOT_PASSWD=seafile_root_pw
@@ -126,17 +126,17 @@ with lib;
               client_max_body_size 2000m;
             '';
           };
-          "/seafhttp/" = {
-            proxyPass = "http://127.0.0.1:8082/seafhttp/";
-            extraConfig = ''
-              proxy_set_header Host $host;
-              proxy_set_header X-Real-IP $remote_addr;
-              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-              proxy_set_header X-Forwarded-Host $server_name;
-              proxy_connect_timeout 36000;
-              proxy_read_timeout 36000;
-            '';
-          };
+          #          "/seafhttp/" = {
+          #            proxyPass = "http://127.0.0.1:8082/seafhttp/";
+          #            extraConfig = ''
+          #              proxy_set_header Host $host;
+          #              proxy_set_header X-Real-IP $remote_addr;
+          #              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          #              proxy_set_header X-Forwarded-Host $server_name;
+          #              proxy_connect_timeout 36000;
+          #              proxy_read_timeout 36000;
+          #            '';
+          #          };
         };
       };
     };
