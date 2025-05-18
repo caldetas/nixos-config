@@ -34,7 +34,7 @@
 
   services.openssh.enable = true;
   services.openssh.settings.PermitRootLogin = "no";
-  networking.firewall.allowedTCPPorts = [ 22 80 443 ];
+  networking.firewall.allowedTCPPorts = [ 22 80 443 8082 ];
 
   # Under normal circumstances we would listen to your server's cloud-init callback and mark the server
   # as installed at this point. As we don't deliver cloud-init with NixOS we have to use a workaround
