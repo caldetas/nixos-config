@@ -69,7 +69,6 @@ with lib;
           DOCKER=${pkgs.docker}/bin/docker
           SEAFILE_CONTAINER=seafile
 
-          # Wait for container to be running
           for i in {1..30}; do
             if $DOCKER ps --format '{{.Names}}' | grep -q "^$SEAFILE_CONTAINER$"; then
               break
@@ -78,7 +77,6 @@ with lib;
             sleep 2
           done
 
-          # Wait for settings.py to appear inside the container
           for i in {1..30}; do
             if $DOCKER exec $SEAFILE_CONTAINER sh -c 'ls /opt/seafile/seafile-server-*/seahub/seahub/settings.py 1>/dev/null 2>&1'; then
               break
@@ -99,6 +97,9 @@ with lib;
             if ! grep -q FILE_SERVER_ROOT "$SETTINGS"; then
               echo "FILE_SERVER_ROOT = \"https://seafile.${vars.domain}/seafhttp\"" >> "$SETTINGS"
             fi
+
+            echo "Ensuring Seafile backend is running..."
+            "$SEAFILE_PATH/seafile.sh" start
 
             echo "Restarting Seahub..."
             "$SEAFILE_PATH/seahub.sh" restart || echo "⚠️ Seahub restart failed or unnecessary, continuing anyway"
