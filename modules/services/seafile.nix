@@ -118,9 +118,6 @@ with lib;
             # Optional: remove INNER_FILE_SERVER_ROOT as well
             sed -i '/^INNER_FILE_SERVER_ROOT\s*=.*/d' \"\$SETTINGS\"
           "
-
-          '
-
           echo "✅ Patch complete."
           exit 0
         '';
