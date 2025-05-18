@@ -41,8 +41,9 @@ with lib;
             - SEAFILE_ADMIN_PASSWORD=admin_pw
             - SEAFILE_SERVER_HOSTNAME=seafile.${vars.domain}
             - SERVICE_URL=https://seafile.${vars.domain}
+            - FILE_SERVER_ROOT=https://seafile.${vars.domain}/seafhttp
           volumes:
-            - /var/lib/seafile/seafile-data:/shared
+            - /mnt/nas/seafile-data:/shared
           depends_on:
             - db
     '';
@@ -110,18 +111,28 @@ with lib;
       virtualHosts."seafile.${vars.domain}" = {
         forceSSL = pkgs.lib.strings.hasInfix "." vars.domain;
         enableACME = pkgs.lib.strings.hasInfix "." vars.domain;
-        locations."/" = {
-          proxyPass = "http://127.0.0.1:8000";
+        locations = {
+          "/" = {
+            proxyPass = "http://127.0.0.1:8000";
+          };
+          "/seafhttp/" = {
+            proxyPass = "http://127.0.0.1:8000/seafhttp/";
+            proxySetHeaders = {
+              Host = "$host";
+              X-Real-IP = "$remote_addr";
+              X-Forwarded-For = "$proxy_add_x_forwarded_for";
+              X-Forwarded-Host = "$server_name";
+            };
+          };
         };
+      };
+
+      security.acme = {
+        acceptTerms = true;
+        defaults.email = "info@${vars.domain}";
       };
     };
 
-    security.acme = {
-      acceptTerms = true;
-      defaults.email = "info@${vars.domain}";
-    };
-  };
-
-  # Reinstall run this command
-  #  cd /etc/seafile && sudo systemctl stop seafile && docker compose down && cd && sudo  rm -fr /var/lib/seafile && sudo rm -fr /etc/seafile
-}
+    # Reinstall run this command
+    #  cd /etc/seafile && sudo systemctl stop seafile && docker compose down && cd && sudo  rm -fr /var/lib/seafile && sudo rm -fr /etc/seafile
+  }
