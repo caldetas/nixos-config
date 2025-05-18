@@ -58,6 +58,7 @@ with lib;
         WorkingDirectory = "/etc/seafile";
         ExecStart = "${pkgs.docker-compose}/bin/docker-compose up -d";
         ExecStop = "${pkgs.docker-compose}/bin/docker-compose down";
+        RemainAfterExit = true;
         #        Restart = "always";
         #        RestartSec = 5;
 
