@@ -34,6 +34,7 @@ with lib;
           container_name: seafile
           ports:
             - "8000:80"
+            - "8082:8082"
           environment:
             - DB_HOST=db
             - DB_ROOT_PASSWD=seafile_root_pw
@@ -126,7 +127,7 @@ with lib;
             '';
           };
           "/seafhttp/" = {
-            proxyPass = "http://127.0.0.1:8000/seafhttp/";
+            proxyPass = "http://127.0.0.1:8082/seafhttp/";
             extraConfig = ''
               proxy_set_header Host $host;
               proxy_set_header X-Real-IP $remote_addr;
