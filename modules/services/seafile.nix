@@ -136,7 +136,7 @@ with lib;
               client_max_body_size 2000m;
             '';
           };
-          "/seafhttp" = {
+          "/seafhttp/" = {
             proxyPass = "http://127.0.0.1:8082";
             extraConfig = ''
               proxy_set_header Host $host;
