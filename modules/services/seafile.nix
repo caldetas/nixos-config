@@ -129,7 +129,7 @@ with lib;
             '';
           };
           "/seafhttp/" = {
-            proxyPass = "http://127.0.0.1:8000/seafhttp/";
+            proxyPass = "http://127.0.0.1:8082/seafhttp/";
             extraConfig = ''
               proxy_set_header Host $host;
               proxy_set_header X-Real-IP $remote_addr;
