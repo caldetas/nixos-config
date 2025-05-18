@@ -106,7 +106,9 @@ with lib;
             set -e
             SETTINGS="'$SEAFILE_PATH'/seahub/seahub/settings.py"
             grep -q CSRF_TRUSTED_ORIGINS "$SETTINGS" || echo "CSRF_TRUSTED_ORIGINS = [\"https://seafile.${vars.domain}\"]" >> "$SETTINGS"
-            grep -q FILE_SERVER_ROOT "$SETTINGS" || echo "FILE_SERVER_ROOT = \"https://seafile.${vars.domain}/seafhttp\"" >> "$SETTINGS"
+            grep -q FILE_SERVER_ROOT "$SETTINGS" || echo "FILE_SERVER_ROOT = [\"https://seafile.${vars.domain}/seafhttp\"]" >> "$SETTINGS"
+            echo "FILE_SERVER_ROOT = \"https://seafile.${vars.domain}/seafhttp\""
+
           '
 
           echo "✅ Patch complete."
