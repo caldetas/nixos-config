@@ -109,6 +109,8 @@ with lib;
                     #            if ! ./seahub.sh start-fastcgi --admin_email '"$ADMIN_EMAIL"' --admin_password '"$ADMIN_PASSWORD"' 2>&1 | tee /tmp/seahub.log | grep -q "created successfully"; then
                     #              echo "Admin user may already exist or creation failed, continuing..."
                     #            fi
+                    #          '
+          #                    '
           #                    '
 
                               echo "✅ Patch complete."
