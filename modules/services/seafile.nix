@@ -68,42 +68,50 @@ with lib;
           set -e
           DOCKER=${pkgs.docker}/bin/docker
           SEAFILE_CONTAINER=seafile
+          ADMIN_EMAIL="admin@${vars.domain}"
+          ADMIN_PASSWORD="admin_pw"
 
+          echo "⏳ Waiting for container '$SEAFILE_CONTAINER' to start..."
           for i in {1..30}; do
             if $DOCKER ps --format '{{.Names}}' | grep -q "^$SEAFILE_CONTAINER$"; then
               break
             fi
-            echo "Waiting for Seafile container to start..."
             sleep 2
           done
 
+          echo "🔍 Detecting Seafile path inside container..."
+          SEAFILE_PATH=$($DOCKER exec $SEAFILE_CONTAINER sh -c 'ls -d /opt/seafile/seafile-server-* | sort -r | head -n1')
+          echo "📂 Using SEAFILE_PATH: $SEAFILE_PATH"
+
+          echo "⏳ Waiting for settings.py to appear..."
           for i in {1..30}; do
-            if $DOCKER exec $SEAFILE_CONTAINER sh -c 'ls /opt/seafile/seafile-server-*/seahub/seahub/settings.py 1>/dev/null 2>&1'; then
+            if $DOCKER exec $SEAFILE_CONTAINER test -f "$SEAFILE_PATH/seahub/seahub/settings.py"; then
               break
             fi
-            echo "Waiting for settings.py to appear..."
             sleep 2
           done
 
-          $DOCKER exec $SEAFILE_CONTAINER bash -c '
+          echo "⚙️ Patching settings.py if needed..."
+          $DOCKER exec $SEAFILE_CONTAINER sh -c '
             set -e
-            SEAFILE_PATH=$(ls -d /opt/seafile/seafile-server-* | tail -n1)
-            SETTINGS="$SEAFILE_PATH/seahub/seahub/settings.py"
-            echo "Using SEAFILE_PATH: $SEAFILE_PATH"
-
-            if ! grep -q CSRF_TRUSTED_ORIGINS "$SETTINGS"; then
-              echo "CSRF_TRUSTED_ORIGINS = [\"https://seafile.${vars.domain}\"]" >> "$SETTINGS"
-            fi
-            if ! grep -q FILE_SERVER_ROOT "$SETTINGS"; then
-              echo "FILE_SERVER_ROOT = \"https://seafile.${vars.domain}/seafhttp\"" >> "$SETTINGS"
-            fi
-
-            echo "Ensuring Seafile backend is running..."
-            "$SEAFILE_PATH/seafile.sh" start || echo "Seafile backend may already be running."
-
-            echo "Restarting Seahub..."
-            "$SEAFILE_PATH/seahub.sh" restart || echo "⚠️ Seahub restart failed or unnecessary, continuing anyway"
+            SETTINGS="'$SEAFILE_PATH'/seahub/seahub/settings.py"
+            grep -q CSRF_TRUSTED_ORIGINS "$SETTINGS" || echo "CSRF_TRUSTED_ORIGINS = [\"https://seafile.${vars.domain}\"]" >> "$SETTINGS"
+            grep -q FILE_SERVER_ROOT "$SETTINGS" || echo "FILE_SERVER_ROOT = \"https://seafile.${vars.domain}/seafhttp\"" >> "$SETTINGS"
           '
+
+          echo "🚀 Ensuring Seafile backend is running..."
+          $DOCKER exec $SEAFILE_CONTAINER "$SEAFILE_PATH/seafile.sh" start
+
+          echo "🧾 Creating admin user if needed..."
+          $DOCKER exec $SEAFILE_CONTAINER sh -c '
+            export SEAFILE_PATH="'$SEAFILE_PATH'"
+            cd "$SEAFILE_PATH"
+            if ! ./seahub.sh start-fastcgi --admin_email '"$ADMIN_EMAIL"' --admin_password '"$ADMIN_PASSWORD"' 2>&1 | tee /tmp/seahub.log | grep -q "created successfully"; then
+              echo "Admin user may already exist or creation failed, continuing..."
+            fi
+          '
+
+          echo "✅ Patch complete."
         '';
       };
     };
