@@ -43,7 +43,7 @@ with lib;
             - SEAFILE_SERVER_HOSTNAME=seafile.${vars.domain}
 #            - SERVICE_URL=https://seafile.${vars.domain} #deprecated
             - FILE_SERVER_ROOT=https://seafile.${vars.domain}/seafhttp
-            - ALLOWED_HOSTS = ['.${vars.domain}']
+            - ALLOWED_HOSTS=['.${vars.domain}']
           volumes:
             - /mnt/nas/seafile-data:/shared
           depends_on:
