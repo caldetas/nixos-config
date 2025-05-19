@@ -41,8 +41,9 @@ with lib;
             - SEAFILE_ADMIN_EMAIL=admin@${vars.domain}
             - SEAFILE_ADMIN_PASSWORD=admin_pw
             - SEAFILE_SERVER_HOSTNAME=seafile.${vars.domain}
-            - SERVICE_URL=https://seafile.${vars.domain}
+#            - SERVICE_URL=https://seafile.${vars.domain} #deprecated
             - FILE_SERVER_ROOT=https://seafile.${vars.domain}/seafhttp
+            - ALLOWED_HOSTS = ['.${vars.domain}']
           volumes:
             - /mnt/nas/seafile-data:/shared
           depends_on:
@@ -66,60 +67,63 @@ with lib;
 
         # Run CSRF fix *after* containers have been started
         ExecStartPost = pkgs.writeShellScript "patch-seafile-csrf" ''
-          set -e
-          DOCKER=${pkgs.docker}/bin/docker
-          SEAFILE_CONTAINER=seafile
-          ADMIN_EMAIL="admin@${vars.domain}"
-          ADMIN_PASSWORD="admin_pw"
-          FILE_SERVER_ROOT="https://seafile.${vars.domain}/seafhttp"
+                    set -e
+                    DOCKER=${pkgs.docker}/bin/docker
+                    SEAFILE_CONTAINER=seafile
+                    ADMIN_EMAIL="admin@${vars.domain}"
+                    ADMIN_PASSWORD="admin_pw"
+                    FILE_SERVER_ROOT="https://seafile.${vars.domain}/seafhttp"
 
-          echo "⏳ Waiting for container '$SEAFILE_CONTAINER' to start..."
-          for i in {1..30}; do
-            if $DOCKER ps --format '{{.Names}}' | grep -q "^$SEAFILE_CONTAINER$"; then
-              break
-            fi
-            sleep 2
-          done
+                    echo "⏳ Waiting for container '$SEAFILE_CONTAINER' to start..."
+                    for i in {1..30}; do
+                      if $DOCKER ps --format '{{.Names}}' | grep -q "^$SEAFILE_CONTAINER$"; then
+                        break
+                      fi
+                      sleep 2
+                    done
 
-          echo "🔍 Detecting Seafile path inside container..."
-          SEAFILE_PATH=$($DOCKER exec $SEAFILE_CONTAINER sh -c 'ls -d /opt/seafile/seafile-server-* | sort -r | head -n1') || {
-            echo "⚠️ Failed to detect SEAFILE_PATH, continuing anyway"
-            exit 0
-          }
-          echo "📂 Using SEAFILE_PATH: $SEAFILE_PATH"
+                    echo "🔍 Detecting Seafile path inside container..."
+                    SEAFILE_PATH=$($DOCKER exec $SEAFILE_CONTAINER sh -c 'ls -d /opt/seafile/seafile-server-* | sort -r | head -n1') || {
+                      echo "⚠️ Failed to detect SEAFILE_PATH, continuing anyway"
+                      exit 0
+                    }
+                    echo "📂 Using SEAFILE_PATH: $SEAFILE_PATH"
 
-          echo "⏳ Waiting for settings.py to appear..."
-          for i in {1..30}; do
-            if $DOCKER exec $SEAFILE_CONTAINER test -f "$SEAFILE_PATH/seahub/seahub/settings.py"; then
-              break
-            fi
-            sleep 2
-          done
+                    echo "⏳ Waiting for settings.py to appear..."
+                    for i in {1..30}; do
+                      if $DOCKER exec $SEAFILE_CONTAINER test -f "$SEAFILE_PATH/seahub/seahub/settings.py"; then
+                        break
+                      fi
+                      sleep 2
+                    done
 
-          if ! $DOCKER exec $SEAFILE_CONTAINER test -f "$SEAFILE_PATH/seahub/seahub/settings.py"; then
-            echo "⚠️ settings.py not found, skipping patch."
-            exit 0
-          fi
+                    if ! $DOCKER exec $SEAFILE_CONTAINER test -f "$SEAFILE_PATH/seahub/seahub/settings.py"; then
+                      echo "⚠️ settings.py not found, skipping patch."
+                      exit 0
+                    fi
 
-          echo "⚙️ Patching settings.py if needed..."
+                    echo "⚙️ Patching settings.py if needed..."
 
-          $DOCKER exec $SEAFILE_CONTAINER sh -c "
-            set -e
-            SETTINGS=\"$SEAFILE_PATH/seahub/seahub/settings.py\"
+                    $DOCKER exec $SEAFILE_CONTAINER sh -c "
+                      set -e
+                      SETTINGS=\"$SEAFILE_PATH/seahub/seahub/settings.py\"
 
-            grep -q CSRF_TRUSTED_ORIGINS \"\$SETTINGS\" || echo \"CSRF_TRUSTED_ORIGINS = [\\\"https://seafile.${vars.domain}\\\"]\" >> \"\$SETTINGS\"
+                      grep -q CSRF_TRUSTED_ORIGINS \"\$SETTINGS\" || echo \"CSRF_TRUSTED_ORIGINS = [\\\"https://seafile.${vars.domain}\\\"]\" >> \"\$SETTINGS\"
 
-            # Remove existing FILE_SERVER_ROOT lines
-            sed -i '/^FILE_SERVER_ROOT\s*=.*/d' \"\$SETTINGS\"
+                      # Remove existing FILE_SERVER_ROOT lines
+          #            sed -i '/^FILE_SERVER_ROOT\s*=.*/d' \"\$SETTINGS\"
 
-            # Append correct value
-            echo \"FILE_SERVER_ROOT = \\\"https://seafile.${vars.domain}/seafhttp\\\"\" >> \"\$SETTINGS\"
+                      # Append correct value
+                      echo \"FILE_SERVER_ROOT = \\\"https://seafile.${vars.domain}/seafhttp\\\"\" >> \"\$SETTINGS\"
 
-            # Optional: remove INNER_FILE_SERVER_ROOT as well
-            sed -i '/^INNER_FILE_SERVER_ROOT\s*=.*/d' \"\$SETTINGS\"
-          "
-          echo "✅ Patch complete."
-          exit 0
+                      # Append correct value
+                      echo \"ALLOWED_HOSTS = [\".${vars.domain}\"] >> \"\$SETTINGS\"
+
+                      # Optional: remove INNER_FILE_SERVER_ROOT as well
+          #            sed -i '/^INNER_FILE_SERVER_ROOT\s*=.*/d' \"\$SETTINGS\"
+                    "
+                    echo "✅ Patch complete."
+                    exit 0
         '';
       };
     };
