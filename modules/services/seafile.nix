@@ -117,7 +117,7 @@ with lib;
                       echo \"FILE_SERVER_ROOT = \\\"https://seafile.${vars.domain}/seafhttp\\\"\" >> \"\$SETTINGS\"
 
                       # Append correct value
-                      echo \"ALLOWED_HOSTS = [\".${vars.domain}\"] >> \"\$SETTINGS\"
+                      echo \"ALLOWED_HOSTS = [\\\".${vars.domain}\\\"]\" >> \"\$SETTINGS\"
 
                       # Optional: remove INNER_FILE_SERVER_ROOT as well
           #            sed -i '/^INNER_FILE_SERVER_ROOT\s*=.*/d' \"\$SETTINGS\"
