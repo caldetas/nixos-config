@@ -7,13 +7,19 @@ with lib;
 {
   config = mkIf (config.server.enable) {
     services.nginx = {
-      enable = true;
       virtualHosts."hochrheinisches.ch" = {
-        forceSSL = false; # No HTTPS in this case
+        serverName = "hochrheinisches.ch";
+        forceSSL = true; # Redirect HTTP to HTTPS
+        enableACME = true; # Automatically fetch a Let's Encrypt certificate
         locations."/" = {
           return = "301 http://hochrheinisches.clubdesk.ch$request_uri";
         };
       };
+    };
+
+    security.acme = {
+      acceptTerms = true;
+      email = "your-email@example.com"; # Required for Let's Encrypt
     };
   };
 }
