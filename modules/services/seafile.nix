@@ -30,7 +30,7 @@ with lib;
             - /var/lib/seafile/mysql-data:/var/lib/mysql
 
         seafile:
-          image: seafileltd/seafile-mc:11.0.13
+          image: seafileltd/seafile-mc:latest
           container_name: seafile
           ports:
             - "8000:80"
