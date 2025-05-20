@@ -10,7 +10,7 @@ with lib;
 
     # Persistent data directories
     systemd.tmpfiles.rules = [
-      "d /var/lib/seafile/seafile-data 0755 root root -"
+      "d /mnt/nas/seafile-data 0755 root root -"
       "d /var/lib/seafile/mysql-data 0755 root root -"
     ];
 
@@ -41,7 +41,7 @@ with lib;
             - SEAFILE_ADMIN_EMAIL=admin@${vars.domain}
             - SEAFILE_ADMIN_PASSWORD=admin_pw
             - SEAFILE_SERVER_HOSTNAME=seafile.${vars.domain}
-#            - SERVICE_URL=https://seafile.${vars.domain} #deprecated
+            - SERVICE_URL=https://seafile.${vars.domain} #deprecated
             - FILE_SERVER_ROOT=https://seafile.${vars.domain}/seafhttp
             - ALLOWED_HOSTS=['.${vars.domain}']
           volumes:
