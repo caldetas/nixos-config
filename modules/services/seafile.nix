@@ -49,6 +49,7 @@ with lib;
             - SERVICE_URL=https://seafile.${vars.domain} #deprecated
             - FILE_SERVER_ROOT=https://seafile.${vars.domain}/seafhttp
             - ALLOWED_HOSTS=['.${vars.domain}']
+            - MEMCACHED_HOST=memcached
           volumes:
             - /mnt/nas/seafile-data:/shared
           depends_on:
