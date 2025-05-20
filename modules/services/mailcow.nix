@@ -49,7 +49,7 @@ with lib;
 
   ##  MIGRATION
   ## On old server
-  #docker-compose down
+  #docker compose down
   #sudo tar czf mailcow-volumes.tar.gz -C /var/lib/docker/volumes $(docker volume ls -q | grep mailcowdockerized_)
   #sudo tar czf mailcow-config.tar.gz mailcow-dockerized/
   #

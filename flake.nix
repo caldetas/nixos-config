@@ -53,7 +53,7 @@
         location = "/home/caldetas/Desktop/nixos-config";
         terminal = "kitty";
         editor = "nano";
-        domain = "graf-data.com";
+        domain = "caldetas.com";
       };
     in
     {
