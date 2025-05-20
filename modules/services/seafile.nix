@@ -1,21 +1,22 @@
-#
-#  System Notifications
-#
-
 { config, lib, pkgs, vars, ... }:
+
 with lib;
+
+let
+  seafileImage = "seafileltd/seafile-mc:11.0.13"; # Use pinned version
+in
 {
+  config = mkIf config.server.enable {
 
-  config = mkIf (config.server.enable) {
-
-    # Persistent data directories
+    # Persistent volumes
     systemd.tmpfiles.rules = [
       "d /var/lib/seafile/seafile-data 0755 root root -"
       "d /var/lib/seafile/mysql-data 0755 root root -"
     ];
 
-    # Docker Compose file
+    # docker-compose config
     environment.etc."seafile/docker-compose.yml".text = ''
+      version: '3'
 
       services:
         db:
@@ -28,9 +29,10 @@ with lib;
             - MYSQL_PASSWORD=seafile_pw
           volumes:
             - /var/lib/seafile/mysql-data:/var/lib/mysql
+          restart: unless-stopped
 
         seafile:
-          image: seafileltd/seafile-mc:11.0.13
+          image: ${seafileImage}
           container_name: seafile
           ports:
             - "8000:80"
@@ -41,22 +43,22 @@ with lib;
             - SEAFILE_ADMIN_EMAIL=admin@${vars.domain}
             - SEAFILE_ADMIN_PASSWORD=admin_pw
             - SEAFILE_SERVER_HOSTNAME=seafile.${vars.domain}
-#            - SERVICE_URL=https://seafile.${vars.domain} #deprecated
+            - SERVICE_URL=https://seafile.${vars.domain}
             - FILE_SERVER_ROOT=https://seafile.${vars.domain}/seafhttp
-            - ALLOWED_HOSTS=['.${vars.domain}']
           volumes:
-            - /mnt/nas/seafile-data:/shared
+            - /var/lib/seafile/seafile-data
           depends_on:
             - db
+          restart: unless-stopped
     '';
 
+    # Seafile systemd service
     systemd.services.seafile = {
       enable = true;
       description = "Seafile via Docker Compose";
       after = [ "docker.service" ];
       wants = [ "docker.service" ];
       wantedBy = [ "multi-user.target" ];
-
       serviceConfig = {
         WorkingDirectory = "/etc/seafile";
         ExecStart = "${pkgs.docker-compose}/bin/docker-compose up -d";
@@ -64,85 +66,24 @@ with lib;
         RemainAfterExit = true;
         Restart = "always";
         RestartSec = 5;
-
-        # Run CSRF fix *after* containers have been started
-        ExecStartPost = pkgs.writeShellScript "patch-seafile-csrf" ''
-                    set -e
-                    DOCKER=${pkgs.docker}/bin/docker
-                    SEAFILE_CONTAINER=seafile
-                    ADMIN_EMAIL="admin@${vars.domain}"
-                    ADMIN_PASSWORD="admin_pw"
-                    FILE_SERVER_ROOT="https://seafile.${vars.domain}/seafhttp"
-
-                    echo "⏳ Waiting for container '$SEAFILE_CONTAINER' to start..."
-                    for i in {1..30}; do
-                      if $DOCKER ps --format '{{.Names}}' | grep -q "^$SEAFILE_CONTAINER$"; then
-                        break
-                      fi
-                      sleep 2
-                    done
-
-                    echo "🔍 Detecting Seafile path inside container..."
-                    SEAFILE_PATH=$($DOCKER exec $SEAFILE_CONTAINER sh -c 'ls -d /opt/seafile/seafile-server-* | sort -r | head -n1') || {
-                      echo "⚠️ Failed to detect SEAFILE_PATH, continuing anyway"
-                      exit 0
-                    }
-                    echo "📂 Using SEAFILE_PATH: $SEAFILE_PATH"
-
-                    echo "⏳ Waiting for settings.py to appear..."
-                    for i in {1..30}; do
-                      if $DOCKER exec $SEAFILE_CONTAINER test -f "$SEAFILE_PATH/seahub/seahub/settings.py"; then
-                        break
-                      fi
-                      sleep 2
-                    done
-
-                    if ! $DOCKER exec $SEAFILE_CONTAINER test -f "$SEAFILE_PATH/seahub/seahub/settings.py"; then
-                      echo "⚠️ settings.py not found, skipping patch."
-                      exit 0
-                    fi
-
-                    echo "⚙️ Patching settings.py if needed..."
-
-                    $DOCKER exec $SEAFILE_CONTAINER sh -c "
-                      set -e
-                      SETTINGS=\"$SEAFILE_PATH/seahub/seahub/settings.py\"
-
-                      grep -q CSRF_TRUSTED_ORIGINS \"\$SETTINGS\" || echo \"CSRF_TRUSTED_ORIGINS = [\\\"https://seafile.${vars.domain}\\\"]\" >> \"\$SETTINGS\"
-
-                      # Remove existing FILE_SERVER_ROOT lines
-          #            sed -i '/^FILE_SERVER_ROOT\s*=.*/d' \"\$SETTINGS\"
-
-                      # Append correct value
-                      echo \"FILE_SERVER_ROOT = \\\"https://seafile.${vars.domain}/seafhttp\\\"\" >> \"\$SETTINGS\"
-
-                      # Append correct value
-                      echo \"ALLOWED_HOSTS = [\\\".${vars.domain}\\\"]\" >> \"\$SETTINGS\"
-
-                      # Optional: remove INNER_FILE_SERVER_ROOT as well
-          #            sed -i '/^INNER_FILE_SERVER_ROOT\s*=.*/d' \"\$SETTINGS\"
-                    "
-                    echo "✅ Patch complete."
-                    exit 0
-        '';
       };
     };
 
+    # NGINX reverse proxy
     services.nginx = {
       enable = true;
       virtualHosts."seafile.${vars.domain}" = {
-        forceSSL = pkgs.lib.strings.hasInfix "." vars.domain;
-        enableACME = pkgs.lib.strings.hasInfix "." vars.domain;
+        forceSSL = true;
+        enableACME = true;
         locations = {
           "/" = {
             proxyPass = "http://127.0.0.1:8000";
-            extraConfig = ''
-              client_max_body_size 2000m;
-            '';
+            extraConfig = "client_max_body_size 2000m;";
           };
           "/seafhttp/" = {
             proxyPass = "http://127.0.0.1:8082";
             extraConfig = ''
+              rewrite ^/seafhttp/(.*)$ /$1 break;
               proxy_set_header Host $host;
               proxy_set_header X-Real-IP $remote_addr;
               proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -155,12 +96,10 @@ with lib;
       };
     };
 
+    # SSL cert
     security.acme = {
       acceptTerms = true;
       defaults.email = "info@${vars.domain}";
     };
   };
-
-  # Reinstall run this command
-  #  cd /etc/seafile && sudo systemctl stop seafile && docker compose down && cd && sudo  rm -fr /var/lib/seafile && sudo rm -fr /etc/seafile
 }
