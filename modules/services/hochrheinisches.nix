@@ -16,10 +16,5 @@ with lib;
         };
       };
     };
-
-    security.acme = {
-      acceptTerms = true;
-      email = "your-email@example.com"; # Required for Let's Encrypt
-    };
   };
 }
