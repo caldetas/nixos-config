@@ -146,15 +146,13 @@ with lib;
             '';
           };
           "/seafhttp/" = {
-            proxyPass = "http://127.0.0.1:8082";
+            proxyPass = "http://172.18.0.4:8082";
             extraConfig = ''
               rewrite ^/seafhttp/(.*)$ /$1 break;
-              proxy_set_header Host $host;
-              proxy_set_header X-Real-IP $remote_addr;
-              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-              proxy_set_header X-Forwarded-Host $server_name;
-              proxy_connect_timeout 36000;
-              proxy_read_timeout 36000;
+              proxy_set_header   Host $host;
+              proxy_set_header   X-Real-IP $remote_addr;
+              proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+              proxy_set_header   X-Forwarded-Host $server_name;
             '';
           };
         };
