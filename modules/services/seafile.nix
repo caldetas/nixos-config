@@ -146,7 +146,7 @@ with lib;
             '';
           };
           "/seafhttp/" = {
-            proxyPass = "http://172.18.0.4:8082";
+            proxyPass = "http://127.0.0.1:8082";
             extraConfig = ''
               rewrite ^/seafhttp/(.*)$ /$1 break;
               proxy_set_header   Host $host;
@@ -165,6 +165,8 @@ with lib;
     };
   };
 
-  # Reinstall run this command
-  #  cd /etc/seafile && sudo systemctl stop seafile && docker compose down && cd && sudo  rm -fr /var/lib/seafile && sudo rm -fr /etc/seafile
+  # Reinstall from scratch run this command
+  #  cd /etc/seafile; sudo systemctl stop seafile; docker compose down; cd; sudo  rm -fr /var/lib/seafile; sudo rm -fr /etc/seafile; sudo rm -fr /mnt/nas/seafile*
+
+  # TODO activate scripted init, for now you have to activate it in the admin profile and add the s to https paths
 }
