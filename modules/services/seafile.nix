@@ -108,7 +108,7 @@ with lib;
                       set -e
                       SETTINGS=\"$SEAFILE_PATH/seahub/seahub/settings.py\"
 
-                      grep -q CSRF_TRUSTED_ORIGINS \"\$SETTINGS\" || echo \"CSRF_TRUSTED_ORIGINS = [\\\"https://seafile.${vars.domain}\\\"]\" >> \"\$SETTINGS\"
+                      echo \"CSRF_TRUSTED_ORIGINS = [\\\"https://seafile.${vars.domain}\\\"]\" >> \"\$SETTINGS\"
 
                       # Remove existing FILE_SERVER_ROOT lines
           #            sed -i '/^FILE_SERVER_ROOT\s*=.*/d' \"\$SETTINGS\"
