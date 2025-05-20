@@ -29,6 +29,11 @@ with lib;
           volumes:
             - /var/lib/seafile/mysql-data:/var/lib/mysql
 
+        memcached:
+          image: memcached:latest
+          container_name: seafile-memcached
+          restart: always
+
         seafile:
           image: seafileltd/seafile-mc:latest
           container_name: seafile
@@ -48,6 +53,7 @@ with lib;
             - /mnt/nas/seafile-data:/shared
           depends_on:
             - db
+            - memcached
     '';
 
     systemd.services.seafile = {
@@ -141,6 +147,7 @@ with lib;
           "/seafhttp/" = {
             proxyPass = "http://127.0.0.1:8082";
             extraConfig = ''
+              rewrite ^/seafhttp/(.*)$ /$1 break;
               proxy_set_header Host $host;
               proxy_set_header X-Real-IP $remote_addr;
               proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
