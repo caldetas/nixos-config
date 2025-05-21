@@ -43,13 +43,15 @@ with lib;
           environment:
             - DB_HOST=db
             - DB_ROOT_PASSWD=seafile_root_pw
-            - SEAFILE_ADMIN_EMAIL=seafile@${vars.domain} #todo reactivate
+            - SEAFILE_ADMIN_EMAIL=seafile@${vars.domain}
             - SEAFILE_ADMIN_PASSWORD=admin_pw
             - SEAFILE_SERVER_HOSTNAME=seafile.${vars.domain}
             - SERVICE_URL=https://seafile.${vars.domain} #deprecated
             - FILE_SERVER_ROOT=https://seafile.${vars.domain}/seafhttp
             - ALLOWED_HOSTS=['.${vars.domain}']
             - MEMCACHED_HOST=memcached
+            - SEAFILE_SERVER_HOSTNAME=seafile.example.com
+            - SEAFILE_SERVER_PROTOCOL=https
           volumes:
             - /mnt/nas/seafile-data:/shared
           depends_on:

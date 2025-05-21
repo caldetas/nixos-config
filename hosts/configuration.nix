@@ -194,6 +194,7 @@ with lib;
         pdftk
         qbittorrent
         remmina
+        seafile-client
         spotify
         stremio
         strongswan
