@@ -20,7 +20,6 @@ with lib;
       ccnetSettings.General.SERVICE_URL = "https://seafile.${vars.domain}";
 
       # Seafile fileserver config — run behind Nginx using a Unix socket
-
       seafileSettings = {
         fileserver = {
           host = "unix:/run/seafile/server.sock";
@@ -55,10 +54,9 @@ with lib;
           "/" = {
             proxyPass = "http://unix:/run/seahub/gunicorn.sock";
             extraConfig = ''
-              #              proxy_set_header Host $host;
-                            proxy_set_header X-Real-IP $remote_addr;
-                            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                            proxy_set_header X-Forwarded-Host $server_name;
+              proxy_set_header X-Real-IP $remote_addr;
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              proxy_set_header X-Forwarded-Host $server_name;
             '';
           };
 
