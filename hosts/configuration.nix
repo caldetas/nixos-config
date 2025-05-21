@@ -89,6 +89,7 @@ with lib;
         btop # Resource Manager
         ctop # Container Manager
         coreutils # GNU Utilities
+        dig # domain lookup
         file # File Type
         git # Version Control
         glxinfo # OpenGL
