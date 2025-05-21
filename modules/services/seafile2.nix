@@ -30,7 +30,6 @@ with lib;
       seahubExtraConf = ''
         CSRF_TRUSTED_ORIGINS = ["https://seafile.${vars.domain}"]
         FILE_SERVER_ROOT =  "https://seafile.${vars.domain}/seafhttp"
-        ALLOWED_HOSTS = [".${vars.domain}"]
       '';
 
       # Optional data directory override
@@ -55,10 +54,10 @@ with lib;
           "/" = {
             proxyPass = "http://unix:/run/seahub/gunicorn.sock";
             extraConfig = ''
-              #              proxy_set_header Host $host;
-                            proxy_set_header X-Real-IP $remote_addr;
-                            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                            proxy_set_header X-Forwarded-Host $server_name;
+              proxy_set_header Host $host;
+              proxy_set_header X-Real-IP $remote_addr;
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              proxy_set_header X-Forwarded-Host $server_name;
             '';
           };
 
