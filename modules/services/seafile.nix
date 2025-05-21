@@ -6,7 +6,8 @@
 with lib;
 {
 
-  config = mkIf (config.server.enable) {
+  config = mkIf (false) {
+    #  config = mkIf (config.server.enable) {
 
     # Persistent data directories
     systemd.tmpfiles.rules = [

@@ -20,6 +20,7 @@
   ./picom.nix
   ./polybar.nix
   ./seafile.nix
+  ./seafile2.nix
   ./server.nix
   ./sops.nix
   ./surfshark.nix
