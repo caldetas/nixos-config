@@ -17,21 +17,21 @@ with lib;
 
   config = mkIf (config.mailcow.enable) {
 
-    systemd.services.mailcow = {
-      description = "Mailcow Docker Compose Service";
-      after = [ "docker.service" "network.target" ];
-      wants = [ "docker.service" ];
-      wantedBy = [ "multi-user.target" ];
-
-      serviceConfig = {
-        WorkingDirectory = "/home/${vars.user}/git/mailcow-dockerized";
-        ExecStart = "${pkgs.docker-compose}/bin/docker-compose up -d";
-        ExecStop = "${pkgs.docker-compose}/bin/docker-compose down";
-        Restart = "always";
-        RestartSec = 10;
-        User = "${vars.user}";
-      };
-    };
+    #    systemd.services.mailcow = {
+    #      description = "Mailcow Docker Compose Service";
+    #      after = [ "docker.service" "network.target" ];
+    #      wants = [ "docker.service" ];
+    #      wantedBy = [ "multi-user.target" ];
+    #
+    #      serviceConfig = {
+    #        WorkingDirectory = "/home/${vars.user}/git/mailcow-dockerized";
+    #        ExecStart = "${pkgs.docker-compose}/bin/docker-compose up -d";
+    #        ExecStop = "${pkgs.docker-compose}/bin/docker-compose down";
+    #        Restart = "always";
+    #        RestartSec = 10;
+    #        User = "${vars.user}";
+    #      };
+    #    };
 
     services.nginx = {
       enable = true;
@@ -54,7 +54,7 @@ with lib;
           proxyWebsockets = true;
 
           extraConfig = ''
-            proxy_set_header Host $host;
+            proxy_set_header Host mail.$host;
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
             proxy_set_header X-Forwarded-Proto $scheme;
