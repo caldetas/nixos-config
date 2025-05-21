@@ -33,7 +33,7 @@ with lib;
       '';
 
       # Optional data directory override
-      dataDir = "/mnt/nas/seafile-test";
+      dataDir = "/mnt/nas/seafile-data";
 
       # Garbage collection (e.g. clean up deleted files weekly)
       gc = {
