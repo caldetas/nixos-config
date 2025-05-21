@@ -29,6 +29,7 @@ with lib;
         ExecStop = "${pkgs.docker-compose}/bin/docker-compose down";
         Restart = "always";
         RestartSec = 10;
+        User = "${vars.user}";
       };
     };
 
