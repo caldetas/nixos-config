@@ -19,14 +19,16 @@ with lib;
       ccnetSettings.General.SERVICE_URL = "https://seafile.${vars.domain}";
 
       # Seafile fileserver config — run behind Nginx using a Unix socket
+
       seafileSettings = {
-        "ALLOWED_HOSTS" = [ ".${vars.domain}" ];
         fileserver = {
           host = "unix:/run/seafile/server.sock";
           web_token_expire_time = 36000;
         };
       };
-
+      seahubSettings = {
+        "ALLOWED_HOSTS" = "['seafile.${vars.domain}']";
+      };
       seahubExtraConf = ''
         CSRF_TRUSTED_ORIGINS = ["https://seafile.${vars.domain}"]
         FILE_SERVER_ROOT =  "https://seafile.${vars.domain}/seafhttp"
