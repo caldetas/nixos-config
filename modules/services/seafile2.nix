@@ -12,7 +12,7 @@ with lib;
       enable = true;
 
       # Set your admin email and initial password
-      adminEmail = "admin@${vars.domain}";
+      adminEmail = "seafile@${vars.domain}";
       initialAdminPassword = "1234";
 
       # External domain (important for web URLs)
