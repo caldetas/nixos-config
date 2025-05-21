@@ -6,7 +6,7 @@
 with lib;
 {
   config = mkIf (config.server.enable) {
-    services.nginx = {
+    /*services.nginx = {
       virtualHosts."hochrheinisches.ch" = {
         serverName = "hochrheinisches.ch";
         forceSSL = true; # Redirect HTTP to HTTPS
@@ -15,6 +15,6 @@ with lib;
           return = "301 http://hochrheinisches.clubdesk.ch$request_uri";
         };
       };
-    };
+    };*/
   };
 }
