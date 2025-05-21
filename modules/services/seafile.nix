@@ -46,12 +46,11 @@ with lib;
             - SEAFILE_ADMIN_EMAIL=seafile@${vars.domain}
             - SEAFILE_ADMIN_PASSWORD=admin_pw
             - SEAFILE_SERVER_HOSTNAME=seafile.${vars.domain}
+            - SEAFILE_SERVER_PROTOCOL=https
             - SERVICE_URL=https://seafile.${vars.domain} #deprecated
             - FILE_SERVER_ROOT=https://seafile.${vars.domain}/seafhttp
             - ALLOWED_HOSTS=['.${vars.domain}']
             - MEMCACHED_HOST=memcached
-            - SEAFILE_SERVER_HOSTNAME=seafile.example.com
-            - SEAFILE_SERVER_PROTOCOL=https
           volumes:
             - /mnt/nas/seafile-data:/shared
           depends_on:
