@@ -29,7 +29,6 @@ with lib;
       seahubExtraConf = ''
         CSRF_TRUSTED_ORIGINS = ["https://seafile.${vars.domain}"]
         FILE_SERVER_ROOT =  "https://seafile.${vars.domain}/seafhttp"
-        ALLOWED_HOSTS = "['seafile.${vars.domain}']"
       '';
 
       # Optional data directory override
