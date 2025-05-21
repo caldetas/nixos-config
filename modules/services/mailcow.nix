@@ -16,6 +16,22 @@ with lib;
   };
 
   config = mkIf (config.mailcow.enable) {
+
+    systemd.services.mailcow = {
+      description = "Mailcow Docker Compose Service";
+      after = [ "docker.service" "network.target" ];
+      wants = [ "docker.service" ];
+      wantedBy = [ "multi-user.target" ];
+
+      serviceConfig = {
+        WorkingDirectory = "/home/${vars.user}/git/mailcow-dockerized";
+        ExecStart = "${pkgs.docker-compose}/bin/docker-compose up -d";
+        ExecStop = "${pkgs.docker-compose}/bin/docker-compose down";
+        Restart = "always";
+        RestartSec = 10;
+      };
+    };
+
     services.nginx = {
       enable = true;
 
