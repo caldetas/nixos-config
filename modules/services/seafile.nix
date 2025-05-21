@@ -8,6 +8,7 @@ with lib;
 
   config = mkIf (config.server.enable) {
 
+    # setup after https://wiki.nixos.org/wiki/Seafile
     services.seafile = {
       enable = true;
 
