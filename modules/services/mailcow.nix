@@ -47,8 +47,6 @@ with lib;
 
         root = "/var/www/empty"; # Required for ACME HTTP challenge
 
-        serverAliases = [ "webmail.${vars.domain}" ];
-
         locations."/" = {
           proxyPass = "http://127.0.0.1:8088";
           proxyWebsockets = true;
