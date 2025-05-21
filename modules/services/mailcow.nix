@@ -34,29 +34,19 @@ with lib;
     #    };
 
     services.nginx = {
-      enable = true;
-
       virtualHosts."mail.${vars.domain}" = {
-        forceSSL = pkgs.lib.strings.hasInfix "." vars.domain;
+        forceSSL = pkgs.lib.strings.hasInfix "." vars.domain; # Use SSL only for real domain
         enableACME = pkgs.lib.strings.hasInfix "." vars.domain;
-
-        listen = [
-          { addr = "0.0.0.0"; port = 80; ssl = false; }
-          { addr = "0.0.0.0"; port = 443; ssl = true; }
-        ];
-
-        root = "/var/www/empty"; # Required for ACME HTTP challenge
-
         locations."/" = {
           proxyPass = "http://127.0.0.1:8088";
           proxyWebsockets = true;
 
-          extraConfig = ''
-            proxy_set_header Host mail.caldetas.com;
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header X-Forwarded-Proto https;
-          '';
+          #          extraConfig = ''
+          #            proxy_set_header Host $host;
+          #            proxy_set_header X-Real-IP $remote_addr;
+          #            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          #            proxy_set_header X-Forwarded-Proto https;
+          #          '';
         };
       };
     };
