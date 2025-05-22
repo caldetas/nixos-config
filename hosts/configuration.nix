@@ -195,7 +195,6 @@ with lib;
         pdftk
         qbittorrent
         remmina
-        seafile-client
         spotify
         stremio
         strongswan
@@ -235,6 +234,7 @@ with lib;
           "io.github.mimbrero.WhatsAppDesktop"
           "org.signal.Signal"
           "ro.go.hmlendea.DL-Desktop"
+          "com.seafile.Client"
         ];
       };
 
