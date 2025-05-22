@@ -16,32 +16,6 @@ with lib;
   };
 
   config = mkIf (config.mailcow.enable) {
-
-    systemd.services.mailcow = {
-      description = "Mailcow Docker Compose Service";
-      after = [ "network-online.target" "docker.service" ];
-      wants = [ "network-online.target" ];
-      wantedBy = [ "multi-user.target" ];
-
-      serviceConfig = {
-        WorkingDirectory = "/home/${vars.user}/git/mailcow-dockerized";
-        ExecStart = "${pkgs.docker-compose}/bin/docker-compose up -d";
-        ExecStop = "${pkgs.docker-compose}/bin/docker-compose down";
-        Restart = "always";
-        RestartSec = 10;
-        User = vars.user;
-        Group = "docker";
-      };
-
-      path = [ pkgs.docker pkgs.docker-compose ];
-
-      # Ensure the directory exists on boot and is owned by the user
-      preStart = ''
-        mkdir -p /home/${vars.user}/git/mailcow-dockerized
-        chown ${vars.user}:docker /home/${vars.user}/git/mailcow-dockerized
-      '';
-    };
-
     services.nginx = {
       virtualHosts."mail.${vars.domain}" = {
         forceSSL = pkgs.lib.strings.hasInfix "." vars.domain; # Use SSL only for real domain
