@@ -24,11 +24,11 @@ with lib;
       wantedBy = [ "multi-user.target" ];
 
       serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
         WorkingDirectory = "/home/${vars.user}/git/mailcow-dockerized";
         ExecStart = "${pkgs.docker-compose}/bin/docker-compose up -d";
         ExecStop = "${pkgs.docker-compose}/bin/docker-compose down";
-        Restart = "always";
-        RestartSec = 10;
         User = vars.user;
       };
     };
