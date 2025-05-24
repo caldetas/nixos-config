@@ -19,6 +19,7 @@
   ./nix.nix
   ./picom.nix
   ./polybar.nix
+  ./routing.nix
   ./seafile.nix
   ./server.nix
   ./sops.nix
