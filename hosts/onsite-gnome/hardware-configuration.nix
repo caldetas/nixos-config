@@ -45,7 +45,6 @@
   networking = with host; {
     useDHCP = false; # Deprecated
     #    hostName = hostName;
-    networkmanager.enable = true;
     interfaces = {
       enp0s31f6 = {
         useDHCP = true; # For versatility sake, manually edit IP on nm-applet.

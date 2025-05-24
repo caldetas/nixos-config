@@ -12,11 +12,11 @@
 { lib, inputs, nixpkgs, nixpkgs-unstable, home-manager, nur, hyprland, plasma-manager, vars, ... }:
 
 let
-  system = "x86_64-linux"; # System Architecture
+  system = "x86_64-linux";
 
   pkgs = import nixpkgs {
     inherit system;
-    config.allowUnfree = true; # Allow Proprietary Software
+    config.allowUnfree = true;
   };
 
   unstable = import nixpkgs-unstable {
@@ -24,124 +24,64 @@ let
     config.allowUnfree = true;
   };
 
-  lib = nixpkgs.lib;
+  makeHost = name: folder: monitors: extraModules:
+    lib.nixosSystem {
+      inherit system;
+      specialArgs = {
+        inherit inputs system unstable hyprland vars;
+        host = {
+          hostName = name;
+          mainMonitor = monitors.main;
+          secondMonitor = monitors.second;
+          thirdMonitor = monitors.third;
+        };
+      };
+      modules = [
+        ./${folder}
+        ./configuration.nix
+        home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.${vars.user}.imports = [ ];
+        }
+      ] ++ extraModules;
+    };
+
 in
 {
-  vm = lib.nixosSystem {
-    # VM Profile
-    inherit system;
-    specialArgs = {
-      inherit inputs system unstable hyprland vars;
-      host = {
-        hostName = "vm";
-        mainMonitor = "Virtual-1";
-        secondMonitor = "";
-        thirdMonitor = "";
-      };
-    };
-    modules = [
-      ./vm
-      ./configuration.nix
+  vm = makeHost "vm" "vm"
+    {
+      main = "Virtual-1";
+      second = "";
+      third = "";
+    } [ ];
 
-      home-manager.nixosModules.home-manager
-      {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-      }
-    ];
-  };
+  libelula = makeHost "libelula" "libelula"
+    {
+      main = "eDP-1";
+      second = "HDMI-A-1";
+      third = "";
+    } [ nur.modules.nixos.default ];
 
-  libelula = lib.nixosSystem {
-    #
-    inherit system;
-    specialArgs = {
-      inherit inputs system unstable hyprland vars;
-      #      inherit inputs system unstable vars;
-      host = {
-        hostName = "libelula";
-        mainMonitor = "eDP-1";
-        secondMonitor = "HDMI-A-1"; #"HDMI-1-1";
-        thirdMonitor = "";
-      };
-    };
-    modules = [
-      nur.modules.nixos.default
-      ./libelula
-      ./configuration.nix
+  onsite-gnome = makeHost "onsite-gnome" "onsite-gnome"
+    {
+      main = "eDP-1";
+      second = "DP-6";
+      third = "DP-8";
+    } [ ];
 
-      home-manager.nixosModules.home-manager
-      {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-        home-manager.users.${vars.user}.imports = [
-        ];
-      }
-    ];
-  };
-  onsite-gnome = lib.nixosSystem {
-    #
-    inherit system;
-    specialArgs = {
-      inherit inputs system unstable hyprland vars;
-      host = {
-        hostName = "onsite-gnome";
-        mainMonitor = "eDP-1";
-        secondMonitor = "DP-6";
-        thirdMonitor = "DP-8";
-      };
-    };
-    modules = [
-      ./onsite-gnome
-      ./configuration.nix
-      home-manager.nixosModules.home-manager
-      {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-      }
-    ];
-  };
-  nixos = lib.nixosSystem {
-    #
-    inherit system;
-    specialArgs = {
-      inherit inputs system unstable hyprland vars;
-      host = {
-        hostName = "nixos";
-        mainMonitor = "";
-        secondMonitor = "";
-        thirdMonitor = "";
-      };
-    };
-    modules = [
-      ./nixos
-      ./configuration.nix
-      home-manager.nixosModules.home-manager
-      {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-      }
-    ];
-  };
-  nixcz = lib.nixosSystem {
-    #
-    inherit system;
-    specialArgs = {
-      inherit inputs system unstable hyprland vars;
-      host = {
-        hostName = "nixcz";
-        mainMonitor = "";
-        secondMonitor = "";
-        thirdMonitor = "";
-      };
-    };
-    modules = [
-      ./nixcz
-      ./configuration.nix
-      home-manager.nixosModules.home-manager
-      {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-      }
-    ];
-  };
+  nixos = makeHost "nixos" "nixos"
+    {
+      main = "";
+      second = "";
+      third = "";
+    } [ ];
+
+  nixcz = makeHost "nixcz" "nixcz"
+    {
+      main = "";
+      second = "";
+      third = "";
+    } [ ];
 }

@@ -50,7 +50,7 @@
       vars = {
         # Variables Used In Flake
         user = "caldetas";
-        location = "/home/caldetas/Desktop/nixos-config";
+        location = toString ./.;
         terminal = "kitty";
         editor = "nano";
         domain = "caldetas.com";

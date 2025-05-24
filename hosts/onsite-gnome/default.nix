@@ -66,7 +66,6 @@
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
-  networking.networkmanager.enable = true;
   networking.networkmanager.enableStrongSwan = true;
 
   # Enable the X11 windowing system. (gnome?)

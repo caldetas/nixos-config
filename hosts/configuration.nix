@@ -119,7 +119,6 @@ with lib;
         mpv # Media Player
         pavucontrol # Audio Control
         pipewire # Audio Server/Control
-        pulseaudio # Audio Server/Control
         usbimager # USB Writer
         vlc # Media Player
 
@@ -162,9 +161,6 @@ with lib;
         appimage-run # Runs AppImages on NixOS
         google-chrome # Browser
         libreoffice # OpenOffice
-
-        # Security
-        sops # Secrets Manager
 
 
 
@@ -297,6 +293,10 @@ with lib;
       # Disable the tty1 getty so that GDM isn’t interfered with at login https://discourse.nixos.org/t/gnome-keyring-slow-start/58364/6
       systemd.services."getty@tty1".enable = false;
       systemd.services."autovt@tty1".enable = false;
+
+      networking.networkmanager.enable = true;
+      systemd.services.NetworkManager-wait-online.enable = true;
+
     })
   ];
 }

@@ -52,6 +52,7 @@ in
       description = "Add VPN bypass route using hostname from SOPS secret";
       wantedBy = [ "network-online.target" ];
       after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
       serviceConfig = {
         Type = "oneshot";
         ExecStart = "${vpnBypassScript}/bin/vpn-bypass-route";
