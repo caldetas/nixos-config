@@ -16,7 +16,23 @@ with lib;
             return = "301 http://hochrheinisches.clubdesk.ch$request_uri";
           };
         };
+        "emanuelgraf.art" = {
+          serverName = "emanuelgraf.art";
+          forceSSL = true;
+          enableACME = true;
+          locations."/" = {
+            return = "301 https://emanuel-graf.kleio.ch$request_uri";
+          };
+        };
 
+        "wurstix.com" = {
+          serverName = "wurstix.com";
+          forceSSL = true;
+          enableACME = true;
+          locations."/" = {
+            return = "301 https://emanuel-graf.kleio.ch$request_uri";
+          };
+        };
         "_" = {
           default = true;
           locations."/" = {
