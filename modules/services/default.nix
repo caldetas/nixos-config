@@ -16,6 +16,7 @@
   ./gnupg.nix
   ./hochrheinisches.nix
   ./mailcow.nix
+  ./nginx.nix
   ./nix.nix
   ./picom.nix
   ./polybar.nix
