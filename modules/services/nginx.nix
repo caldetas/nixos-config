@@ -21,7 +21,7 @@ with lib;
           forceSSL = true;
           enableACME = true;
           locations."/" = {
-            return = "301 https://emanuel-graf.kleio.ch$request_uri";
+            return = "301 https://emanuel-graf.kleio.com$request_uri";
           };
         };
 
@@ -30,7 +30,7 @@ with lib;
           forceSSL = true;
           enableACME = true;
           locations."/" = {
-            return = "301 https://emanuel-graf.kleio.ch$request_uri";
+            return = "301 https://emanuel-graf.kleio.com$request_uri";
           };
         };
         "_" = {
