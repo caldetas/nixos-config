@@ -15,21 +15,24 @@ let
     echo "vpn-bypass: Starting VPN bypass route setup"
 
     HOST=$(cat ${config.sops.secrets."server/nixcz".path})
-    echo "vpn-bypass: Resolved host secret: $HOST"
+    echo "vpn-bypass: Loaded host from secret: $HOST"
 
-    for i in {1..10}; do
-      IP=$(dig +short "$HOST" | head -n1)
-      if [ -n "$IP" ]; then
-        echo "vpn-bypass: Resolved IP: $IP"
-        break
-      fi
-      echo "vpn-bypass: Waiting for DNS resolution..."
-      sleep 1
-    done
+    if [[ "$HOST" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+      IP="$HOST"
+      echo "vpn-bypass: HOST is already an IP: $IP"
+    else
+      for i in {1..10}; do
+        IP=$(dig +short "$HOST" | head -n1)
+        if [ -n "$IP" ]; then
+          echo "vpn-bypass: Resolved IP: $IP"
+          break
+        fi
+        echo "vpn-bypass: Waiting for DNS resolution..."
+        sleep 1
+      done
+    fi
 
     DEFAULT_ROUTE=$(ip route show default | head -n1)
-    echo "vpn-bypass: Default route line: $DEFAULT_ROUTE"
-
     GATEWAY=$(echo "$DEFAULT_ROUTE" | awk '{print $3}')
     IFACE=$(echo "$DEFAULT_ROUTE" | awk '{print $5}')
     echo "vpn-bypass: Gateway: $GATEWAY"
@@ -40,14 +43,14 @@ let
       exit 1
     fi
 
-    echo "vpn-bypass: Adding route to $HOST ($IP) via $GATEWAY on $IFACE"
-    ip route add "$IP" via "$GATEWAY" dev "$IFACE"
+    echo "vpn-bypass: Adding route to $IP via $GATEWAY on $IFACE"
+    ip route replace "$IP" via "$GATEWAY" dev "$IFACE"
   '';
 
 in
 {
 
-  config = mkIf (!config.server.enable) {
+  config = mkIf (config.surfshark.enable) {
     systemd.services.vpn-bypass-route = {
       description = "Add VPN bypass route using hostname from SOPS secret";
       wantedBy = [ "network-online.target" ];
