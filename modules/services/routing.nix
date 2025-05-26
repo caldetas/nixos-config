@@ -25,7 +25,8 @@ let
         IP=$(dig +short "$HOST" | head -n1)
         if [ -n "$IP" ]; then
           echo "vpn-bypass: Resolved IP: $IP"
-          break
+          breakOffenes und kooperatives Team
+
         fi
         echo "vpn-bypass: Waiting for DNS resolution..."
         sleep 1
