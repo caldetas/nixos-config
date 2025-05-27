@@ -212,7 +212,7 @@ with lib;
 
       (with unstable; [
         #CV creation with Latex
-        texlive.combined.scheme-full #latex
+        #        texlive.combined.scheme-full #latex
       ]) ++
 
       (with pkgs; [
