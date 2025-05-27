@@ -15,6 +15,7 @@
   ./eww.nix
   ./flatpak.nix
   ./games.nix
+  ./idea.nix
   ./kitty.nix
   ./rofi.nix
   ./swaylock-effects.nix
