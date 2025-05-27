@@ -85,6 +85,10 @@
   #  directx-headers # elden ring
   #  directx-shader-compiler #elden ring
   #  ];
+  networking.interfaces.wlp0s20f3 = {
+    useDHCP = true;
+    mtu = 1380;
+  };
 
 }
 

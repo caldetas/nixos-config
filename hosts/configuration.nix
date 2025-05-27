@@ -72,9 +72,24 @@ with lib;
 
 
       networking = {
-        #    nameservers =  [ "1.1.1.1" "9.9.9.9"]; # privacy respecting nameserver for dns queries (cloudflare & quad9)
-        nameservers = [ "162.252.172.57" "149.154.159.92" ]; # Surfshark
-        hostName = host.hostName;
+        networkmanager = {
+          enable = true;
+          dns = lib.mkForce "none"; # Prevent NetworkManager from using DNS from the router (e.g., Fritzbox)
+        };
+
+        nameservers = [ "1.1.1.1" "1.0.0.1" ]; # Fallback to Surfshark DNS if VPN fails
+
+        interfaces.wlp0s20f3 = {
+          useDHCP = true;
+          mtu = 1380; # Lower MTU to avoid VPN fragmentation issues
+        };
+      };
+
+      services.resolved = {
+        enable = true;
+        dnssec = "allow-downgrade"; # Optional: Enable DNSSEC if available
+        domains = [ "~." ]; # Route all DNS queries through systemd-resolved (and via VPN)
+        fallbackDns = [ "1.0.0.1" "1.1.1.1" ];
       };
 
       environment.variables = {
@@ -203,7 +218,7 @@ with lib;
 
       (with unstable; [
         #CV creation with Latex
-        #            texlive.combined.scheme-full #latex
+        texlive.combined.scheme-full #latex
       ]) ++
 
       (with pkgs; [
@@ -294,7 +309,6 @@ with lib;
       systemd.services."getty@tty1".enable = false;
       systemd.services."autovt@tty1".enable = false;
 
-      networking.networkmanager.enable = true;
       systemd.services.NetworkManager-wait-online.enable = true;
 
     })
