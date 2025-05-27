@@ -66,7 +66,7 @@
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
-  networking.networkmanager.enableStrongSwan = true;
+  #  networking.networkmanager.enableStrongSwan = true;
 
   # Enable the X11 windowing system. (gnome?)
   #  services.xserver.enable = true;
@@ -84,7 +84,7 @@
 
 
   #VPN
-  surfshark.enable = true;
+  #  surfshark.enable = true;
 
   #  # Enable CUPS to print documents.
   #  services.printing.enable = true;
@@ -111,9 +111,9 @@
   #  directx-shader-compiler #elden ring
   #  ];
 
-  services.printing.drivers = with pkgs; [
-    cnijfilter2
-  ];
+  #  services.printing.drivers = with pkgs; [
+  #    cnijfilter2
+  #  ];
 
 
 
