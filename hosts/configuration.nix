@@ -303,7 +303,7 @@ with lib;
       systemd.services."getty@tty1".enable = false;
       systemd.services."autovt@tty1".enable = false;
 
-      #      systemd.services.NetworkManager-wait-online.enable = true;
+      systemd.services.NetworkManager-wait-online.enable = true;
 
     })
   ];
