@@ -76,13 +76,7 @@ with lib;
           enable = true;
           dns = lib.mkForce "none"; # Prevent NetworkManager from using DNS from the router (e.g., Fritzbox)
         };
-
         nameservers = [ "1.1.1.1" "1.0.0.1" ]; # Fallback to Surfshark DNS if VPN fails
-
-        interfaces.wlp0s20f3 = {
-          useDHCP = true;
-          mtu = 1380; # Lower MTU to avoid VPN fragmentation issues
-        };
       };
 
       services.resolved = {
@@ -309,7 +303,7 @@ with lib;
       systemd.services."getty@tty1".enable = false;
       systemd.services."autovt@tty1".enable = false;
 
-      systemd.services.NetworkManager-wait-online.enable = true;
+      #      systemd.services.NetworkManager-wait-online.enable = true;
 
     })
   ];
