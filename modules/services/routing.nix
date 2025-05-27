@@ -51,7 +51,10 @@ let
 in
 {
 
-  config = mkIf (config.surfshark.enable) {
+  #  config = mkIf (config.surfshark.enable) {
+  config = mkIf (false) {
+    #not necessary with correct VPN setup
+
     systemd.services.vpn-bypass-route = {
       description = "Add VPN bypass route using hostname from SOPS secret";
       wantedBy = [ "network-online.target" ];
