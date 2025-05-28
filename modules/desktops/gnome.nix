@@ -197,7 +197,7 @@ with lib;
         };
         "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4" = {
           binding = "<super>i";
-          command = "idea-ultimate";
+          command = "idea-ai";
           name = "open-intellij";
         };
         "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5" = {
@@ -326,6 +326,16 @@ with lib;
         fullscreen-avoider
         # dash-to-dock
       ];
+      home.file.".config/autostart/seafile.desktop".text = ''
+        [Desktop Entry]
+        Type=Application
+        Name=Seafile (Flatpak)
+        Exec=flatpak run com.seafile.Client
+        X-GNOME-Autostart-enabled=true
+        Terminal=false
+        Icon=seafile
+        Categories=Network;
+      '';
     };
   };
 }
