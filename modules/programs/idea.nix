@@ -7,7 +7,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  ideaFhs = pkgs.buildFHSUserEnv {
+  ideaFhs = pkgs.buildFHSEnv {
     name = "idea-ai";
     targetPkgs = pkgs: with pkgs; [
       jetbrains.idea-ultimate

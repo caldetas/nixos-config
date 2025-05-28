@@ -25,12 +25,16 @@ let
         IP=$(dig +short "$HOST" | head -n1)
         if [ -n "$IP" ]; then
           echo "vpn-bypass: Resolved IP: $IP"
-          breakOffenes und kooperatives Team
-
+          break
         fi
         echo "vpn-bypass: Waiting for DNS resolution..."
         sleep 1
       done
+    fi
+
+    if ip route get "$IP" | grep -v "via $(ip route show default | awk '{print $3}')" &>/dev/null; then
+      echo "vpn-bypass: Route to $IP already exists and does not go through default gateway — skipping."
+      exit 0
     fi
 
     DEFAULT_ROUTE=$(ip route show default | head -n1)
@@ -65,6 +69,10 @@ in
         ExecStart = "${vpnBypassScript}/bin/vpn-bypass-route";
         RemainAfterExit = true;
       };
+    };
+    # Run at every nixos-rebuild
+    system.activationScripts.vpnBypassRoute = {
+      text = "${vpnBypassScript}/bin/vpn-bypass-route";
     };
   };
 }

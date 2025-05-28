@@ -38,13 +38,29 @@ with host;
           phases = [ "installPhase" ];
           buildInputs = [ pkgs.unzip pkgs.rename ];
           installPhase = ''
+            set -x
             unzip $src
             find . -type f ! -name '*_udp.ovpn' -delete
-            find . -type f -exec sed -i "s+auth-user-pass+auth-user-pass /home/${vars.user}/.secrets/openVpnPass.txt+" {} + #file has only root rights
-            # find . -type f -exec sed -i "s+cipher+data-ciphers-fallback+" {} +
-            rename 's/prod.surfshark.com_udp.//' *
+
+            for f in *.ovpn; do
+              [ -e "$f" ] || continue
+
+              substituteInPlace "$f" \
+                --replace "auth-user-pass" "auth-user-pass /home/${vars.user}/.secrets/openVpnPass.txt"
+
+              grep -q "^redirect-gateway" "$f" || echo "redirect-gateway def1" >> "$f"
+              grep -q "^dhcp-option DNS 162.252.172.57" "$f" || echo "dhcp-option DNS 162.252.172.57" >> "$f"
+              grep -q "^dhcp-option DNS 149.154.159.92" "$f" || echo "dhcp-option DNS 149.154.159.92" >> "$f"
+            done
+
+            for f in *.ovpn; do
+              [ -e "$f" ] || continue
+              newname=$(echo "$f" | sed 's/\.prod\.surfshark\.com_udp\.ovpn$/.ovpn/')
+              mv "$f" "$newname"
+            done
+
             mkdir -p $out
-            mv * $out
+            mv *.ovpn $out
           '';
         };
         getConfig = filePath: /*builtins.trace "Processing file: ${filePath}" */
