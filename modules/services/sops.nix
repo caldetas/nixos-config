@@ -18,7 +18,7 @@ with lib;
   # SOPS Configuration Secrets
   sops.defaultSopsFile = ./../../secrets/secrets.yaml;
   sops.defaultSopsFormat = "yaml";
-  sops.age.keyFile = "/home/${vars.user}/MEGAsync/encrypt/nixos/keys.txt";
+  sops.age.keyFile = "/home/${vars.user}/.config/sops/age/keys.txt";
   system.activationScripts = {
     text =
       ''
