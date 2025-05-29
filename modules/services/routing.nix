@@ -32,11 +32,6 @@ let
       done
     fi
 
-    if ip route get "$IP" | grep -v "via $(ip route show default | awk '{print $3}')" &>/dev/null; then
-      echo "vpn-bypass: Route to $IP already exists and does not go through default gateway — skipping."
-      exit 0
-    fi
-
     DEFAULT_ROUTE=$(ip route show default | head -n1)
     GATEWAY=$(echo "$DEFAULT_ROUTE" | awk '{print $3}')
     IFACE=$(echo "$DEFAULT_ROUTE" | awk '{print $5}')
@@ -48,21 +43,21 @@ let
       exit 1
     fi
 
-    echo "vpn-bypass: Adding route to $IP via $GATEWAY on $IFACE"
+    echo "vpn-bypass: Ensuring route to $IP via $GATEWAY on $IFACE"
     ip route replace "$IP" via "$GATEWAY" dev "$IFACE"
   '';
 
 in
 {
 
-  #  config = mkIf (config.surfshark.enable) {
-  config = mkIf (false) {
+  config = mkIf (config.surfshark.enable) {
+    #  config = mkIf (false) {
     #not necessary with correct VPN setup
 
     systemd.services.vpn-bypass-route = {
       description = "Add VPN bypass route using hostname from SOPS secret";
       wantedBy = [ "network-online.target" ];
-      after = [ "network-online.target" ];
+      after = [ "network-online.target" "openvpn-ch-zur.service" ]; # wait for VPN
       wants = [ "network-online.target" ];
       serviceConfig = {
         Type = "oneshot";

@@ -87,7 +87,7 @@ with lib;
             "kitty.desktop"
             "org-gnome-nautilus.desktop"
             "steam.desktop"
-            "idea-ultimate.desktop"
+            "idea-ai.desktop"
             "vlc.desktop"
           ];
           disable-user-extensions = false;
