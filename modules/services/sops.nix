@@ -5,23 +5,23 @@
 { config, lib, pkgs, vars, sops-nix, ... }:
 with lib;
 {
-  config = mkIf (!config.server.enable) {
+  #  config = mkIf (!config.server.enable) {
 
-    sops.secrets.home-path = { };
-    sops.secrets."surfshark/user" = { };
-    sops.secrets."surfshark/password" = { };
-    sops.secrets."server/nixcz" = { };
-    sops.secrets."my-secret" = {
-      owner = "${vars.user}";
-    };
-    users.groups.secrets = { };
-    # SOPS Configuration Secrets
-    sops.defaultSopsFile = ./../../secrets/secrets.yaml;
-    sops.defaultSopsFormat = "yaml";
-    sops.age.keyFile = "/home/${vars.user}/MEGAsync/encrypt/nixos/keys.txt";
-    system.activationScripts = {
-      text =
-        ''
+  sops.secrets.home-path = { };
+  sops.secrets."surfshark/user" = { };
+  sops.secrets."surfshark/password" = { };
+  sops.secrets."server/nixcz" = { };
+  sops.secrets."my-secret" = {
+    owner = "${vars.user}";
+  };
+  users.groups.secrets = { };
+  # SOPS Configuration Secrets
+  sops.defaultSopsFile = ./../../secrets/secrets.yaml;
+  sops.defaultSopsFormat = "yaml";
+  sops.age.keyFile = "/home/${vars.user}/MEGAsync/encrypt/nixos/keys.txt";
+  system.activationScripts = {
+    text =
+      ''
 
          # Set up sops secret keys
          if [ -f /home/${vars.user}/MEGAsync/encrypt/nixos/keys.txt ] && [ ! -f /home/${vars.user}/.config/sops/age/keys.txt ]; then
@@ -66,7 +66,7 @@ with lib;
          fi
                                     '';
 
-    };
   };
+  #  };
 }
 

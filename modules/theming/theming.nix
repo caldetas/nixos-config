@@ -63,10 +63,9 @@
     };
   };
   programs.dconf.enable = true;
-  #            xdg.configFile =  {
-  #              #https://discourse.nixos.org/t/setting-nautiilus-gtk-theme/38958/5
-  #              "gtk-4.0/assets".source = "/nix/store/i0ccfby0kx0md6jbbpkklifzdxmm0f4i-orchis-theme-2023-10-20/share/themes/Orchis-Dark-Compact/gtk-4.0/assets";
-  #              "gtk-4.0/gtk.css".source = "/nix/store/i0ccfby0kx0md6jbbpkklifzdxmm0f4i-orchis-theme-2023-10-20/share/themes/Orchis-Dark-Compact/gtk-4.0/gtk.css";
-  #              "gtk-4.0/gtk-dark.css".source = "/nix/store/i0ccfby0kx0md6jbbpkklifzdxmm0f4i-orchis-theme-2023-10-20/share/themes/Orchis-Dark-Compact/gtk-4.0/gtk-dark.css";
-  #            };
+  # Script to copy .face to AccountsService
+  systemd.tmpfiles.rules = [
+    "f+ /var/lib/AccountsService/users/${vars.user} 0600 root root - [User]\\nIcon=/var/lib/AccountsService/icons/${vars.user}\\n"
+    "L+ /var/lib/AccountsService/icons/${vars.user} - - - - ${./face}"
+  ];
 }
