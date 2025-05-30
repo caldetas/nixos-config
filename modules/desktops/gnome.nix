@@ -92,6 +92,7 @@ with lib;
           ];
           disable-user-extensions = false;
           enabled-extensions = [
+            "appindicator@ubuntu.com"
             "trayiconsreloaded@selfmade.pl"
             "blur-my-shell@aunetx"
             "drive-menu@gnome-shell-extensions.gcampax.github.com"

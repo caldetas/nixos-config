@@ -76,7 +76,8 @@ with lib;
           enable = true;
           dns = lib.mkForce "none"; # Prevent NetworkManager from using DNS from the router (e.g., Fritzbox)
         };
-        nameservers = [ "1.1.1.1" "1.0.0.1" ]; # Fallback to Surfshark DNS if VPN fails
+        nameservers = [ "149.154.159.92" "162.252.172.57" ]; # Fallback to Surfshark DNS if VPN fails
+        #        nameservers = [ "1.1.1.1" "1.0.0.1" ]; # Fallback to Surfshark DNS if VPN fails
       };
 
       services.resolved = {

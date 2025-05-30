@@ -24,6 +24,8 @@ with lib;
       # Seafile fileserver config — run behind Nginx using a Unix socket
       seafileSettings = {
         fileserver = {
+          max_download_dir_size = 200000; # 200GB
+          max_upload_size = 200000; # 200GB
           host = "unix:/run/seafile/server.sock";
           web_token_expire_time = 36000;
         };
