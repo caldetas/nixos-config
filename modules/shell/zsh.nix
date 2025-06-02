@@ -20,7 +20,7 @@
       ohMyZsh = {
         # Plug-ins
         enable = true;
-        plugins = [ "git" "thefuck" ];
+        plugins = [ "git" ];
       };
 
       shellInit = ''
@@ -36,5 +36,7 @@
         fi
       '';
     };
+    #command line tool, thefuck replacement
+    pay-respects.enable = true;
   };
 }

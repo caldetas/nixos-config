@@ -146,15 +146,6 @@ with lib;
 
         # Misc
         python3
-        thefuck
-
-        # IntelliJ IDEA / JetBrains AI support
-        cacert # Required for HTTPS communication
-        curl # HTTP requests, used by many plugins
-        glib # Required by libsecret for keyring support
-        gnome-keyring # Provides libsecret backend; required for secure token storage
-        libsecret # Secret storage used by GitHub Copilot & JetBrains AI Assistant
-        nss # Needed for certificate validation in some contexts
       ];
 
       home-manager.users.${vars.user} = {
@@ -214,7 +205,6 @@ with lib;
         strongswan
         telegram-desktop
         teams-for-linux
-        thefuck
         wpsoffice
         yarn
       ] ++

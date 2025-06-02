@@ -27,18 +27,13 @@ with lib;
     };
 
     services = {
+      displayManager.gdm.enable = true; # Display Manager
+      desktopManager.gnome.enable = true; # Desktop Environment
       xserver = {
         enable = true;
-
         xkb = {
           layout = "ch";
-          #            variant = "de_nodeadkeys";
-          #            options = "compose:ralt";
         };
-
-        displayManager.gdm.enable = true; # Display Manager
-        desktopManager.gnome.enable = true; # Desktop Environment
-
       };
       libinput.enable = true;
 
