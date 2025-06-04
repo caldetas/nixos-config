@@ -51,7 +51,9 @@
   services.immich = {
     enable = true;
     microservices.enable = true;
-    machineLearning.enable = true; # optional but useful
+    "machine-learning"
+
+    .enable = true; # optional but useful
   };
   systemd.services."immich-server".serviceConfig.BindPaths = [
     "/mnt/nas/fotoImmich:/var/lib/immich/upload"
