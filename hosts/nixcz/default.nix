@@ -52,6 +52,7 @@
   systemd.services.immich-server.serviceConfig.BindPaths = [
     "/mnt/nas/fotoImmich:/var/lib/immich/upload"
   ];
+  users.groups.users.members = [ "immich" ];
   users.users.immich = {
     isSystemUser = true;
     extraGroups = [ "users" ];
