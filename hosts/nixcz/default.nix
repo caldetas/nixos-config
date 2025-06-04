@@ -67,11 +67,11 @@
     after = [ "network.target" ];
 
     serviceConfig = {
-      ExecStart = "${pkgs.immich}/bin/immich start microservices";
-
+      ExecStart = "${pkgs.nodejs}/bin/node /var/lib/immich/server/dist/main.js microservices";
+      WorkingDirectory = "/var/lib/immich/server";
       User = "immich";
       Restart = "on-failure";
-      WorkingDirectory = "/var/lib/immich";
+      Environment = "NODE_ENV=production";
     };
   };
 
