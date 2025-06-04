@@ -67,7 +67,8 @@
     after = [ "network.target" ];
 
     serviceConfig = {
-      ExecStart = "/nix/store/abc123-immich-1.134.0/bin/immich start microservices";
+      ExecStart = "${pkgs.immich}/bin/immich start microservices";
+
       User = "immich";
       Restart = "on-failure";
       WorkingDirectory = "/var/lib/immich";
