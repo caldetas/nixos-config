@@ -57,7 +57,9 @@
     isSystemUser = true;
     extraGroups = [ "users" ];
   };
-
+  #wait for nas
+  systemd.services."immich-server".after = [ "mnt-nas.mount" ];
+  systemd.services."immich-server".wants = [ "mnt-nas.mount" ];
 
   networking.networkmanager.enable = true;
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
