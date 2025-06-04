@@ -49,6 +49,9 @@
   mailcow.enable = true;
   server.enable = true;
   services.immich.enable = true;
+  systemd.services.immich-server.serviceConfig.BindPaths = [
+    "/mnt/nas/fotoImmich:/var/lib/immich/upload"
+  ];
 
 
   networking.networkmanager.enable = true;
