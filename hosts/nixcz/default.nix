@@ -49,7 +49,7 @@
   mailcow.enable = true;
   server.enable = true;
   services.immich.enable = true;
-  systemd.services.immich-server.serviceConfig.BindPaths = [
+  systemd.services."immich-server".serviceConfig.BindPaths = [
     "/mnt/nas/fotoImmich:/var/lib/immich/upload"
   ];
   users.groups.users.members = [ "immich" ];
