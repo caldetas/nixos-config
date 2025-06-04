@@ -61,6 +61,19 @@
   systemd.services."immich-server".after = [ "mnt-nas.mount" ];
   systemd.services."immich-server".wants = [ "mnt-nas.mount" ];
 
+  systemd.services."immich-microservices" = {
+    description = "Immich microservices (background processor)";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network.target" ];
+
+    serviceConfig = {
+      ExecStart = "/nix/store/abc123-immich-1.134.0/bin/immich start microservices";
+      User = "immich";
+      Restart = "on-failure";
+      WorkingDirectory = "/var/lib/immich";
+    };
+  };
+
   networking.networkmanager.enable = true;
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
 
