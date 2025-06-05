@@ -191,6 +191,7 @@ with lib;
         git
         gimp
         gparted
+        immich-go
         netbird
         netbird-ui
         nodejs_20

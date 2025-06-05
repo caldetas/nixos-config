@@ -48,13 +48,7 @@
   bitwarden.enable = true;
   mailcow.enable = true;
   server.enable = true;
-  services.immich = {
-    enable = true;
-    microservices.enable = true;
-    "machine-learning"
-
-    .enable = true; # optional but useful
-  };
+  services.immich.enable = true;
   systemd.services."immich-server".serviceConfig.BindPaths = [
     "/mnt/nas/fotoImmich:/var/lib/immich/upload"
   ];
