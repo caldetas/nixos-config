@@ -57,6 +57,6 @@ with lib;
   fileSystems."/mnt/nas" = {
     device = "172.16.129.73:/nas/6223";
     fsType = "nfs";
-
+    options = [ "soft" "timeo=10" "retrans=3" ];
   };
 }
