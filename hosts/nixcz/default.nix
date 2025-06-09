@@ -55,6 +55,7 @@
 
   bitwarden.enable = true;
   mailcow.enable = true;
+  seafile.enable = true;
   server.enable = true;
 
   networking.networkmanager.enable = true;

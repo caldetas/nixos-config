@@ -5,8 +5,15 @@
 { config, lib, pkgs, vars, ... }:
 with lib;
 {
-
-  config = mkIf (config.server.enable) {
+  options = {
+    seafile = {
+      enable = mkOption {
+        type = types.bool;
+        default = false;
+      };
+    };
+  };
+  config = mkIf (config.seafile.enable) {
 
     # setup after https://wiki.nixos.org/wiki/Seafile
     # create data folder if not exists
