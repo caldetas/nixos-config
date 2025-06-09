@@ -68,10 +68,5 @@ in
     systemd.services.vaultwarden.preStart = ''
       echo "Vaultwarden admin token: ${adminToken}"
     '';
-
-    security.acme = {
-      acceptTerms = true;
-      defaults.email = "info@${vars.domain}"; # Replace if needed
-    };
   };
 }
