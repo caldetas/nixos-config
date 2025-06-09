@@ -307,4 +307,7 @@ with lib;
 
     })
   ];
+  # Add your public keys
+  users.users.${vars.user}.openssh.authorizedKeys.keys =
+    [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDm6jfav0cPBC1nhEkq2lV74xBuwHw70qRFG0uPYZA7O" ];
 }
