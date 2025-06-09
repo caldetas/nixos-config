@@ -33,7 +33,7 @@
   # access, create your own users and further secure your server.
 
   services.openssh.enable = true;
-  services.openssh.settings.PermitRootLogin = "no";
+  services.openssh.settings.PermitRootLogin = "yes";
   networking.firewall.allowedTCPPorts = [ 22 80 443 ];
   # Under normal circumstances we would listen to your server's cloud-init callback and mark the server
   # as installed at this point. As we don't deliver cloud-init with NixOS we have to use a workaround
