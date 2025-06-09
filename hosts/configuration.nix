@@ -29,6 +29,8 @@ with lib;
         # System User
         isNormalUser = true;
         extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" "secrets" ];
+        # Add your public keys
+        openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDm6jfav0cPBC1nhEkq2lV74xBuwHw70qRFG0uPYZA7O" ];
       };
 
       #  time.timeZone = "America/Mexico_City";        # Time zone and Internationalisation
@@ -307,7 +309,4 @@ with lib;
 
     })
   ];
-  # Add your public keys
-  users.users.${vars.user}.openssh.authorizedKeys.keys =
-    [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDm6jfav0cPBC1nhEkq2lV74xBuwHw70qRFG0uPYZA7O" ];
 }
