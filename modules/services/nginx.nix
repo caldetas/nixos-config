@@ -56,9 +56,9 @@ with lib;
         };
       };
     };
-    security.acme = {
-      acceptTerms = true;
-      defaults.email = "info@${vars.domain}"; # Replace if needed
-    };
+  };
+  security.acme = {
+    acceptTerms = true;
+    defaults.email = "info@${vars.domain}"; # Replace if needed
   };
 }
