@@ -71,7 +71,7 @@ in
       third = "DP-8";
     } [ ];
 
-  nixos = makeHost "papi" "papi"
+  papi = makeHost "papi" "papi"
     {
       main = "";
       second = "";
