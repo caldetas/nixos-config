@@ -23,7 +23,7 @@
 
   # This is the server's hostname you chose during the order process. Feel free to change it.
 
-  #  networking.hostName = "nixcz";
+  networking.hostName = "papi";
 
   #NAS storage mount
   environment.systemPackages = with pkgs; [ nfs-utils ];
