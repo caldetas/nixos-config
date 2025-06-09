@@ -43,6 +43,10 @@
     authorizedKeysInHomedir = true;
   };
   networking.firewall.allowedTCPPorts = [ 22 80 443 ];
+
+  systemd.extraConfig = ''
+    DefaultTimeoutStartSec=900s
+  '';
   # Under normal circumstances we would listen to your server's cloud-init callback and mark the server
   # as installed at this point. As we don't deliver cloud-init with NixOS we have to use a workaround
   # to indicate that your server is successfully installed. You can remove the cronjob after the server
@@ -53,8 +57,8 @@
   # Please remove the hardcoded password from the configuration and set
   # the password using the " passwd " command after the first boot.
 
-  bitwarden.enable = true;
-  mailcow.enable = true;
+  #  bitwarden.enable = true;
+  #  mailcow.enable = true;
   server.enable = true;
 
   # Enable serial getty so you get a login prompt in the console
