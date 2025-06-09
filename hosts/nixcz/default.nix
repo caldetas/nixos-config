@@ -48,32 +48,9 @@
   bitwarden.enable = true;
   mailcow.enable = true;
   server.enable = true;
-  /*
-    services.immich.enable = true;
-    systemd.services."immich-server".serviceConfig.BindPaths = [
-    "/mnt/nas/fotoImmich:/var/lib/immich/upload"
-    ];
-    users.groups.users.members = [ "immich" ];
-    users.users.immich = {
-    isSystemUser = true;
-    extraGroups = [ "users" ];
-    };
-    #wait for nas
-    systemd.services."immich-server".after = [ "mnt-nas.mount" ];
-    systemd.services."immich-server".wants = [ "mnt-nas.mount" ];
-    systemd.services."immich-microservices" = {
-    description = "Immich microservices (background processor)";
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network.target" ];
 
-    serviceConfig = {
-      ExecStart = "${pkgs.nodejs}/bin/node /var/lib/immich/server/dist/main.js microservices";
-      WorkingDirectory = "/var/lib/immich/server";
-      User = "immich";
-      Restart = "on-failure";
-      Environment = "NODE_ENV=production";
-    };
-  };*/
+  # Enable serial getty so you get a login prompt in the console
+  services.getty.serial.enable = true;
 
   networking.networkmanager.enable = true;
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
