@@ -61,9 +61,6 @@
   #  mailcow.enable = true;
   server.enable = true;
 
-  # Enable serial getty so you get a login prompt in the console
-  services.getty.serial.enable = true;
-
   networking.networkmanager.enable = true;
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
 
