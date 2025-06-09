@@ -41,7 +41,7 @@ with lib;
       xrdp.enable = true;
       #        xrdp.defaultWindowManager =  "gnome-remote-desktop";
       xrdp.defaultWindowManager = "/run/current-system/sw/bin/gnome-session";
-      xrdp.openFirewall = true;
+      xrdp.openFirewall = false;
       gnome.gnome-remote-desktop.enable = true;
 
       udev.packages = with pkgs; [
