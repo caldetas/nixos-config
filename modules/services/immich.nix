@@ -50,11 +50,12 @@ with lib;
       after = [ "docker.service" "immich-fetch-compose.service" ];
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
+        Type = "oneshot"; # Optional: ensures the copy+start is a task, not a daemon
         ExecStart = ''
+          #!/bin/sh
           cp /etc/immich.env /var/lib/immich/.env
           ${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml up -d
         '';
-
         ExecStop = "${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml down";
         WorkingDirectory = "/var/lib/immich";
         Restart = "always";
