@@ -43,18 +43,15 @@ with lib;
       DB_DATABASE_NAME=immich
     '';
 
-    ExecStart = ''
-      cp /etc/immich.env /var/lib/immich/.env
-      ${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml up -d
-    '';
-
-
     systemd.services.immich = {
       description = "Immich photo server using docker-compose";
       after = [ "docker.service" "immich-fetch-compose.service" ];
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
-        ExecStart = "${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml up -d";
+        ExecStart = ''
+          cp /etc/immich.env /var/lib/immich/.env
+          ${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml up -d
+        '';
         ExecStop = "${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml down";
         WorkingDirectory = "/var/lib/immich";
         Restart = "always";
