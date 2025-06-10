@@ -62,8 +62,8 @@ with lib;
       after = [ "docker.service" "immich-fetch-compose.service" ];
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
-        ExecStart = "docker compose up -d";
-        ExecStop = "docker compose down";
+        ExecStart = "${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml up -d";
+        ExecStop = "${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml down";
         WorkingDirectory = "/var/lib/immich";
         Restart = "always";
         RestartSec = "5s";
