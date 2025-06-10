@@ -35,20 +35,20 @@ with lib;
       description = "Immich photo server using docker-compose";
       after = [ "docker.service" "immich-fetch-compose.service" ];
       wantedBy = [ "multi-user.target" ];
+      preStart = ''
+            cat > /var/lib/immich/.env <<EOF
+        UPLOAD_LOCATION=./library
+        DB_DATA_LOCATION=./postgres
+        TZ=Europe/Zurich
+        IMMICH_VERSION=release
+        DB_PASSWORD=postgres
+        DB_USERNAME=postgres
+        DB_DATABASE_NAME=immich
+        EOF
+      '';
       serviceConfig = {
         ExecStart = "${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml up -d";
         ExecStop = "${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml down";
-        preStart = ''
-              cat > /var/lib/immich/.env <<EOF
-          UPLOAD_LOCATION=./library
-          DB_DATA_LOCATION=./postgres
-          TZ=Europe/Zurich
-          IMMICH_VERSION=release
-          DB_PASSWORD=postgres
-          DB_USERNAME=postgres
-          DB_DATABASE_NAME=immich
-          EOF
-        '';
         WorkingDirectory = "/var/lib/immich";
         Restart = "always";
         RestartSec = "5s";
