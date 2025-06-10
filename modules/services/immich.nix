@@ -1,0 +1,71 @@
+#
+#  System Notifications
+#
+
+{ config, lib, pkgs, vars, ... }:
+with lib;
+{
+  options = {
+    immich = {
+      enable = mkOption {
+        type = types.bool;
+        default = false;
+      };
+    };
+  };
+  config = mkIf (config.immich.enable) {
+
+    systemd.tmpfiles.rules = [
+      "d /var/lib/immich 0755 root root - -"
+    ];
+
+    systemd.services.immich-fetch-compose = {
+      description = "Fetch latest Immich docker-compose.yml";
+      before = [ "immich.service" ];
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = ''
+          ${pkgs.curl}/bin/curl -L -o /var/lib/immich/docker-compose.yml \
+            https://github.com/immich-app/immich/releases/latest/download/docker-compose.yml
+        '';
+      };
+    };
+
+    environment.etc."immich/.env".text = ''
+      # Directory where uploaded photos and videos are stored
+      UPLOAD_LOCATION=/mnt/nas/immich/library
+
+      # Directory where PostgreSQL stores its database data (should NOT be on a network share)
+      DB_DATA_LOCATION=/var/lib/immich/postgres
+
+      # Optional: set your local timezone (recommended)
+      TZ=Europe/Zurich
+
+      # Immich version to use
+      IMMICH_VERSION=release
+
+      # PostgreSQL connection password
+      DB_PASSWORD=postgres
+
+      # The following values should typically not be changed
+      DB_USERNAME=postgres
+      DB_DATABASE_NAME=immich
+    '';
+
+
+    systemd.services.immich = {
+      description = "Immich photo server using docker-compose";
+      after = [ "docker.service" "immich-fetch-compose.service" ];
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig = {
+        ExecStart = "${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml up -d";
+        ExecStop = "${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml down";
+        WorkingDirectory = "/var/lib/immich";
+        Restart = "always";
+      };
+    };
+
+    environment.etc."immich/.env".source = /var/lib/immich/.env;
+  };
+}

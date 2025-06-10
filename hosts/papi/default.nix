@@ -60,6 +60,7 @@
   #  bitwarden.enable = true;
   #  mailcow.enable = true;
   server.enable = true;
+  immich.enable = true;
 
   networking.networkmanager.enable = true;
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
