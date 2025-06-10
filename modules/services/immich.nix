@@ -62,11 +62,11 @@ with lib;
       after = [ "docker.service" "immich-fetch-compose.service" ];
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
-        Type = "oneshot"; # Optional: ensures the copy+start is a task, not a daemon
         ExecStart = "docker compose up -d";
         ExecStop = "docker compose down";
         WorkingDirectory = "/var/lib/immich";
         Restart = "always";
+        RestartSec = "5s";
       };
     };
 
