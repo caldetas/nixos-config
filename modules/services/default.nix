@@ -14,6 +14,7 @@
   ./bitwarden.nix
   ./dunst.nix
   ./gnupg.nix
+  ./immich.nix
   ./mailcow.nix
   ./nginx.nix
   ./nix.nix
