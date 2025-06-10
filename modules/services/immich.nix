@@ -32,32 +32,17 @@ with lib;
       };
     };
 
-    environment.systemPackages = [
-      (pkgs.writeTextFile {
-        name = "immich-env";
-        destination = "/var/lib/immich/.env";
-        text = ''
-          # Directory where uploaded photos and videos are stored
-          UPLOAD_LOCATION=./library
+    environment.etc."immich.env".text = ''
+      # Directory where uploaded photos and videos are stored
+      UPLOAD_LOCATION=/mnt/nas/immich/library
+      DB_DATA_LOCATION=/var/lib/immich/postgres
+      TZ=Europe/Zurich
+      IMMICH_VERSION=release
+      DB_PASSWORD=postgres
+      DB_USERNAME=postgres
+      DB_DATABASE_NAME=immich
+    '';
 
-          # Directory where PostgreSQL stores its database data (should NOT be on a network share)
-          DB_DATA_LOCATION=./postgres
-
-          # Optional: set your local timezone (recommended)
-          TZ=Europe/Zurich
-
-          # Immich version to use
-          IMMICH_VERSION=release
-
-          # PostgreSQL connection password
-          DB_PASSWORD=postgres
-
-          # The following values should typically not be changed
-          DB_USERNAME=postgres
-          DB_DATABASE_NAME=immich
-        '';
-      })
-    ];
 
 
     systemd.services.immich = {
@@ -65,7 +50,10 @@ with lib;
       after = [ "docker.service" "immich-fetch-compose.service" ];
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
-        ExecStart = "${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml up -d";
+        ExecStart = ''
+          cp /etc/immich.env /var/lib/immich/.env
+          ${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml up -d
+        '';
         ExecStop = "${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml down";
         WorkingDirectory = "/var/lib/immich";
         Restart = "always";
