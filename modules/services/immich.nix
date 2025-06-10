@@ -17,6 +17,18 @@ with lib;
 
     systemd.tmpfiles.rules = [
       "d /var/lib/immich 0755 root root - -"
+    ] ++ [
+      "f /var/lib/immich/.env 0644 root root - ${
+                  pkgs.writeText "immich-env" ''
+                    UPLOAD_LOCATION=/mnt/nas/immich/library
+                    DB_DATA_LOCATION=/var/lib/immich/postgres
+                    TZ=Europe/Zurich
+                    IMMICH_VERSION=release
+                    DB_PASSWORD=postgres
+                    DB_USERNAME=postgres
+                    DB_DATABASE_NAME=immich
+                  ''
+                }"
     ];
 
     systemd.services.immich-fetch-compose = {
@@ -51,8 +63,8 @@ with lib;
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         Type = "oneshot"; # Optional: ensures the copy+start is a task, not a daemon
-        ExecStart = "${pkgs.bash}/bin/bash -c \"cp /etc/immich.env /var/lib/immich/.env && ${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml up -d\"";
-        ExecStop = "${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml down";
+        ExecStart = "docker compose up -d";
+        ExecStop = "docker compose down";
         WorkingDirectory = "/var/lib/immich";
         Restart = "always";
       };
