@@ -34,8 +34,8 @@ with lib;
 
     environment.etc."immich.env".text = ''
       # Directory where uploaded photos and videos are stored
-      UPLOAD_LOCATION=/mnt/nas/immich/library
-      DB_DATA_LOCATION=/var/lib/immich/postgres
+      UPLOAD_LOCATION=./library
+      DB_DATA_LOCATION=./postgres
       TZ=Europe/Zurich
       IMMICH_VERSION=release
       DB_PASSWORD=postgres
@@ -60,6 +60,5 @@ with lib;
       };
     };
 
-    environment.etc."immich/.env".source = /var/lib/immich/.env;
   };
 }
