@@ -32,26 +32,32 @@ with lib;
       };
     };
 
-    environment.etc."immich/.env".text = ''
-      # Directory where uploaded photos and videos are stored
-      UPLOAD_LOCATION=/mnt/nas/immich/library
+    environment.systemPackages = [
+      (pkgs.writeTextFile {
+        name = "immich-env";
+        destination = "/var/lib/immich/.env";
+        text = ''
+          # Directory where uploaded photos and videos are stored
+          UPLOAD_LOCATION=/mnt/nas/immich/library
 
-      # Directory where PostgreSQL stores its database data (should NOT be on a network share)
-      DB_DATA_LOCATION=/var/lib/immich/postgres
+          # Directory where PostgreSQL stores its database data (should NOT be on a network share)
+          DB_DATA_LOCATION=/var/lib/immich/postgres
 
-      # Optional: set your local timezone (recommended)
-      TZ=Europe/Zurich
+          # Optional: set your local timezone (recommended)
+          TZ=Europe/Zurich
 
-      # Immich version to use
-      IMMICH_VERSION=release
+          # Immich version to use
+          IMMICH_VERSION=release
 
-      # PostgreSQL connection password
-      DB_PASSWORD=postgres
+          # PostgreSQL connection password
+          DB_PASSWORD=postgres
 
-      # The following values should typically not be changed
-      DB_USERNAME=postgres
-      DB_DATABASE_NAME=immich
-    '';
+          # The following values should typically not be changed
+          DB_USERNAME=postgres
+          DB_DATABASE_NAME=immich
+        '';
+      })
+    ];
 
 
     systemd.services.immich = {
