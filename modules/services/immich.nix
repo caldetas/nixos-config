@@ -35,6 +35,8 @@ with lib;
       description = "Immich photo server using docker-compose";
       after = [ "docker.service" "immich-fetch-compose.service" ];
       wantedBy = [ "multi-user.target" ];
+
+      #write env file to specify the locations
       preStart = ''
             cat > /var/lib/immich/.env <<EOF
         UPLOAD_LOCATION=./library
@@ -50,6 +52,7 @@ with lib;
         ExecStart = "${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml up -d";
         ExecStop = "${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml down";
         WorkingDirectory = "/var/lib/immich";
+        RemainAfterExit = true;
         Restart = "always";
         RestartSec = "5s";
       };
