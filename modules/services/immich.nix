@@ -15,9 +15,7 @@ with lib;
   };
   config = mkIf (config.immich.enable) {
 
-    systemd.tmpfiles.rules = [
-      "d /var/lib/immich 0755 root root - -"
-    ];
+    systemd.tmpfiles.rules = [ "d /var/lib/immich 0755 root root - -" ];
 
     systemd.services.immich-fetch-compose = {
       description = "Fetch latest Immich docker-compose.yml";
