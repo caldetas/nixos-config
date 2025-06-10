@@ -20,8 +20,8 @@ with lib;
     ] ++ [
       "f /var/lib/immich/.env 0644 root root - ${
                   pkgs.writeText "immich-env" ''
-                    UPLOAD_LOCATION=/mnt/nas/immich/library
-                    DB_DATA_LOCATION=/var/lib/immich/postgres
+                    UPLOAD_LOCATION=./library
+                    DB_DATA_LOCATION=./postgres
                     TZ=Europe/Zurich
                     IMMICH_VERSION=release
                     DB_PASSWORD=postgres
