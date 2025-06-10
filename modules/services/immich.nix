@@ -17,18 +17,6 @@ with lib;
 
     systemd.tmpfiles.rules = [
       "d /var/lib/immich 0755 root root - -"
-    ] ++ [
-      "f /var/lib/immich/.env 0644 root root - ${
-                  pkgs.writeText "immich-env" ''
-                    UPLOAD_LOCATION=./library
-                    DB_DATA_LOCATION=./postgres
-                    TZ=Europe/Zurich
-                    IMMICH_VERSION=release
-                    DB_PASSWORD=postgres
-                    DB_USERNAME=postgres
-                    DB_DATABASE_NAME=immich
-                  ''
-                }"
     ];
 
     systemd.services.immich-fetch-compose = {
@@ -44,18 +32,6 @@ with lib;
       };
     };
 
-    environment.etc."immich.env".text = ''
-      # Directory where uploaded photos and videos are stored
-      UPLOAD_LOCATION=./library
-      DB_DATA_LOCATION=./postgres
-      TZ=Europe/Zurich
-      IMMICH_VERSION=release
-      DB_PASSWORD=postgres
-      DB_USERNAME=postgres
-      DB_DATABASE_NAME=immich
-    '';
-
-
 
     systemd.services.immich = {
       description = "Immich photo server using docker-compose";
@@ -64,6 +40,17 @@ with lib;
       serviceConfig = {
         ExecStart = "${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml up -d";
         ExecStop = "${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml down";
+        preStart = ''
+              cat > /var/lib/immich/.env <<EOF
+          UPLOAD_LOCATION=./library
+          DB_DATA_LOCATION=./postgres
+          TZ=Europe/Zurich
+          IMMICH_VERSION=release
+          DB_PASSWORD=postgres
+          DB_USERNAME=postgres
+          DB_DATABASE_NAME=immich
+          EOF
+        '';
         WorkingDirectory = "/var/lib/immich";
         Restart = "always";
         RestartSec = "5s";
