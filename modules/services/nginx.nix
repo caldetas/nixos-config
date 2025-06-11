@@ -7,6 +7,8 @@ with lib;
 {
   config = mkIf (config.server.enable) {
     services.nginx = {
+      enable = true;
+      recommendedProxySettings = true;
       virtualHosts = {
         "_" = {
           default = true;

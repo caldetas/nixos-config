@@ -54,8 +54,6 @@ with lib;
     };
 
     services.nginx = {
-      enable = true;
-      recommendedProxySettings = true;
 
       virtualHosts."seafile.${vars.domain}" = {
         enableACME = true;
