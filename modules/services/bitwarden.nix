@@ -4,7 +4,7 @@
 
 { config, lib, pkgs, vars, ... }:
 let
-  ADMIN_TOKEN = "$(cat ${config.sops.secrets.my-secret.path})";
+  ADMIN_TOKEN = "${config.sops.secrets."vaultwarden/admin-token".path})";
 in
 with lib;
 {
