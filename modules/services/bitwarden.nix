@@ -7,7 +7,8 @@
 with lib;
 let
   # Create a deterministic admin token
-  adminToken = builtins.hashString "sha256" "vaultwarden-${vars.domain}";
+  # Written to /etc/vaultwarden.env on server
+  adminToken = builtins.hashString "sha256" "${vars.server.db-password}";
 in
 {
   options = {
