@@ -3,10 +3,6 @@
 #
 
 { config, lib, pkgs, vars, ... }:
-let
-  # at build-time, load the plain-text token from the sops-nix–decrypted file
-  adminToken = builtins.readFile config.sops.secrets."vaultwarden/admin-token".path;
-in
 with lib;
 {
   options = {
@@ -26,7 +22,7 @@ with lib;
   config = mkIf (config.bitwarden.enable) {
     services.vaultwarden = {
       enable = true;
-      environmentFile = "/etc/vaultwarden.env";
+      environmentFile = config.sops.secrets."vaultwarden/env".path;
       config = {
         DOMAIN = "http://${vars.domain}";
         SIGNUPS_ALLOWED = true;
@@ -39,11 +35,6 @@ with lib;
     systemd.tmpfiles.rules = [
       "d /var/lib/bitwarden_rs 0750 vaultwarden vaultwarden -"
     ];
-    #create secret token
-    environment.etc."vaultwarden.env".text = ''
-      DATABASE_URL=/var/lib/bitwarden_rs/vaultwarden.db
-      ADMIN_TOKEN=${adminToken}
-    '';
 
     services.nginx = {
       enable = true;
@@ -61,11 +52,5 @@ with lib;
       Restart = "always";
       RestartSec = "5s";
     };
-
-    # Written to /etc/vaultwarden.env on server
-    #    systemd.services.vaultwarden.serviceConfig.Environment = "ADMIN_TOKEN=$(cat ${ADMIN_TOKEN_PATH})";
-    #    systemd.services.vaultwarden.preStart = ''
-    #      echo "Vaultwarden admin token: $(cat ${ADMIN_TOKEN_PATH})"
-    #    '';
   };
 }
