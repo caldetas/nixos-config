@@ -4,7 +4,7 @@
 
 { config, lib, pkgs, vars, ... }:
 let
-  ADMIN_TOKEN = "echo $(cat ${config.sops.secrets."vaultwarden/admin-token".path}))";
+  ADMIN_TOKEN_PATH = config.sops.secrets."vaultwarden/admin-token".path;
 in
 with lib;
 {
@@ -47,7 +47,7 @@ with lib;
     services.nginx = {
       enable = true;
       virtualHosts."vault.${vars.domain}" = {
-        forceSSL = pkgs.lib.strings.hasInfix "." vars.domain; # Use SSL only for real domain
+        forceSSL = pkgs.lib.strings.hasInfix "." vars.domain;
         enableACME = pkgs.lib.strings.hasInfix "." vars.domain;
         locations."/" = {
           proxyPass = "http://127.0.0.1:8222";
@@ -55,8 +55,6 @@ with lib;
         };
       };
     };
-
-    #    networking.firewall.allowedTCPPorts = [ 80 443 8222 ];
 
     systemd.services.vaultwarden.serviceConfig = {
       Restart = "always";
@@ -66,7 +64,7 @@ with lib;
     # Written to /etc/vaultwarden.env on server
     systemd.services.vaultwarden.serviceConfig.Environment = "ADMIN_TOKEN=${ADMIN_TOKEN}";
     systemd.services.vaultwarden.preStart = ''
-      echo "Vaultwarden admin token: ${ADMIN_TOKEN}"
+      echo "Vaultwarden admin token: $(cat ${ADMIN_TOKEN_PATH})"
     '';
   };
 }
