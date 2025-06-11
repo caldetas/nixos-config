@@ -3,7 +3,9 @@
 #
 
 { config, lib, pkgs, vars, ... }:
-
+let
+  ADMIN_TOKEN = "$(cat ${config.sops.secrets.my-secret.path})";
+in
 with lib;
 {
   options = {
@@ -39,7 +41,7 @@ with lib;
     #create secret token
     environment.etc."vaultwarden.env".text = ''
       DATABASE_URL=/var/lib/bitwarden_rs/vaultwarden.db
-      ADMIN_TOKEN=${adminToken}
+      ADMIN_TOKEN=${ADMIN_TOKEN}
     '';
 
     services.nginx = {
@@ -62,9 +64,9 @@ with lib;
     };
 
     # Written to /etc/vaultwarden.env on server
-    systemd.services.vaultwarden.serviceConfig.Environment = "ADMIN_TOKEN=${config.sops.secrets."vaultwarden/admin-token".path}";
+    #    systemd.services.vaultwarden.serviceConfig.Environment = "ADMIN_TOKEN=${config.sops.secrets."vaultwarden/admin-token".path}";
     systemd.services.vaultwarden.preStart = ''
-      echo "Vaultwarden admin token: $(ADMIN_TOKEN)"
+      echo "Vaultwarden admin token: ${ADMIN_TOKEN}"
     '';
   };
 }
