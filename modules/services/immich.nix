@@ -43,7 +43,7 @@ with lib;
         DB_DATA_LOCATION=./postgres
         TZ=Europe/Zurich
         IMMICH_VERSION=release
-        DB_PASSWORD=postgres
+        DB_PASSWORD=$(cat ${config.sops.secrets."server/db-password".path})
         DB_USERNAME=postgres
         DB_DATABASE_NAME=immich
         EOF

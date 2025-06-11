@@ -240,8 +240,9 @@ with lib;
           "com.github.tchx84.Flatseal"
           "io.github.mimbrero.WhatsAppDesktop"
           "org.signal.Signal"
-          "ro.go.hmlendea.DL-Desktop"
+          "ro.go.hmlendea.DL-Desktop" #Duolingo
           "com.seafile.Client"
+          "ch.protonmail.protonmail-import-export-app"
         ];
       };
 

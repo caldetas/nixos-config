@@ -10,7 +10,8 @@ with lib;
   sops.secrets.home-path = { };
   sops.secrets."surfshark/user" = { };
   sops.secrets."surfshark/password" = { };
-  sops.secrets."server/nixcz" = { };
+  sops.secrets."server/ips" = { };
+  sops.secrets."server/db-password" = { };
   sops.secrets."my-secret" = {
     owner = "${vars.user}";
   };

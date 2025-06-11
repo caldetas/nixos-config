@@ -14,22 +14,36 @@ let
 
     echo "vpn-bypass: Starting VPN bypass route setup"
 
-    HOST=$(cat ${config.sops.secrets."server/nixcz".path})
-    echo "vpn-bypass: Loaded host from secret: $HOST"
+    # Load the list of hosts from the secret (space or newline separated)
+    HOSTS=$(cat ${config.sops.secrets."server/ips".path})
+    echo "vpn-bypass: Loaded hosts from secret: $HOSTS"
 
-    if [[ "$HOST" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-      IP="$HOST"
-      echo "vpn-bypass: HOST is already an IP: $IP"
-    else
-      for i in {1..10}; do
-        IP=$(dig +short "$HOST" | head -n1)
-        if [ -n "$IP" ]; then
-          echo "vpn-bypass: Resolved IP: $IP"
-          break
-        fi
-        echo "vpn-bypass: Waiting for DNS resolution..."
-        sleep 1
-      done
+    # Initialize an empty array to store resolved IPs
+    IPS=()
+
+    for HOST in $HOSTS; do
+     if [[ "$HOST" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+       IP="$HOST"
+       echo "vpn-bypass: HOST is already an IP: $IP"
+     else
+       for i in {1..10}; do
+         IP=$(dig +short "$HOST" | head -n1 || true)
+         if [ -n "$IP" ]; then
+           echo "vpn-bypass: Resolved $HOST to IP: $IP"
+           break
+         fi
+         echo "vpn-bypass: Waiting for DNS resolution for $HOST..."
+         sleep 1
+       done
+     fi
+     if [ -n "$IP" ]; then
+       IPS+=("$IP")
+     fi
+    done
+
+    if [ "''${#IPS[@]}" -eq 0 ]; then
+     echo "vpn-bypass: ERROR — no valid IPs found" >&2
+     exit 1
     fi
 
     DEFAULT_ROUTE=$(ip route show default | head -n1)
@@ -38,13 +52,15 @@ let
     echo "vpn-bypass: Gateway: $GATEWAY"
     echo "vpn-bypass: Interface: $IFACE"
 
-    if [ -z "$IP" ] || [ -z "$GATEWAY" ] || [ -z "$IFACE" ]; then
-      echo "vpn-bypass: ERROR — missing IP, gateway, or interface" >&2
-      exit 1
+    if [ -z "$GATEWAY" ] || [ -z "$IFACE" ]; then
+     echo "vpn-bypass: ERROR — missing gateway or interface" >&2
+     exit 1
     fi
 
-    echo "vpn-bypass: Ensuring route to $IP via $GATEWAY on $IFACE"
-    ip route replace "$IP" via "$GATEWAY" dev "$IFACE"
+    for IP in "''${IPS[@]}"; do
+     echo "vpn-bypass: Ensuring route to $IP via $GATEWAY on $IFACE"
+     ip route replace "$IP" via "$GATEWAY" dev "$IFACE"
+    done
   '';
 
 in
