@@ -8,7 +8,7 @@ with lib;
 let
   # Create a deterministic admin token
   # Written to /etc/vaultwarden.env on server
-  adminToken = builtins.hashString "sha256" "${vars.server.db-password}";
+  adminToken = builtins.hashString "sha256" "${sops.secrets.server.db-password}";
 in
 {
   options = {
@@ -65,9 +65,9 @@ in
       Restart = "always";
       RestartSec = "5s";
     };
-
+    systemd.services.vaultwarden.serviceConfig.Environment = "ADMIN_TOKEN=${config.sops.secrets."vaultwarden/admin-token".path}";
     systemd.services.vaultwarden.preStart = ''
-      echo "Vaultwarden admin token: ${adminToken}"
+      echo "Vaultwarden admin token: ${ADMIN_TOKEN}"
     '';
   };
 }

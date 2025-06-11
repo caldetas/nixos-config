@@ -12,6 +12,7 @@ with lib;
   sops.secrets."surfshark/password" = { };
   sops.secrets."server/ips" = { };
   sops.secrets."server/db-password" = { };
+  sops.secrets."vaultwarden/admin-token" = { };
   sops.secrets."my-secret" = {
     owner = "${vars.user}";
   };
