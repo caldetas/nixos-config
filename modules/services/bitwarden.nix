@@ -62,7 +62,7 @@ with lib;
     };
 
     # Written to /etc/vaultwarden.env on server
-    systemd.services.vaultwarden.serviceConfig.Environment = "ADMIN_TOKEN=${ADMIN_TOKEN}";
+    systemd.services.vaultwarden.serviceConfig.Environment = "ADMIN_TOKEN=$(cat ${ADMIN_TOKEN_PATH})";
     systemd.services.vaultwarden.preStart = ''
       echo "Vaultwarden admin token: $(cat ${ADMIN_TOKEN_PATH})"
     '';
