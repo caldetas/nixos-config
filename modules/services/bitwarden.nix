@@ -33,9 +33,9 @@ with lib;
         Restart = "always";
         RestartSec = "5s";
       };
-      preStart = ''
-        echo "Vaultwarden admin token is being written."
-      '';
+      #      preStart = ''
+      #        echo "Vaultwarden admin token is being written."
+      #      '';
     };
 
     # -- write the .env file at /etc/vaultwarden.env
