@@ -93,6 +93,7 @@ with lib;
         TERMINAL = vars.terminal;
         EDITOR = vars.editor;
         VISUAL = vars.editor;
+        TERM = vars.term;
       };
 
       environment.systemPackages = with unstable; [
@@ -108,6 +109,7 @@ with lib;
         htop
         hwinfo # Hardware Info
         killall # Process Killer
+        kitty.terminfo #terminal compatibility
         lshw # Hardware Info
         nano # Text Editor
         neofetch

@@ -52,6 +52,7 @@
         user = "caldetas";
         location = "/home/caldetas/Desktop/nixos-config";
         terminal = "kitty";
+        term = "xterm-kitty";
         editor = "nano";
         domain = "caldetas.com";
       };

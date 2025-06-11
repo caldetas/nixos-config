@@ -10,6 +10,7 @@
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./nginx.nix
       ../../modules/desktops/virtualisation/docker.nix
     ] ++
     (import ../../modules/desktops ++
