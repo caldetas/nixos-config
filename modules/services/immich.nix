@@ -42,7 +42,7 @@ with lib;
         UPLOAD_LOCATION=./library
         DB_DATA_LOCATION=./postgres
         TZ=Europe/Zurich
-        IMMICH_VERSION=release
+        IMMICH_VERSION=v1.134.0 #update automatically: release
         DB_PASSWORD=$(cat ${config.sops.secrets."server/db-password".path})
         DB_USERNAME=postgres
         DB_DATABASE_NAME=immich
