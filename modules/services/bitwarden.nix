@@ -67,7 +67,7 @@ in
     };
     systemd.services.vaultwarden.serviceConfig.Environment = "ADMIN_TOKEN=${config.sops.secrets."vaultwarden/admin-token".path}";
     systemd.services.vaultwarden.preStart = ''
-      echo "Vaultwarden admin token: ${ADMIN_TOKEN}"
+      echo "Vaultwarden admin token: $(ADMIN_TOKEN)"
     '';
   };
 }
