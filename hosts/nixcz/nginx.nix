@@ -11,7 +11,7 @@ with lib;
         enableACME = true;
         forceSSL = true;
         locations."/" = {
-          proxyPass = "http://127.0.0.1:2283";
+          proxyPass = "http://0.0.0.0:2283";
           proxyWebsockets = true;
           recommendedProxySettings = true;
           extraConfig = ''
