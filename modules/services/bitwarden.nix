@@ -41,7 +41,7 @@ with lib;
     #create secret token
     environment.etc."vaultwarden.env".text = ''
       DATABASE_URL=/var/lib/bitwarden_rs/vaultwarden.db
-      ADMIN_TOKEN=${ADMIN_TOKEN}
+      ADMIN_TOKEN=$(cat ${ADMIN_TOKEN_PATH})
     '';
 
     services.nginx = {
