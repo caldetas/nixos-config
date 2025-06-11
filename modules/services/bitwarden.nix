@@ -14,11 +14,6 @@ with lib;
     };
   };
 
-  ## Activate SURFSHARK VPN
-  # systemctl start openvpn-ch-zur.service
-  # systemctl status openvpn-ch-zur.service
-  # systemctl stop openvpn-ch-zur.service
-
   config = mkIf (config.bitwarden.enable) {
     services.vaultwarden = {
       enable = true;
