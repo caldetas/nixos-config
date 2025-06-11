@@ -4,7 +4,8 @@
 
 { config, lib, pkgs, vars, ... }:
 let
-  ADMIN_TOKEN_PATH = config.sops.secrets."vaultwarden/admin-token".path;
+  # at build-time, load the plain-text token from the sops-nix–decrypted file
+  adminToken = builtins.readFile config.sops.secrets."vaultwarden/admin-token".path;
 in
 with lib;
 {
@@ -17,12 +18,8 @@ with lib;
     };
   };
 
-  ## Activate SURFSHARK VPN
-  # systemctl start openvpn-ch-zur.service
-  # systemctl status openvpn-ch-zur.service
-  # systemctl stop openvpn-ch-zur.service
-
-  config = mkIf (config.bitwarden.enable) {
+  config = mkIf config.bitwarden.enable {
+    # -- vaultwarden service
     services.vaultwarden = {
       enable = true;
       environmentFile = "/etc/vaultwarden.env";
@@ -32,18 +29,27 @@ with lib;
         WEBSOCKET_ENABLED = true;
         ROCKET_PORT = 8222;
       };
+      serviceConfig = {
+        Restart = "always";
+        RestartSec = "5s";
+      };
+      preStart = ''
+        echo "Vaultwarden admin token is being written."
+      '';
     };
 
-    #create db file if not exists
+    # -- write the .env file at /etc/vaultwarden.env
+    environment.etc."vaultwarden.env".text = ''
+      DATABASE_URL=/var/lib/bitwarden_rs/vaultwarden.db
+      ADMIN_TOKEN=${adminToken}
+    '';
+
+    # -- ensure the data dir exists
     systemd.tmpfiles.rules = [
       "d /var/lib/bitwarden_rs 0750 vaultwarden vaultwarden -"
     ];
-    #create secret token
-    environment.etc."vaultwarden.env".text = ''
-      DATABASE_URL=/var/lib/bitwarden_rs/vaultwarden.db
-      ADMIN_TOKEN=$(cat ${ADMIN_TOKEN_PATH})
-    '';
 
+    # -- nginx reverse-proxy
     services.nginx = {
       enable = true;
       virtualHosts."vault.${vars.domain}" = {
@@ -62,9 +68,9 @@ with lib;
     };
 
     # Written to /etc/vaultwarden.env on server
-    systemd.services.vaultwarden.serviceConfig.Environment = "ADMIN_TOKEN=$(cat ${ADMIN_TOKEN_PATH})";
-    systemd.services.vaultwarden.preStart = ''
-      echo "Vaultwarden admin token: $(cat ${ADMIN_TOKEN_PATH})"
-    '';
+    #    systemd.services.vaultwarden.serviceConfig.Environment = "ADMIN_TOKEN=$(cat ${ADMIN_TOKEN_PATH})";
+    #    systemd.services.vaultwarden.preStart = ''
+    #      echo "Vaultwarden admin token: $(cat ${ADMIN_TOKEN_PATH})"
+    #    '';
   };
 }
