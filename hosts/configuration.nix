@@ -198,7 +198,7 @@ with lib;
         immich-go
         netbird
         netbird-ui
-        nodejs_20
+        nodejs
         openvpn
         pandoc
         pinentry
@@ -210,6 +210,7 @@ with lib;
         strongswan
         telegram-desktop
         teams-for-linux
+        vpsfree-client
         wpsoffice
         yarn
       ] ++
