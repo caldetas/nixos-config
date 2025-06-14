@@ -13,6 +13,7 @@ with lib;
   sops.secrets."server/ips" = { };
   sops.secrets."server/db-password" = { };
   sops.secrets."vaultwarden/env" = { };
+  sops.secrets."vpsfreectl/haveapi-client" = { };
   sops.secrets."my-secret" = {
     owner = "${vars.user}";
   };

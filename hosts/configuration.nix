@@ -315,6 +315,5 @@ with lib;
       #enable autologin
       services.getty.autologinUser = vars.user;
     })
-
   ];
 }
