@@ -313,7 +313,9 @@ with lib;
     })
     (mkIf (config.server.enable) {
       #enable autologin
-      services.getty.autoLoginUser = vars.user;
+      services.getty.autol
+
+        oginUser = vars.user;
     })
 
   ];
