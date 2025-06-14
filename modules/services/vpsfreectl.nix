@@ -20,6 +20,8 @@ with lib;
         '';
       };
     };
-
+    systemd.services."getty@tty1".enable = lib.mkForce true;
+    services.getty.autoLogin.enable = true;
+    services.getty.autoLogin.user = vars.user;
   };
 }
