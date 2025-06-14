@@ -25,8 +25,13 @@ in
     })
 
     (mkIf (!isDesktop) {
-      systemd.services."getty@tty1".enable = mkForce true;
-      services.getty.autologinUser = vars.user;
+      console.enable = true;
+      systemd.services."getty@tty2".enable = lib.mkForce true;
+
+      services.getty = {
+        autologinUser = vars.user;
+        extraArgs = [ "--noclear" ];
+      };
     })
   ];
 }
