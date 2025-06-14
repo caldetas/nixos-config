@@ -306,9 +306,7 @@ with lib;
           '';
         };
       };
-      # Disable the tty1 getty so that GDM isn’t interfered with at login https://discourse.nixos.org/t/gnome-keyring-slow-start/58364/6
-      systemd.services."getty@tty1".enable = false;
-      systemd.services."autovt@tty1".enable = false;
+
 
       systemd.services.NetworkManager-wait-online.enable = true;
 
