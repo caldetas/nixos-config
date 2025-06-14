@@ -72,12 +72,13 @@ in
 
     systemd.services.vpn-bypass-route = {
       description = "Add VPN bypass route using hostname from SOPS secret";
-      wantedBy = [ "network-online.target" ];
-      after = [ "network-online.target" "openvpn-ch-zur.service" ]; # wait for VPN
+      wantedBy = [ "openvpn-ch-zur.service" ];
+      after = [ "network-online.target" "openvpn-ch-zur.service" ];
       wants = [ "network-online.target" ];
       serviceConfig = {
         Type = "oneshot";
         ExecStart = "${vpnBypassScript}/bin/vpn-bypass-route";
+        RequiresMountsFor = [ "/run/secrets" ]; #missing credentials throw errors
         RemainAfterExit = true;
       };
     };

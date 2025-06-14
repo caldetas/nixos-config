@@ -189,6 +189,7 @@ with lib;
         brave
         calibre
         discord
+        exiftool
         firefox
         gedit
         ghostscript #pdf compression
