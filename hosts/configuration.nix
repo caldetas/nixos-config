@@ -312,8 +312,7 @@ with lib;
 
     })
     (mkIf (config.server.enable) {
-      #      systemd.services."getty@tty1".enable = lib.mkForce true;
-      #      services.getty.autologinUser = vars.user;
+      #  server specific settings
     })
   ];
 }
