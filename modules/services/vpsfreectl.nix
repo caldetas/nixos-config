@@ -9,7 +9,7 @@ with lib;
   config = mkIf (!config.server.enable) {
     systemd.user.services.link-haveapi-client = {
       description = "Symlink vpsfreectl haveapi-client.yml secret";
-      after = [ "default.target" ]; # or `graphical-session.target` if using GUI
+      after = [ "graphical-session.target" ];
 
       wantedBy = [ "default.target" ];
 
