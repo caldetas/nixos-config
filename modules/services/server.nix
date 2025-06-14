@@ -13,9 +13,4 @@ with lib;
       };
     };
   };
-  config = mkIf (config.seafile.enable) {
-    home-manager.users.${vars.user} = {
-      home.file.".haveapi-client.yml".source = "/run/secrets/haveapi-client";
-    };
-  };
 }
