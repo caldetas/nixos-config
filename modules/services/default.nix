@@ -26,6 +26,6 @@
   ./sops.nix
   ./surfshark.nix
   ./sxhkd.nix
-  #  ./udiskie.nix
+  ./vpsfreectl.nix
 ]
 

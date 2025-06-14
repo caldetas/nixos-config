@@ -310,11 +310,6 @@ with lib;
 
       systemd.services.NetworkManager-wait-online.enable = true;
 
-      #vpsfreectl remote console
-      home-manager.users.${vars.user} = {
-        home.file.".haveapi-client.yml".source = config.lib.file.mkOutOfStoreSymlink "/run/secrets/haveapi-client.yml";
-
-      };
     })
     (mkIf (config.server.enable) {
       #enable autologin
