@@ -311,9 +311,6 @@ with lib;
       systemd.services.NetworkManager-wait-online.enable = true;
 
     })
-    (mkIf (config.server.enable) {
-      #enable autologin
-      services.getty.autologinUser = vars.user;
-    })
+    (mkIf (config.server.enable) { })
   ];
 }
