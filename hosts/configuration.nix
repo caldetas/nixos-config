@@ -120,6 +120,7 @@ with lib;
         psmisc # A set of small useful utilities that use the proc filesystem (such as fuser, killall and pstree)
         ranger # File Manager
         screen # Deatach
+        sshfs # protocol to mount hetzner drive
         tldr # Helper
         usbutils # Manage USB
         wget # Retriever

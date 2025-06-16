@@ -64,9 +64,6 @@
 
   #mount hetzner drive
   boot.supportedFilesystems = [ "sshfs" ];
-  environment.systemPackages = previous.environment.systemPackages ++ (with pkgs; [
-    sshfs
-  ]);
 
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="fuse", MODE="0666"
