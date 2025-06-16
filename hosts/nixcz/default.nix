@@ -73,8 +73,9 @@
     device = "sshfs#u466367@u466367.your-storagebox.de:/home/u466367";
     fsType = "fuse.sshfs";
     options = [
-      "users"
-      "defaults"
+      "_netdev" # wait for network before trying to mount
+      "x-systemd.automount" # systemd will mount on first access
+      "x-systemd.idle-timeout=60" # optional: unmount after 60s of inactivity
       "allow_other"
       "IdentityFile=/root/.ssh/hetzner_box_ed25519"
       "reconnect"

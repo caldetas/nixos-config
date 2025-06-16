@@ -131,6 +131,7 @@ with lib;
         audacity # Audio Editor
         feh # Image Viewer
         glmark2 # OpenGL Benchmark
+        immich-go # immich media uploader
         mpv # Media Player
         pavucontrol # Audio Control
         pipewire # Audio Server/Control
@@ -197,7 +198,6 @@ with lib;
         git
         gimp
         gparted
-        immich-go
         netbird
         netbird-ui
         nodejs
