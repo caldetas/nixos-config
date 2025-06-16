@@ -2,7 +2,17 @@
 #  System Notifications
 #
 
-{ config, lib, pkgs, vars, ... }:
+{ config, lib, pkgs, vars, host, ... }:
+
+
+let
+  LIBRARY_PATH =
+    if config.networking.hostName != "nixcz"
+    then "./library"
+    else "/mnt/hetzner-box/immich-library";
+  VERSION = "v1.134.0";
+
+in
 with lib;
 {
   options = {
@@ -25,7 +35,7 @@ with lib;
         Type = "oneshot";
         ExecStart = ''
           ${pkgs.curl}/bin/curl -L -o /var/lib/immich/docker-compose.yml \
-            https://github.com/immich-app/immich/releases/latest/download/docker-compose.yml
+            https://github.com/immich-app/immich/releases/download/${VERSION}/docker-compose.yml
         '';
       };
     };
@@ -39,10 +49,10 @@ with lib;
       #write env file to specify the locations
       preStart = ''
             cat > /var/lib/immich/.env <<EOF
-        UPLOAD_LOCATION=./library
+        UPLOAD_LOCATION=${LIBRARY_PATH}
         DB_DATA_LOCATION=./postgres
         TZ=Europe/Zurich
-        IMMICH_VERSION=v1.134.0 #update automatically: release
+        IMMICH_VERSION=${VERSION} #update automatically: release
         DB_PASSWORD=$(cat ${config.sops.secrets."server/db-password".path})
         DB_USERNAME=postgres
         DB_DATABASE_NAME=immich
