@@ -58,6 +58,7 @@
   mailcow.enable = true;
   seafile.enable = true;
   server.enable = true;
+  immich.enable = ture;
 
   networking.networkmanager.enable = true;
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
