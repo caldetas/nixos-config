@@ -62,6 +62,31 @@
   networking.networkmanager.enable = true;
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
 
+  #mount hetzner drive
+  boot.supportedFilesystems = [ "sshfs" ];
+  environment.systemPackages = with pkgs; [
+    sshfs
+  ];
+
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="fuse", MODE="0666"
+  '';
+
+  fileSystems."/mnt/hetzner-box" = {
+    device = "sshfs#u466367@u466367.your-storagebox.de:/home/u466367";
+    fsType = "fuse.sshfs";
+    options = [
+      "users"
+      "defaults"
+      "allow_other"
+      "IdentityFile=/root/.ssh/hetzner_box_ed25519"
+      "reconnect"
+      "ServerAliveInterval=15"
+      "ServerAliveCountMax=3"
+      "StrictHostKeyChecking=no"
+    ];
+    neededForBoot = false;
+  };
 }
 
 
