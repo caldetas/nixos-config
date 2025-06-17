@@ -8,6 +8,9 @@ with lib;
   services.nginx = {
     virtualHosts = {
       "immich.${vars.domain}" = {
+        serverName = "immich.${vars.domain}";
+        serverAlias = "foto.${vars.domain}";
+        serverAlias = "foto.wurstix.com";
         enableACME = true;
         forceSSL = true;
         locations."/" = {
