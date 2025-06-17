@@ -9,8 +9,10 @@ with lib;
     virtualHosts = {
       "immich.${vars.domain}" = {
         serverName = "immich.${vars.domain}";
-        serverAlias = "foto.${vars.domain}";
-        serverAlias = "foto.wurstix.com";
+        serverAliases = [
+          "foto.${vars.domain}"
+          "foto.wurstix.com"
+        ];
         enableACME = true;
         forceSSL = true;
         locations."/" = {
