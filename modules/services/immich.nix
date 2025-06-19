@@ -11,6 +11,10 @@ let
     then "./library"
     else "/mnt/hetzner-box/immich-library";
   VERSION = "v1.134.0";
+  dbPassword =
+    if config ? sops.secrets."server/db-password".path
+    then "cat ${config.sops.secrets."server/db-password".path}"
+    else "echo passwd";
 
 in
 with lib;
@@ -53,7 +57,7 @@ with lib;
         DB_DATA_LOCATION=./postgres
         TZ=Europe/Zurich
         IMMICH_VERSION=${VERSION} #update automatically: release
-        DB_PASSWORD=$(cat ${config.sops.secrets."server/db-password".path})
+        DB_PASSWORD=$(${dbPassword})
         DB_USERNAME=postgres
         DB_DATABASE_NAME=immich
         EOF

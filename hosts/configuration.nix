@@ -206,6 +206,7 @@ with lib;
         pinentry
         pdftk
         qbittorrent
+        qemu
         remmina
         spotify
         stremio
@@ -215,6 +216,7 @@ with lib;
         vpsfree-client
         wpsoffice
         yarn
+        yq
       ] ++
 
       (with unstable; [
