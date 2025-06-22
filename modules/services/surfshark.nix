@@ -51,6 +51,11 @@ with host;
               grep -q "^redirect-gateway" "$f" || echo "redirect-gateway def1" >> "$f"
               grep -q "^dhcp-option DNS 162.252.172.57" "$f" || echo "dhcp-option DNS 162.252.172.57" >> "$f"
               grep -q "^dhcp-option DNS 149.154.159.92" "$f" || echo "dhcp-option DNS 149.154.159.92" >> "$f"
+
+              #avoid mtu packet fragmentation
+              grep -q "^tun-mtu " "$f" || echo "tun-mtu 1360" >> "$f"
+              grep -q "^mssfix " "$f" || echo "mssfix 1320" >> "$f"
+
             done
 
             for f in *.ovpn; do
