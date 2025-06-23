@@ -10,7 +10,7 @@ let
     if config.networking.hostName != "nixcz"
     then "./library"
     else "/mnt/hetzner-box/immich-library";
-  VERSION = "v1.135.3"; #"release";
+  VERSION = "v1.134.0"; # "v1.135.3"; #"release";
   dbPassword =
     if config ? sops.secrets."server/db-password".path
     then "cat ${config.sops.secrets."server/db-password".path}"
@@ -30,51 +30,61 @@ with lib;
   config = mkIf (config.immich.enable) {
 
     systemd.tmpfiles.rules = [ "d /var/lib/immich 0755 root root - -" ];
-
-    systemd.services.immich-fetch-compose = {
-      description = "Fetch latest Immich docker-compose.yml";
-      before = [ "immich.service" ];
-      wantedBy = [ "multi-user.target" ];
-      serviceConfig = {
-        Type = "oneshot";
-        ExecStart = ''
-          ${pkgs.curl}/bin/curl -L -o /var/lib/immich/docker-compose.yml \
-            https://github.com/immich-app/immich/releases/download/${VERSION}/docker-compose.yml
-        '';
-        #            https://github.com/immich-app/immich/releases/download/${VERSION}/docker-compose.yml
-        #            https://github.com/immich-app/immich/releases/latest/download/docker-compose.yml
-      };
-    };
-
+    environment.etc."immich/docker-compose.yml".source = ../../rsc/immich/docker-compose.yml;
+    environment.etc."immich/prometheus.yml".source = ../../rsc/immich/prometheus.yml;
+    #    environment.etc."immich/create-admin.sh" = {
+    #      source = ../../rsc/immich/create-admin.sh;
+    #      mode = "0755"; # executable permissions
+    #    };
 
     systemd.services.immich = {
       description = "Immich photo server using docker-compose";
       after = [ "docker.service" "immich-fetch-compose.service" ];
-      requires = [ "immich-fetch-compose.service" ];
       wantedBy = [ "multi-user.target" ];
 
       #write env file to specify the locations
       preStart = ''
-        ${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml pull #get newest images
-              cat > /var/lib/immich/.env <<EOF
-          UPLOAD_LOCATION=${LIBRARY_PATH}
-          DB_DATA_LOCATION=./postgres
-          TZ=Europe/Zurich
-          IMMICH_VERSION=${VERSION} #update automatically: release
-          DB_PASSWORD=$(${dbPassword})
-          DB_USERNAME=postgres
-          DB_DATABASE_NAME=immich
-          EOF
+          set -euo pipefail
+
+          # Write .env file line by line
+          echo "UPLOAD_LOCATION=${LIBRARY_PATH}" > /var/lib/immich/.env
+          echo "DB_DATA_LOCATION=./postgres" >> /var/lib/immich/.env
+          echo "TZ=Europe/Zurich" >> /var/lib/immich/.env
+          echo "IMMICH_VERSION=${VERSION}" >> /var/lib/immich/.env
+          echo "DB_PASSWORD=${dbPassword}" >> /var/lib/immich/.env
+          echo "DB_USERNAME=postgres" >> /var/lib/immich/.env
+          echo "DB_DATABASE_NAME=immich" >> /var/lib/immich/.env
+          echo "IMMICH_TELEMETRY_INCLUDE=all" >> /var/lib/immich/.env
+
+          #preload images for qemu qcow2 images
+          if [ -f /mnt/shared/immich-images.tar ]; then
+            echo "Loading Docker images from shared folder..."
+            ${pkgs.docker}/bin/docker load -i /mnt/shared/immich-images.tar
+          else
+            echo "Shared image tarball not found — skipping load."
+          fi
+
+        echo "Replacing docker-compose.yml..."
+        rm -f /var/lib/immich/docker-compose.yml
+        cp /etc/immich/docker-compose.yml /var/lib/immich/docker-compose.yml
+
+        echo "Replacing prometheus.yml..."
+        rm -f /var/lib/immich/prometheus.yml
+        cp /etc/immich/prometheus.yml /var/lib/immich/prometheus.yml
+
+        echo "Pulling latest images (optional)..."
+        ${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml pull || true
       '';
+
       serviceConfig = {
-        ExecStart = "${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml up -d";
-        ExecStop = "${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml down";
+        ExecStart = "${pkgs.docker}/bin/docker compose up -d";
+        ExecStop = "${pkgs.docker}/bin/docker compose -f /etc/immich/docker-compose.yml down";
         WorkingDirectory = "/var/lib/immich";
         RemainAfterExit = true;
+        TimeoutStartSec = 600; #10min
         Restart = "always";
         RestartSec = "5s";
       };
     };
-
   };
 }
