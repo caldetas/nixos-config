@@ -51,7 +51,7 @@ with lib;
           echo "DB_DATA_LOCATION=./postgres" >> /var/lib/immich/.env
           echo "TZ=Europe/Zurich" >> /var/lib/immich/.env
           echo "IMMICH_VERSION=${VERSION}" >> /var/lib/immich/.env
-          echo "DB_PASSWORD=${dbPassword}" >> /var/lib/immich/.env
+          echo "DB_PASSWORD=$(${dbPassword})" >> /var/lib/immich/.env
           echo "DB_USERNAME=postgres" >> /var/lib/immich/.env
           echo "DB_DATABASE_NAME=immich" >> /var/lib/immich/.env
           echo "IMMICH_TELEMETRY_INCLUDE=all" >> /var/lib/immich/.env
