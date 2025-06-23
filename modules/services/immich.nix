@@ -39,8 +39,9 @@ with lib;
         Type = "oneshot";
         ExecStart = ''
           ${pkgs.curl}/bin/curl -L -o /var/lib/immich/docker-compose.yml \
-            https://github.com/immich-app/immich/releases/download/${VERSION}/docker-compose.yml
+            https://github.com/immich-app/immich/releases/latest/download/docker-compose.yml
         '';
+        #            https://github.com/immich-app/immich/releases/download/${VERSION}/docker-compose.yml
       };
     };
 
