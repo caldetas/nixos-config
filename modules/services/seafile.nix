@@ -18,9 +18,14 @@ with lib;
 
       nixpkgs.overlays = [
         (final: prev: {
-          seahub = prev.seahub.override {
-            python = prev.python311;
-          };
+          python313Packages = prev.python313Packages.overrideScope' (pyFinal: pyPrev: {
+            future = pyPrev.future.overrideAttrs (old: {
+              meta = old.meta // {
+                broken = false;
+                unsupportedInterpreters = [ ];
+              };
+            });
+          });
         })
       ];
 
