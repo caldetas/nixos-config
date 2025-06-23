@@ -151,7 +151,7 @@ with lib;
         sops # Secrets Manager
 
         # Misc
-        python3
+        python311 #python3 gave error with seahub
       ];
 
       home-manager.users.${vars.user} = {
