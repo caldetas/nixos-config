@@ -15,6 +15,15 @@ with lib;
   };
   config = mkIf (config.seafile.enable) {
 
+    nixpkgs.overlays = [
+      (final: prev: {
+        # Patch python interpreter for seahub so that 'future' works
+        seafile-server = prev.seafile-server.overridePythonAttrs (old: {
+          python = prev.python311;
+        });
+      })
+    ];
+
     # setup after https://wiki.nixos.org/wiki/Seafile
     # create data folder if not exists
     # sudo mkdir /mnt/nas/seafile-data && sudo chown -R seafile:seafile /mnt/nas/seafile-data
