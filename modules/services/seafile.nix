@@ -17,8 +17,16 @@ with lib;
 
     nixpkgs.overlays = [
       (final: prev: {
-        # Patch python interpreter for seahub so that 'future' works
-        seafile-server = prev.seafile-server.overridePythonAttrs (old: {
+        # Override the seafile seahub package to force Python 3.11
+        seafile = prev.seafile.overrideAttrs (old: {
+          # Patch dependency: seahub uses future
+          propagatedBuildInputs = (old.propagatedBuildInputs or [ ]) ++ [
+            (prev.python311.withPackages (ps: with ps; [ future ]))
+          ];
+        });
+
+        # Optionally: override seahub separately if needed
+        seahub = prev.seahub.overrideAttrs (old: {
           python = prev.python311;
         });
       })
