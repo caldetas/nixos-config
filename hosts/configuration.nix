@@ -152,7 +152,7 @@ with lib;
 
         # Misc
         #        python3 #python3 gave error with seahub
-        (python313.withPackages (ps: with ps; [ pip future ]))
+        #        (python313.withPackages (ps: with ps; [ pip future ]))
       ];
 
       home-manager.users.${vars.user} = {
