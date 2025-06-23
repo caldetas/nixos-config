@@ -10,7 +10,7 @@ let
     if config.networking.hostName != "nixcz"
     then "./library"
     else "/mnt/hetzner-box/immich-library";
-  VERSION = "release"; #"v1.135.0";
+  VERSION = "v1.135.3"; #"release";
   dbPassword =
     if config ? sops.secrets."server/db-password".path
     then "cat ${config.sops.secrets."server/db-password".path}"
@@ -39,9 +39,10 @@ with lib;
         Type = "oneshot";
         ExecStart = ''
           ${pkgs.curl}/bin/curl -L -o /var/lib/immich/docker-compose.yml \
-            https://github.com/immich-app/immich/releases/latest/download/docker-compose.yml
+            https://github.com/immich-app/immich/releases/download/${VERSION}/docker-compose.yml
         '';
         #            https://github.com/immich-app/immich/releases/download/${VERSION}/docker-compose.yml
+        #            https://github.com/immich-app/immich/releases/latest/download/docker-compose.yml
       };
     };
 
