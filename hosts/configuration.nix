@@ -151,8 +151,7 @@ with lib;
         sops # Secrets Manager
 
         # Misc
-        #        python3 #python3 gave error with seahub
-        #        (python313.withPackages (ps: with ps; [ pip future ]))
+        python3
       ];
 
       home-manager.users.${vars.user} = {

@@ -1,49 +1,30 @@
+#
+#  Example of a python development shell flake that allows for multiple versions and hosts
+#  Can be run with "$ nix develop" or "$ nix develop </path/to/flake.nix>#<host>"
+#
+
 {
-  description = "Python dev env with forced future support for Python 3.13";
+  description = "A python development environment";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs = { url = "github:nixos/nixpkgs/nixpkgs-unstable"; };
   };
 
-  outputs = { self, nixpkgs }:
+  outputs = inputs:
     let
-      system = "x86_64-linux";
-
-      #overlay to get future with python313, required by seahub
-      overlay = final: prev: {
-        python313Packages = prev.python313Packages.overrideScope' (pyFinal: pyPrev: {
-          future = pyPrev.future.overridePythonAttrs (old: {
-            meta = old.meta // {
-              broken = false;
-              unsupportedInterpreters = [ ]; # force allow all interpreters
-            };
-          });
-        });
-      };
-
-      pkgs = import nixpkgs {
-        inherit system;
-        overlays = [ overlay ];
-      };
-
-      mkPyEnv = python: python.withPackages (ps: with ps; [
+      pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
+      pypi = with pkgs; (ps: with ps; [
         pip
-        future
       ]);
     in
     {
-      devShells.${system} = {
-        default = pkgs.mkShell {
-          buildInputs = [ (mkPyEnv pkgs.python310) ];
-        };
-
-        py311 = pkgs.mkShell {
-          buildInputs = [ (mkPyEnv pkgs.python311) ];
-        };
-
-        py313 = pkgs.mkShell {
-          buildInputs = [ (mkPyEnv pkgs.python313) ];
-        };
+      # default host
+      devShells.x86_64-linux.default = inputs.nixpkgs.legacyPackages.x86_64-linux.mkShell {
+        buildInputs = [ (pkgs.python310.withPackages pypi) ];
+      };
+      # py311 host
+      devShells.x86_64-linux.py311 = inputs.nixpkgs.legacyPackages.x86_64-linux.mkShell {
+        buildInputs = [ (pkgs.python311.withPackages pypi) ];
       };
     };
 }
