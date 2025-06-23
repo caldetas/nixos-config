@@ -30,12 +30,12 @@ with lib;
   config = mkIf (config.immich.enable) {
 
     systemd.tmpfiles.rules = [ "d /var/lib/immich 0755 root root - -" ];
-    environment.etc."immich/docker-compose.yml".source = ../../rsc/immich/docker-compose.yml;
-    environment.etc."immich/prometheus.yml".source = ../../rsc/immich/prometheus.yml;
-    #    environment.etc."immich/create-admin.sh" = {
-    #      source = ../../rsc/immich/create-admin.sh;
-    #      mode = "0755"; # executable permissions
-    #    };
+    environment.etc."immich/docker-compose.yml".source = ../../rsc/config/immich/docker-compose.yml;
+    environment.etc."immich/prometheus.yml".source = ../../rsc/config/immich/prometheus.yml;
+    environment.etc."immich/create-admin.sh" = {
+      source = ../../rsc/config/immich/create-admin.sh;
+      mode = "0755"; # executable permissions
+    };
 
     systemd.services.immich = {
       description = "Immich photo server using docker-compose";
