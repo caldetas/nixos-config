@@ -18,7 +18,7 @@ with lib;
 
       nixpkgs.overlays = [
         (final: prev: {
-          python313Packages = prev.python313Packages.overrideScope' (pyFinal: pyPrev: {
+          python313Packages = prev.python313Packages.overrideScope (pyFinal: pyPrev: {
             future = pyPrev.future.overrideAttrs (old: {
               meta = old.meta // {
                 broken = false;
