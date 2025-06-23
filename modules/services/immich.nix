@@ -54,15 +54,16 @@ with lib;
 
       #write env file to specify the locations
       preStart = ''
-            cat > /var/lib/immich/.env <<EOF
-        UPLOAD_LOCATION=${LIBRARY_PATH}
-        DB_DATA_LOCATION=./postgres
-        TZ=Europe/Zurich
-        IMMICH_VERSION=${VERSION} #update automatically: release
-        DB_PASSWORD=$(${dbPassword})
-        DB_USERNAME=postgres
-        DB_DATABASE_NAME=immich
-        EOF
+        ${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml pull #get newest images
+              cat > /var/lib/immich/.env <<EOF
+          UPLOAD_LOCATION=${LIBRARY_PATH}
+          DB_DATA_LOCATION=./postgres
+          TZ=Europe/Zurich
+          IMMICH_VERSION=${VERSION} #update automatically: release
+          DB_PASSWORD=$(${dbPassword})
+          DB_USERNAME=postgres
+          DB_DATABASE_NAME=immich
+          EOF
       '';
       serviceConfig = {
         ExecStart = "${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml up -d";
