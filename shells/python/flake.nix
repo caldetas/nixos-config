@@ -26,5 +26,9 @@
       devShells.x86_64-linux.py311 = inputs.nixpkgs.legacyPackages.x86_64-linux.mkShell {
         buildInputs = [ (pkgs.python311.withPackages pypi) ];
       };
+
+      devShells.${system}.py313 = pkgs.mkShell {
+        buildInputs = [ (mkPyEnv pkgs.python313) ];
+      };
     };
 }
