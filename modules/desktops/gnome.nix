@@ -27,8 +27,8 @@ with lib;
     };
 
     services = {
-      displayManager.gdm.enable = true; # Display Manager
-      desktopManager.gnome.enable = true; # Desktop Environment
+      xserver.displayManager.gdm.enable = true; # Display Manager
+      xserver.desktopManager.gnome.enable = true; # Desktop Environment
       xserver = {
         enable = true;
         xkb = {
