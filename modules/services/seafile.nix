@@ -15,9 +15,17 @@ with lib;
   };
   config = mkIf (config.seafile.enable)
     {
-
       nixpkgs.overlays = [
         (final: prev: {
+          # Force override of the future derivation from any interpreter
+          future = prev.pythonPackages.future.overrideAttrs (old: {
+            meta = old.meta // {
+              broken = false;
+              unsupportedInterpreters = [ ];
+            };
+          });
+
+          # Optional safety net: override python313Packages.future too
           python313Packages = prev.python313Packages.overrideScope (pyFinal: pyPrev: {
             future = pyPrev.future.overrideAttrs (old: {
               meta = old.meta // {
