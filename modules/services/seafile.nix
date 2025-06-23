@@ -18,13 +18,14 @@ with lib;
 
       nixpkgs.overlays = [
         (final: prev: {
-          python313Packages = prev.python313Packages.overrideScope (pyFinal: pyPrev: {
-            future = pyPrev.future.overrideAttrs (old: {
-              meta = old.meta // {
-                broken = false;
-                unsupportedInterpreters = [ ];
-              };
-            });
+          seahub = prev.seahub.overrideAttrs (old: {
+            # Replace interpreter with python3.11
+            nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ prev.python311 ];
+            buildInputs = (old.buildInputs or [ ]) ++ [ prev.python311 ];
+            # Optional: for extra clarity if seahub uses python.withPackages
+            passthru = old.passthru // {
+              python = prev.python311;
+            };
           });
         })
       ];
