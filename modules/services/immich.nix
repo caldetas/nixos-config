@@ -48,6 +48,7 @@ with lib;
     systemd.services.immich = {
       description = "Immich photo server using docker-compose";
       after = [ "docker.service" "immich-fetch-compose.service" ];
+      requires = [ "immich-fetch-compose.service" ];
       wantedBy = [ "multi-user.target" ];
 
       #write env file to specify the locations
