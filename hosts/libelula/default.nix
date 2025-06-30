@@ -26,7 +26,6 @@
       ../configuration-desktop.nix
     ] ++
     (
-    import ../../modules/desktop ++
     import ../../modules/desktops ++
     import ../../modules/editors ++
     import ../../modules/hardware ++
