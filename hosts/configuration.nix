@@ -12,8 +12,7 @@ with lib;
     [
       inputs.sops-nix.nixosModules.sops
     ] ++
-    (import ../../modules/core ++
-             import ../../modules/desktop ++
+    (
       import ../modules/desktops ++
       import ../modules/editors ++
       import ../modules/hardware ++

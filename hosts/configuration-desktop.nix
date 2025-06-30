@@ -11,7 +11,7 @@ with lib;
   imports =
     [
     ] ++
-    (import ../../modules/core ++
+    (
         import ../../modules/desktop
     );
 

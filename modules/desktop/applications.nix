@@ -34,7 +34,8 @@
     wpsoffice
     yarn
     yq
-  ] ++ (with pkgs; [ megasync steam ]);
+  ] ++ (with unstable; [ megasync steam ]);
+#  ] ++ (with pkgs; [ megasync steam ]);
 
   flatpak = {
     enable = true;
