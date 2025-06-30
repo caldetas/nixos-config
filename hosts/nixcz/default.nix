@@ -12,7 +12,7 @@
       ./hardware-configuration.nix
       ./nginx.nix
       ../../modules/desktops/virtualisation/docker.nix
-      ../../configuration-server.nix
+      ../configuration-server.nix
     ] ++
     (import ../../modules/desktops ++
     import ../../modules/editors ++
