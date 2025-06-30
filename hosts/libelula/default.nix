@@ -23,8 +23,9 @@
       ./hardware-configuration.nix
       ./nvidia.nix
       ../../modules/desktops/virtualisation/docker.nix
+      ../configuration-desktop.nix
     ] ++
-    (import ../../modules/core ++
+    (
     import ../../modules/desktop ++
     import ../../modules/desktops ++
     import ../../modules/editors ++
