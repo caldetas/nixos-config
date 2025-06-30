@@ -24,13 +24,16 @@
       ./nvidia.nix
       ../../modules/desktops/virtualisation/docker.nix
     ] ++
-    (import ../../modules/desktops ++
+    (import ../../modules/core ++
+    import ../../modules/desktop ++
+    import ../../modules/desktops ++
     import ../../modules/editors ++
     import ../../modules/hardware ++
     import ../../modules/programs ++
     import ../../modules/services ++
     import ../../modules/shell ++
-    import ../../modules/theming);
+    import ../../modules/theming
+    );
 
   # Bootloader.
   # boot.loader.systemd-boot.enable = true;

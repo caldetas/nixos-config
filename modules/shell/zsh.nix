@@ -8,7 +8,13 @@
   users.users.${vars.user} = {
     shell = pkgs.zsh;
   };
-
+  system.activationScripts.ensureZshrc.text = ''
+    ZSHRC="/home/${vars.user}/.zshrc"
+    if [ ! -f "$ZSHRC" ]; then
+      echo "# .zshrc created by Nix to suppress zsh-newuser-install" > "$ZSHRC"
+      chown ${vars.user}:users "$ZSHRC"
+    fi
+  '';
   programs = {
     zsh = {
       enable = true;
