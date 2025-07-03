@@ -43,6 +43,6 @@
       '';
     };
     #command line tool, thefuck replacement
-    pay-respects.enable = true;
+#    pay-respects.enable = true;
   };
 }

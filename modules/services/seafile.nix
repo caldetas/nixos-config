@@ -15,6 +15,8 @@ with lib;
   };
   config = mkIf (config.seafile.enable)
     {
+
+#      https://github.com/NixOS/nixpkgs/issues/389149
       nixpkgs.overlays = [
         (final: prev: {
           # Force override of the future derivation from any interpreter

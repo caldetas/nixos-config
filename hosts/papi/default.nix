@@ -22,9 +22,6 @@
     import ../../modules/theming);
 
 
-  # This is the server's hostname you chose during the order process. Feel free to change it.
-
-  networking.hostName = "papi";
 
   #NAS storage mount
   environment.systemPackages = with pkgs; [ nfs-utils ];
@@ -34,8 +31,6 @@
   # access, create your own users and further secure your server.
 
   services.openssh = {
-    enable = true;
-
     # Allow root login with password, needed for passwords set through vpsAdmin
     settings.PermitRootLogin = "yes";
 
