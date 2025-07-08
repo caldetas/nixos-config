@@ -82,6 +82,12 @@ fileSystems."/mnt/hetzner-box" = {
   ];
   neededForBoot = false;
 };
+systemd.automounts = [
+  {
+    where = "/mnt/hetzner-box";
+    wantedBy = [ "multi-user.target" ];
+  }
+];
 }
 
 
