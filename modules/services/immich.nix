@@ -74,13 +74,6 @@ with lib;
 
         echo "Pulling latest images (optional)..."
         ${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml pull || true
-
-        echo "setting up external storage..."
-        sshfs -o IdentityFile=/root/.ssh/hetzner_box_ed25519 \
-                   -o reconnect \
-                   -o allow_other \
-                   -o StrictHostKeyChecking=no \
-                   u466367@u466367.your-storagebox.de:/ /mnt/hetzner-box
       '';
 
       serviceConfig = {
@@ -93,5 +86,24 @@ with lib;
         RestartSec = "5s";
       };
     };
+    systemd.services.mount-hetzner-box = {
+      description = "Mount Hetzner Storage Box via SSHFS";
+      after = [ "network-online.target" "mount-hetzner-box.service"];
+      requires = [ "mount-hetzner-box.service"];
+      wants = [ "network-online.target" ];
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        ExecStart = ''
+          ${pkgs.coreutils}/bin/mkdir -p /mnt/hetzner-box
+          ${pkgs.sshfs}/bin/sshfs \
+            -o IdentityFile=/root/.ssh/hetzner_box_ed25519 \
+            -o reconnect \
+            -o allow_other \
+            -o StrictHostKeyChecking=no \
+            u466367@u466367.your-storagebox.de:/ /mnt/hetzner-box
+        '';
+      };
   };
 }
