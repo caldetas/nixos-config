@@ -39,7 +39,8 @@ with lib;
 
     systemd.services.immich = {
       description = "Immich photo server using docker-compose";
-      after = [ "docker.service" "immich-fetch-compose.service" ];
+      after = [ "docker.service" "immich-fetch-compose.service" "mnt-hetzner\\x2dbox.mount"  ];
+      requires = [ "mnt-hetzner\\x2dbox.mount" ]:
       wantedBy = [ "multi-user.target" ];
 
       #write env file to specify the locations
@@ -79,7 +80,6 @@ with lib;
       serviceConfig = {
         ExecStart = "${pkgs.docker}/bin/docker compose up -d";
         ExecStop = "${pkgs.docker}/bin/docker compose -f /etc/immich/docker-compose.yml down";
-         RequiresMountsFor = "/mnt/hetzner-box";
         WorkingDirectory = "/var/lib/immich";
         RemainAfterExit = true;
         TimeoutStartSec = 600; #10min
