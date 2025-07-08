@@ -39,8 +39,7 @@ with lib;
 
     systemd.services.immich = {
       description = "Immich photo server using docker-compose";
-      after = [ "docker.service" "immich-fetch-compose.service" "mnt-hetzner\\x2dbox.automount"  ];
-      requires = [ "mnt-hetzner\\x2dbox.automount" ];
+      after = [ "docker.service" "immich-fetch-compose.service" ];
       wantedBy = [ "multi-user.target" ];
 
       #write env file to specify the locations
@@ -75,6 +74,13 @@ with lib;
 
         echo "Pulling latest images (optional)..."
         ${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml pull || true
+
+        echo "setting up external storage..."
+        sshfs -o IdentityFile=/root/.ssh/hetzner_box_ed25519 \
+                   -o reconnect \
+                   -o allow_other \
+                   -o StrictHostKeyChecking=no \
+                   u466367@u466367.your-storagebox.de:/ /mnt/hetzner-box
       '';
 
       serviceConfig = {
