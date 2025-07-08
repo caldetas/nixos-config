@@ -88,14 +88,13 @@ with lib;
     };
     systemd.services.mount-hetzner-box = {
       description = "Mount Hetzner Storage Box via SSHFS";
-      after = [ "network-online.target" "mount-hetzner-box.service"];
-      requires = [ "mount-hetzner-box.service"];
+      after = [ "network-online.target" ];
       wants = [ "network-online.target" ];
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;
-        ExecStart = ''
+        ExecStart = lib.mkForce (pkgs.writeShellScript "mount-hetzner-box" ''
           ${pkgs.coreutils}/bin/mkdir -p /mnt/hetzner-box
           ${pkgs.sshfs}/bin/sshfs \
             -o IdentityFile=/root/.ssh/hetzner_box_ed25519 \
@@ -103,8 +102,8 @@ with lib;
             -o allow_other \
             -o StrictHostKeyChecking=no \
             u466367@u466367.your-storagebox.de:/ /mnt/hetzner-box
-        '';
+        '');
       };
-  };
+    };
   };
 }
