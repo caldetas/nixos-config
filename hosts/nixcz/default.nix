@@ -70,16 +70,15 @@ fileSystems."/mnt/hetzner-box" = {
   fsType = "fuse.sshfs";
   options = [
     "_netdev"
+    "x-systemd.automount"
+    "x-systemd.idle-timeout=600"
+    "x-systemd.requires=network-online.target"
     "allow_other"
     "IdentityFile=/root/.ssh/hetzner_box_ed25519"
     "reconnect"
     "ServerAliveInterval=15"
     "ServerAliveCountMax=3"
     "StrictHostKeyChecking=no"
-    "x-systemd.automount"
-    "x-systemd.idle-timeout=10min"
-    "x-systemd.requires=network-online.target"
-    "x-systemd.device-timeout=5"
   ];
   neededForBoot = false;
 };
