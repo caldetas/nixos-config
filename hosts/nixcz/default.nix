@@ -65,22 +65,20 @@
     ACTION=="add", SUBSYSTEM=="fuse", MODE="0666"
   '';
 
-  fileSystems."/mnt/hetzner-box" = {
-    device = "sshfs#u466367@u466367.your-storagebox.de:/";
-    fsType = "fuse.sshfs";
-    options = [
-      "_netdev"
-      "x-systemd.automount"
-      "x-systemd.idle-timeout=600"
-      "allow_other"
-      "IdentityFile=/root/.ssh/hetzner_box_ed25519"
-      "reconnect"
-      "ServerAliveInterval=15"
-      "ServerAliveCountMax=3"
-      "StrictHostKeyChecking=no"
-    ];
-    neededForBoot = false;
-  };
+fileSystems."/mnt/hetzner-box" = {
+  device = "sshfs#u466367@u466367.your-storagebox.de:/";
+  fsType = "fuse.sshfs";
+  options = [
+    "_netdev"
+    "allow_other"                     # let non-root users read it
+    "IdentityFile=/root/.ssh/hetzner_box_ed25519"
+    "reconnect"
+    "ServerAliveInterval=15"
+    "ServerAliveCountMax=3"
+    "StrictHostKeyChecking=no"
+  ];
+  neededForBoot = false;
+};
 }
 
 
