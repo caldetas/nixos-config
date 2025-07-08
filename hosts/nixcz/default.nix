@@ -59,38 +59,38 @@
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
 
   #mount hetzner drive
-  boot.supportedFilesystems = [ "sshfs" ];
-
-services.udev.extraRules = ''
-  ACTION=="add", SUBSYSTEM=="fuse", MODE="0666"
-'';
-
-fileSystems."/mnt/hetzner-box" = {
-  device = "sshfs#u466367@u466367.your-storagebox.de:/";
-  fsType = "fuse.sshfs";
-  options = [
-    "_netdev"
-    "noauto"
-    "allow_other"
-    "IdentityFile=/root/.ssh/hetzner_box_ed25519"
-    "reconnect"
-    "ServerAliveInterval=15"
-    "ServerAliveCountMax=3"
-    "StrictHostKeyChecking=no"
-  ];
-  neededForBoot = false;
-};
-
-systemd.automounts = [
-  {
-    where = "/mnt/hetzner-box";
-    wantedBy = [ "multi-user.target" ];
-  }
-];
-
-systemd.tmpfiles.rules = [
-  "d /mnt/hetzner-box 0755 root root"
-];
+#  boot.supportedFilesystems = [ "sshfs" ];
+#
+#services.udev.extraRules = ''
+#  ACTION=="add", SUBSYSTEM=="fuse", MODE="0666"
+#'';
+#
+#fileSystems."/mnt/hetzner-box" = {
+#  device = "sshfs#u466367@u466367.your-storagebox.de:/";
+#  fsType = "fuse.sshfs";
+#  options = [
+#    "_netdev"
+#    "noauto"
+#    "allow_other"
+#    "IdentityFile=/root/.ssh/hetzner_box_ed25519"
+#    "reconnect"
+#    "ServerAliveInterval=15"
+#    "ServerAliveCountMax=3"
+#    "StrictHostKeyChecking=no"
+#  ];
+#  neededForBoot = false;
+#};
+#
+#systemd.automounts = [
+#  {
+#    where = "/mnt/hetzner-box";
+#    wantedBy = [ "multi-user.target" ];
+#  }
+#];
+#
+#systemd.tmpfiles.rules = [
+#  "d /mnt/hetzner-box 0755 root root"
+#];
 }
 
 
