@@ -79,6 +79,7 @@ with lib;
       serviceConfig = {
         ExecStart = "${pkgs.docker}/bin/docker compose up -d";
         ExecStop = "${pkgs.docker}/bin/docker compose -f /etc/immich/docker-compose.yml down";
+         RequiresMountsFor = "/mnt/hetzner-box";
         WorkingDirectory = "/var/lib/immich";
         RemainAfterExit = true;
         TimeoutStartSec = 600; #10min
