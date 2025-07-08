@@ -66,12 +66,12 @@
   '';
 
   fileSystems."/mnt/hetzner-box" = {
-    device = "sshfs#u466367@u466367.your-storagebox.de:/home/u466367";
+    device = "sshfs#u466367@u466367.your-storagebox.de:/";
     fsType = "fuse.sshfs";
     options = [
-      "_netdev" # wait for network before trying to mount
-      "x-systemd.automount" # systemd will mount on first access
-      "x-systemd.idle-timeout=60" # optional: unmount after 60s of inactivity
+      "_netdev"
+      "x-systemd.automount"
+      "x-systemd.idle-timeout=600"
       "allow_other"
       "IdentityFile=/root/.ssh/hetzner_box_ed25519"
       "reconnect"
