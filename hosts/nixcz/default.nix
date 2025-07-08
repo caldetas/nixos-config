@@ -70,6 +70,7 @@ fileSystems."/mnt/hetzner-box" = {
   fsType = "fuse.sshfs";
   options = [
     "_netdev"
+    "noauto"
     "allow_other"
     "IdentityFile=/root/.ssh/hetzner_box_ed25519"
     "reconnect"
