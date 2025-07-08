@@ -39,7 +39,7 @@ with lib;
 
     systemd.services.immich = {
       description = "Immich photo server using docker-compose";
-      after = [ "docker.service" "immich-fetch-compose.service" "mnt-hetzner\\x2dbox.mount" ];
+      after = [ "docker.service" "immich-fetch-compose.service" ];
       wantedBy = [ "multi-user.target" ];
 
       #write env file to specify the locations
