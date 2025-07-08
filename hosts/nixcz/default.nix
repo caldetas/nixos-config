@@ -70,7 +70,8 @@ fileSystems."/mnt/hetzner-box" = {
   fsType = "fuse.sshfs";
   options = [
     "_netdev"
-    "allow_other"                     # let non-root users read it
+    "noauto"  # <--- prevent systemd from auto-mounting
+    "allow_other"
     "IdentityFile=/root/.ssh/hetzner_box_ed25519"
     "reconnect"
     "ServerAliveInterval=15"
@@ -78,6 +79,18 @@ fileSystems."/mnt/hetzner-box" = {
     "StrictHostKeyChecking=no"
   ];
   neededForBoot = false;
+};
+
+systemd.services.mount-hetzner-box = {
+  description = "Mount Hetzner Storage Box via SSHFS";
+  wantedBy = [ "multi-user.target" ];
+  after = [ "network-online.target" ];
+  requires = [ "network-online.target" ];
+  serviceConfig = {
+    Type = "oneshot";
+    ExecStart = "${pkgs.util-linux}/bin/mount /mnt/hetzner-box";
+    RemainAfterExit = true;
+  };
 };
 }
 
