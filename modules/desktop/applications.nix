@@ -15,6 +15,7 @@
     git
     gimp
     gparted
+    jq
     netbird
     netbird-ui
     nodejs
@@ -27,9 +28,9 @@
     remmina
     spotify
     stremio
-    strongswan
     telegram-desktop
     teams-for-linux
+    terraform
     vpsfree-client
     wpsoffice
     yarn
