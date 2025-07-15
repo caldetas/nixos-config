@@ -46,7 +46,6 @@
     usbimager
     vlc
     file-roller
-    pcmanfm
     p7zip
     rsync
     unzip
