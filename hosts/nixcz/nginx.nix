@@ -52,6 +52,20 @@ with lib;
           return = "301 https://emanuel-graf.kleio.com$request_uri";
         };
       };
+      "mail.caldetas.com" = {
+        serverName = "mail.caldetas.com";
+        enableACME = true;
+        forceSSL = true;
+
+        locations."/.well-known/acme-challenge/" = {
+          root = "/var/lib/acme/acme-challenge/";
+        };
+
+        # Optional fallback
+        locations."/" = {
+          return = "404";
+        };
+      };
     };
   };
 }
