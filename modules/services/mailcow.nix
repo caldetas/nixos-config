@@ -69,9 +69,9 @@ systemd.services.mailcow-cert-sync = {
       install -m 0600 "$ACME_PATH/key.pem" /etc/ssl/mail/key.pem
 
       # Restart mailcow services that use certs
-      ${pkgs.docker} restart mailcowdockerized-nginx-mailcow-1
-      ${pkgs.docker} restart mailcowdockerized-postfix-mailcow-1
-      ${pkgs.docker} restart mailcowdockerized-dovecot-mailcow-1
+      ${pkgs.docker}/bin/docker restart mailcowdockerized-nginx-mailcow-1
+      ${pkgs.docker}/bin/docker restart mailcowdockerized-postfix-mailcow-1
+      ${pkgs.docker}/bin/docker restart mailcowdockerized-dovecot-mailcow-1
     '';
   };
 };
