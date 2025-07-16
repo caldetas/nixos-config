@@ -65,7 +65,7 @@ with lib;
 
       # Optional: run on boot and on cert renewal
       systemd.timers.mailcow-cert-sync = {
-      user = "acme";
+      User = "acme";
           group = "users";
         wantedBy = [ "timers.target" ];
         timerConfig = {
