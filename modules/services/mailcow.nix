@@ -50,12 +50,12 @@ systemd.services.mailcow-cert-sync = {
   wantedBy = [ "multi-user.target" ];
   serviceConfig = {
     Type = "oneshot";
-    User = "root";
-    Group = "users";
+#    User = "root";
+#    Group = "users";
     ExecStart = pkgs.writeShellScript "mailcow-cert-sync" ''
       set -euo pipefail
 
-      install -d -m 0750 -o root -g mail /etc/ssl/mailcow
+      install -d -m 0750 -o root -g users /etc/ssl/mailcow
       install -m 0640 -o root -g users /var/lib/acme/mail.caldetas.com/fullchain.pem /etc/ssl/mailcow/mailcow.pem
       install -m 0640 -o root -g users /var/lib/acme/mail.caldetas.com/privkey.pem /etc/ssl/mailcow/mailcow.key
 
