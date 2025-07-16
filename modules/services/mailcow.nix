@@ -55,9 +55,9 @@ systemd.services.mailcow-cert-sync = {
     ExecStart = pkgs.writeShellScript "mailcow-cert-sync" ''
       set -euo pipefail
 
-      install -d -m 0750 -o root -g users /etc/ssl/mailcow
-      install -m 0640 -o root -g users /var/lib/acme/mail.caldetas.com/fullchain.pem /etc/ssl/mailcow/mailcow.pem
-      install -m 0640 -o root -g users /var/lib/acme/mail.caldetas.com/key.pem /etc/ssl/mailcow/mailcow.key
+      install -d -m 0750 -o caldetas -g users /etc/ssl/mailcow
+      install -m 0640 -o caldetas -g users /var/lib/acme/mail.caldetas.com/fullchain.pem /etc/ssl/mailcow/mailcow.pem
+      install -m 0640 -o caldetas -g users /var/lib/acme/mail.caldetas.com/key.pem /etc/ssl/mailcow/mailcow.key
 
       # Optional: restart container(s)
       ${pkgs.docker}/bin/docker restart mailcowdockerized-nginx-mailcow-1
