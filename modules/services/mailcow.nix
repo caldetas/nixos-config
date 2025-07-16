@@ -55,17 +55,23 @@ systemd.services.mailcow-cert-sync = {
     ExecStart = pkgs.writeShellScript "mailcow-cert-sync" ''
       set -euo pipefail
 
-      install -d -m 0750 -o root -g root /etc/ssl/mailcow
-      install -m 0640 -o root -g root /var/lib/acme/mail.caldetas.com/fullchain.pem /etc/ssl/mailcow/fullchain.pem
-      install -m 0640 -o root -g root /var/lib/acme/mail.caldetas.com/key.pem /etc/ssl/mailcow/privkey.pem
+      # Path to source certs
+      ACME_PATH="/var/lib/acme/mail.caldetas.com"
 
-      # Create expected paths in a bind-mountable way
-      mkdir -p /var/lib/mailcow/dovecot-ssl
-      ln -sf /etc/ssl/mailcow/mailcow.pem /var/lib/mailcow/dovecot-ssl/cert.pem
-      ln -sf /etc/ssl/mailcow/mailcow.key /var/lib/mailcow/dovecot-ssl/key.pem
+      # Dovecot expects certs in: /etc/ssl/mail/mail.caldetas.com/
+      install -d -m 0755 -o root -g root /etc/ssl/mail/mail.caldetas.com
+      install -m 0644 "$ACME_PATH/fullchain.pem" /etc/ssl/mail/mail.caldetas.com/cert.pem
+      install -m 0600 "$ACME_PATH/key.pem" /etc/ssl/mail/mail.caldetas.com/key.pem
 
-      # Optional: restart container(s)
-      ${pkgs.docker}/bin/docker restart mailcowdockerized-nginx-mailcow-1
+      # Postfix and Nginx expect certs in: /etc/ssl/mail/
+      install -d -m 0755 -o root -g root /etc/ssl/mail
+      install -m 0644 "$ACME_PATH/fullchain.pem" /etc/ssl/mail/cert.pem
+      install -m 0600 "$ACME_PATH/key.pem" /etc/ssl/mail/key.pem
+
+      # Restart mailcow services that use certs
+      ${pkgs.docker} restart mailcowdockerized-nginx-mailcow-1
+      ${pkgs.docker} restart mailcowdockerized-postfix-mailcow-1
+      ${pkgs.docker} restart mailcowdockerized-dovecot-mailcow-1
     '';
   };
 };
