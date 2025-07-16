@@ -44,6 +44,30 @@ with lib;
         };
       };
     };
+      systemd.services.mailcow-cert-sync = {
+        description = "Copy ACME certs for Mailcow";
+        after = [ "acme-finished.service" ];
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStart = pkgs.writeShellScript "mailcow-cert-sync" ''
+            set -euo pipefail
+
+            install -d -m 0750 -o root -g mail /etc/ssl/mailcow
+            install -m 0640 -o root -g mail /var/lib/acme/mail.caldetas.com/fullchain.pem /etc/ssl/mailcow/mailcow.pem
+            install -m 0640 -o root -g mail /var/lib/acme/mail.caldetas.com/privkey.pem /etc/ssl/mailcow/mailcow.key
+          '';
+        };
+      };
+
+      # Optional: run on boot and on cert renewal
+      systemd.timers.mailcow-cert-sync = {
+        wantedBy = [ "timers.target" ];
+        timerConfig = {
+          OnCalendar = "daily";
+          Persistent = true;
+        };
+      };
   };
 
   ##  MIGRATION

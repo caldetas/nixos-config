@@ -52,6 +52,18 @@ with lib;
           return = "301 https://emanuel-graf.kleio.com$request_uri";
         };
       };
+      "mail.caldetas.com" = {
+        serverName = "mail.caldetas.com";
+        enableACME = true;         # Let NixOS handle the cert
+        forceSSL = true;           # Redirect HTTP to HTTPS
+
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:8088";
+          proxyWebsockets = true;
+          recommendedProxySettings = true;
+        };
+      };
+
     };
   };
 }
