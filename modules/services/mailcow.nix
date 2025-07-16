@@ -44,35 +44,26 @@ with lib;
         };
       };
     };
-      systemd.services.mailcow-cert-sync = {
-      User = "acme";
-          group = "users";
-        description = "Copy ACME certs for Mailcow";
-        after = [ "acme-finished.service" ];
-        wantedBy = [ "multi-user.target" ];
-        postRun = "systemctl restart mailcow.service";
-        serviceConfig = {
-          Type = "oneshot";
-          ExecStart = pkgs.writeShellScript "mailcow-cert-sync" ''
-            set -euo pipefail
+systemd.services.mailcow-cert-sync = {
+  description = "Copy ACME certs for Mailcow";
+  after = [ "acme-finished.service" ];
+  wantedBy = [ "multi-user.target" ];
+  serviceConfig = {
+    Type = "oneshot";
+    User = "root";
+    Group = "mail";
+    ExecStart = pkgs.writeShellScript "mailcow-cert-sync" ''
+      set -euo pipefail
 
-            install -d -m 0750 -o root -g mail /etc/ssl/mailcow
-            install -m 0640 -o root -g mail /var/lib/acme/mail.caldetas.com/fullchain.pem /etc/ssl/mailcow/mailcow.pem
-            install -m 0640 -o root -g mail /var/lib/acme/mail.caldetas.com/privkey.pem /etc/ssl/mailcow/mailcow.key
-          '';
-        };
-      };
+      install -d -m 0750 -o root -g mail /etc/ssl/mailcow
+      install -m 0640 -o root -g mail /var/lib/acme/mail.caldetas.com/fullchain.pem /etc/ssl/mailcow/mailcow.pem
+      install -m 0640 -o root -g mail /var/lib/acme/mail.caldetas.com/privkey.pem /etc/ssl/mailcow/mailcow.key
 
-      # Optional: run on boot and on cert renewal
-      systemd.timers.mailcow-cert-sync = {
-      User = "acme";
-          group = "users";
-        wantedBy = [ "timers.target" ];
-        timerConfig = {
-          OnCalendar = "daily";
-          Persistent = true;
-        };
-      };
+      # Optional: restart container(s)
+      ${pkgs.docker}/bin/docker restart mailcowdockerized-nginx-mailcow-1
+    '';
+  };
+};
       user.groups.mail = {};
   };
 
