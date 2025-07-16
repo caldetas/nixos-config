@@ -45,9 +45,12 @@ with lib;
       };
     };
       systemd.services.mailcow-cert-sync = {
+      user = "acme";
+          group = "users";
         description = "Copy ACME certs for Mailcow";
         after = [ "acme-finished.service" ];
         wantedBy = [ "multi-user.target" ];
+        postRun = "systemctl restart mailcow.service";
         serviceConfig = {
           Type = "oneshot";
           ExecStart = pkgs.writeShellScript "mailcow-cert-sync" ''
@@ -62,12 +65,15 @@ with lib;
 
       # Optional: run on boot and on cert renewal
       systemd.timers.mailcow-cert-sync = {
+      user = "acme";
+          group = "users";
         wantedBy = [ "timers.target" ];
         timerConfig = {
           OnCalendar = "daily";
           Persistent = true;
         };
       };
+      user.groups.mail = {};
   };
 
   ##  MIGRATION
