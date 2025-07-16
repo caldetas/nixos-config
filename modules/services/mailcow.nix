@@ -51,7 +51,7 @@ systemd.services.mailcow-cert-sync = {
   serviceConfig = {
     Type = "oneshot";
     User = "root";
-    Group = "mail";
+    Group = "users";
     ExecStart = pkgs.writeShellScript "mailcow-cert-sync" ''
       set -euo pipefail
 
@@ -64,7 +64,7 @@ systemd.services.mailcow-cert-sync = {
     '';
   };
 };
-      user.groups.mail = {};
+#      user.groups.mail = {};
   };
 
   ##  MIGRATION
