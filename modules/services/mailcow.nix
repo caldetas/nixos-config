@@ -64,7 +64,7 @@ systemd.services.mailcow-cert-sync = {
     '';
   };
 };
-#      user.groups.mail = {};
+      user.groups.mail = {};
   };
 
   ##  MIGRATION
