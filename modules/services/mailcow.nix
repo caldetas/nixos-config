@@ -45,7 +45,7 @@ with lib;
       };
     };
       systemd.services.mailcow-cert-sync = {
-      user = "acme";
+      User = "acme";
           group = "users";
         description = "Copy ACME certs for Mailcow";
         after = [ "acme-finished.service" ];
