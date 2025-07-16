@@ -56,15 +56,14 @@ systemd.services.mailcow-cert-sync = {
       set -euo pipefail
 
       install -d -m 0750 -o root -g mail /etc/ssl/mailcow
-      install -m 0640 -o root -g mail /var/lib/acme/mail.caldetas.com/fullchain.pem /etc/ssl/mailcow/mailcow.pem
-      install -m 0640 -o root -g mail /var/lib/acme/mail.caldetas.com/privkey.pem /etc/ssl/mailcow/mailcow.key
+      install -m 0640 -o root -g users /var/lib/acme/mail.caldetas.com/fullchain.pem /etc/ssl/mailcow/mailcow.pem
+      install -m 0640 -o root -g users /var/lib/acme/mail.caldetas.com/privkey.pem /etc/ssl/mailcow/mailcow.key
 
       # Optional: restart container(s)
       ${pkgs.docker}/bin/docker restart mailcowdockerized-nginx-mailcow-1
     '';
   };
 };
-      user.groups.mail = {};
   };
 
   ##  MIGRATION
