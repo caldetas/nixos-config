@@ -57,7 +57,7 @@ systemd.services.mailcow-cert-sync = {
 
       install -d -m 0750 -o caldetas -g users /etc/ssl/mailcow
       install -m 0640 -o caldetas -g users /var/lib/acme/mail.caldetas.com/fullchain.pem /etc/ssl/mailcow/fullchain.pem
-      install -m 0640 -o caldetas -g users /var/lib/acme/mail.caldetas.com/privkey.pem /etc/ssl/mailcow/privkey.pem
+      install -m 0640 -o caldetas -g users /var/lib/acme/mail.caldetas.com/key.pem /etc/ssl/mailcow/privkey.pem
 
       # Optional: restart container(s)
       ${pkgs.docker}/bin/docker restart mailcowdockerized-nginx-mailcow-1
