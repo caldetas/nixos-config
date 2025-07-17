@@ -75,9 +75,40 @@ systemd.services.mailcow-cert-sync = {
     '';
   };
 };
+
+#backup
+    environment.etc."mailcow/backup.sh" = {source = ../../rsc/config/mailcow/backup.sh;mode = "0755";};
+    environment.etc."mailcow/restore.sh" = {source = ../../rsc/config/mailcow/restore.sh;mode = "0755";};
+
+    # Main borgmatic backup service
+    systemd.services.mailcow-backup = {
+      description = "Run mailcow backup";
+      after = [ "network-online.target"  ];
+      requires = [ "network-online.target" ];
+#      onFailure = [ ];
+#      environment = { };
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = ''
+        ${pkgs.bash}/bin/bash /etc/mailcow/backup.sh
+        rsync -aHv /backup/ /mnt/hetzner/backup_server
+        '';
+      };
+    };
+
+    # Daily timer
+    systemd.timers.mailcow-backup = {
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnCalendar = "daily";
+        Persistent = true;
+      };
+    };
   };
 
-  ##  MIGRATION
+  #new migration scripts in rsc/mailcow
+
+  ##  OLD MIGRATION
   ## On old server
   #docker compose down
   #sudo tar czf mailcow-volumes.tar.gz -C /var/lib/docker/volumes $(docker volume ls -q | grep mailcowdockerized_)
