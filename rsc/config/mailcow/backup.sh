@@ -11,5 +11,5 @@ rsync -aHv --delete /var/lib/docker/volumes/ /backup/mailcow/$DATE/volumes/
 docker compose up -d
 BACKUP_LOCATION=/backup/mailcow/$DATE/ /home/caldetas/git/mailcow-dockerized/helper-scripts/backup_and_restore.sh backup mysql crypt redis --delete-days 3
 #copy to hetzner box
-mkdir -p /mnt/hetzner/backup_server
-rsync -aHv /backup/ /mnt/hetzner/backup_server
+mkdir -p /mnt/hetzner-box/backup_server
+rsync -aHv /backup/ /mnt/hetzner-box/backup_server
