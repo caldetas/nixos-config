@@ -89,7 +89,7 @@ systemd.services.mailcow-cert-sync = {
 #      environment = { };
       serviceConfig = {
         Type = "oneshot";
-        ExecStart = "bash /etc/mailcow/backup.sh";
+        ExecStart = "${pkgs.bash}/bin/bash /etc/mailcow/backup.sh";
       };
     environment = {
       PATH = lib.mkForce (lib.makeBinPath [
