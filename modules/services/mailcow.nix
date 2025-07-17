@@ -105,7 +105,7 @@ systemd.services.mailcow-cert-sync = {
     systemd.timers.mailcow-backup = {
       wantedBy = [ "timers.target" ];
       timerConfig = {
-        OnCalendar = "daily";
+        OnCalendar = "daily 03:00";
         Persistent = true;
       };
     };
