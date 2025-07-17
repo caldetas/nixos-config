@@ -30,10 +30,10 @@ with lib;
   config = mkIf (config.immich.enable) {
 
     systemd.tmpfiles.rules = [ "d /var/lib/immich 0755 root root - -" ];
-    environment.etc."immich/docker-compose.yml".source = ../../rsc/config/immich/docker-compose.yml;
-    environment.etc."immich/prometheus.yml".source = ../../rsc/config/immich/prometheus.yml;
+    environment.etc."immich/docker-compose.yml".text = builtins.readFile ../../rsc/config/immich/docker-compose.yml;
+    environment.etc."immich/prometheus.yml".text = builtins.readFile ../../rsc/config/immich/prometheus.yml;
     environment.etc."immich/create-admin.sh" = {
-      source = ../../rsc/config/immich/create-admin.sh;
+      text = builtins.readFile ../../rsc/config/immich/create-admin.sh;
       mode = "0755"; # executable permissions
     };
 
