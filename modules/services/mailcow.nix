@@ -89,9 +89,22 @@ systemd.services.mailcow-cert-sync = {
 #      environment = { };
       serviceConfig = {
         Type = "oneshot";
-        ExecStart = ''
-        ${pkgs.bash}/bin/bash /etc/mailcow/backup.sh'';
+        ExecStart = "bash /etc/mailcow/backup.sh";
       };
+    environment = {
+      PATH = lib.mkForce (lib.makeBinPath [
+        pkgs.bash
+        pkgs.rsync
+        pkgs.coreutils
+        pkgs.docker
+        pkgs.gnutar
+        pkgs.gzip
+        pkgs.findutils
+        pkgs.gawk
+        pkgs.gnugrep
+        pkgs.gnused
+      ]);
+    };
     };
 
     # Daily timer
