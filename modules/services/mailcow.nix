@@ -84,7 +84,6 @@ systemd.services.mailcow-cert-sync = {
     systemd.services.mailcow-backup = {
   description = "Run mailcow backup";
   stopIfChanged = false;
-  startAt = null; # Just for clarity
   unitConfig = {
     RefuseManualStart = false; # Allow timer to start it
     RefuseManualStop = false;
