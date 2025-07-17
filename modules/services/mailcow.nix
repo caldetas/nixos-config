@@ -90,9 +90,7 @@ systemd.services.mailcow-cert-sync = {
       serviceConfig = {
         Type = "oneshot";
         ExecStart = ''
-        ${pkgs.bash}/bin/bash /etc/mailcow/backup.sh
-        rsync -aHv /backup/ /mnt/hetzner/backup_server
-        '';
+        ${pkgs.bash}/bin/bash /etc/mailcow/backup.sh'';
       };
     };
 
