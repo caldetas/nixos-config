@@ -26,13 +26,13 @@
       ../configuration-desktop.nix
     ] ++
     (
-    import ../../modules/desktops ++
-    import ../../modules/editors ++
-    import ../../modules/hardware ++
-    import ../../modules/programs ++
-    import ../../modules/services ++
-    import ../../modules/shell ++
-    import ../../modules/theming
+      import ../../modules/desktops ++
+      import ../../modules/editors ++
+      import ../../modules/hardware ++
+      import ../../modules/programs ++
+      import ../../modules/services ++
+      import ../../modules/shell ++
+      import ../../modules/theming
     );
 
   # Bootloader.

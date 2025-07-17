@@ -12,7 +12,7 @@ with lib;
     [
     ] ++
     (
-    import "${inputs.self}/modules/server"
+      import "${inputs.self}/modules/server"
     );
 
 }

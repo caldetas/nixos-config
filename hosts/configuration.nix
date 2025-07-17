@@ -8,7 +8,8 @@
 with lib;
 let
   args = { inherit config lib pkgs unstable inputs vars sops-nix host; };
-in {
+in
+{
   imports =
     [
       inputs.sops-nix.nixosModules.sops
@@ -23,7 +24,7 @@ in {
       import ../modules/shell ++
       import ../modules/theming
     );
-networking = {
-  hostName =  host.hostName;
-};
+  networking = {
+    hostName = host.hostName;
+  };
 }

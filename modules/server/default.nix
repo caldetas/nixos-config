@@ -1,3 +1,3 @@
 [
-./services.nix
+  ./services.nix
 ]

@@ -1,5 +1,5 @@
 [
-./applications.nix
-./services.nix
-./theming.nix
+  ./applications.nix
+  ./services.nix
+  ./theming.nix
 ]

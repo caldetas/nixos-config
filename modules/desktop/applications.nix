@@ -36,7 +36,7 @@
     yarn
     yq
   ] ++ (with unstable; [ megasync steam ]);
-#  ] ++ (with pkgs; [ megasync steam ]);
+  #  ] ++ (with pkgs; [ megasync steam ]);
 
   flatpak = {
     enable = true;

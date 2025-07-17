@@ -44,59 +44,59 @@ with lib;
         };
       };
     };
-systemd.services.mailcow-cert-sync = {
-  description = "Copy ACME certs for Mailcow";
-  after = [ "acme-finished.service" ];
-  wantedBy = [ "multi-user.target" ];
-  serviceConfig = {
-    Type = "oneshot";
-#    User = "root";
-#    Group = "users";
-    ExecStart = pkgs.writeShellScript "mailcow-cert-sync" ''
-      set -euo pipefail
+    systemd.services.mailcow-cert-sync = {
+      description = "Copy ACME certs for Mailcow";
+      after = [ "acme-finished.service" ];
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig = {
+        Type = "oneshot";
+        #    User = "root";
+        #    Group = "users";
+        ExecStart = pkgs.writeShellScript "mailcow-cert-sync" ''
+          set -euo pipefail
 
-      # Path to source certs
-      ACME_PATH="/var/lib/acme/mail.caldetas.com"
+          # Path to source certs
+          ACME_PATH="/var/lib/acme/mail.caldetas.com"
 
-      # Dovecot expects certs in: /etc/ssl/mail/mail.caldetas.com/
-      install -d -m 0755 -o root -g root /etc/ssl/mail/mail.caldetas.com
-      install -m 0644 "$ACME_PATH/fullchain.pem" /etc/ssl/mail/mail.caldetas.com/cert.pem
-      install -m 0600 "$ACME_PATH/key.pem" /etc/ssl/mail/mail.caldetas.com/key.pem
+          # Dovecot expects certs in: /etc/ssl/mail/mail.caldetas.com/
+          install -d -m 0755 -o root -g root /etc/ssl/mail/mail.caldetas.com
+          install -m 0644 "$ACME_PATH/fullchain.pem" /etc/ssl/mail/mail.caldetas.com/cert.pem
+          install -m 0600 "$ACME_PATH/key.pem" /etc/ssl/mail/mail.caldetas.com/key.pem
 
-      # Postfix and Nginx expect certs in: /etc/ssl/mail/
-      install -d -m 0755 -o root -g root /etc/ssl/mail
-      install -m 0644 "$ACME_PATH/fullchain.pem" /etc/ssl/mail/cert.pem
-      install -m 0600 "$ACME_PATH/key.pem" /etc/ssl/mail/key.pem
+          # Postfix and Nginx expect certs in: /etc/ssl/mail/
+          install -d -m 0755 -o root -g root /etc/ssl/mail
+          install -m 0644 "$ACME_PATH/fullchain.pem" /etc/ssl/mail/cert.pem
+          install -m 0600 "$ACME_PATH/key.pem" /etc/ssl/mail/key.pem
 
-      # Restart mailcow services that use certs
-      ${pkgs.docker}/bin/docker restart mailcowdockerized-nginx-mailcow-1
-      ${pkgs.docker}/bin/docker restart mailcowdockerized-postfix-mailcow-1
-      ${pkgs.docker}/bin/docker restart mailcowdockerized-dovecot-mailcow-1
-    '';
-  };
-};
+          # Restart mailcow services that use certs
+          ${pkgs.docker}/bin/docker restart mailcowdockerized-nginx-mailcow-1
+          ${pkgs.docker}/bin/docker restart mailcowdockerized-postfix-mailcow-1
+          ${pkgs.docker}/bin/docker restart mailcowdockerized-dovecot-mailcow-1
+        '';
+      };
+    };
 
-#backup
-    environment.etc."mailcow/backup.sh" = {text = builtins.readFile ../../rsc/config/mailcow/backup.sh;mode = "0755";};
-    environment.etc."mailcow/restore.sh" = {text = builtins.readFile ../../rsc/config/mailcow/restore.sh;mode = "0755";};
+    #backup
+    environment.etc."mailcow/backup.sh" = { text = builtins.readFile ../../rsc/config/mailcow/backup.sh; mode = "0755"; };
+    environment.etc."mailcow/restore.sh" = { text = builtins.readFile ../../rsc/config/mailcow/restore.sh; mode = "0755"; };
 
     # Main borgmatic backup service
     systemd.services.mailcow-backup = {
-  description = "Run mailcow backup";
-  stopIfChanged = false;
-  unitConfig = {
-    RefuseManualStart = false; # Allow timer to start it
-    RefuseManualStop = false;
-    DefaultDependencies = false; # Prevent link to default.target or rescue.target
-  };
-      after = [ "network-online.target"  ];
+      description = "Run mailcow backup";
+      stopIfChanged = false;
+      unitConfig = {
+        RefuseManualStart = false; # Allow timer to start it
+        RefuseManualStop = false;
+        DefaultDependencies = false; # Prevent link to default.target or rescue.target
+      };
+      after = [ "network-online.target" ];
       requires = [ "network-online.target" ];
-#      onFailure = [ ];
+      #      onFailure = [ ];
       wantedBy = [ ]; #  Don't auto-start on boot or rebuild
-#      environment = { };
+      #      environment = { };
       serviceConfig = {
         Type = "oneshot";
-     Environment = "PATH=/run/wrappers/bin:/etc/profiles/per-user/root/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin";
+        Environment = "PATH=/run/wrappers/bin:/etc/profiles/per-user/root/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin";
         ExecStart = "${pkgs.bash}/bin/bash /etc/mailcow/backup.sh";
       };
     };

@@ -24,7 +24,7 @@
       ./nvidia.nix
       ../../modules/desktops/virtualisation/docker.nix
       ../configuration-desktop.nix
-    ] ;
+    ];
 
   # Bootloader.
   # boot.loader.systemd-boot.enable = true;
