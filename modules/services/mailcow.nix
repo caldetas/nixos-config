@@ -77,8 +77,8 @@ systemd.services.mailcow-cert-sync = {
 };
 
 #backup
-    environment.etc."mailcow/backup.sh" = {source = ../../rsc/config/mailcow/backup.sh;mode = "0755";force = true;};
-    environment.etc."mailcow/restore.sh" = {source = ../../rsc/config/mailcow/restore.sh;mode = "0755";force = true;};
+    environment.etc."mailcow/backup.sh" = {text = builtins.readFile ../../rsc/config/mailcow/backup.sh;mode = "0755";};
+    environment.etc."mailcow/restore.sh" = {source = ../../rsc/config/mailcow/restore.sh;mode = "0755";};
 
     # Main borgmatic backup service
     systemd.services.mailcow-backup = {
