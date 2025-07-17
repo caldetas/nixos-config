@@ -9,3 +9,4 @@ rsync -aHv --delete /backup/mailcow/$DATE/rsync/ /home/caldetas/git/mailcow-dock
 rsync -aHv --delete /backup/mailcow/$DATE/volumes/ /var/lib/docker/volumes/
 docker compose up -d
 BACKUP_LOCATION=/backup/mailcow/$DATE/ /home/caldetas/git/mailcow-dockerized/helper-scripts/backup_and_restore.sh restore mysql crypt redis
+tar xvpf backup-mailcow-$DATE.tar.gz -C /restore-location
