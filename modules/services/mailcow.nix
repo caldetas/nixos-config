@@ -86,25 +86,13 @@ systemd.services.mailcow-cert-sync = {
       after = [ "network-online.target"  ];
       requires = [ "network-online.target" ];
 #      onFailure = [ ];
+      wanted-by = [ ]; # ⛔ Don't auto-start on boot or rebuild
 #      environment = { };
       serviceConfig = {
         Type = "oneshot";
+     Environment = "PATH=/run/wrappers/bin:/etc/profiles/per-user/root/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin";
         ExecStart = "${pkgs.bash}/bin/bash /etc/mailcow/backup.sh";
       };
-    environment = {
-      PATH = lib.mkForce (lib.makeBinPath [
-        pkgs.bash
-        pkgs.rsync
-        pkgs.coreutils
-        pkgs.docker
-        pkgs.gnutar
-        pkgs.gzip
-        pkgs.findutils
-        pkgs.gawk
-        pkgs.gnugrep
-        pkgs.gnused
-      ]);
-    };
     };
 
     # Daily timer
