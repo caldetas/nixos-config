@@ -82,11 +82,18 @@ systemd.services.mailcow-cert-sync = {
 
     # Main borgmatic backup service
     systemd.services.mailcow-backup = {
-      description = "Run mailcow backup";
+  description = "Run mailcow backup";
+  stopIfChanged = false;
+  startAt = null; # Just for clarity
+  unitConfig = {
+    RefuseManualStart = false; # Allow timer to start it
+    RefuseManualStop = false;
+    DefaultDependencies = false; # Prevent link to default.target or rescue.target
+  };
       after = [ "network-online.target"  ];
       requires = [ "network-online.target" ];
 #      onFailure = [ ];
-      wantedBy = [ ]; # ⛔ Don't auto-start on boot or rebuild
+      wantedBy = [ ]; #  Don't auto-start on boot or rebuild
 #      environment = { };
       serviceConfig = {
         Type = "oneshot";
