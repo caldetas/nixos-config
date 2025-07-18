@@ -4,6 +4,10 @@
 
 { config, lib, pkgs, vars, ... }:
 with lib;
+let
+  isNixcz = host.hostName == "nixcz";
+  in
+
 {
 
   options = {
@@ -102,7 +106,7 @@ with lib;
     };
 
     # Daily timer
-    systemd.timers.mailcow-backup = mkIf host.hostName == "nixcz" {
+    systemd.timers.mailcow-backup = mkIf isNixcz {
       wantedBy = [ "timers.target" ];
       timerConfig = {
         OnCalendar = "*-*-* 04:30:00";
