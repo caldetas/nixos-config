@@ -2,7 +2,7 @@
 #  System Notifications
 #
 
-{ config, lib, pkgs, vars, ... }:
+{ config, lib, pkgs, vars, host,... }:
 with lib;
 let
   isNixcz = host.hostName == "nixcz";
