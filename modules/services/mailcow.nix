@@ -102,10 +102,10 @@ with lib;
     };
 
     # Daily timer
-    systemd.timers.mailcow-backup = {
+    systemd.timers.mailcow-backup = mkIf host.hostName == "nixcz" {
       wantedBy = [ "timers.target" ];
       timerConfig = {
-        OnCalendar = "daily 03:00";
+        OnCalendar = "*-*-* 04:30:00";
         Persistent = true;
       };
     };
