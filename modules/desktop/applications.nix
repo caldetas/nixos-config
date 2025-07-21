@@ -1,7 +1,7 @@
-{ config, pkgs, unstable, ... }:
+{ config, pkgs, stable, unstable, ... }:
 
 {
-  environment.systemPackages = with unstable; [
+  environment.systemPackages = with pkgs; [
     appimage-run
     google-chrome
     libreoffice
@@ -35,8 +35,9 @@
     wpsoffice
     yarn
     yq
-  ] ++ (with unstable; [ megasync steam ]);
-  #  ] ++ (with pkgs; [ megasync steam ]);
+  ]
+  ++ (with unstable; [ megasync steam ])
+  ++ (with stable; [ ]);
 
   flatpak = {
     enable = true;

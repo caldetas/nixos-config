@@ -4,12 +4,12 @@
 #  Safer than patching the non-executable package directly
 #
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, stable, ... }:
 
 let
   ideaFhs = pkgs.buildFHSEnv {
     name = "idea-ai";
-    targetPkgs = pkgs: with pkgs; [
+    targetPkgs = pkgs: with stable; [
       jetbrains.idea-ultimate
       glib
       libsecret
