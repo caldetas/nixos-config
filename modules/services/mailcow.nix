@@ -48,38 +48,17 @@ in
         };
       };
     };
-    systemd.services.mailcow-cert-sync = {
-      description = "Copy ACME certs for Mailcow";
-      after = [ "acme-finished.service" ];
-      wantedBy = [ "multi-user.target" ];
+    systemd.services.mailcow-reload-after-cert-renewal = {
+      wantedBy = [ "acme-finished.mail.caldetas.com.target" ];
+      script = ''
+        docker restart mailcowdockerized-dovecot-mailcow-1
+        docker restart mailcowdockerized-postfix-mailcow-1
+        docker restart mailcowdockerized-nginx-mailcow-1
+      '';
       serviceConfig = {
         Type = "oneshot";
-        #    User = "root";
-        #    Group = "users";
-        ExecStart = pkgs.writeShellScript "mailcow-cert-sync" ''
-          set -euo pipefail
-
-          # Path to source certs
-          ACME_PATH="/var/lib/acme/mail.caldetas.com"
-
-          # Dovecot expects certs in: /etc/ssl/mail/mail.caldetas.com/
-          install -d -m 0755 -o root -g root /etc/ssl/mail/mail.caldetas.com
-          install -m 0644 "$ACME_PATH/fullchain.pem" /etc/ssl/mail/mail.caldetas.com/cert.pem
-          install -m 0600 "$ACME_PATH/key.pem" /etc/ssl/mail/mail.caldetas.com/key.pem
-
-          # Postfix and Nginx expect certs in: /etc/ssl/mail/
-          install -d -m 0755 -o root -g root /etc/ssl/mail
-          install -m 0644 "$ACME_PATH/fullchain.pem" /etc/ssl/mail/cert.pem
-          install -m 0600 "$ACME_PATH/key.pem" /etc/ssl/mail/key.pem
-
-          # Restart mailcow services that use certs
-          ${pkgs.docker}/bin/docker restart mailcowdockerized-nginx-mailcow-1
-          ${pkgs.docker}/bin/docker restart mailcowdockerized-postfix-mailcow-1
-          ${pkgs.docker}/bin/docker restart mailcowdockerized-dovecot-mailcow-1
-        '';
       };
     };
-
     #backup
     environment.etc."mailcow/backup.sh" = { text = builtins.readFile ../../rsc/config/mailcow/backup.sh; mode = "0755"; };
     environment.etc."mailcow/restore.sh" = { text = builtins.readFile ../../rsc/config/mailcow/restore.sh; mode = "0755"; };

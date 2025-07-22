@@ -9,7 +9,7 @@
 #           └─ default.nix 
 #
 
-{ lib, inputs, nixpkgs, nixpkgs-unstable, home-manager, nur, hyprland, plasma-manager, vars, ... }:
+{ lib, inputs, nixpkgs, nixpkgs-stable, nixpkgs-unstable, home-manager, nur, hyprland, plasma-manager, vars, ... }:
 
 let
   system = "x86_64-linux";
@@ -23,12 +23,16 @@ let
     inherit system;
     config.allowUnfree = true;
   };
+  stable = import nixpkgs-stable {
+    inherit system;
+    config.allowUnfree = true;
+  };
 
   makeHost = name: folder: monitors: extraModules:
     lib.nixosSystem {
       inherit system;
       specialArgs = {
-        inherit inputs system unstable hyprland vars;
+        inherit inputs system unstable stable hyprland vars;
         host = {
           hostName = name;
           mainMonitor = monitors.main;
