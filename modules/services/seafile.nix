@@ -85,7 +85,8 @@ with lib;
 
           locations = {
             "/" = {
-              proxyPass = "http://127.0.0.1:8000";
+              proxyPass = "http://unix:/run/seahub/gunicorn.sock";
+              #              proxyPass = "http://127.0.0.1:8000";
               extraConfig = ''
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -94,7 +95,8 @@ with lib;
             };
 
             "/seafhttp" = {
-              proxyPass = "http://127.0.0.1:8082";
+              proxyPass = "http://unix:/run/seafile/server.sock";
+              #              proxyPass = "http://127.0.0.1:8082";
               extraConfig = ''
                 rewrite ^/seafhttp(.*)$ $1 break;
                 client_max_body_size 0;
