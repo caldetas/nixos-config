@@ -55,10 +55,7 @@
       };
       wlp0s20f3 = {
         useDHCP = true;
-        #ipv4.addresses = [ {
-        #  address = "192.168.0.51";
-        #  prefixLength = 24;
-        #} ];
+        mtu = 1380;
       };
     };
     #    defaultGateway = "192.168.0.1";
