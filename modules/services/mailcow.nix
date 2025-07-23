@@ -63,7 +63,7 @@ in
     environment.etc."mailcow/backup.sh" = { text = builtins.readFile ../../rsc/config/mailcow/backup.sh; mode = "0755"; };
     environment.etc."mailcow/restore.sh" = { text = builtins.readFile ../../rsc/config/mailcow/restore.sh; mode = "0755"; };
 
-    # Main borgmatic backup service
+    # backup service
     systemd.services.mailcow-backup = {
       description = "Run mailcow backup";
       stopIfChanged = false;

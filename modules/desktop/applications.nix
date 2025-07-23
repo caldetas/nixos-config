@@ -43,7 +43,7 @@
     enable = true;
     extraPackages = [
       "com.github.tchx84.Flatseal"
-      "io.github.mimbrero.WhatsAppDesktop"
+      "com.rtosta.zapzap"
       "org.signal.Signal"
       "ro.go.hmlendea.DL-Desktop"
       "com.seafile.Client"
