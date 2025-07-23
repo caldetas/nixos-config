@@ -1,114 +1,104 @@
-#
-#  System Notifications
-#
-
 { config, lib, pkgs, vars, ... }:
-with lib;
+
+let
+  inherit (lib) mkOption mkIf types;
+  seafilePath = "/home/${vars.user}/git/seafile-docker-ce";
+  envFile = "/home/${vars.user}/git/.env";
+in
 {
-  options = {
-    seafile = {
-      enable = mkOption {
-        type = types.bool;
-        default = false;
+  options.seafile = {
+    enable = mkOption {
+      type = types.bool;
+      default = false;
+      description = "Enable Dockerized Seafile service";
+    };
+  };
+
+  config = mkIf config.seafile.enable {
+
+    # Clone the repo if not already done (optional, or manage manually)
+    systemd.services.seafile-setup = {
+      description = "Initial clone of seafile-docker-ce repository";
+      wantedBy = [ "multi-user.target" ];
+      before = [ "docker-compose@seafile.service" ];
+      serviceConfig = {
+        Type = "oneshot";
+        User = vars.user;
+        WorkingDirectory = "/home/${vars.user}/git";
+        ExecStart = "${pkgs.git}/bin/git clone https://github.com/caldetas/seafile-docker-ce.git ${seafilePath}";
+        # ExecStartPost = "/run/current-system/sw/bin/chown -R ${vars.user}:${vars.user} ${seafilePath}";
+      };
+      # Only run once (use a state file or comment this out if you're testing often)
+      install.wantedBy = lib.mkForce [ ];
+    };
+
+    # SOPS secret for .env
+    sops.secrets."seafile/env" = {
+      path = envFile;
+      owner = vars.user;
+      group = "users";
+    };
+
+    # Docker Compose service
+    systemd.services."docker-compose@seafile" = {
+      wantedBy = [ "multi-user.target" ];
+      after = [ "network-online.target" ];
+      requires = [ "docker.service" ];
+      serviceConfig = {
+        WorkingDirectory = seafilePath;
+        ExecStart = "${pkgs.docker-compose}/bin/docker-compose up";
+        ExecStop = "${pkgs.docker-compose}/bin/docker-compose down";
+        Restart = "always";
+        User = vars.user;
+        EnvironmentFile = envFile;
+      };
+    };
+
+    # One-time setup: modify gunicorn + restart seahub
+    systemd.services.seafile-postsetup = {
+      description = "One-time Seafile config patch (gunicorn + CSRF)";
+      after = [ "docker-compose@seafile.service" ];
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = pkgs.writeShellScript "seafile-postsetup" ''
+          set -e
+          docker exec seafile sed -i 's/bind = "127.0.0.1:8000"/bind = "0.0.0.0:8000"/' /opt/seafile/conf/gunicorn.conf.py
+          echo "CSRF_TRUSTED_ORIGINS = ['https://seafile.${vars.domain}']" >> ${seafilePath}/data/seafile/conf/seahub_settings.py
+          docker exec seafile /opt/seafile/seafile-server-latest/seahub.sh restart
+        '';
+      };
+    };
+
+    # Nginx reverse proxy
+    services.nginx = {
+      enable = true;
+      virtualHosts."seafile.${vars.domain}" = {
+        enableACME = true;
+        forceSSL = true;
+        locations = {
+          "/" = {
+            proxyPass = "http://127.0.0.1:8000";
+            extraConfig = ''
+              proxy_set_header X-Real-IP $remote_addr;
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              proxy_set_header X-Forwarded-Host $server_name;
+            '';
+          };
+          "/seafhttp" = {
+            proxyPass = "http://127.0.0.1:8082";
+            extraConfig = ''
+              rewrite ^/seafhttp(.*)$ $1 break;
+              client_max_body_size 0;
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              proxy_connect_timeout 36000s;
+              proxy_read_timeout 36000s;
+              proxy_send_timeout 36000s;
+              send_timeout 36000s;
+            '';
+          };
+        };
       };
     };
   };
-  config = mkIf (config.seafile.enable)
-    {
-
-      #      https://github.com/NixOS/nixpkgs/issues/389149
-      nixpkgs.overlays = [
-        (final: prev: {
-          # Force override of the future derivation from any interpreter
-          future = prev.pythonPackages.future.overrideAttrs (old: {
-            meta = old.meta // {
-              broken = false;
-              unsupportedInterpreters = [ ];
-            };
-          });
-
-          # Optional safety net: override python313Packages.future too
-          python313Packages = prev.python313Packages.overrideScope (pyFinal: pyPrev: {
-            future = pyPrev.future.overrideAttrs (old: {
-              meta = old.meta // {
-                broken = false;
-                unsupportedInterpreters = [ ];
-              };
-            });
-          });
-        })
-      ];
-
-      # setup after https://wiki.nixos.org/wiki/Seafile
-      # create data folder if not exists
-      # sudo mkdir /mnt/nas/seafile-data && sudo chown -R seafile:seafile /mnt/nas/seafile-data
-      services.seafile = {
-        enable = true;
-
-        # Set your admin email and initial password
-        adminEmail = "seafile@${vars.domain}";
-        initialAdminPassword = "1234";
-
-        # External domain (important for web URLs)
-        ccnetSettings.General.SERVICE_URL = "https://seafile.${vars.domain}";
-
-        # Seafile fileserver config — run behind Nginx using a Unix socket
-        seafileSettings = {
-          fileserver = {
-            max_download_dir_size = 200000; # 200GB
-            max_upload_size = 200000; # 200GB
-            host = "unix:/run/seafile/server.sock";
-            web_token_expire_time = 36000;
-          };
-        };
-        seahubExtraConf = ''
-          CSRF_TRUSTED_ORIGINS = ["https://seafile.${vars.domain}"]
-          FILE_SERVER_ROOT =  "https://seafile.${vars.domain}/seafhttp"
-          ALLOWED_HOSTS = ["seafile.${vars.domain}"]
-        '';
-
-        # Optional data directory override
-        dataDir = "/mnt/nas/seafile-data";
-
-        # Garbage collection (e.g. clean up deleted files weekly)
-        gc = {
-          enable = true;
-          dates = [ "Sun 03:00:00" ];
-        };
-      };
-
-      services.nginx = {
-
-        virtualHosts."seafile.${vars.domain}" = {
-          enableACME = true;
-          forceSSL = true;
-
-          locations = {
-            "/" = {
-              #              proxyPass = "http://unix:/run/seahub/gunicorn.sock";
-              proxyPass = "http://127.0.0.1:8000";
-              extraConfig = ''
-                proxy_set_header X-Real-IP $remote_addr;
-                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                proxy_set_header X-Forwarded-Host $server_name;
-              '';
-            };
-
-            "/seafhttp" = {
-              #              proxyPass = "http://unix:/run/seafile/server.sock";
-              proxyPass = "http://127.0.0.1:8082";
-              extraConfig = ''
-                rewrite ^/seafhttp(.*)$ $1 break;
-                client_max_body_size 0;
-                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                proxy_connect_timeout 36000s;
-                proxy_read_timeout 36000s;
-                proxy_send_timeout 36000s;
-                send_timeout 36000s;
-              '';
-            };
-          };
-        };
-      };
-    };
 }
