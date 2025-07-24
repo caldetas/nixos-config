@@ -45,10 +45,11 @@ with lib;
           export BORG_PASSPHRASE="$(cat ${config.sops.secrets."borg/password".path})"
           export BORG_REPO="$(cat ${config.sops.secrets."borg/repo".path})"
           export BORG_RSH="$(cat ${config.sops.secrets."borg/rsh".path})"
-          exec ${pkgs.borgmatic}/bin/borgmatic --verbosity 1 --syslog-verbosity 1
-          exec ${pkgs.borgmatic}/bin/borgmatic init --verbosity 2
+          exec ${pkgs.bash}/bin/bash ./backup.sh
+          exec ${pkgs.borgmatic}/bin/borg init --encryption=repokey-blake2 /mnt/hetzner-box/backup/nixcz/borgmatic
           exec ${pkgs.borgmatic}/bin/borgmatic --verbosity 1 --syslog-verbosity 1
         '';
+        WorkingDirectory = seafilePath;
       };
     };
 
