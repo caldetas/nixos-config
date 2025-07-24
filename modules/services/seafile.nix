@@ -52,8 +52,6 @@ in
         ExecStart = pkgs.writeShellScript "link-env" ''
           ln -sf /run/secrets/seafile/.env /home/${vars.user}/git/seafile-docker-ce/.env
         '';
-        Restart = "on-failure";
-        RestartSec = 5;
       };
     };
     # Docker Compose service
