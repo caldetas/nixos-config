@@ -49,7 +49,7 @@ with lib;
           exec ${pkgs.borgmatic}/bin/borg init --encryption=repokey-blake2 /mnt/hetzner-box/backup/nixcz/borgmatic
           exec ${pkgs.borgmatic}/bin/borgmatic --verbosity 1 --syslog-verbosity 1
         '';
-        WorkingDirectory = seafilePath;
+        WorkingDirectory = "${seafilePath}";
       };
     };
 
