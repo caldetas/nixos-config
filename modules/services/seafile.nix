@@ -27,7 +27,7 @@ in
         WorkingDirectory = "/home/${vars.user}/git";
         ExecStart = pkgs.writeShellScript "seafile-clone-once" ''
           set -e
-          if [ ! -d "${dockerDir}/.git" ]; then
+          if [ ! -d "${seafilePath}/.git" ]; then
             ${pkgs.git}/bin/git clone https://github.com/caldetas/seafile-docker-ce.git ${seafilePath}
           fi
         '';
