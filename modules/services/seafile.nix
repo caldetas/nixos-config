@@ -57,7 +57,12 @@ in
     # Docker Compose service
     systemd.services."seafile-docker-compose" = {
       wantedBy = [ "multi-user.target" ];
-      after = [ "network-online.target" ];
+      after = [
+        "network-online.target"
+        "docker.service"
+        "link-seafile-env.service"
+        "seafile-setup.service"
+      ];
       requires = [
         "docker.service"
         "link-seafile-env.service"
