@@ -59,7 +59,7 @@ in
         WorkingDirectory = seafilePath;
         ExecStart = "${pkgs.docker-compose}/bin/docker-compose up";
         ExecStop = "${pkgs.docker-compose}/bin/docker-compose down";
-        Restart = "always";
+        # Restart = "always";
         User = vars.user;
       };
     };
