@@ -45,9 +45,11 @@ with lib;
           export BORG_PASSPHRASE="$(cat ${config.sops.secrets."borg/password".path})"
           export BORG_REPO="$(cat ${config.sops.secrets."borg/repo".path})"
           export BORG_RSH="$(cat ${config.sops.secrets."borg/rsh".path})"
-          exec ${pkgs.bash}/bin/bash ./backup.sh
-          exec ${pkgs.borgmatic}/bin/borg init --encryption=repokey-blake2 /mnt/hetzner-box/backup/nixcz/borgmatic
-          exec ${pkgs.borgmatic}/bin/borgmatic --verbosity 1 --syslog-verbosity 1
+          export PATH=${lib.makeBinPath [ pkgs.docker pkgs.bash pkgs.borgmatic pkgs.borgbackup pkgs.coreutils ]}:$PATH
+
+          ./backup.sh
+          ${pkgs.borgmatic}/bin/borgmatic init --encryption=repokey-blake2 /mnt/hetzner-box/backup/nixcz/borgmatic
+          ${pkgs.borgmatic}/bin/borgmatic --verbosity 1 --syslog-verbosity 1
         '';
         WorkingDirectory = "/home/${vars.user}/git/seafile-docker-ce";
       };
