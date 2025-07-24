@@ -51,7 +51,7 @@ in
       };
     };
     # Docker Compose service
-    systemd.services."docker-compose@seafile" = {
+    systemd.services."seafile-docker-compose" = {
       wantedBy = [ "multi-user.target" ];
       after = [ "network-online.target" ];
       requires = [ "docker.service" "link-seafile-env.service" ];
@@ -67,7 +67,7 @@ in
     # One-time setup: modify gunicorn + restart seahub
     systemd.services.seafile-postsetup = {
       description = "One-time Seafile config patch (gunicorn + CSRF)";
-      after = [ "docker-compose@seafile.service" ];
+      after = [ "seafile-docker-compose.service" ];
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         Type = "oneshot";
@@ -75,12 +75,12 @@ in
           pkgs.writeShellScript "seafile-postsetup" ''
             set -e
             if [ ! -f "${seafilePath}/.setup" ]; then
-            #echo "Waiting to execute seafile-postsetup.."
-            ${pkgs.coreutils}/bin/sleep 30
-            ${pkgs.docker}/bin/docker exec seafile sed -i 's/bind = "127.0.0.1:8000"/bind = "0.0.0.0:8000"/' /opt/seafile/conf/gunicorn.conf.py
-            echo "CSRF_TRUSTED_ORIGINS = ['https://seafile.${vars.domain}']" | ${pkgs.coreutils}/bin/tee -a ${seafilePath}/data/seafile/conf/seahub_settings.py > /dev/null
-            ${pkgs.docker}/bin/docker exec seafile /opt/seafile/seafile-server-latest/seahub.sh restart
-            ${pkgs.coreutils}/bin/touch ${seafilePath}/.setup
+                #echo "Waiting to execute seafile-postsetup.."
+                ${pkgs.coreutils}/bin/sleep 5
+                ${pkgs.docker}/bin/docker exec seafile sed -i 's/bind = "127.0.0.1:8000"/bind = "0.0.0.0:8000"/' /opt/seafile/conf/gunicorn.conf.py
+                echo "CSRF_TRUSTED_ORIGINS = ['https://seafile.${vars.domain}']" | ${pkgs.coreutils}/bin/tee -a ${seafilePath}/data/seafile/conf/seahub_settings.py > /dev/null
+                ${pkgs.docker}/bin/docker exec seafile /opt/seafile/seafile-server-latest/seahub.sh restart
+                ${pkgs.coreutils}/bin/touch ${seafilePath}/.setup
             fi
           '';
       };
