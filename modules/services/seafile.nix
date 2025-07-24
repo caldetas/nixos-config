@@ -25,11 +25,14 @@ in
         Type = "oneshot";
         User = vars.user;
         WorkingDirectory = "/home/${vars.user}/git";
-        ExecStart = "${pkgs.git}/bin/git clone https://github.com/caldetas/seafile-docker-ce.git ${seafilePath}";
-        # ExecStartPost = "/run/current-system/sw/bin/chown -R ${vars.user}:${vars.user} ${seafilePath}";
+        ExecStart = pkgs.writeShellScript "seafile-clone-once" ''
+          set -e
+          if [ ! -d "${dockerDir}/.git" ]; then
+            ${pkgs.git}/bin/git clone https://github.com/caldetas/seafile-docker-ce.git ${seafilePath}
+          fi
+        '';
+
       };
-      # Only run once (use a state file or comment this out if you're testing often)
-      install.wantedBy = lib.mkForce [ ];
     };
 
     # SOPS secret for .env
@@ -61,12 +64,16 @@ in
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         Type = "oneshot";
-        ExecStart = pkgs.writeShellScript "seafile-postsetup" ''
-          set -e
-          docker exec seafile sed -i 's/bind = "127.0.0.1:8000"/bind = "0.0.0.0:8000"/' /opt/seafile/conf/gunicorn.conf.py
-          echo "CSRF_TRUSTED_ORIGINS = ['https://seafile.${vars.domain}']" >> ${seafilePath}/data/seafile/conf/seahub_settings.py
-          docker exec seafile /opt/seafile/seafile-server-latest/seahub.sh restart
-        '';
+        ExecStart =
+          pkgs.writeShellScript "seafile-postsetup" ''
+            set -e
+            if [ ! -f "${seafilePath}/.setup" ]; then
+            docker exec seafile sed -i 's/bind = "127.0.0.1:8000"/bind = "0.0.0.0:8000"/' /opt/seafile/conf/gunicorn.conf.py
+            echo "CSRF_TRUSTED_ORIGINS = ['https://seafile.${vars.domain}']" >> ${seafilePath}/data/seafile/conf/seahub_settings.py
+            docker exec seafile /opt/seafile/seafile-server-latest/seahub.sh restart
+            touch ${seafilePath}/.setup
+            fi
+          '';
       };
     };
 
