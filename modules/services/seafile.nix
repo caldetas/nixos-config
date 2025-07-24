@@ -16,10 +16,6 @@ in
 
   config = mkIf config.seafile.enable {
 
-    systemd.tmpfiles.rules = [
-      "L+ /home/${vars.user}/git/seafile-docker-ce/.env - - - - /run/secrets/seafile/.env"
-    ];
-
     # Clone the repo if not already done (optional, or manage manually)
     systemd.services.seafile-setup = {
       description = "Initial clone of seafile-docker-ce repository";
@@ -41,11 +37,18 @@ in
 
     # SOPS secret for .env
     sops.secrets."seafile/.env" = {
-      path = envFile;
-      owner = vars.user;
       group = "users";
     };
-
+    systemd.services.link-seafile-env = {
+      wantedBy = [ "multi-user.target" ];
+      after = [ "sops-nix.service" ];
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = pkgs.writeShellScript "link-env" ''
+          ln -sf /run/secrets/seafile/.env /home/${vars.user}/git/seafile-docker-ce/.env
+        '';
+      };
+    };
     # Docker Compose service
     systemd.services."docker-compose@seafile" = {
       wantedBy = [ "multi-user.target" ];
