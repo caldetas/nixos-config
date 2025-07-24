@@ -10,6 +10,7 @@
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./borg.nix
       ./nginx.nix
       ../../modules/desktops/virtualisation/docker.nix
       ../configuration-server.nix
@@ -49,6 +50,7 @@
   # Please remove the hardcoded password from the configuration and set
   # the password using the " passwd " command after the first boot.
 
+  backup.true = true;
   bitwarden.enable = true;
   mailcow.enable = true;
   seafile.enable = true;

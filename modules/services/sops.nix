@@ -13,6 +13,9 @@ with lib;
   sops.secrets."server/ips" = { };
   sops.secrets."server/db-password" = { };
   sops.secrets."vaultwarden/env" = { };
+  sops.secrets."borg/password" = { };
+  sops.secrets."borg/repo" = { };
+  sops.secrets."borg/rsh" = { };
   sops.secrets."vpsfreectl/haveapi-client" = {
     owner = "${vars.user}";
   };
