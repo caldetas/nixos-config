@@ -44,9 +44,9 @@ in
       owner = "${vars.user}";
     };
     systemd.services.link-seafile-env = {
-      wantedBy = [ "multi-user.target" ];
+      wantedBy = [ "multi-user.target" "seafile-docker-compose.service" ];
       requires = [ "docker.service" "seafile-setup.service" ];
-      after = [ "sops-nix.service" ];
+      after = [ "sops-nix.service" "seafile-setup.service" ];
       serviceConfig = {
         Type = "oneshot";
         ExecStart = pkgs.writeShellScript "link-env" ''
