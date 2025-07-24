@@ -14,7 +14,10 @@ in
   };
 
   config = mkIf config.seafile.enable {
-
+    #make shure folder exists
+    systemd.tmpfiles.rules = [
+      "d /home/${vars.user}/git 0755 ${vars.user} users -"
+    ];
     # Clone the repo if not already done (optional, or manage manually)
     systemd.services.seafile-setup = {
       description = "Initial clone of seafile-docker-ce repository";
