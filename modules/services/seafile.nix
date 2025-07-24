@@ -68,8 +68,8 @@ in
         "link-seafile-env.service"
         "seafile-setup.service"
       ];
+      ConditionPathExists = "/run/secrets/seafile/.env";
       serviceConfig = {
-        ConditionPathExists = "/run/secrets/seafile/.env";
         WorkingDirectory = seafilePath;
         ExecStart = "${pkgs.docker-compose}/bin/docker-compose up";
         ExecStop = "${pkgs.docker-compose}/bin/docker-compose down";
