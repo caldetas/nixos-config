@@ -3,7 +3,6 @@
 let
   inherit (lib) mkOption mkIf types;
   seafilePath = "/home/${vars.user}/git/seafile-docker-ce";
-  envFile = "/home/${vars.user}/git/.env";
 in
 {
   options.seafile = {
@@ -38,6 +37,7 @@ in
     # SOPS secret for .env
     sops.secrets."seafile/.env" = {
       group = "users";
+      owner = vars.user;
     };
     systemd.services.link-seafile-env = {
       wantedBy = [ "multi-user.target" ];
@@ -60,7 +60,6 @@ in
         ExecStop = "${pkgs.docker-compose}/bin/docker-compose down";
         Restart = "always";
         User = vars.user;
-        EnvironmentFile = envFile;
       };
     };
 
