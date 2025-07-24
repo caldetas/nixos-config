@@ -3,7 +3,7 @@ source_directories:
   - /home/caldetas/git/seafile-docker-ce/data/seafile/seafile-data
 
 repositories:
-  - path: "${BORG_REPO}"
+  - /mnt/hetzner-box/backup/nixcz/borgmatic # or user@host:/path/to/repo
 
 ssh_command: "ssh -i /home/caldetas/.ssh/hetzner_box_ed25519 -o UserKnownHostsFile=/home/caldetas/.ssh/known_hosts -p 23"
 
