@@ -5,6 +5,8 @@
     appimage-run
     google-chrome
     libreoffice
+    borgbackup
+    borgmatic
     brave
     calibre
     discord
