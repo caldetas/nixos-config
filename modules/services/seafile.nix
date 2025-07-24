@@ -36,7 +36,7 @@ in
     };
 
     # SOPS secret for .env
-    sops.secrets."seafile/env" = {
+    sops.secrets."seafile/.env" = {
       path = envFile;
       owner = vars.user;
       group = "users";
