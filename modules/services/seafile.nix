@@ -17,6 +17,7 @@ in
     #make shure folder exists
     systemd.tmpfiles.rules = [
       "d /home/${vars.user}/git 0755 ${vars.user} users -"
+      "d ${seafilePath} 0755 ${vars.user} users -"
     ];
     # Clone the repo if not already done (optional, or manage manually)
     systemd.services.seafile-setup = {
@@ -57,7 +58,11 @@ in
     systemd.services."seafile-docker-compose" = {
       wantedBy = [ "multi-user.target" ];
       after = [ "network-online.target" ];
-      requires = [ "docker.service" "link-seafile-env.service" ];
+      requires = [
+        "docker.service"
+        "link-seafile-env.service"
+        "seafile-setup.service"
+      ];
       serviceConfig = {
         WorkingDirectory = seafilePath;
         ExecStart = "${pkgs.docker-compose}/bin/docker-compose up";
