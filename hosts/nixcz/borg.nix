@@ -76,7 +76,7 @@ with lib;
       description = "Notify on Borgmatic Failure";
       serviceConfig = {
         Type = "oneshot";
-        ExecStart = alertScript;
+        ExecStart = "echo alert"; #alertScript;
       };
     };
   };
