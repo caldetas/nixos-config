@@ -67,7 +67,7 @@ with lib;
       onFailure = [ "borgmatic-alert.service" ];
       serviceConfig = {
         Type = "oneshot";
-        ExecStart = borgRestoreScript;
+        ExecStart = "echo alert"; #borgRestoreScript;
       };
     };
 
