@@ -16,6 +16,10 @@ in
 
   config = mkIf config.seafile.enable {
 
+    systemd.tmpfiles.rules = [
+      "L+ /home/${vars.user}/git/seafile-docker-ce/.env - - - - /run/secrets/seafile/.env"
+    ];
+
     # Clone the repo if not already done (optional, or manage manually)
     systemd.services.seafile-setup = {
       description = "Initial clone of seafile-docker-ce repository";
@@ -68,6 +72,7 @@ in
           pkgs.writeShellScript "seafile-postsetup" ''
             set -e
             if [ ! -f "${seafilePath}/.setup" ]; then
+            ${pkgs.sleep}/bin/sleep
             ${pkgs.docker}/bin/docker exec seafile sed -i 's/bind = "127.0.0.1:8000"/bind = "0.0.0.0:8000"/' /opt/seafile/conf/gunicorn.conf.py
             echo "CSRF_TRUSTED_ORIGINS = ['https://seafile.${vars.domain}']" >> ${seafilePath}/data/seafile/conf/seahub_settings.py
             ${pkgs.docker}/bin/docker exec seafile /opt/seafile/seafile-server-latest/seahub.sh restart
