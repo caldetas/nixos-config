@@ -46,6 +46,8 @@ with lib;
           export BORG_REPO="$(cat ${config.sops.secrets."borg/repo".path})"
           export BORG_RSH="$(cat ${config.sops.secrets."borg/rsh".path})"
           exec ${pkgs.borgmatic}/bin/borgmatic --verbosity 1 --syslog-verbosity 1
+          exec ${pkgs.borgmatic}/bin/borgmatic init --verbosity 2
+          exec ${pkgs.borgmatic}/bin/borgmatic --verbosity 1 --syslog-verbosity 1
         '';
       };
     };
