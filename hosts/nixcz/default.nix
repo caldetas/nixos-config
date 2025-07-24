@@ -50,7 +50,7 @@
   # Please remove the hardcoded password from the configuration and set
   # the password using the " passwd " command after the first boot.
 
-  backup.true = true;
+  backup.enable = true;
   bitwarden.enable = true;
   mailcow.enable = true;
   seafile.enable = true;
