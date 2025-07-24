@@ -1,20 +1,21 @@
-source_directories:
-  - /home/caldetas/git/seafile-docker-ce/backup
-  - /home/caldetas/git/seafile-docker-ce/data/seafile/seafile-data
+location:
+  source_directories:
+    - /home/caldetas/git/seafile-docker-ce/backup
+    - /home/caldetas/git/seafile-docker-ce/data/seafile/seafile-data
+  repositories:
+    - path: /mnt/hetzner-box/backup/nixcz/borgmatic
+  ssh_command: "ssh -i /home/caldetas/.ssh/hetzner_box_ed25519 -o UserKnownHostsFile=/home/caldetas/.ssh/known_hosts -p 23"
 
-repositories:
-  - /mnt/hetzner-box/backup/nixcz/borgmatic # or user@host:/path/to/repo
-
-ssh_command: "ssh -i /home/caldetas/.ssh/hetzner_box_ed25519 -o UserKnownHostsFile=/home/caldetas/.ssh/known_hosts -p 23"
-
-encryption_passphrase: "${BORG_PASSPHRASE}"
-compression: zstd
+storage:
+  encryption_passphrase: "${BORG_PASSPHRASE}"
+  compression: zstd
 
 retention:
   keep_daily: 7
   keep_weekly: 4
   keep_monthly: 6
 
-checks:
-  - repository
-  - archives
+consistency:
+  checks:
+    - name: repository
+    - name: archives
