@@ -23,7 +23,7 @@ in
     systemd.services.seafile-setup = {
       description = "Initial clone of seafile-docker-ce repository";
       wantedBy = [ "multi-user.target" ];
-      before = [ "docker-compose@seafile.service" ];
+      before = [ "seafile-docker-compose.service" ];
       serviceConfig = {
         Type = "oneshot";
         User = vars.user;
@@ -64,6 +64,7 @@ in
         "seafile-setup.service"
       ];
       requires = [
+        "network-online.target"
         "docker.service"
         "link-seafile-env.service"
         "seafile-setup.service"
