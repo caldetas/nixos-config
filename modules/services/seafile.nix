@@ -41,6 +41,7 @@ in
     };
     systemd.services.link-seafile-env = {
       wantedBy = [ "multi-user.target" ];
+      requires = [ "docker.service" "seafile-setup.service" ];
       after = [ "sops-nix.service" ];
       serviceConfig = {
         Type = "oneshot";
@@ -53,7 +54,7 @@ in
     systemd.services."docker-compose@seafile" = {
       wantedBy = [ "multi-user.target" ];
       after = [ "network-online.target" ];
-      requires = [ "docker.service" ];
+      requires = [ "docker.service" "link-seafile-env.service" ];
       serviceConfig = {
         WorkingDirectory = seafilePath;
         ExecStart = "${pkgs.docker-compose}/bin/docker-compose up";
