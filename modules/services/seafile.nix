@@ -68,10 +68,10 @@ in
           pkgs.writeShellScript "seafile-postsetup" ''
             set -e
             if [ ! -f "${seafilePath}/.setup" ]; then
-            docker exec seafile sed -i 's/bind = "127.0.0.1:8000"/bind = "0.0.0.0:8000"/' /opt/seafile/conf/gunicorn.conf.py
+            ${pkgs.docker}/bin/docker exec seafile ${pkgs.gnused}/bin/sed -i 's/bind = "127.0.0.1:8000"/bind = "0.0.0.0:8000"/' /opt/seafile/conf/gunicorn.conf.py
             echo "CSRF_TRUSTED_ORIGINS = ['https://seafile.${vars.domain}']" >> ${seafilePath}/data/seafile/conf/seahub_settings.py
-            docker exec seafile /opt/seafile/seafile-server-latest/seahub.sh restart
-            touch ${seafilePath}/.setup
+            ${pkgs.docker}/bin/docker exec seafile /opt/seafile/seafile-server-latest/seahub.sh restart
+            ${pkgs.coreutils}/bin/touch ${seafilePath}/.setup
             fi
           '';
       };
