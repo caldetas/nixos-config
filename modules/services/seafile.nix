@@ -68,7 +68,7 @@ in
         "link-seafile-env.service"
         "seafile-setup.service"
       ];
-      ConditionPathExists = "/run/secrets/seafile/.env";
+      unitConfig.ConditionPathExists = "/run/secrets/seafile/.env";
       serviceConfig = {
         WorkingDirectory = seafilePath;
         ExecStart = "${pkgs.docker-compose}/bin/docker-compose up";
