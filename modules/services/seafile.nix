@@ -36,8 +36,6 @@ in
         '';
 
       };
-      Restart = "on-failure";
-      RestartSec = 5;
     };
 
     # SOPS secret for .env
@@ -79,8 +77,6 @@ in
         ExecStop = "${pkgs.docker-compose}/bin/docker-compose down";
         # Restart = "always";
         User = vars.user;
-        Restart = "on-failure";
-        RestartSec = 5;
       };
     };
 
@@ -105,8 +101,6 @@ in
                 echo "not executing seafile-postsetup.."
             fi
           '';
-        Restart = "on-failure";
-        RestartSec = 5;
       };
     };
 
