@@ -37,7 +37,7 @@ in
     # SOPS secret for .env
     sops.secrets."seafile/.env" = {
       group = "users";
-      owner = vars.user;
+      owner = "${vars.user}";
     };
     systemd.services.link-seafile-env = {
       wantedBy = [ "multi-user.target" ];
