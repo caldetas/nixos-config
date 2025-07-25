@@ -32,10 +32,10 @@ with lib;
       ''
 
          # Set up sops secret keys
-         if [ -f /home/${vars.user}/MEGAsync/encrypt/nixos/keys.txt ] && [ ! -f /home/${vars.user}/.config/sops/age/keys.txt ]; then
+         if [ -f /home/${vars.user}/seafile/encrypt/nixos/keys.txt ] && [ ! -f /home/${vars.user}/.config/sops/age/keys.txt ]; then
              echo 'Copying sops keys to user folder';
              mkdir -p /home/${vars.user}/.config/sops/age || true
-             cp /home/${vars.user}/MEGAsync/encrypt/nixos/keys.txt /home/${vars.user}/.config/sops/age/keys.txt || true
+             cp /home/${vars.user}/seafile/encrypt/nixos/keys.txt /home/${vars.user}/.config/sops/age/keys.txt || true
 
              # Check if sops encryption is working
              echo '
@@ -64,10 +64,10 @@ with lib;
          fi;
 
          # Set up automated scripts if not already set up. Abort if no script folder present.
-         if ! grep -q 'MEGAsync/work/programs'  /home/${vars.user}/.zshrc && [[ -d "/home/${vars.user}/MEGAsync/work/programs" ]] ;
+         if ! grep -q 'seafile/work/programs'  /home/${vars.user}/.zshrc && [[ -d "/home/${vars.user}/seafile/work/programs" ]] ;
          then
-            echo 'chmod +x ~/MEGAsync/work/programs/*' >> /home/caldetas/.zshrc
-            echo 'export PATH=$PATH:/home/caldetas/MEGAsync/work/programs' >> /home/caldetas/.zshrc
+            echo 'chmod +x ~/seafile/work/programs/*' >> /home/caldetas/.zshrc
+            echo 'export PATH=$PATH:/home/caldetas/seafile/work/programs' >> /home/caldetas/.zshrc
             echo "set up scripts in zshrc";
          else
             echo "not settings up scripts in zshrc, already present";
