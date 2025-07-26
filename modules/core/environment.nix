@@ -9,7 +9,6 @@
   };
 
   environment.systemPackages = with unstable; [
-    borgbackup
     borgmatic
     btop
     ctop
@@ -55,5 +54,6 @@
     zip
     sops
     python3
+    tmux
   ];
 }
