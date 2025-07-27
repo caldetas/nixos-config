@@ -4,6 +4,8 @@ let
   inherit (lib) mkOption mkIf types;
   seafilePath = "/home/${vars.user}/git/seafile-docker-ce";
 in
+#external nas storage is a two step installation process. adapt docker-compose.yml
+  #- /mnt/nas/seafile-data:/shared/seafile/seafile-data #folder needs to be non existent for setup new db.. uncomment after first startup!
 {
   options.seafile = {
     enable = mkOption {
