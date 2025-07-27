@@ -198,7 +198,7 @@ with lib;
         };
         "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5" = {
           binding = "<super>r";
-          command = "sh -c 'flatpak run com.rtosta.zapzap & telegram-desktop &'";
+          command = "sh -c 'flatpak run com.rtosta.zapzap & Telegram &'";
           name = "open-messaging-apps";
         };
 
