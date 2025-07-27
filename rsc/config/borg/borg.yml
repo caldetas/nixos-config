@@ -4,6 +4,7 @@ location:
     - /home/caldetas/git/seafile-docker-ce/data/seafile/seafile-data
     - /home/caldetas/git/seafile-docker-ce/data/seafile/seahub-data
     - /home/caldetas/git/seafile-docker-ce/data/seafile/conf
+    - /mnt/nas/seafile-data
   repositories:
     - path: /mnt/hetzner-box/backup/nixcz/borgmatic
   ssh_command: "ssh -i /home/caldetas/.ssh/hetzner_box_ed25519 -o UserKnownHostsFile=/home/caldetas/.ssh/known_hosts -p 23"
