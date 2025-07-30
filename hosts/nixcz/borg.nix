@@ -19,8 +19,8 @@ with lib;
     };
   };
   config = mkIf (config.backup.enable) {
-    environment.etc."borgmatic/config-seafile.yaml".text = builtins.readFile ../../rsc/config/borg/borg-seafile.yml;
-    environment.etc."borgmatic/config-immich.yaml".text = builtins.readFile ../../rsc/config/borg/borg-immich.yml;
+    environment.etc."borgmatic/config-seafile.yml".text = builtins.readFile ../../rsc/config/borg/borg-seafile.yml;
+    environment.etc."borgmatic/config-immich.yml".text = builtins.readFile ../../rsc/config/borg/borg-immich.yml;
 
     # Prepare environment file before running borgmatic
     systemd.services.borgmatic-prepare-env = {
