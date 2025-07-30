@@ -1,4 +1,4 @@
-{ config, lib, pkgs, unstable, vars, ... }:
+{ config, lib, pkgs, stable, unstable, vars, ... }:
 
 {
   environment.variables = {
@@ -37,7 +37,6 @@
     wget
     xdg-utils
     alsa-utils
-    audacity
     feh
     glmark2
     immich-go
@@ -55,5 +54,5 @@
     sops
     python3
     tmux
-  ];
+  ] ++ (with stable; [ audacity ]);
 }

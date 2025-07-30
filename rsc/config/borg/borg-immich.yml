@@ -1,0 +1,20 @@
+location:
+  source_directories:
+    - /mnt/hetzner-box/immich-library
+  repositories:
+    - path: /mnt/nas/backup/immich
+  ssh_command: "ssh -i /home/caldetas/.ssh/hetzner_box_ed25519 -o UserKnownHostsFile=/home/caldetas/.ssh/known_hosts -p 23"
+
+storage:
+  encryption_passphrase: "${BORG_PASSPHRASE}"
+  compression: zstd
+
+retention:
+  keep_daily: 7
+  keep_weekly: 4
+  keep_monthly: 6
+
+consistency:
+  checks:
+    - name: repository
+    - name: archives

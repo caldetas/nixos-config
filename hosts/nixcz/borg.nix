@@ -19,7 +19,8 @@ with lib;
     };
   };
   config = mkIf (config.backup.enable) {
-    environment.etc."borgmatic/config.yaml".text = builtins.readFile ../../rsc/config/borg/borg.yml;
+    environment.etc."borgmatic/config-seafile.yaml".text = builtins.readFile ../../rsc/config/borg/borg-seafile.yml;
+    environment.etc."borgmatic/config-immich.yaml".text = builtins.readFile ../../rsc/config/borg/borg-immich.yml;
 
     # Prepare environment file before running borgmatic
     systemd.services.borgmatic-prepare-env = {
@@ -49,7 +50,10 @@ with lib;
 
           ./backup.sh
           ${pkgs.borgmatic}/bin/borgmatic init --encryption=repokey-blake2 /mnt/hetzner-box/backup/nixcz/borgmatic
-          ${pkgs.borgmatic}/bin/borgmatic --verbosity 1 --syslog-verbosity 1
+          ${pkgs.borgmatic}/bin/borgmatic -c /etc/borgmatic/config-seafile.yml --verbosity 1 --syslog-verbosity 1
+
+          ${pkgs.borgmatic}/bin/borgmatic init --encryption=repokey-blake2 /mnt/nas/backup/immich
+          ${pkgs.borgmatic}/bin/borgmatic -c /etc/borgmatic/config-immich.yml --verbosity 1 --syslog-verbosity 1
         '';
         WorkingDirectory = "/home/${vars.user}/git/seafile-docker-ce";
       };
