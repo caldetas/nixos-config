@@ -10,7 +10,7 @@ let
     if config.networking.hostName != "nixcz"
     then "./library"
     else "/mnt/hetzner-box/immich-library";
-  VERSION = "v1.137.3"; # "v1.135.3"; #"release";
+  VERSION = "v1.138.1"; # "v1.135.3"; #"release";
   dbPassword =
     if config ? sops.secrets."server/db-password".path
     then "cat ${config.sops.secrets."server/db-password".path}"
