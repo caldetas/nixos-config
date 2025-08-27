@@ -46,7 +46,7 @@ with lib;
         modules = [ pkgs.xf86_input_wacom ];
         wacom.enable = true;
 
-        desktopManager.plasma5 = {
+        desktopManager.plasma6 = {
           enable = true;
         };
       };
@@ -57,7 +57,7 @@ with lib;
         bismuth # Dynamic Tiling
         packagekit-qt # Package Updater
       ];
-      plasma5.excludePackages = with pkgs.libsForQt5; [
+      plasma6.excludePackages = with pkgs.libsForQt5; [
         elisa
         khelpcenter
         konsole
