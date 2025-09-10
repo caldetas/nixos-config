@@ -32,6 +32,7 @@
     ranger
     screen
     sshfs
+    texliveFull #for cv, large!
     tldr
     usbutils
     wget
@@ -56,6 +57,6 @@
     tmux
   ] ++ (with stable; [ audacity ]);
   nixpkgs.config.permittedInsecurePackages = [
-    "qtwebengine-5.15.19"
+    "qtwebengine-5.15.19" # stremio
   ];
 }

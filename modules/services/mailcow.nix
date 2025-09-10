@@ -21,6 +21,31 @@ in
 
   config = mkIf (config.mailcow.enable) {
 
+    #make shure folder exists
+    systemd.tmpfiles.rules = [
+      "d /home/${vars.user}/git 0755 ${vars.user} users -"
+      "d /home/${vars.user}/git/mailcow-dockerized 0755 ${vars.user} users -"
+    ];
+
+    # Clone the repo if not already done (optional, or manage manually)
+    systemd.services.mailcow-setup = {
+      description = "Initial clone of mailcow-dockerized repository";
+      wantedBy = [ "multi-user.target" ];
+      before = [ "mailcow.service" ];
+      serviceConfig = {
+        Type = "oneshot";
+        User = vars.user;
+        WorkingDirectory = "/home/${vars.user}/git";
+        ExecStart = pkgs.writeShellScript "mailcow-clone-once" ''
+          set -e
+          if [ ! -d "/home/${vars.user}/git/mailcow-dockerized/.git" ]; then
+            ${pkgs.git}/bin/git clone https://github.com/mailcow/mailcow-dockerized.git /home/${vars.user}/git/mailcow-dockerized
+          fi
+        '';
+
+      };
+    };
+
     systemd.services.mailcow = {
       description = "Mailcow Docker Compose";
       after = [ "network-online.target" "docker.service" ];
@@ -93,25 +118,4 @@ in
       };
     };
   };
-
-  #new migration scripts in rsc/mailcow
-
-  ##  OLD MIGRATION
-  ## On old server
-  #docker compose down
-  #sudo tar czf mailcow-volumes.tar.gz -C /var/lib/docker/volumes $(docker volume ls -q | grep mailcowdockerized_)
-  #sudo tar czf mailcow-config.tar.gz mailcow-dockerized/
-  #
-  ## Transfer files
-  #scp *.tar.gz newserver:
-  #
-  ## On new server
-  #tar xzf mailcow-config.tar.gz
-  #sudo tar xzf mailcow-volumes.tar.gz -C /var/lib/docker/volumes
-  #cd mailcow-dockerized && docker-compose up -d
-
-  ### Installation
-  #  Before enabling mailcow clone the repo to /home/caldetas/git/
-  #  git clone https://github.com/mailcow/mailcow-dockerized /home/caldetas/git/mailcow-dockerized
-
 }
