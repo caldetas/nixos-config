@@ -38,7 +38,7 @@ in
         WorkingDirectory = "/home/${vars.user}/git";
         ExecStart = pkgs.writeShellScript "mailcow-clone-once" ''
           set -e
-          if [ ! -d "/home/${vars.user}/git/mailcow-dockerized/.git" ]; then
+          if [ ! -d "/home/${vars.user}/git/mailcow-dockerized" ]; then
             ${pkgs.git}/bin/git clone https://github.com/mailcow/mailcow-dockerized.git /home/${vars.user}/git/mailcow-dockerized
           fi
         '';
