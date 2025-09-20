@@ -10,6 +10,7 @@ with lib;
   sops.secrets.home-path = { };
   sops.secrets."surfshark/user" = { };
   sops.secrets."surfshark/password" = { };
+  sops.secrets."surfshark/openvpn" = { };
   sops.secrets."server/ips" = { };
   sops.secrets."server/db-password" = { };
   sops.secrets."vaultwarden/env" = { };
