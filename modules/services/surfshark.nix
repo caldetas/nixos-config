@@ -3,18 +3,26 @@ with lib;
 with host;
 
 let
-  bundle = pkgs.fetchzip {
-    url = "https://github.com/caldetas/surfshark/archive/refs/heads/main.zip";
-    sha256 = "sha256-MCtHbCRA17tvKv7qMf3zNcoQih6Oxxih21QZUNQ/Z4Q=";
+  bundle = pkgs.fetchFromGitHub {
+    owner = "caldetas";
+    repo = "surfshark";
+    rev = "dab2c471785a1c9181cd38436bebf53c249c7384";
+    sha256 = "sha256-GHf3WXJtZ2EmRKUu85JN7EM2pyHiW+tVuKGfc6jWwd4=";
     stripRoot = true; # GitHub archives have a single top dir
   };
   configFiles = pkgs.stdenv.mkDerivation {
     name = "surfshark-config";
     phases = [ "installPhase" ];
-    buildInputs = [ pkgs.findutils pkgs.gnused pkgs.coreutils ];
+    buildInputs = [
+      pkgs.findutils
+      pkgs.gnused
+      pkgs.coreutils
+      pkgs.utillinux
+      pkgs.rename
+    ];
     installPhase = ''
           set -euo pipefail
-          cfgdir=${bundle}/configurations
+          cfgdir=${bundle}
           mkdir -p "$out"
 
           # copy ONLY UDP profiles and write them as $out/<short>.ovpn (e.g. ch-zur.ovpn)
@@ -60,6 +68,12 @@ let
           grep -qE '^ping-restart(\s|$)' "$f" && sed -i -E 's/^ping-restart(\s+).*/ping-restart 300/' "$f" || echo 'ping-restart 300' >> "$f"
       done < <(find "$out" -type f -name '*.ovpn' -print0)
       # --- end hardening block ---
+      # Final sanity: require ch-zur.ovpn to exist if we reference it
+      if [ ! -f "$out/ch-zur.ovpn" ]; then
+          echo "ERROR: expected $out/ch-zur.ovpn missing. Contents of $out:" >&2
+          ls -la "$out" >&2
+          exit 1
+       fi
     '';
   };
 
