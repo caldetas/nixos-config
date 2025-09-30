@@ -18,7 +18,9 @@ let
     HOSTS=$(cat ${config.sops.secrets."server/ips".path})
     echo "vpn-bypass: Loaded hosts from secret: $HOSTS"
 
-    # Initialize an empty array to store resolved IPs
+    # VPN DNS IPs to exclude from bypass
+    VPN_DNS_IPS="162.252.172.57 149.154.159.92"
+
     IPS=()
 
     for HOST in $HOSTS; do
@@ -57,10 +59,18 @@ let
      exit 1
     fi
 
-    for IP in "''${IPS[@]}"; do
-     echo "vpn-bypass: Ensuring route to $IP via $GATEWAY on $IFACE"
-     ip route replace "$IP" via "$GATEWAY" dev "$IFACE"
+    # Add DNS bypass routes first
+    for dnsip in $VPN_DNS_IPS; do
+      echo "vpn-bypass: Adding DNS bypass for $dnsip"
+      ip route replace "$dnsip" via "$GATEWAY" dev "$IFACE"
     done
+
+    # Add SSH server bypass routes
+    for IP in "''${IPS[@]}"; do
+      echo "vpn-bypass: Ensuring route to $IP via $GATEWAY on $IFACE"
+      ip route replace "$IP" via "$GATEWAY" dev "$IFACE"
+    done
+
   '';
 
 in
