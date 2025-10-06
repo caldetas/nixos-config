@@ -88,10 +88,24 @@
   #  directx-headers # elden ring
   #  directx-shader-compiler #elden ring
   #  ];
-  networking.interfaces.wlp0s20f3 = {
-    useDHCP = true;
-    mtu = 1380;
+  networking = with host; {
+    useDHCP = false; # Deprecated
+    #    hostName = hostName;
+    interfaces = {
+      #      enp0s31f6 = {
+      #        useDHCP = true;
+      #      };
+      wlp0s20f3 = {
+        useDHCP = true;
+        mtu = 1380;
+      };
+    };
+    firewall = {
+      enable = true;
+      trustedInterfaces = [ "p2p-wl+" ]; # trust Wi‑Fi Direct interface created
+      allowedUDPPorts = [ 80 5672 15672 500 4500 3389 5900 7236 7250 ];
+      allowedTCPPorts = [ 500 5672 15672 4500 3389 5333 5900 7236 ];
+    };
   };
-
 }
 

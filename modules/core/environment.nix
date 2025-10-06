@@ -55,6 +55,20 @@
     sops
     python3
     tmux
+
+    #cast
+    gnome-network-displays
+    gst_all_1.gstreamer
+    # Common plugins like "filesrc" to combine within e.g. gst-launch
+    gst_all_1.gst-plugins-base
+    gst_all_1.gst-plugins-good
+    gst_all_1.gst-plugins-bad
+    gst_all_1.gst-plugins-ugly
+    gst_all_1.gst-libav
+    gst_all_1.gst-vaapi
+    #          intel-media-driver  # or vaapiIntel for older Intel GPUs
+    #                               libva-utils
+    #                               intel-gpu-tools
   ] ++ (with stable; [ audacity ]);
   nixpkgs.config.permittedInsecurePackages = [
     "qtwebengine-5.15.19" # stremio

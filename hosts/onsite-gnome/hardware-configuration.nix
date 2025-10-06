@@ -61,9 +61,10 @@
     #    defaultGateway = "192.168.0.1";
     #    nameservers = [ "192.168.0.4" ];
     firewall = {
-      enable = false;
-      allowedUDPPorts = [ 80 5672 15672 500 4500 3389 5900 ];
-      allowedTCPPorts = [ 500 5672 15672 4500 3389 5900 ];
+      enable = true;
+      trustedInterfaces = [ "p2p-wl+" ]; # trust Wi‑Fi Direct interface created
+      allowedUDPPorts = [ 80 5672 15672 500 4500 3389 5900 7236 7250 ];
+      allowedTCPPorts = [ 500 5672 15672 4500 3389 5333 5900 7236 ];
     };
   };
   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";

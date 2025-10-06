@@ -14,7 +14,6 @@
     avahi = {
       enable = true;
       nssmdns4 = true;
-      openFirewall = false;
     };
     pipewire = {
       enable = true;
