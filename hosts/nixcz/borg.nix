@@ -49,6 +49,7 @@ with lib;
           export PATH=${lib.makeBinPath [ pkgs.docker pkgs.bash pkgs.borgmatic pkgs.borgbackup pkgs.coreutils ]}:$PATH
 
           ./backup.sh
+          mkdir -p /mnt/backup/nixcz/borgmatic
           ${pkgs.borgmatic}/bin/borgmatic init --encryption=repokey-blake2 /mnt/backup/nixcz/borgmatic
           ${pkgs.borgmatic}/bin/borgmatic --verbosity 1 --syslog-verbosity 1
         '';
