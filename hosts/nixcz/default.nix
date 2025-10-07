@@ -85,7 +85,6 @@
       wants = [ "network-online.target" ];
     }
   ];
-}
 
   #  systemd.automounts = [
   #    {
@@ -99,9 +98,9 @@
   #  ];
 
   systemd.tmpfiles.rules = [
-"d /mnt/hetzner-box 0755 root root"
-"d /mnt/backup 0755 root root"
-];
+    "d /mnt/hetzner-box 0755 root root"
+    "d /mnt/backup 0755 root root"
+  ];
 }
 
 
