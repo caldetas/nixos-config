@@ -68,6 +68,8 @@
   '';
 
   fileSystems."/mnt/hetzner-box" = {
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
     device = "sshfs#u466367@u466367.your-storagebox.de:/";
     fsType = "fuse.sshfs";
     options = [
@@ -83,6 +85,8 @@
     neededForBoot = false;
   };
   fileSystems."/mnt/backup" = {
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
     device = "sshfs#u497568@u497568.your-storagebox.de:/";
     fsType = "fuse.sshfs";
     options = [
