@@ -83,7 +83,7 @@
     neededForBoot = false;
   };
   fileSystems."/mnt/backup" = {
-    device = "sshfs#u466367@u466367.your-storagebox.de:/";
+    device = "sshfs#u497568@u497568.your-storagebox.de:/";
     fsType = "fuse.sshfs";
     options = [
       "_netdev"
@@ -102,6 +102,8 @@
     {
       where = "/mnt/hetzner-box";
       wantedBy = [ "multi-user.target" ];
+    }
+    {
       where = "/mnt/backup";
       wantedBy = [ "multi-user.target" ];
     }
