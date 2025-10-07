@@ -68,13 +68,11 @@
   '';
 
   fileSystems."/mnt/hetzner-box" = {
-    after = [ "network-online.target" ];
-    wants = [ "network-online.target" ];
     device = "sshfs#u466367@u466367.your-storagebox.de:/";
     fsType = "fuse.sshfs";
     options = [
       "_netdev"
-      "noauto"
+      #      "noauto"
       "allow_other"
       "IdentityFile=/root/.ssh/hetzner_box_ed25519"
       "reconnect"
@@ -85,8 +83,6 @@
     neededForBoot = false;
   };
   fileSystems."/mnt/backup" = {
-    after = [ "network-online.target" ];
-    wants = [ "network-online.target" ];
     device = "sshfs#u497568@u497568.your-storagebox.de:/";
     fsType = "fuse.sshfs";
     options = [
