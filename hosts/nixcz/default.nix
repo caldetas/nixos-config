@@ -63,44 +63,28 @@
   #mount hetzner drive
   boot.supportedFilesystems = [ "sshfs" ];
 
-  services.udev.extraRules = ''
-    ACTION=="add", SUBSYSTEM=="fuse", MODE="0666"
-  '';
+  #  services.udev.extraRules = ''
+  #    ACTION=="add", SUBSYSTEM=="fuse", MODE="0666"
+  #  '';
 
-  systemd.mounts = [
-    {
-      what = "sshfs#u466367@u466367.your-storagebox.de:/";
-      where = "/mnt/hetzner-box";
-      type = "fuse.sshfs";
-      options = "_netdev,allow_other,IdentityFile=/root/.ssh/hetzner_box_ed25519,reconnect,ServerAliveInterval=15,ServerAliveCountMax=3,StrictHostKeyChecking=accept-new,ssh_command=ssh -oBatchMode=yes -s sftp";
-      after = [ "network-online.target" ];
-      wants = [ "network-online.target" ];
-    }
-    {
-      what = "sshfs#u497568@u497568.your-storagebox.de:/";
-      where = "/mnt/backup";
-      type = "fuse.sshfs";
-      options = "_netdev,allow_other,IdentityFile=/root/.ssh/hetzner_box_ed25519,reconnect,ServerAliveInterval=15,ServerAliveCountMax=3,StrictHostKeyChecking=accept-new,ssh_command=ssh -p23 -oBatchMode=yes -s sftp";
-      after = [ "network-online.target" ];
-      wants = [ "network-online.target" ];
-    }
-  ];
+  fileSystems."/mnt/hetzner-box" = {
+    device = "sshfs#u466367@u466367.your-storagebox.de:/";
+    fsType = "fuse.sshfs";
+    options = [
+      "_netdev"
+      "idmap=user"
+      "allow_other"
+      "x-systemd.automount"
+      "identityfile=/root/.ssh/hetzner_box_ed25519"
+      "user"
+    ];
+    neededForBoot = false;
+  };
 
-  #  systemd.automounts = [
-  #    {
-  #      where = "/mnt/hetzner-box";
-  #      wantedBy = [ "multi-user.target" ];
-  #    }
-  #    {
-  #      where = "/mnt/backup";
-  #      wantedBy = [ "multi-user.target" ];
-  #    }
+  #  systemd.tmpfiles.rules = [
+  #    "d /mnt/hetzner-box 0755 root root"
+  #    "d /mnt/backup 0755 root root"
   #  ];
-
-  systemd.tmpfiles.rules = [
-    "d /mnt/hetzner-box 0755 root root"
-    "d /mnt/backup 0755 root root"
-  ];
 }
 
 
