@@ -48,7 +48,8 @@ with lib;
           export BORG_RSH="$(cat ${config.sops.secrets."borg/rsh".path})"
           export PATH=${lib.makeBinPath [ pkgs.docker pkgs.bash pkgs.borgmatic pkgs.borgbackup pkgs.coreutils ]}:$PATH
 
-          ./backup.sh
+          ./backup.sh #mailcow server backup
+
           mkdir -p /mnt/backup/nixcz/borgmatic
           ${pkgs.borgmatic}/bin/borgmatic init --encryption=repokey-blake2 /mnt/backup/nixcz/borgmatic
           ${pkgs.borgmatic}/bin/borgmatic --verbosity 1 --syslog-verbosity 1
