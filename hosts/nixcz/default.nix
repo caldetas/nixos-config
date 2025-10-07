@@ -80,6 +80,19 @@
     ];
     neededForBoot = false;
   };
+  fileSystems."/mnt/backup" = {
+    device = "sshfs#u497568@uu497568.your-storagebox.de:/";
+    fsType = "fuse.sshfs";
+    options = [
+      "_netdev"
+      "idmap=user"
+      "allow_other"
+      "x-systemd.automount"
+      "identityfile=/root/.ssh/hetzner_box_ed25519"
+      "user"
+    ];
+    neededForBoot = false;
+  };
 
   #  systemd.tmpfiles.rules = [
   #    "d /mnt/hetzner-box 0755 root root"
