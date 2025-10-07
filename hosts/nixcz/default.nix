@@ -72,15 +72,7 @@
       what = "sshfs#u466367@u466367.your-storagebox.de:/";
       where = "/mnt/hetzner-box";
       type = "fuse.sshfs";
-      options = [
-        "_netdev"
-        "allow_other"
-        "IdentityFile=/root/.ssh/hetzner_box_ed25519"
-        "reconnect"
-        "ServerAliveInterval=15"
-        "ServerAliveCountMax=3"
-        "StrictHostKeyChecking=no"
-      ];
+      options = "_netdev,allow_other,IdentityFile=/root/.ssh/hetzner_box_ed25519,reconnect,ServerAliveInterval=15,ServerAliveCountMax=3,StrictHostKeyChecking=no";
       after = [ "network-online.target" ];
       wants = [ "network-online.target" ];
     }
@@ -88,15 +80,7 @@
       what = "sshfs#u497568@u497568.your-storagebox.de:/";
       where = "/mnt/backup";
       type = "fuse.sshfs";
-      options = [
-        "_netdev"
-        "allow_other"
-        "IdentityFile=/root/.ssh/hetzner_box_ed25519"
-        "reconnect"
-        "ServerAliveInterval=15"
-        "ServerAliveCountMax=3"
-        "StrictHostKeyChecking=no"
-      ];
+      options = "_netdev,allow_other,IdentityFile=/root/.ssh/hetzner_box_ed25519,reconnect,ServerAliveInterval=15,ServerAliveCountMax=3,StrictHostKeyChecking=no";
       after = [ "network-online.target" ];
       wants = [ "network-online.target" ];
     }
