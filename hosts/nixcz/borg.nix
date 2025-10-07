@@ -4,6 +4,7 @@ let
   prepareEnvScript = pkgs.writeShellScript "prepare-borgmatic-env" ''
     mkdir -p /root/.ssh
     ${pkgs.openssh}/bin/ssh-keyscan -p 23 u466367.your-storagebox.de >> /root/.ssh/known_hosts
+    ${pkgs.openssh}/bin/ssh-keyscan -p 23 u497568.your-storagebox.de >> /root/.ssh/known_hosts
     chmod 600 /root/.ssh/known_hosts
   '';
 
