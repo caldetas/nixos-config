@@ -5,13 +5,13 @@ location:
     - /home/caldetas/git/seafile-docker-ce/data/seafile/seahub-data
     - /home/caldetas/git/seafile-docker-ce/data/seafile/conf
     - /mnt/nas/seafile-data
-    - /mnt/hetzner-box/immich-library/backups
-    - /mnt/hetzner-box/immich-library/upload
-    - /mnt/hetzner-box/immich-library/profile
-    - /mnt/hetzner-box/immich-library/library
-    - /mnt/hetzner-box/backup/nixcz/mailcow
+#    - /mnt/hetzner-box/immich-library/backups
+#    - /mnt/hetzner-box/immich-library/upload
+#    - /mnt/hetzner-box/immich-library/profile
+#    - /mnt/hetzner-box/immich-library/library
+#    - /mnt/hetzner-box/backup/nixcz/mailcow
   repositories:
-    - path: /mnt/hetzner-box/backup/nixcz/borgmatic
+    - path: /mnt/backup/nixcz/borgmatic
   ssh_command: "ssh -i /home/caldetas/.ssh/hetzner_box_ed25519 -o UserKnownHostsFile=/home/caldetas/.ssh/known_hosts -p 23"
 
 storage:
