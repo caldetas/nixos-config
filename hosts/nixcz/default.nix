@@ -63,41 +63,44 @@
   #mount hetzner drive
   boot.supportedFilesystems = [ "sshfs" ];
 
-  #  services.udev.extraRules = ''
-  #    ACTION=="add", SUBSYSTEM=="fuse", MODE="0666"
-  #  '';
-
-  fileSystems."/mnt/hetzner-box" = {
-    device = "sshfs#u466367@u466367.your-storagebox.de:/";
-    fsType = "fuse.sshfs";
-    options = [
-      "_netdev"
-      "idmap=user"
-      "allow_other"
-      "x-systemd.automount"
-      "identityfile=/root/.ssh/hetzner_box_ed25519"
-      "user"
-    ];
-    neededForBoot = false;
+  systemd.services.mount-hetzner-box = {
+    description = "Mount Hetzner Storage Box via SSHFS";
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = lib.mkForce (pkgs.writeShellScript "mount-hetzner-box" ''
+        ${pkgs.coreutils}/bin/mkdir -p /mnt/hetzner-box
+        ${pkgs.sshfs}/bin/sshfs \
+          -o IdentityFile=/root/.ssh/hetzner_box_ed25519 \
+          -o reconnect \
+          -o allow_other \
+          -o StrictHostKeyChecking=no \
+          u466367@u466367.your-storagebox.de:/ /mnt/hetzner-box
+      '');
+    };
   };
-  fileSystems."/mnt/backup" = {
-    device = "sshfs#u497568@uu497568.your-storagebox.de:/";
-    fsType = "fuse.sshfs";
-    options = [
-      "_netdev"
-      "idmap=user"
-      "allow_other"
-      "x-systemd.automount"
-      "identityfile=/root/.ssh/hetzner_box_ed25519"
-      "user"
-    ];
-    neededForBoot = false;
+  systemd.services.mount-backup = {
+    description = "Mount Hetzner Storage Box via SSHFS";
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = lib.mkForce (pkgs.writeShellScript "mount-backup" ''
+        ${pkgs.coreutils}/bin/mkdir -p /mnt/backup
+        ${pkgs.sshfs}/bin/sshfs \
+          -o IdentityFile=/root/.ssh/hetzner_box_ed25519 \
+          -o reconnect \
+          -o allow_other \
+          -o StrictHostKeyChecking=no \
+          u497568@u497568.your-storagebox.de:/ /mnt/backup
+      '');
+    };
   };
-
-  #  systemd.tmpfiles.rules = [
-  #    "d /mnt/hetzner-box 0755 root root"
-  #    "d /mnt/backup 0755 root root"
-  #  ];
 }
 
 

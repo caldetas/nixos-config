@@ -78,7 +78,7 @@ with lib;
 
       serviceConfig = {
         ExecStart = "${pkgs.docker}/bin/docker compose up -d";
-        ExecStop = "${pkgs.docker}/bin/docker compose -f /etc/immich/docker-compose.yml down";
+        ExecStop = "${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml down";
         environmentFile = "/var/lib/immich/.env";
         WorkingDirectory = "/var/lib/immich";
         RemainAfterExit = true;
