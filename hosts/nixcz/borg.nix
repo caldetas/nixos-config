@@ -43,21 +43,21 @@ with lib;
       serviceConfig = {
         Type = "oneshot";
         ExecStart = pkgs.writeShellScript "borgmatic-wrapper" ''
-          #          for terminal use
-          #          export BORG_PASSPHRASE="$(sudo more /run/secrets/borg/password)"
-          #          export BORG_REPO="$(sudo more /run/secrets/borg/repo)"
-          #          export BORG_RSH="ssh -i /home/caldetas/.ssh/hetzner_box_ed25519 -p23 -oBatchMode=yes" #ssh key has to be user readable
-          #          borgmatic borg key export --repository "ssh://$BORG_REPO"
-                    export BORG_PASSPHRASE="$(cat ${config.sops.secrets."borg/password".path})"
-                    export BORG_REPO="$(cat ${config.sops.secrets."borg/repo".path})"
-                    export BORG_RSH="$(cat ${config.sops.secrets."borg/rsh".path})"
-                    export PATH=${lib.makeBinPath [ pkgs.docker pkgs.bash pkgs.borgmatic pkgs.borgbackup pkgs.coreutils ]}:$PATH
+                    #          for terminal use
+          #                    export BORG_PASSPHRASE="$(sudo more /run/secrets/borg/password)"
+          #                    export BORG_REPO="$(sudo more /run/secrets/borg/repo)"
+          #                    export BORG_RSH="ssh -i /home/caldetas/.ssh/hetzner_box_ed25519 -p23 -oBatchMode=yes" #ssh key has to be user readable
+          #                    borgmatic borg key export --repository "ssh://$BORG_REPO"
+                              export BORG_PASSPHRASE="$(cat ${config.sops.secrets."borg/password".path})"
+                              export BORG_REPO="$(cat ${config.sops.secrets."borg/repo".path})"
+                              export BORG_RSH="$(cat ${config.sops.secrets."borg/rsh".path})"
+                              export PATH=${lib.makeBinPath [ pkgs.docker pkgs.bash pkgs.borgmatic pkgs.borgbackup pkgs.coreutils ]}:$PATH
 
-                    ./backup.sh #mailcow server backup
+                              ./backup.sh #mailcow server backup
 
-                    mkdir -p /mnt/backup/nixcz/borgmatic
-                    ${pkgs.borgmatic}/bin/borgmatic init --encryption=repokey-blake2 $BORG_REPO
-                    ${pkgs.borgmatic}/bin/borgmatic --verbosity 1 --syslog-verbosity 1
+                              mkdir -p /mnt/backup/nixcz/borgmatic
+                              ${pkgs.borgmatic}/bin/borgmatic init --encryption=repokey-blake2 $BORG_REPO
+                              ${pkgs.borgmatic}/bin/borgmatic --verbosity 1 --syslog-verbosity 1
         '';
         WorkingDirectory = "/home/${vars.user}/git/seafile-docker-ce";
       };
