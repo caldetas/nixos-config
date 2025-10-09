@@ -1,5 +1,5 @@
 repositories:
-  - /mnt/backup/nixcz/borgmatic
+  - !file /run/secrets/borg/repo
 source_directories:
   - /home/caldetas/git/seafile-docker-ce/backup
   - /home/caldetas/git/seafile-docker-ce/data/seafile/seafile-data
