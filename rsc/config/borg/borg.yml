@@ -12,8 +12,8 @@ source_directories:
   - /mnt/hetzner-box/immich-library/library
   - /mnt/hetzner-box/backup/nixcz/mailcow
 
-ssh_command: !file /run/secrets/borg/rsh
-password: !file /run/secrets/borg/password
+ssh_command: "{credential file /run/secrets/borg/rsh}"
+encryption_passphrase: "{credential file /run/secrets/borg/password}"
 compression: zstd
 
 retention:
