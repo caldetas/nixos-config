@@ -1,5 +1,5 @@
-repository:
-  - path: {BORG_REPO}
+repositories:
+  - path: "{env:BORG_REPO}"
 source_directories:
 #  - /home/caldetas/git/seafile-docker-ce/backup
 #  - /home/caldetas/git/seafile-docker-ce/data/seafile/seafile-data
@@ -13,7 +13,7 @@ source_directories:
   - /mnt/hetzner-box/backup/nixcz/mailcow
 
 compression: zstd
-encryption_passphrase: {BORG_PASSPHRASE}
+encryption_passphrase: "{env:BORG_PASSPHRASE}"
 
 keep_daily: 7
 keep_weekly: 4
