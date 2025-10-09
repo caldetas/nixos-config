@@ -2,11 +2,11 @@ repositories:
   - path: "ssh://${BORG_REPO}"
 
 source_directories:
-#  - /home/caldetas/git/seafile-docker-ce/backup
-#  - /home/caldetas/git/seafile-docker-ce/data/seafile/seafile-data
-#  - /home/caldetas/git/seafile-docker-ce/data/seafile/seahub-data
-#  - /home/caldetas/git/seafile-docker-ce/data/seafile/conf
-#  - /mnt/nas/seafile-data
+  - /home/caldetas/git/seafile-docker-ce/backup
+  - /home/caldetas/git/seafile-docker-ce/data/seafile/seafile-data
+  - /home/caldetas/git/seafile-docker-ce/data/seafile/seahub-data
+  - /home/caldetas/git/seafile-docker-ce/data/seafile/conf
+  - /mnt/nas/seafile-data
 #  - /mnt/hetzner-box/immich-library/backups
 #  - /mnt/hetzner-box/immich-library/upload
 #  - /mnt/hetzner-box/immich-library/profile
