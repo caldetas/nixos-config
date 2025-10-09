@@ -51,7 +51,7 @@ with lib;
           ./backup.sh #mailcow server backup
 
           mkdir -p /mnt/backup/nixcz/borgmatic
-          ${pkgs.borgmatic}/bin/borgmatic init --encryption=repokey-blake2 /mnt/backup/nixcz/borgmatic
+          ${pkgs.borgmatic}/bin/borgmatic init --encryption=repokey-blake2 u497568@u497568.your-storagebox.de:/./nixcz/borgmatic
           ${pkgs.borgmatic}/bin/borgmatic --verbosity 1 --syslog-verbosity 1
         '';
         WorkingDirectory = "/home/${vars.user}/git/seafile-docker-ce";
