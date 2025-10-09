@@ -1,5 +1,6 @@
 repositories:
-  - path: "{env:BORG_REPO}"
+  - path: "ssh://{env:BORG_REPO}"
+
 source_directories:
 #  - /home/caldetas/git/seafile-docker-ce/backup
 #  - /home/caldetas/git/seafile-docker-ce/data/seafile/seafile-data
@@ -14,6 +15,7 @@ source_directories:
 
 compression: zstd
 encryption_passphrase: "{env:BORG_PASSPHRASE}"
+ssh_command: "{env:BORG_RSH}"
 
 keep_daily: 7
 keep_weekly: 4
