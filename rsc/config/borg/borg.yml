@@ -1,5 +1,6 @@
 repositories:
-  - "{credential file /run/secrets/borg/repo}"
+  - path: /mnt/backup/nixcz/borgmatic
+    label: nixcz-backup
 source_directories:
   - /home/caldetas/git/seafile-docker-ce/backup
   - /home/caldetas/git/seafile-docker-ce/data/seafile/seafile-data
