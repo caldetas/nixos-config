@@ -78,32 +78,13 @@ with lib;
 
       serviceConfig = {
         ExecStart = "${pkgs.docker}/bin/docker compose up -d";
-        ExecStop = "${pkgs.docker}/bin/docker compose -f /var/lib/immich/docker-compose.yml down";
+        ExecStop = "${pkgs.docker}/bin/docker compose down";
         environmentFile = "/var/lib/immich/.env";
         WorkingDirectory = "/var/lib/immich";
         RemainAfterExit = true;
         TimeoutStartSec = 600; #10min
         Restart = "always";
         RestartSec = "5s";
-      };
-    };
-    systemd.services.mount-hetzner-box = {
-      description = "Mount Hetzner Storage Box via SSHFS";
-      after = [ "network-online.target" ];
-      wants = [ "network-online.target" ];
-      wantedBy = [ "multi-user.target" ];
-      serviceConfig = {
-        Type = "oneshot";
-        RemainAfterExit = true;
-        ExecStart = lib.mkForce (pkgs.writeShellScript "mount-hetzner-box" ''
-          ${pkgs.coreutils}/bin/mkdir -p /mnt/hetzner-box
-          ${pkgs.sshfs}/bin/sshfs \
-            -o IdentityFile=/root/.ssh/hetzner_box_ed25519 \
-            -o reconnect \
-            -o allow_other \
-            -o StrictHostKeyChecking=no \
-            u466367@u466367.your-storagebox.de:/ /mnt/hetzner-box
-        '');
       };
     };
   };

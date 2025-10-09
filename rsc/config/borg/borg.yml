@@ -1,29 +1,28 @@
-location:
-  source_directories:
-    - /home/caldetas/git/seafile-docker-ce/backup
-    - /home/caldetas/git/seafile-docker-ce/data/seafile/seafile-data
-    - /home/caldetas/git/seafile-docker-ce/data/seafile/seahub-data
-    - /home/caldetas/git/seafile-docker-ce/data/seafile/conf
-    - /mnt/nas/seafile-data
-    - /mnt/hetzner-box/immich-library/backups
-    - /mnt/hetzner-box/immich-library/upload
-    - /mnt/hetzner-box/immich-library/profile
-    - /mnt/hetzner-box/immich-library/library
-    - /mnt/hetzner-box/backup/nixcz/mailcow
-  repositories:
-    - path: /mnt/backup/nixcz/borgmatic
-  ssh_command: "ssh -i /home/caldetas/.ssh/hetzner_box_ed25519 -o UserKnownHostsFile=/home/caldetas/.ssh/known_hosts -p 23"
+repositories:
+  - /mnt/backup/nixcz/borgmatic
+source_directories:
+  - /home/caldetas/git/seafile-docker-ce/backup
+  - /home/caldetas/git/seafile-docker-ce/data/seafile/seafile-data
+  - /home/caldetas/git/seafile-docker-ce/data/seafile/seahub-data
+  - /home/caldetas/git/seafile-docker-ce/data/seafile/conf
+  - /mnt/nas/seafile-data
+  - /mnt/hetzner-box/immich-library/backups
+  - /mnt/hetzner-box/immich-library/upload
+  - /mnt/hetzner-box/immich-library/profile
+  - /mnt/hetzner-box/immich-library/library
+  - /mnt/hetzner-box/backup/nixcz/mailcow
 
-storage:
-  encryption_passphrase: "${BORG_PASSPHRASE}"
-  compression: zstd
+ssh_command: !file /run/secrets/borg/rsh
+password: !file /run/secrets/borg/password
+compression: zstd
 
 retention:
   keep_daily: 7
   keep_weekly: 4
   keep_monthly: 6
 
-consistency:
-  checks:
-    - name: repository
-    - name: archives
+checks:
+  - name: repository
+    frequency: 2 weeks
+  - name: archives
+    frequency: 1 month
