@@ -2,11 +2,11 @@ repositories:
   - path: /mnt/backup/nixcz/borgmatic
     label: nixcz-backup
 source_directories:
-  - /home/caldetas/git/seafile-docker-ce/backup
-  - /home/caldetas/git/seafile-docker-ce/data/seafile/seafile-data
-  - /home/caldetas/git/seafile-docker-ce/data/seafile/seahub-data
-  - /home/caldetas/git/seafile-docker-ce/data/seafile/conf
-  - /mnt/nas/seafile-data
+#  - /home/caldetas/git/seafile-docker-ce/backup
+#  - /home/caldetas/git/seafile-docker-ce/data/seafile/seafile-data
+#  - /home/caldetas/git/seafile-docker-ce/data/seafile/seahub-data
+#  - /home/caldetas/git/seafile-docker-ce/data/seafile/conf
+#  - /mnt/nas/seafile-data
 #  - /mnt/hetzner-box/immich-library/backups
 #  - /mnt/hetzner-box/immich-library/upload
 #  - /mnt/hetzner-box/immich-library/profile
@@ -17,10 +17,9 @@ ssh_command: "ssh -i /home/caldetas/.ssh/hetzner_box_ed25519 -o UserKnownHostsFi
 encryption_passphrase: "${BORG_PASSPHRASE}"
 compression: zstd
 
-retention:
-  keep_daily: 7
-  keep_weekly: 4
-  keep_monthly: 6
+keep_daily: 7
+keep_weekly: 4
+keep_monthly: 6
 
 checks:
   - name: repository
