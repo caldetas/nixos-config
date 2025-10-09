@@ -43,6 +43,9 @@ with lib;
       serviceConfig = {
         Type = "oneshot";
         ExecStart = pkgs.writeShellScript "borgmatic-wrapper" ''
+          export BORG_PASSPHRASE="$(cat ${config.sops.secrets."borg/password".path})"
+          export BORG_REPO="$(cat ${config.sops.secrets."borg/repo".path})"
+          export BORG_RSH="$(cat ${config.sops.secrets."borg/rsh".path})"
           export PATH=${lib.makeBinPath [ pkgs.docker pkgs.bash pkgs.borgmatic pkgs.borgbackup pkgs.coreutils ]}:$PATH
 
           ./backup.sh #mailcow server backup
