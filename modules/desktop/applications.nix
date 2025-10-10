@@ -27,7 +27,6 @@
     qemu
     remmina
     spotify
-    stremio
     telegram-desktop
     teams-for-linux
     terraform
@@ -47,6 +46,7 @@
       "org.signal.Signal"
       "ro.go.hmlendea.DL-Desktop"
       "com.seafile.Client"
+      "com.stremio.Stremio"
       "ch.protonmail.protonmail-import-export-app"
     ];
   };
