@@ -9,7 +9,7 @@
 let
   ideaFhs = pkgs.buildFHSEnv {
     name = "idea-ai";
-    targetPkgs = pkgs: with stable; [
+    targetPkgs = pkgs: with unstable; [
       jetbrains.idea-ultimate
       glib
       libsecret
