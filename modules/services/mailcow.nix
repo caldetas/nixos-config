@@ -113,7 +113,7 @@ in
     systemd.timers.mailcow-backup = mkIf isNixcz {
       wantedBy = [ "timers.target" ];
       timerConfig = {
-        OnCalendar = "*-*-* 04:30:00";
+        OnCalendar = "*-*-* 01:30:00";
         Persistent = true;
       };
     };

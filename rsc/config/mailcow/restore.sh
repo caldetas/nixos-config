@@ -5,6 +5,12 @@ DATE=$(date '+%Y-%m-%d')
 echo $DATE
 mkdir -p /home/caldetas/git/mailcow-dockerized
 mkdir -p /tmp/backup/mailcow/
+
+#make it a git repo again
+git init
+git remote add origin https://github.com/mailcow/mailcow-dockerized.git
+git fetch
+
 tar xvpf backup-mailcow-$DATE.tar.gz -C /tmp/backup/mailcow/
 cd /home/caldetas/git/mailcow-dockerized
 rsync -aHv --delete /tmp/backup/mailcow/$DATE/rsync/ /home/caldetas/git/mailcow-dockerized/
