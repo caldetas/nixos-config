@@ -55,7 +55,7 @@ with lib;
 
                               ./backup.sh #mailcow server backup
 
-                              mkdir -p /mnt/backup/nixcz/borgmatic
+                              mkdir -p /mnt/backup/nixcz/borgmatic || true
                               ${pkgs.borgmatic}/bin/borgmatic init --encryption=repokey-blake2 $BORG_REPO
                               ${pkgs.borgmatic}/bin/borgmatic --verbosity 1 --syslog-verbosity 1
         '';

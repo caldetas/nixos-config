@@ -82,7 +82,9 @@
       '');
     };
   };
-  systemd.services.mount-backup = {
+  /*
+     # only mount backup when necessary, to prevent deletion errors
+    systemd.services.mount-backup = {
     description = "Mount Hetzner Storage Box via SSHFS";
     after = [ "network-online.target" ];
     wants = [ "network-online.target" ];
@@ -100,7 +102,8 @@
           u497568@u497568.your-storagebox.de:/ /mnt/backup
       '');
     };
-  };
+    };
+  */
 }
 
 
