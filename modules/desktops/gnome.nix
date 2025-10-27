@@ -321,16 +321,16 @@ with lib;
         fullscreen-avoider
         # dash-to-dock
       ];
-      home.file.".config/autostart/seafile.desktop".text = ''
-        [Desktop Entry]
-        Type=Application
-        Name=Seafile (Flatpak)
-        Exec=flatpak run com.seafile.Client
-        X-GNOME-Autostart-enabled=true
-        Terminal=false
-        Icon=seafile
-        Categories=Network;
-      '';
+      #      home.file.".config/autostart/seafile.desktop".text = ''
+      #        [Desktop Entry]
+      #        Type=Application
+      #        Name=Seafile (Flatpak)
+      #        Exec=flatpak run com.seafile.Client
+      #        X-GNOME-Autostart-enabled=true
+      #        Terminal=false
+      #        Icon=seafile
+      #        Categories=Network;
+      #      '';
     };
     # Disable the tty1 getty so that GDM isn’t interfered with at login https://discourse.nixos.org/t/gnome-keyring-slow-start/58364/6
     systemd.services."getty@tty1".enable = false;

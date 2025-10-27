@@ -48,10 +48,11 @@
     interfaces = {
       enp0s31f6 = {
         useDHCP = true; # For versatility sake, manually edit IP on nm-applet.
-        #ipv4.addresses = [ {
-        #    address = "192.168.0.51";
-        #    prefixLength = 24;
-        #} ];
+        #        useDHCP = false; # For versatility sake, manually edit IP on nm-applet.
+        #        ipv4.addresses = [ {
+        #            address = "192.168.0.51";
+        #            prefixLength = 24;
+        #        } ];
       };
       wlp0s20f3 = {
         useDHCP = true;
@@ -61,10 +62,10 @@
     #    defaultGateway = "192.168.0.1";
     #    nameservers = [ "192.168.0.4" ];
     firewall = {
-      enable = true;
+      enable = false;
       trustedInterfaces = [ "p2p-wl+" ]; # trust Wi‑Fi Direct interface created
-      allowedUDPPorts = [ 80 5672 15672 500 4500 3389 5900 7236 7250 ];
-      allowedTCPPorts = [ 500 5672 15672 4500 3389 5333 5900 7236 ];
+      allowedUDPPorts = [ 80 5672 15672 500 4500 3389 5900 7236 7250 27015 27036 27037 ];
+      allowedTCPPorts = [ 500 5672 15672 4500 3389 5333 5900 7236 27015 27031 27032 27033 27034 27035 27036 ];
     };
   };
   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
