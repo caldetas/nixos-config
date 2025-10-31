@@ -21,7 +21,7 @@
     nodejs
     openvpn
     pandoc
-    pinentry
+    pinentry-curses
     pdftk
     qbittorrent
     qemu

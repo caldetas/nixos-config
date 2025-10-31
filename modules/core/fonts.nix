@@ -4,7 +4,7 @@
   fonts.packages = with pkgs; [
     jetbrains-mono
     font-awesome
-    ubuntu_font_family
+    ubuntu-classic
   ];
 
   fonts.fontconfig.enable = lib.mkForce true;

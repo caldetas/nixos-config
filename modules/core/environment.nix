@@ -16,7 +16,7 @@
     dig
     file
     git
-    glxinfo
+    mesa-demos
     htop
     hwinfo
     killall
