@@ -17,7 +17,7 @@ let
       pkgs.findutils
       pkgs.gnused
       pkgs.coreutils
-      pkgs.utillinux
+      pkgs.util-linux
       pkgs.rename
     ];
     installPhase = ''

@@ -62,7 +62,7 @@
     #    defaultGateway = "192.168.0.1";
     #    nameservers = [ "192.168.0.4" ];
     firewall = {
-      enable = false;
+      enable = true;
       trustedInterfaces = [ "p2p-wl+" ]; # trust Wi‑Fi Direct interface created
       allowedUDPPorts = [ 80 5672 15672 500 4500 3389 5900 7236 7250 27015 27036 27037 ];
       allowedTCPPorts = [ 500 5672 15672 4500 3389 5333 5900 7236 27015 27031 27032 27033 27034 27035 27036 ];
