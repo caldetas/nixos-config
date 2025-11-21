@@ -14,4 +14,4 @@ BACKUP_LOCATION=/tmp/backup/mailcow/ /home/caldetas/git/mailcow-dockerized/helpe
 
 #copy to hetzner box as tar to preserve permissions
 mkdir -p /mnt/hetzner-box/backup/nixcz/mailcow
-tar czpf /mnt/hetzner-box/backup/nixcz/mailcow/backup-mailcow.tar.gz -C /tmp/backup/mailcow "$DATE"
+tar czpf /mnt/hetzner-box/backup/nixcz/mailcow/backup-mailcow.tar.gz -C /tmp/backup mailcow
