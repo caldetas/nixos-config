@@ -51,7 +51,7 @@
   # the password using the " passwd " command after the first boot.
 
   backup.enable = true;
-  bitwarden.enable = true;
+  vaultwarden.enable = true;
   mailcow.enable = true;
   seafile.enable = true;
   server.enable = true;

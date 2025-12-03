@@ -6,7 +6,7 @@
 with lib;
 {
   options = {
-    bitwarden = {
+    vaultwarden = {
       enable = mkOption {
         type = types.bool;
         default = false;
@@ -14,7 +14,7 @@ with lib;
     };
   };
 
-  config = mkIf (config.bitwarden.enable) {
+  config = mkIf (config.vaultwarden.enable) {
     services.vaultwarden = {
       enable = true;
       environmentFile = config.sops.secrets."vaultwarden/env".path;

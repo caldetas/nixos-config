@@ -11,7 +11,7 @@
 #
 
 [
-  ./bitwarden.nix
+  ./vaultwarden.nix
   ./dunst.nix
   ./gnupg.nix
   ./immich.nix
