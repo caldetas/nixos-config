@@ -12,6 +12,7 @@ source_directories:
   - /mnt/hetzner-box/immich-library/profile
   - /mnt/hetzner-box/immich-library/library
   - /mnt/hetzner-box/backup/nixcz/mailcow
+  - /mnt/hetzner-box/backup/nixcz/vaultwarden
 
 compression: zstd
 encryption_passphrase: "${BORG_PASSPHRASE}"
