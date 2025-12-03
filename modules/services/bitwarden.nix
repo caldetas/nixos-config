@@ -38,7 +38,6 @@ with lib;
     systemd.timers.backup-vaultwarden = {
       wantedBy = [ "timers.target" ];
       timerConfig = {
-        OnCalendar = "daily";
         Persistent = true;
         OnCalendar = "*-*-* 01:15:00";
         RandomizedDelaySec = "5m";
