@@ -36,11 +36,8 @@ with lib;
 
     # Copy tar command after backing up
     systemd.services.backup-vaultwarden.postStart = ''
-      /etc/vaultwarden/backup.sh
+      ${pkgs.bash}/bin/bash -c "export PATH=${pkgs.coreutils}/bin:${pkgs.gzip}/bin:$PATH; /etc/vaultwarden/backup.sh"
     '';
-
-    # Make bash available to the backup service
-    systemd.services.backup-vaultwarden.path = [ pkgs.bash pkgs.coreutils pkgs.gzip ];
 
     services.nginx = {
       enable = true;
