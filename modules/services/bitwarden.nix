@@ -1,5 +1,5 @@
 #
-#  System Notifications
+#  Vaultwarden Password Manager
 #
 
 { config, lib, pkgs, vars, ... }:
@@ -18,6 +18,8 @@ with lib;
     services.vaultwarden = {
       enable = true;
       environmentFile = config.sops.secrets."vaultwarden/env".path;
+      # Enable the built-in backup service - this creates backup-vaultwarden.service
+      backupDir = "/tmp/backup/vaultwarden";
       config = {
         DOMAIN = "http://${vars.domain}";
         SIGNUPS_ALLOWED = true;
@@ -26,10 +28,22 @@ with lib;
       };
     };
 
-    #create db file if not exists
+    # Create required directories
     systemd.tmpfiles.rules = [
       "d /var/lib/bitwarden_rs 0750 vaultwarden vaultwarden -"
+      "d /tmp/backup/vaultwarden 0750 vaultwarden vaultwarden -"
     ];
+
+    # Schedule the backup to run daily (adjust as needed)
+    systemd.timers.backup-vaultwarden = {
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnCalendar = "daily";
+        Persistent = true;
+        OnCalendar = "*-*-* 01:15:00";
+        RandomizedDelaySec = "5m";
+      };
+    };
 
     services.nginx = {
       enable = true;
