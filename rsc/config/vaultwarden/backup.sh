@@ -4,7 +4,7 @@ set -euo pipefail
 OUT="/mnt/hetzner-box/backup/nixcz/vaultwarden/vaultwarden-backup.tar.gz.gpg"
 
 #copy as tar to hetzner box as tar to preserve permissions
-tar czpf /mnt/hetzner-box/backup/nixcz/vaultwarden/backup-vaultwarden.tar.gz -C /tmp/backup vaultwarden |  \
+tar czpf -C /tmp/backup vaultwarden |  \
 gpg \
 --batch --yes \
 --symmetric --cipher-algo AES256 \
