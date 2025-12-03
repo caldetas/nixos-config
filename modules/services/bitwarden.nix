@@ -35,9 +35,29 @@ with lib;
     ];
 
     # Copy tar command after backing up
-    systemd.services.backup-vaultwarden.postStart = ''
-      ${pkgs.bash}/bin/bash -c "export PATH=${pkgs.coreutils}/bin:${pkgs.gzip}/bin:$PATH; /etc/vaultwarden/backup.sh"
-    '';
+    # backup service
+    systemd.services.backup-vaultwarden-copy = {
+      description = "Vaultwarden copy backup to Hetzner box";
+      after = [ "backup-vaultwarden.service" ];
+      wants = [ "backup-vaultwarden.service" ];
+      wantedBy = [ ]; # Don't auto-start; triggered by timer only
+
+      serviceConfig = {
+        Type = "oneshot";
+        User = "root";
+        Environment = "PATH=/run/wrappers/bin:/etc/profiles/per-user/root/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin";
+        ExecStart = "${pkgs.bash}/bin/bash /etc/vaultwarden/backup.sh";
+      };
+    };
+
+    systemd.timers.backup-vaultwarden-copy = {
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnCalendar = "*-*-* 01:30:00";
+        Persistent = true;
+        RandomizedDelaySec = "5m";
+      };
+    };
 
     services.nginx = {
       enable = true;
