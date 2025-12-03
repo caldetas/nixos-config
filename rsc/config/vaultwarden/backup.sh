@@ -1,6 +1,13 @@
 #!/bin/sh
 set -euo pipefail
 #folders are already created in vaultwarden.nix
+OUT="/mnt/hetzner-box/backup/nixcz/vaultwarden/vaultwarden-backup.tar.gz.gpg"
+PASSPHRASE_FILE='${config.sops.secrets."borg/password".path}'
 
 #copy as tar to hetzner box as tar to preserve permissions
-tar czpf /mnt/hetzner-box/backup/nixcz/vaultwarden/backup-vaultwarden.tar.gz -C /tmp/backup vaultwarden
+tar czpf /mnt/hetzner-box/backup/nixcz/vaultwarden/backup-vaultwarden.tar.gz -C /tmp/backup vaultwarden |  \
+gpg \
+--batch --yes \
+--symmetric --cipher-algo AES256 \
+--passphrase-file "$PASSPHRASE_FILE" \
+-o "$OUT"
