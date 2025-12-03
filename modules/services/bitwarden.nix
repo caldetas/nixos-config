@@ -33,30 +33,10 @@ with lib;
       "d /var/lib/bitwarden_rs 0750 vaultwarden vaultwarden -"
       "d /tmp/backup/vaultwarden 0750 vaultwarden vaultwarden -"
     ];
-    # Timer that triggers BOTH backup services
-    # (backup-vaultwarden first, then backup-vaultwarden-post)
-    systemd.timers.backup-vaultwarden = {
-      wantedBy = [ "timers.target" ];
-      timerConfig = {
-        OnCalendar = "*-*-* 01:15:00";
-        Persistent = true;
-        RandomizedDelaySec = "5m";
-      };
-    };
 
-    # Override the unit to also trigger the post-backup service
-    systemd.units."backup-vaultwarden.timer".unit.Unit.Unit = mkForce ''
-      [Unit]
-      Description=Daily backup of Vaultwarden
-      PartOf=backup-vaultwarden-post.timer
-
-      [Timer]
-      OnCalendar=*-*-* 01:15:00
-      Persistent=true
-      RandomizedDelaySec=5m
-
-      [Install]
-      WantedBy=timers.target
+    # Copy tar command after backing up
+    systemd.services.backup-vaultwarden.postStart = ''
+      /etc/vaultwarden/backup.sh
     '';
 
     services.nginx = {
