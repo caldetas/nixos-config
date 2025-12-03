@@ -34,16 +34,6 @@ with lib;
       "d /tmp/backup/vaultwarden 0750 vaultwarden vaultwarden -"
     ];
 
-    # Schedule the backup to run daily (adjust as needed)
-    systemd.timers.backup-vaultwarden = {
-      wantedBy = [ "timers.target" ];
-      timerConfig = {
-        Persistent = true;
-        OnCalendar = "*-*-* 01:15:00";
-        RandomizedDelaySec = "5m";
-      };
-    };
-
     services.nginx = {
       enable = true;
       virtualHosts."vault.${vars.domain}" = {
