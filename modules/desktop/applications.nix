@@ -15,7 +15,6 @@
     git
     gimp
     gparted
-    jq
     netbird
     netbird-ui
     nodejs

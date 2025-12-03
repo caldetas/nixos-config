@@ -19,6 +19,7 @@
     mesa-demos
     htop
     hwinfo
+    jq
     killall
     kitty.terminfo
     lshw
@@ -26,6 +27,7 @@
     neofetch
     nix-tree
     nixpkgs-fmt
+    openssl
     pciutils
     powertop
     psmisc
