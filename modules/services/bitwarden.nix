@@ -39,6 +39,9 @@ with lib;
       /etc/vaultwarden/backup.sh
     '';
 
+    # Make bash available to the backup service
+    systemd.services.backup-vaultwarden.path = [ pkgs.bash ];
+
     services.nginx = {
       enable = true;
       virtualHosts."vault.${vars.domain}" = {
