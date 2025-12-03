@@ -41,7 +41,10 @@ with lib;
       after = [ "backup-vaultwarden.service" ];
       wants = [ "backup-vaultwarden.service" ];
       wantedBy = [ ]; # Don't auto-start; triggered by timer only
-
+      environment = {
+        PASSPHRASE_FILE = config.sops.secrets."borg/password".path;
+      };
+      path = with pkgs; [ bash coreutils gnutar gnupg gzip ];
       serviceConfig = {
         Type = "oneshot";
         User = "root";
