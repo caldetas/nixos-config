@@ -40,7 +40,7 @@ with lib;
     '';
 
     # Make bash available to the backup service
-    systemd.services.backup-vaultwarden.path = [ pkgs.bash pkgs.tar ];
+    systemd.services.backup-vaultwarden.path = with pkgs; [ bash tar gzip coreutils ];
 
     services.nginx = {
       enable = true;
