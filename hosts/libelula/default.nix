@@ -77,6 +77,7 @@
   # Enable Desktop Environment.
   #      bspwm.enable = true;
   gnome.enable = true;
+  #  vaultwarden.enable = true;
   #    kde.enable = true;
   #  hyprland.enable = true;
 
@@ -101,7 +102,7 @@
       };
     };
     firewall = {
-      enable = true;
+      enable = false;
       trustedInterfaces = [ "p2p-wl+" ]; # trust Wi‑Fi Direct interface created
       allowedUDPPorts = [ 80 5672 15672 500 4500 3389 5900 7236 7250 ];
       allowedTCPPorts = [ 500 5672 15672 4500 3389 5333 5900 7236 ];

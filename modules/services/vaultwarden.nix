@@ -22,7 +22,7 @@ with lib;
       backupDir = "/tmp/backup/vaultwarden";
       config = {
         DOMAIN = "http://${vars.domain}";
-        SIGNUPS_ALLOWED = true;
+        SIGNUPS_ALLOWED = false;
         WEBSOCKET_ENABLED = true;
         ROCKET_PORT = 8222;
       };

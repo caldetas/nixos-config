@@ -4,7 +4,8 @@ set -euo pipefail
 mkdir -p /home/caldetas/git/mailcow-dockerized
 mkdir -p /tmp/backup/mailcow/
 
-tar xvpf /home/caldetas/backup-mailcow.tar.gz -C /tmp/backup/
+rm -rf /tmp/backup/mailcow*
+tar xvpf ./backup-mailcow.tar.gz -C /tmp/backup/
 cd /home/caldetas/git/mailcow-dockerized
 rsync -aHv /tmp/backup/mailcow/rsync/* /home/caldetas/git/mailcow-dockerized/
 rsync -aHv  /tmp/backup/mailcow/volumes/ /var/lib/docker/volumes/ # "--delete" deletes all other docker volumes.. careful
