@@ -119,9 +119,9 @@
   systemd.targets.hibernate.enable = false;
   systemd.targets.hybrid-sleep.enable = false;
 
-  services.logind.lidSwitch = "ignore"; #Remmina stay accessible when lid is closed
+  services.logind.settings.Login.HandleLidSwitch = "ignore"; #Remmina stay accessible when lid is closed
 
-  services.xserver.displayManager.gdm.autoSuspend = false;
+  services.displayManager.gdm.autoSuspend = false;
   security.polkit.extraConfig = ''
     polkit.addRule(function(action, subject) {
         if (action.id == "org.freedesktop.login1.suspend" ||

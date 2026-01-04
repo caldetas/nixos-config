@@ -297,7 +297,7 @@ in
               menu-2-1 = "";
               menu-2-1-exec = "brave &";
               menu-2-2 = "";
-              menu-2-2-exec = "idea-ultimate &";
+              menu-2-2-exec = "idea &";
               menu-2-3 = "";
               menu-2-3-exec = "plexmediaplayer &";
               menu-2-4 = "";

@@ -6,7 +6,7 @@
       enable = true;
       dns = lib.mkForce "none";
     };
-    nameservers = [ "149.154.159.92" "162.252.172.57" ];
+    nameservers = [ "194.169.169.169" ];
   };
 
   services.resolved = {

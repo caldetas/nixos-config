@@ -10,7 +10,7 @@ let
   ideaFhs = pkgs.buildFHSEnv {
     name = "idea-ai";
     targetPkgs = pkgs: with unstable; [
-      jetbrains.idea-ultimate
+      jetbrains.idea
       glib
       libsecret
       gnome-keyring
@@ -19,7 +19,7 @@ let
       curl
       dbus
     ];
-    runScript = "idea-ultimate";
+    runScript = "idea";
   };
 in
 {

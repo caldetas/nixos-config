@@ -274,7 +274,7 @@ with host;
 
               "SUPER,Return,exec,${pkgs.${vars.terminal}}/bin/${vars.terminal}"
               "SUPER,B,exec,brave"
-              "SUPER,I,exec,idea-ultimate"
+              "SUPER,I,exec,idea"
               "SUPER,Q,killactive,"
               "SUPER,L,exec,swaylock"
               "SUPER,E,exec,thunar"
