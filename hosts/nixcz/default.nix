@@ -57,7 +57,7 @@
   server.enable = true;
   immich.enable = true;
 
-  networking.networkmanager.enable = true;
+  networking.wireless.enable = false; #todo delete, wpa was blocking rebuild
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
 
   #mount hetzner drive
