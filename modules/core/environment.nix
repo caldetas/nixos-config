@@ -34,7 +34,7 @@
     ranger
     screen
     sshfs
-    texliveFull #for cv, large!
+    #    texliveFull #for cv, large!
     tldr
     usbutils
     wget
