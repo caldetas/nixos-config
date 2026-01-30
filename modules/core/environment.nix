@@ -34,7 +34,7 @@
     ranger
     screen
     sshfs
-    #    texliveFull #for cv, large!
+    texliveFull #for cv, large!
     tldr
     usbutils
     wget
@@ -71,6 +71,9 @@
     #          intel-media-driver  # or vaapiIntel for older Intel GPUs
     #                               libva-utils
     #                               intel-gpu-tools
+
+    #spring boot
+    maven
   ] ++ (with stable; [ audacity ]);
   nixpkgs.config.permittedInsecurePackages = [
   ];
