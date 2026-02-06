@@ -56,7 +56,7 @@ with lib;
                               ./backup.sh #mailcow server backup
 
                               mkdir -p /mnt/backup/nixcz/borgmatic || true
-                              ${pkgs.borgmatic}/bin/borgmatic init --encryption=repokey-blake2 $BORG_REPO
+                              #${pkgs.borgmatic}/bin/borgmatic init --encryption=repokey-blake2 $BORG_REPO #uncomment to init repo, can lead to lock issues
                               ${pkgs.borgmatic}/bin/borgmatic --verbosity 1 --syslog-verbosity 1
         '';
         WorkingDirectory = "/home/${vars.user}/git/seafile-docker-ce";

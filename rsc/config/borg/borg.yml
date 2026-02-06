@@ -18,6 +18,8 @@ compression: zstd
 encryption_passphrase: "${BORG_PASSPHRASE}"
 ssh_command: "${BORG_RSH}"
 
+lock_wait: 600  # 10 minutes, slow hetzner box timeout avoiding
+
 keep_daily: 7
 keep_weekly: 4
 keep_monthly: 6
