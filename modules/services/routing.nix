@@ -18,8 +18,8 @@ let
     HOSTS=$(cat ${config.sops.secrets."server/ips".path})
     echo "vpn-bypass: Loaded hosts from secret: $HOSTS"
 
-    # VPN DNS IPs to exclude from bypass
-    VPN_DNS_IPS="162.252.172.57 149.154.159.92"
+    # VPN DNS IPs to exclude from bypass, separated by space
+    VPN_DNS_IPS="162.252.172.57 149.154.159.92 194.169.169.169"
 
     IPS=()
 
