@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+
+#vaultwarden needs https for client side login
+
 set -euo pipefail
 
 # Stop vaultwarden
