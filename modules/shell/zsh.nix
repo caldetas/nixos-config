@@ -36,13 +36,52 @@
         # Hook direnv
         #emulate zsh -c "$(direnv hook zsh)"
         #eval "$(direnv hook zsh)"
-        # Only run neofetch in truly interactive, login-ish shells
+        # Only run fastfetch in truly interactive, login-ish shells
         if [[ $- == *i* ]] && [[ -z "$SSH_ORIGINAL_COMMAND" ]] && [[ -z "$RSYNC_CALL" ]]; then
-          neofetch
+          fastfetch
         fi
       '';
     };
     #command line tool, thefuck replacement
     #    pay-respects.enable = true;
+  };
+  home-manager.users.${vars.user} = {
+    programs.fastfetch = {
+      enable = true;
+      settings = {
+        modules = [
+          "title"
+          "separator"
+          "os"
+          "host"
+          "kernel"
+          "uptime"
+          "packages"
+          "shell"
+          "display"
+          #             "de"
+          #             "wm"
+          #             "wmtheme"
+          #             "theme"
+          #             "icons"
+          #             "font"
+          #             "cursor"
+          "terminal"
+          #             "terminalfont"
+          "cpu"
+          "gpu"
+          "memory"
+          "swap"
+          "disk"
+          #             "localip"
+          #             "battery"
+          #             "poweradapter"
+          "locale"
+          "break"
+          "colors"
+        ];
+      };
+      #      };
+    };
   };
 }

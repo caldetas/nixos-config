@@ -24,7 +24,6 @@
     kitty.terminfo
     lshw
     nano
-    neofetch
     nix-tree
     nixpkgs-fmt
     openssl
