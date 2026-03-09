@@ -134,6 +134,48 @@ in
           };
         };
       };
+      virtualHosts = {
+        "seafile.${vars.domain}" = {
+          enableACME = true;
+          forceSSL = true;
+          locations = {
+            "/" = {
+              proxyPass = "http://127.0.0.1:8000";
+              extraConfig = ''
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Host $server_name;
+              '';
+            };
+            "/seafhttp" = {
+              proxyPass = "http://127.0.0.1:8082";
+              extraConfig = ''
+                rewrite ^/seafhttp(.*)$ $1 break;
+                client_max_body_size 0;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_connect_timeout 36000s;
+                proxy_read_timeout 36000s;
+                proxy_send_timeout 36000s;
+                send_timeout 36000s;
+              '';
+            };
+          };
+        };
+        "oods.${vars.domain}" = {
+          enableACME = true;
+          forceSSL = true;
+          locations = {
+            "/" = {
+              proxyPass = "http://127.0.0.1:8081";
+              extraConfig = ''
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Host $server_name;
+              '';
+            };
+          };
+        };
+      };
     };
   };
 }
