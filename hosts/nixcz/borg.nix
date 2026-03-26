@@ -90,7 +90,6 @@ with lib;
       description = "Notify on Borgmatic Failure";
       serviceConfig = {
         Type = "oneshot";
-        User = "root";
       };
       script = ''
         ${pkgs.curl}/bin/curl --ssl-reqd \
@@ -112,7 +111,6 @@ with lib;
       description = "Notify on Borgmatic Failure";
       serviceConfig = {
         Type = "oneshot";
-        User = "root";
       };
       script = ''
         ${pkgs.curl}/bin/curl --ssl-reqd \
