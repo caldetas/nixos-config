@@ -2,21 +2,19 @@
 
 {
   environment.systemPackages = with pkgs; [
-    appimage-run
     google-chrome
-    libreoffice
     brave
-    calibre
+    calibre #ebooks
     discord
     exiftool
+    feh
     firefox
     gedit
     ghostscript
     git
     gimp
+    glmark2
     gparted
-    netbird
-    netbird-ui
     nodejs
     openvpn
     pandoc
@@ -25,14 +23,18 @@
     qbittorrent
     qemu
     remmina
+    seafile-client
     spotify
     telegram-desktop
     teams-for-linux
     terraform
+    vlc
     vpsfree-client
-    wpsoffice
     yarn
     yq
+
+    #spring boot
+    maven
   ]
   ++ (with unstable; [ steam ])
   ++ (with stable; [ ]);
@@ -44,9 +46,7 @@
       "com.rtosta.zapzap"
       "org.signal.Signal"
       "ro.go.hmlendea.DL-Desktop"
-      "com.seafile.Client"
       "com.stremio.Stremio"
-      "ch.protonmail.protonmail-import-export-app"
     ];
   };
 }

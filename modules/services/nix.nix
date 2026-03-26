@@ -14,7 +14,6 @@ with lib;
       # Garbage Collection
       automatic = true;
       dates = "weekly";
-      options = "--delete-generation +10"; #"--delete-older-than 7d";
     };
     package = pkgs.nixVersions.latest; # Enable Flakes
     registry.nixpkgs.flake = inputs.nixpkgs;

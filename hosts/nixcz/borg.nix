@@ -90,8 +90,44 @@ with lib;
       description = "Notify on Borgmatic Failure";
       serviceConfig = {
         Type = "oneshot";
-        ExecStart = "echo alert"; #alertScript;
+        ExecStart = "
+        curl --ssl-reqd \
+          --url 'smtp://mail.${vars.domain}.com:587' --insecure \
+          --netrc /run/secrets/curl/.netrc \
+          --mail-from 'info@${vars.domain}.com' \
+          --mail-rcpt 'info@${vars.domain}.com' \
+          --upload-file - <<EOF
+        From: Server ${host.hostName} info@${vars.domain}.com
+        To: Server Admin info@${vars.domain}.com
+        Subject: Borgmatic backup failed on ${host.hostName}
+
+        Please have a look..
+        EOF
+        ";
       };
+    };
+    #Alert notifications
+    systemd.services.borgmatic-test = {
+      description = "Notify on Borgmatic Failure";
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "
+        curl --ssl-reqd \
+          --url 'smtp://mail.${vars.domain}.com:587' --insecure \
+          --netrc /run/secrets/curl/.netrc \
+          --mail-from 'info@${vars.domain}.com' \
+          --mail-rcpt 'info@${vars.domain}.com' \
+          --upload-file - <<EOF
+        From: Server ${host.hostName} info@${vars.domain}.com
+        To: Server Admin info@${vars.domain}.com
+        Subject: Borgmatic backup failed on ${host.hostName}
+
+        It runs locally..
+        EOF
+        ";
+      };
+      restartIfChanged = true;
+      wantedBy = [ "multi-user.target" ];
     };
   };
 }
