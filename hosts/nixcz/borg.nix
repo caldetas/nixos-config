@@ -98,8 +98,8 @@ with lib;
           --mail-from 'info@${vars.domain}' \
           --mail-rcpt 'info@${vars.domain}' \
           --upload-file - <<'EOF'
-        From: Server ${host.hostName} info@${vars.domain}
-        To: Server Admin info@${vars.domain}
+        From: Server ${host.hostName} <info@${vars.domain}>
+        To: Server Admin <info@${vars.domain}>
         Subject: Borgmatic backup failed on ${host.hostName}
 
         Please have a look..
