@@ -93,41 +93,18 @@ with lib;
       };
       script = ''
         ${pkgs.curl}/bin/curl --ssl-reqd \
-          --url 'smtp://mail.${vars.domain}.com:587' --insecure \
+          --url 'smtp://mail.${vars.domain}:587' --insecure \
           --netrc-file ${config.sops.secrets."curl/netrc".path} \
-          --mail-from 'info@${vars.domain}.com' \
-          --mail-rcpt 'info@${vars.domain}.com' \
+          --mail-from 'info@${vars.domain}' \
+          --mail-rcpt 'info@${vars.domain}' \
           --upload-file - <<'EOF'
-        From: Server ${host.hostName} info@${vars.domain}.com
-        To: Server Admin info@${vars.domain}.com
+        From: Server ${host.hostName} info@${vars.domain}
+        To: Server Admin info@${vars.domain}
         Subject: Borgmatic backup failed on ${host.hostName}
 
         Please have a look..
         EOF
       '';
-    };
-    #Alert notifications
-    systemd.services.borgmatic-test = {
-      description = "Notify on Borgmatic Failure";
-      serviceConfig = {
-        Type = "oneshot";
-      };
-      script = ''
-        ${pkgs.curl}/bin/curl --ssl-reqd \
-          --url 'smtp://mail.${vars.domain}.com:587' --insecure \
-          --netrc-file ${config.sops.secrets."curl/netrc".path} \
-          --mail-from 'info@${vars.domain}.com' \
-          --mail-rcpt 'info@${vars.domain}.com' \
-          --upload-file - <<'EOF'
-        From: Server ${host.hostName} info@${vars.domain}.com
-        To: Server Admin info@${vars.domain}.com
-        Subject: Borgmatic backup failed on ${host.hostName}
-
-        It runs locally..
-        EOF
-      '';
-      restartIfChanged = true;
-      wantedBy = [ "multi-user.target" ];
     };
   };
 }
