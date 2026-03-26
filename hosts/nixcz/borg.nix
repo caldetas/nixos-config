@@ -94,7 +94,7 @@ with lib;
       script = ''
         ${pkgs.curl}/bin/curl --ssl-reqd \
           --url 'smtp://mail.${vars.domain}.com:587' --insecure \
-          --netrc /run/secrets/curl/.netrc \
+          --netrc ${config.sops.secrets."curl/.netrc".path} \
           --mail-from 'info@${vars.domain}.com' \
           --mail-rcpt 'info@${vars.domain}.com' \
           --upload-file - <<EOF
@@ -115,7 +115,7 @@ with lib;
       script = ''
         ${pkgs.curl}/bin/curl --ssl-reqd \
           --url 'smtp://mail.${vars.domain}.com:587' --insecure \
-          --netrc /run/secrets/curl/.netrc \
+          --netrc ${config.sops.secrets."curl/.netrc".path} \
           --mail-from 'info@${vars.domain}.com' \
           --mail-rcpt 'info@${vars.domain}.com' \
           --upload-file - <<EOF
