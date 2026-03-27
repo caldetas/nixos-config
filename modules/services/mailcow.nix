@@ -74,7 +74,7 @@ in
       };
     };
     systemd.services.mailcow-reload-after-cert-renewal = {
-      wantedBy = [ "acme-finished.mail.caldetas.com.target" ];
+      wantedBy = [ "acme-finished.mail.${vars.domain}.target" ];
       script = ''
         docker restart mailcowdockerized-dovecot-mailcow-1
         docker restart mailcowdockerized-postfix-mailcow-1

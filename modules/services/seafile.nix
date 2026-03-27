@@ -152,4 +152,43 @@ in
       };
     };
   };
+  /*
+
+    #for onlyoffice appended the following vars to seafile-docker-ce/data/seafile/conf/seahub_settings.py
+
+    TIME_ZONE = 'Europe/Zurich'
+    FILE_SERVER_ROOT = 'https://seafile.caldetas.com/seafhttp'
+    CSRF_TRUSTED_ORIGINS = ['https://seafile.caldetas.com', 'https://oods.caldetas.com']
+    ENABLE_ONLYOFFICE = True
+    VERIFY_ONLYOFFICE_CERTIFICATE = True
+    ONLYOFFICE_FORCE_SAVE = True # user save saves to file, default is save upon closing tab
+
+    ONLYOFFICE_INNER_URL = 'http://seafile/seafhttp'
+    ONLYOFFICE_DOCUMENT_CALLBACK = 'http://seafile/seahub/api2/onlyoffice/callback'
+    ONLYOFFICE_APIJS_URL = 'https://oods.caldetas.com/web-apps/apps/api/documents/api.js'
+    ONLYOFFICE_FILE_EXTENSION = (
+    'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx',
+    'odt', 'fodt', 'odp', 'fodp', 'ods', 'fods'
+    )
+    ONLYOFFICE_EDIT_FILE_EXTENSION = ('docx', 'pptx', 'xlsx')
+    ONLYOFFICE_JWT_SECRET = 'REDACTED'  # must match ONLYOFFICE_JWT_SECRET in .env
+
+
+    #and to doker-compose.yml
+
+    onlyoffice-documentserver:
+    ports:
+      - "8081:80"
+    image: onlyoffice/documentserver:latest
+    restart: unless-stopped
+    container_name: seafile-oods
+    #volumes:
+      # Optional: see https://manual.seafile.com/12.0/extension/only_office/
+      #- ${ONLYOFFICE_CONFIG:-./data/onlyoffice/local.conf}:/etc/onlyoffice/documentserver/local.json
+    environment:
+      - JWT_ENABLED=true
+      - JWT_SECRET=${ONLYOFFICE_JWT_SECRET:-Supers3cr3t}
+    networks:
+      - seafile-net
+  */
 }
