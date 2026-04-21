@@ -100,7 +100,7 @@ in
   config = mkIf config.surfshark.enable {
     networking.networkmanager.plugins = [ pkgs.networkmanager-openvpn ];
     services.openvpn.servers = serversAttr;
-    # services.resolved = { enable = true; dnssec = "allow-downgrade"; domains = [ "~." ]; };
+    services.resolved = { enable = true; dnssec = "allow-downgrade"; domains = [ "~." ]; };
   };
   #  countries
   #  ad-leu.ovpn  au-syd.ovpn  bs-nas.ovpn  cy-nic.ovpn  es-mad.ovpn  hk-hkg.ovpn  it-mil.ovpn  lu-ste.ovpn  mt-mla.ovpn  ph-mnl.ovpn  sa-ruh.ovpn  uk-gla.ovpn  us-dal.ovpn  us-phx.ovpn
