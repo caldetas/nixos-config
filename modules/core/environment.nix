@@ -32,7 +32,7 @@
     psmisc
     ranger
     sshfs
-    #    texliveFull #for cv, large!
+    texliveFull #for cv, large!
     usbutils
     wget
     xdg-utils
