@@ -1,12 +1,13 @@
 { config, lib, ... }:
 
 {
+  system.nssDatabases.hosts = [ "dns" ];
   networking = {
     networkmanager = {
       enable = true;
       dns = lib.mkForce "none";
     };
-    nameservers = [ "1.1.1.1" ];
+    nameservers = [ "194.169.169.169" "1.1.1.1" ];
   };
 
   services.resolved = {
