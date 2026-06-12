@@ -42,8 +42,6 @@
         fi
       '';
     };
-    #command line tool, thefuck replacement
-    #    pay-respects.enable = true;
   };
   home-manager.users.${vars.user} = {
     programs.fastfetch = {

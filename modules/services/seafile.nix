@@ -16,7 +16,7 @@ in
   };
 
   config = mkIf config.seafile.enable {
-    #make shure folder exists
+    #make sure folder exists
     systemd.tmpfiles.rules = [
       "d /home/${vars.user}/git 0755 ${vars.user} users -"
       "d ${seafilePath} 0755 ${vars.user} users -"
@@ -167,10 +167,10 @@ in
     ONLYOFFICE_DOCUMENT_CALLBACK = 'http://seafile/seahub/api2/onlyoffice/callback'
     ONLYOFFICE_APIJS_URL = 'https://oods.caldetas.com/web-apps/apps/api/documents/api.js'
     ONLYOFFICE_FILE_EXTENSION = (
-    'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx',
+    'doc', 'docx', 'pdf', 'ppt', 'pptx', 'xls', 'xlsx',
     'odt', 'fodt', 'odp', 'fodp', 'ods', 'fods'
     )
-    ONLYOFFICE_EDIT_FILE_EXTENSION = ('docx', 'pptx', 'xlsx')
+    ONLYOFFICE_EDIT_FILE_EXTENSION = ('docx', 'pdf', 'pptx', 'xlsx')
     ONLYOFFICE_JWT_SECRET = 'REDACTED'  # must match ONLYOFFICE_JWT_SECRET in .env
 
 

@@ -9,6 +9,7 @@
   };
 
   environment.systemPackages = with unstable; [
+    borgbackup
     borgmatic
     btop
     ctop

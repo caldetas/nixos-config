@@ -15,6 +15,7 @@
     gimp
     glmark2
     gparted
+    hypnotix
     nodejs
     openvpn
     pandoc

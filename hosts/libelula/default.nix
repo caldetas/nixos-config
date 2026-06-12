@@ -77,6 +77,8 @@
   # Enable Desktop Environment.
   #      bspwm.enable = true;
   gnome.enable = true;
+  #  immich.enable = true;
+  #  seafile.enable = true;
   #  vaultwarden.enable = true;
   #    kde.enable = true;
   #  hyprland.enable = true;

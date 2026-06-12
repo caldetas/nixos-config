@@ -16,7 +16,7 @@
   };
 
   console = {
-    font = "Lat2-Terminus16";
+    #    font = "Lat2-Terminus16";
     keyMap = "sg";
   };
 }
