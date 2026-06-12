@@ -7,10 +7,7 @@ source_directories:
   - /home/caldetas/git/seafile-docker-ce/data/seafile/seahub-data
   - /home/caldetas/git/seafile-docker-ce/data/seafile/conf
   - /mnt/nas/seafile-data
-  - /mnt/hetzner-box/immich-library/backups
-  - /mnt/hetzner-box/immich-library/upload
-  - /mnt/hetzner-box/immich-library/profile
-  - /mnt/hetzner-box/immich-library/library
+  - /mnt/hetzner-box/immich-library
   - /mnt/hetzner-box/backup/nixcz/mailcow
   - /mnt/hetzner-box/backup/nixcz/vaultwarden
 
