@@ -79,6 +79,13 @@
           -o allow_other \
           -o StrictHostKeyChecking=no \
           u466367@u466367.your-storagebox.de:/ /mnt/hetzner-box
+        ${pkgs.coreutils}/bin/mkdir -p /mnt/restore-box
+        ${pkgs.sshfs}/bin/sshfs \
+          -o IdentityFile=/root/.ssh/hetzner_box_ed25519 \
+          -o reconnect \
+          -o allow_other \
+          -o StrictHostKeyChecking=no \
+          u612908@u612908.your-storagebox.de:/ /mnt/restore-box
       '');
     };
   };
