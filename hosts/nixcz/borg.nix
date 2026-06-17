@@ -19,17 +19,16 @@ with lib;
       onFailure = [ "borgmatic-alert.service" ];
       serviceConfig = {
         Type = "oneshot";
-        ExecStart = ''
-                        ${pkgs.coreutils}/bin/mkdir -p /root/.ssh
-                        ${pkgs.coreutils}/bin/touch /root/.ssh/known_hosts
-                        ${pkgs.coreutils}/bin/chmod 600 /root/.ssh/known_hosts
-          host1="\$(\${pkgs.coreutils}/bin/cat \${config.sops.secrets."hetzner-id/backup".path}).your-storagebox.de"
-          host2="\$(\${pkgs.coreutils}/bin/cat \${config.sops.secrets."hetzner-id/storage".path}).your-storagebox.de"
-
-          if ! \${pkgs.gnugrep}/bin/grep -q "\$host1" /root/.ssh/known\_hosts; then
-            \${pkgs.openssh}/bin/ssh-keyscan -p 23 "\$host1" >> /root/.ssh/known\_hosts
-            \${pkgs.openssh}/bin/ssh-keyscan -p 23 "\$host2" >> /root/.ssh/known\_hosts
-          fi
+        ExecStart = pkgs.writeShellScript "borgmatic-prepare" ''
+          ${pkgs.coreutils}/bin/mkdir -p /root/.ssh
+          ${pkgs.coreutils}/bin/touch /root/.ssh/known_hosts
+          ${pkgs.coreutils}/bin/chmod 600 /root/.ssh/known_hosts
+            host1="\$(\${pkgs.coreutils}/bin/cat \${config.sops.secrets."hetzner-id/backup".path}).your-storagebox.de"
+            host2="\$(\${pkgs.coreutils}/bin/cat \${config.sops.secrets."hetzner-id/storage".path}).your-storagebox.de"
+            if ! \${pkgs.gnugrep}/bin/grep -q "\$host1" /root/.ssh/known\_hosts; then
+              \${pkgs.openssh}/bin/ssh-keyscan -p 23 "\$host1" >> /root/.ssh/known\_hosts
+              \${pkgs.openssh}/bin/ssh-keyscan -p 23 "\$host2" >> /root/.ssh/known\_hosts
+            fi
         '';
 
 
