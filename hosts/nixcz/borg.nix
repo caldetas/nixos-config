@@ -20,16 +20,15 @@ with lib;
       serviceConfig = {
         Type = "oneshot";
         ExecStart = ''
-                        ${pkgs.coreutils}/bin/mkdir -p /root/.ssh
-                        ${pkgs.coreutils}/bin/touch /root/.ssh/known_hosts
-                        ${pkgs.coreutils}/bin/chmod 600 /root/.ssh/known_hosts
-          host1="\$(\${pkgs.coreutils}/bin/cat \${config.sops.secrets."hetzner-id/backup".path}).your-storagebox.de"
-          host2="\$(\${pkgs.coreutils}/bin/cat \${config.sops.secrets."hetzner-id/storage".path}).your-storagebox.de"
-
-          if ! \${pkgs.gnugrep}/bin/grep -q "\$host1" /root/.ssh/known\_hosts; then
-            \${pkgs.openssh}/bin/ssh-keyscan -p 23 "\$host1" >> /root/.ssh/known\_hosts
-            \${pkgs.openssh}/bin/ssh-keyscan -p 23 "\$host2" >> /root/.ssh/known\_hosts
-          fi
+          ${pkgs.coreutils}/bin/mkdir -p /root/.ssh; \
+          ${pkgs.coreutils}/bin/touch /root/.ssh/known_hosts; \
+          ${pkgs.coreutils}/bin/chmod 600 /root/.ssh/known_hosts; \
+          host1="\$(\${pkgs.coreutils}/bin/cat; \${config.sops.secrets."hetzner-id/backup".path}).your-storagebox.de"; \
+          host2="\$(\${pkgs.coreutils}/bin/cat; \${config.sops.secrets."hetzner-id/storage".path}).your-storagebox.de"; \
+          if !; \${pkgs.gnugrep}/bin/grep -q "\$host1" /root/.ssh/known\_hosts; then; \
+             ; \${pkgs.openssh}/bin/ssh-keyscan -p 23 "\$host1" >> /root/.ssh/known\_hosts; \
+             ; \${pkgs.openssh}/bin/ssh-keyscan -p 23 "\$host2" >> /root/.ssh/known\_hosts; \
+          ; \
         '';
 
 
@@ -96,11 +95,11 @@ with lib;
         Type = "oneshot";
       };
       script = ''
-        ${pkgs.curl}/bin/curl --ssl-reqd \
-          --url 'smtp://mail.${vars.domain}:587' --insecure \
-          --netrc-file ${config.sops.secrets."curl/netrc".path} \
-          --mail-from 'info@${vars.domain}' \
-          --mail-rcpt 'info@${vars.domain}' \
+        ${pkgs.curl}/bin/curl --ssl-reqd; \
+          --url 'smtp://mail.${vars.domain}:587' --insecure; \
+          --netrc-file ${config.sops.secrets."curl/netrc".path}; \
+          --mail-from 'info@${vars.domain}'; \
+          --mail-rcpt 'info@${vars.domain}'; \
           --upload-file - <<'EOF'
         From: Server ${host.hostName} <info@${vars.domain}>
         To: Server Admin <info@${vars.domain}>
