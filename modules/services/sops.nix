@@ -17,6 +17,8 @@ with lib;
   sops.secrets."borg/password" = { };
   sops.secrets."borg/repo" = { };
   sops.secrets."borg/rsh" = { };
+  sops.secrets."hetzner-id/storage" = { };
+  sops.secrets."hetzner-id/backup" = { };
   sops.secrets."curl/netrc" = { };
   sops.secrets."vpsfreectl/haveapi-client" = {
     owner = "${vars.user}";

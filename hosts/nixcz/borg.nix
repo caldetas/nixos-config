@@ -1,14 +1,5 @@
 { config, pkgs, lib, vars, host, ... }:
 
-let
-  prepareEnvScript = pkgs.writeShellScript "prepare-borgmatic-env" ''
-    mkdir -p /root/.ssh
-    ${pkgs.openssh}/bin/ssh-keyscan -p 23 u466367.your-storagebox.de >> /root/.ssh/known_hosts
-    ${pkgs.openssh}/bin/ssh-keyscan -p 23 u497568.your-storagebox.de >> /root/.ssh/known_hosts
-    chmod 600 /root/.ssh/known_hosts
-  '';
-
-in
 with lib;
 {
   options = {
@@ -28,7 +19,15 @@ with lib;
       onFailure = [ "borgmatic-alert.service" ];
       serviceConfig = {
         Type = "oneshot";
-        ExecStart = prepareEnvScript;
+        ExecStart = ''
+          mkdir -p /root/.ssh
+          touch /root/.ssh/known_hosts
+          chmod 600 /root/.ssh/known_hosts
+          if ! grep -q '"$(cat ${config.sops.secrets."hetzner-id/backup".path})".your-storagebox.de' /root/.ssh/known_hosts; then
+          ${pkgs.openssh}/bin/ssh-keyscan -p 23 "$(cat ${config.sops.secrets."hetzner-id/backup".path})".your-storagebox.de >> /root/.ssh/known_hosts
+          ${pkgs.openssh}/bin/ssh-keyscan -p 23 "$(cat ${config.sops.secrets."hetzner-id/storage".path})".your-storagebox.de >> /root/.ssh/known_hosts
+          fi
+        '';
       };
       wantedBy = [ "multi-user.target" ];
     };
