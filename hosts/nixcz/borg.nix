@@ -20,9 +20,9 @@ with lib;
       serviceConfig = {
         Type = "oneshot";
         ExecStart = ''
-          mkdir -p /root/.ssh
-          touch /root/.ssh/known_hosts
-          chmod 600 /root/.ssh/known_hosts
+          ${pkgs.coreutils}/bin/mkdir -p /root/.ssh
+          ${pkgs.coreutils}/bin/touch /root/.ssh/known_hosts
+          ${pkgs.coreutils}/bin/chmod 600 /root/.ssh/known_hosts
           if ! grep -q '"$(cat ${config.sops.secrets."hetzner-id/backup".path})".your-storagebox.de' /root/.ssh/known_hosts; then
           ${pkgs.openssh}/bin/ssh-keyscan -p 23 "$(cat ${config.sops.secrets."hetzner-id/backup".path})".your-storagebox.de >> /root/.ssh/known_hosts
           ${pkgs.openssh}/bin/ssh-keyscan -p 23 "$(cat ${config.sops.secrets."hetzner-id/storage".path})".your-storagebox.de >> /root/.ssh/known_hosts
