@@ -28,7 +28,7 @@
     spotify
     telegram-desktop
     teams-for-linux
-    terraform
+    #    terraform
     vlc
     vpsfree-client
     yarn
