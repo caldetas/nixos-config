@@ -10,7 +10,7 @@ systemctl stop vaultwarden
 mkdir -p /tmp/backup/vaultwarden/
 
 rm -rf /tmp/backup/vaultwarden/* || true
-gpg vaultwarden-backup.tar.gz.gpg
+gpg vaultwarden-backup.tar.gz.gpg #borg password from sops
 tar xvpf ./vaultwarden-backup.tar.gz -C /tmp/backup/vaultwarden
 rsync -aHv /tmp/backup/vaultwarden/vaultwarden/ /var/lib/bitwarden_rs
 
