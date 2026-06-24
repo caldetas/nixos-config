@@ -20,3 +20,14 @@ systemctl start vaultwarden
 # Watch logs
 journalctl -u vaultwarden -f
 
+##change nginx
+#    services.nginx = {
+#      enable = true;
+#      virtualHosts."127.0.0.1" = {
+#        forceSSL = true;
+#        enableACME = true;
+## add security verification
+#    security.acme = {
+#      acceptTerms = true;
+#      defaults.email = "info@${vars.domain}"; # Replace if needed
+#    };
