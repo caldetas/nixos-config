@@ -65,8 +65,8 @@ with lib;
     services.nginx = {
       enable = true;
       virtualHosts."vault.${vars.domain}" = {
-        forceSSL = pkgs.lib.strings.hasInfix "." vars.domain;
-        enableACME = pkgs.lib.strings.hasInfix "." vars.domain;
+        forceSSL = true;
+        enableACME = true;
         locations."/" = {
           proxyPass = "http://127.0.0.1:8222";
           proxyWebsockets = true;

@@ -15,10 +15,11 @@
 
 ### List Archives
     borg list "ssh://$BORG_REPO" #last archive on bottom of the list is the most recent!
+    last_archive=$(borg list --last 1 --short "ssh://$BORG_REPO")
 
 ### List Files
-    borg list "ssh://$BORG_REPO::nixcz-2026-02-09T02:53:02.449215"  #last archive specified
+    borg list "ssh://$BORG_REPO::$last_archive"  #last archive specified
 
 ### Restore Vaultwarden Backup
-    borg extract "ssh://$BORG_REPO::nixcz-2026-02-09T02:53:02.449215" ./mnt/hetzner-box/backup/nixcz/vaultwarden/vaultwarden-backup.tar.gz.gpg --strip-components 5
+    borg extract "ssh://$BORG_REPO::$last_archive" ./mnt/hetzner-box/backup/nixcz/vaultwarden/vaultwarden-backup.tar.gz.gpg --strip-components 5
 
