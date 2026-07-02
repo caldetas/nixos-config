@@ -9,8 +9,8 @@
       # randomize mac-address when using wifi
       settings = {
         device = {
-          wifi.scan-rand-mac-address = true;
-          wifi.mac-address-randomization = 1;
+          "scan-rand-mac-address" = true;
+          "mac-address-randomization" = 1;
         };
       };
     };
