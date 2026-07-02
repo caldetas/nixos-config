@@ -6,6 +6,12 @@
     networkmanager = {
       enable = true;
       dns = lib.mkForce "none";
+      # writes /etc/NetworkManager/conf.d/*.conf to randomize mac-address when using wifi
+      extraConfig = ''
+        [device]
+        wifi.scan-rand-mac-address=true
+        wifi.mac-address-randomization=1
+      '';
     };
     nameservers = [ "194.169.169.169" "1.1.1.1" ];
   };
