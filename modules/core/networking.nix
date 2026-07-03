@@ -6,6 +6,13 @@
     networkmanager = {
       enable = true;
       dns = lib.mkForce "none";
+      # randomize mac-address when using wifi
+      settings = {
+        device = {
+          "scan-rand-mac-address" = true;
+          "mac-address-randomization" = 1;
+        };
+      };
     };
     nameservers = [ "194.169.169.169" "1.1.1.1" ];
   };
