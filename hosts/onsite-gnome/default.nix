@@ -39,7 +39,7 @@
       enableCryptodisk = true;
       device = "nodev";
       useOSProber = true;
-      configurationLimit = 20;
+      configurationLimit = 3;
       default = 0;
     };
     efi = {
