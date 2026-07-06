@@ -78,6 +78,8 @@
           -o reconnect \
           -o allow_other \
           -o StrictHostKeyChecking=no \
+          -o uid=0 \
+          -o gid=0 \
           u466367@u466367.your-storagebox.de:/ /mnt/hetzner-box
       '');
     };
