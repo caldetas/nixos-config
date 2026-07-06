@@ -72,7 +72,7 @@
       Type = "oneshot";
       RemainAfterExit = true;
       ExecStart = lib.mkForce (pkgs.writeShellScript "mount-hetzner-box" ''
-        ${pkgs.coreutils}/bin/mkdir -p /mnt/hetzner-box
+        ${pkgs.coreutils}/bin/mkdir -p /mnt/hetzner-box || true
         ${pkgs.sshfs}/bin/sshfs \
           -o IdentityFile=/root/.ssh/hetzner_box_ed25519 \
           -o reconnect \
