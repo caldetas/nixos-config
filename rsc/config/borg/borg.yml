@@ -2,14 +2,14 @@ repositories:
   - path: "ssh://${BORG_REPO}"
 
 source_directories:
+  - /mnt/hetzner-box/backup/nixcz/vaultwarden
+  - /mnt/hetzner-box/backup/nixcz/mailcow
   - /home/caldetas/git/seafile-docker-ce/backup
   - /home/caldetas/git/seafile-docker-ce/data/seafile/seafile-data
   - /home/caldetas/git/seafile-docker-ce/data/seafile/seahub-data
   - /home/caldetas/git/seafile-docker-ce/data/seafile/conf
-  - /mnt/nas/seafile-data
+  - /mnt/hetzner-box/seafile-data
   - /mnt/hetzner-box/immich-library
-  - /mnt/hetzner-box/backup/nixcz/mailcow
-  - /mnt/hetzner-box/backup/nixcz/vaultwarden
 
 compression: zstd
 encryption_passphrase: "${BORG_PASSPHRASE}"
