@@ -5,18 +5,18 @@
 { config, lib, pkgs, vars, ... }:
 with lib;
 {
-  config = mkIf (config.server.enable) {
+  config = mkIf (true) {
     services.nginx = {
       enable = true;
       recommendedProxySettings = true;
-      virtualHosts = {
-        "_" = {
-          default = true;
-          locations."/" = {
-            return = "302 https://duckduckgo.com";
-          };
-        };
-      };
+      #      virtualHosts = {
+      #        "_" = {
+      #          default = true;
+      #          locations."/" = {
+      #            return = "302 https://duckduckgo.com";
+      #          };
+      #        };
+      #      };
     };
     security.acme = {
       acceptTerms = true;
