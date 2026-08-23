@@ -39,7 +39,7 @@
     # authorize your keys in configuration
     authorizedKeysInHomedir = true;
   };
-  networking.firewall.allowedTCPPorts = [ 22 80 443 ];
+  networking.firewall.allowedTCPPorts = [ 22 80 443 9117 ];
   # Under normal circumstances we would listen to your server's cloud-init callback and mark the server
   # as installed at this point. As we don't deliver cloud-init with NixOS we have to use a workaround
   # to indicate that your server is successfully installed. You can remove the cronjob after the server
