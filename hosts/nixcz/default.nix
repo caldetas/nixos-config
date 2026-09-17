@@ -39,13 +39,14 @@
     # authorize your keys in configuration
     authorizedKeysInHomedir = true;
   };
-  networking.firewall.allowedTCPPorts = [ 22 80 443 ];
+  networking.firewall.allowedTCPPorts = [ 22 80 443 9117 ];
   # Under normal circumstances we would listen to your server's cloud-init callback and mark the server
   # as installed at this point. As we don't deliver cloud-init with NixOS we have to use a workaround
   # to indicate that your server is successfully installed. You can remove the cronjob after the server
   # has been started the first time. It's no longer needed.
 
   services.cron.enable = true;
+
 
   # Please remove the hardcoded password from the configuration and set
   # the password using the " passwd " command after the first boot.
@@ -56,6 +57,10 @@
   seafile.enable = true;
   server.enable = true;
   immich.enable = true;
+  services.jackett = {
+    enable = true;
+    openFirewall = true;
+  };
 
   networking.wireless.enable = lib.mkForce false; #todo delete, wpa was blocking rebuild
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
