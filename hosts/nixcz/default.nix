@@ -59,6 +59,7 @@
   immich.enable = true;
   services.jackett = {
     enable = true;
+    listenPort = 9117;
     openFirewall = true;
   };
 
