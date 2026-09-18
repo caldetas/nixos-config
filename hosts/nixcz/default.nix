@@ -57,7 +57,7 @@
   seafile.enable = true;
   server.enable = true;
   immich.enable = true;
-  services.jackett = {
+  services.jackett.enable = {
     enable = true;
     listenPort = 9117;
     openFirewall = true;
