@@ -47,7 +47,6 @@
 
   services.cron.enable = true;
 
-
   # Please remove the hardcoded password from the configuration and set
   # the password using the " passwd " command after the first boot.
 
@@ -57,7 +56,6 @@
   seafile.enable = true;
   server.enable = true;
   immich.enable = true;
-  services.jackett.enable = true;
 
   networking.wireless.enable = lib.mkForce false; #todo delete, wpa was blocking rebuild
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
