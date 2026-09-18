@@ -37,16 +37,6 @@ with lib;
           recommendedProxySettings = true;
         };
       };
-      "jack.${vars.domain}" = {
-        serverName = "jack.${vars.domain}";
-        enableACME = true;
-        forceSSL = true;
-        locations."/" = {
-          proxyPass = "http://0.0.0.0:9117";
-          proxyWebsockets = true;
-          recommendedProxySettings = true;
-        };
-      };
       "hochrheinisches.ch" = {
         serverName = "hochrheinisches.ch";
         forceSSL = true; # Redirect HTTP to HTTPS
