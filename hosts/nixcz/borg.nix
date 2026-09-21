@@ -47,6 +47,11 @@ with lib;
       environment = { };
       serviceConfig = {
         Type = "oneshot";
+
+        #allow long runs
+        TimeoutStartSec = "infinity";
+        RuntimeMaxSec = "48h";
+
         ExecStart = pkgs.writeShellScript "borgmatic-wrapper" ''
                     #          for terminal use
           #                    export BORG_PASSPHRASE="$(sudo more /run/secrets/borg/password)"
