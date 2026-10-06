@@ -6,6 +6,7 @@
 
     # Recommended hardening for a Jitsi-only Prosody instance
     prosody.lockdown = true;
+    secureDomain.enable = true;
 
     config = {
       prejoinPageEnabled = true;
