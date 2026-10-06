@@ -1,3 +1,4 @@
 [
+  ./jitsi.nix
   ./services.nix
 ]

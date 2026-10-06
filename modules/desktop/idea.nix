@@ -19,7 +19,7 @@ let
       curl
       dbus
     ];
-    runScript = "idea";
+    runScript = "intellij-idea";
   };
 in
 {
