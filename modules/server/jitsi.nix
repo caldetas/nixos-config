@@ -2,7 +2,7 @@
 {
   services.jitsi-meet = {
     enable = true;
-    hostName = "meet@${vars.domain}";
+    hostName = "meet.${vars.domain}";
 
     # Recommended hardening for a Jitsi-only Prosody instance
     prosody.lockdown = true;
