@@ -1,4 +1,4 @@
-{ config, vars, ... }:
+{ config, lib, vars, ... }:
 with lib;
 {
   options = {
