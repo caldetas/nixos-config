@@ -110,6 +110,7 @@ with lib;
           color-scheme = "prefer-dark";
           enable-hot-corners = false;
           clock-show-weekday = true;
+          gtk-enable-primary-paste = true; #middle click copy
         };
         "org/gnome/desktop/peripherals/touchpad " = {
           tap-to-click = true;

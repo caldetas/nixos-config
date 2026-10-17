@@ -48,6 +48,7 @@
       "org.signal.Signal"
       "ro.go.hmlendea.DL-Desktop"
       "com.stremio.Stremio"
+      "com.surfshark.Surfshark"
     ];
   };
 }

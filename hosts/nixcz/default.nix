@@ -51,11 +51,12 @@
   # the password using the " passwd " command after the first boot.
 
   backup.enable = true;
-  vaultwarden.enable = true;
+  immich.enable = true;
+  #  jitsi.enable = true;
   mailcow.enable = true;
   seafile.enable = true;
   server.enable = true;
-  immich.enable = true;
+  vaultwarden.enable = true;
 
   networking.wireless.enable = lib.mkForce false; #todo delete, wpa was blocking rebuild
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;

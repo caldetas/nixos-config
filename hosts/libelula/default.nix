@@ -83,8 +83,6 @@
   #    kde.enable = true;
   #  hyprland.enable = true;
 
-  #VPN
-  surfshark.enable = true;
 
   #  environment.systemPackages = with unstable; [
   #  mesa #elden ring
