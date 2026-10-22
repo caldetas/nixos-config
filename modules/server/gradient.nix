@@ -11,6 +11,7 @@
     secrets.cryptFile = "/run/secrets/cr";
     postgres.enable = true;
     worker.enable = true;
+    baseDir = "/mnt/nas/gradient";
   };
 
   services.postgresql.package = pkgs.postgresql_18;
