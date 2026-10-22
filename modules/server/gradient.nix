@@ -8,7 +8,7 @@
     enable = true;
     domain = "gradient.${vars.domain}";
     secrets.jwtFile = "/run/secrets/gradient/jwt";
-    secrets.cryptFile = "/run/secrets/cr";
+    secrets.cryptFile = "/run/secrets/gradient/crypt";
     postgres.enable = true;
     worker.enable = true;
     baseDir = "/mnt/nas/gradient";
