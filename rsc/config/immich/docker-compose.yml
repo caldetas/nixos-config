@@ -65,46 +65,46 @@ services:
     networks:
       - immich_net
 
-  immich-prometheus:
-    container_name: immich_prometheus
-    image: prom/prometheus:latest
-    restart: unless-stopped
-    ports:
-      - '9090:9090'
-    volumes:
-      - prometheus-data:/prometheus
-      - /etc/immich/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-    networks:
-      - immich_net
-
-
-  immich-grafana:
-    container_name: immich_grafana
-    image: grafana/grafana:latest
-    command: ['./run.sh', '-disable-reporting']
-    restart: unless-stopped
-    ports:
-      - '3000:3000'
-    volumes:
-      - grafana-data:/var/lib/grafana
-    depends_on:
-      - immich-prometheus
-    networks:
-      - immich_net
-  node-exporter:
-    image: prom/node-exporter
-    container_name: node_exporter
-    ports:
-      - "9100:9100"
-    pid: "host"
-    volumes:
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-      - /:/rootfs:ro
-    command:
-      - '--path.procfs=/host/proc'
-      - '--path.sysfs=/host/sys'
-      - '--path.rootfs=/rootfs'
-    restart: always
+#  immich-prometheus:
+#    container_name: immich_prometheus
+#    image: prom/prometheus:latest
+#    restart: unless-stopped
+#    ports:
+#      - '9090:9090'
+#    volumes:
+#      - prometheus-data:/prometheus
+#      - /etc/immich/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+#    networks:
+#      - immich_net
+#
+#
+#  immich-grafana:
+#    container_name: immich_grafana
+#    image: grafana/grafana:latest
+#    command: ['./run.sh', '-disable-reporting']
+#    restart: unless-stopped
+#    ports:
+#      - '3000:3000'
+#    volumes:
+#      - grafana-data:/var/lib/grafana
+#    depends_on:
+#      - immich-prometheus
+#    networks:
+#      - immich_net
+#  node-exporter:
+#    image: prom/node-exporter
+#    container_name: node_exporter
+#    ports:
+#      - "9100:9100"
+#    pid: "host"
+#    volumes:
+#      - /proc:/host/proc:ro
+#      - /sys:/host/sys:ro
+#      - /:/rootfs:ro
+#    command:
+#      - '--path.procfs=/host/proc'
+#      - '--path.sysfs=/host/sys'
+#      - '--path.rootfs=/rootfs'
+#    restart: always
     networks:
       - immich_net
