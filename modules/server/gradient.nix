@@ -3,6 +3,16 @@
   imports = [
     gradient.nixosModules.default
   ];
+  services.nginx = {
+    virtualHosts."gradient.${vars.domain}" = {
+      forceSSL = true;
+      enableACME = true;
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:3000";
+        proxyWebsockets = true;
+      };
+    };
+  };
 
   services.gradient = {
     enable = true;
