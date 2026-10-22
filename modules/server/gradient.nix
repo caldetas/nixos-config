@@ -26,8 +26,6 @@
       "public.gradient.ci-main:qmxRE+saUvhNa3jqaCMWje+feVU77TjABchZrPGf7A8="
     ];
   };
-  nix.settings.max-jobs = 1;
-  nix.settings.cores = 1;
 
 
   #      security.acme = {
