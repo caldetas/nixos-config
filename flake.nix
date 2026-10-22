@@ -47,16 +47,6 @@
       gradient = {
         url = "github:wavelens/gradient/latest";
       };
-
-      outputs = { nixpkgs, gradient, ... }: {
-        nixosConfigurations.gradient = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            ./configuration.nix
-            gradient.nixosModules.default
-          ];
-        };
-      };
     };
 
   outputs = inputs @ { self, nixpkgs, nixpkgs-stable, nixpkgs-unstable, home-manager, nur, nixgl, hyprland, plasma-manager, sops-nix, gradient, ... }: # Function telling flake which inputs to use

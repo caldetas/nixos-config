@@ -4,7 +4,7 @@
   environment.systemPackages = with pkgs; [
     google-chrome
     brave
-    calibre #ebooks
+    #    calibre #ebooks
     discord
     exiftool
     feh
