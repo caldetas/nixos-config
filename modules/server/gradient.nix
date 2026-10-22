@@ -8,7 +8,7 @@
     enable = true;
     domain = "gradient.${vars.domain}";
     secrets.jwtFile = "/run/secrets/gradient/jwt";
-    secrets.cryptFile = "/run/secrets/gradient/crypt";
+    secrets.cryptFile = "/run/secrets/cr";
     postgres.enable = true;
     worker.enable = true;
   };

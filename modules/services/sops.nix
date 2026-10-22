@@ -20,6 +20,8 @@ with lib;
   sops.secrets."hetzner-id/storage" = { };
   sops.secrets."hetzner-id/backup" = { };
   sops.secrets."curl/netrc" = { };
+  sops.secrets."gradient/crypt" = { };
+  sops.secrets."gradient/jwt" = { };
   sops.secrets."vpsfreectl/haveapi-client" = {
     owner = "${vars.user}";
   };
