@@ -106,5 +106,5 @@ services:
 #      - '--path.sysfs=/host/sys'
 #      - '--path.rootfs=/rootfs'
 #    restart: always
-    networks:
-      - immich_net
+#    networks:
+#      - immich_net
