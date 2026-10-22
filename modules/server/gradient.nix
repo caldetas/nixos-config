@@ -3,16 +3,17 @@
   imports = [
     gradient.nixosModules.default
   ];
-  services.nginx = {
-    virtualHosts."gradient.${vars.domain}" = {
-      forceSSL = true;
-      enableACME = true;
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:3000";
-        proxyWebsockets = true;
-      };
-    };
-  };
+
+  #  services.nginx = {
+  #    virtualHosts."gradient.${vars.domain}" = {
+  #      forceSSL = true;
+  #      enableACME = true;
+  #      locations."/" = {
+  #        proxyPass = "http://127.0.0.1:3000";
+  #        proxyWebsockets = true;
+  #      };
+  #    };
+  #  };
 
   services.gradient = {
     enable = true;
@@ -21,7 +22,7 @@
     secrets.cryptFile = "/run/secrets/gradient/crypt";
     postgres.enable = true;
     worker.enable = true;
-    baseDir = "/mnt/nas/gradient";
+    #    baseDir = "/mnt/nas/gradient";
   };
 
   services.postgresql.package = pkgs.postgresql_18;
