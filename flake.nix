@@ -44,9 +44,22 @@
         inputs.nixpkgs.follows = "nixpkgs";
         inputs.home-manager.follows = "nixpkgs";
       };
+      gradient = {
+        url = "github:wavelens/gradient/latest";
+      };
+
+      outputs = { nixpkgs, gradient, ... }: {
+        nixosConfigurations.gradient = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./configuration.nix
+            gradient.nixosModules.default
+          ];
+        };
+      };
     };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-stable, nixpkgs-unstable, home-manager, nur, nixgl, hyprland, plasma-manager, sops-nix, ... }: # Function telling flake which inputs to use
+  outputs = inputs @ { self, nixpkgs, nixpkgs-stable, nixpkgs-unstable, home-manager, nur, nixgl, hyprland, plasma-manager, sops-nix, gradient, ... }: # Function telling flake which inputs to use
     let
       vars = {
         # Variables Used In Flake
@@ -63,7 +76,7 @@
         # NixOS Configurations
         import ./hosts {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-unstable nixpkgs-stable home-manager nur hyprland plasma-manager vars sops-nix; # Inherit inputs
+          inherit inputs nixpkgs nixpkgs-unstable nixpkgs-stable home-manager nur hyprland plasma-manager vars sops-nix gradient; # Inherit inputs
         }
       );
 
