@@ -22,6 +22,7 @@ with lib;
       secrets.cryptFile = "/run/secrets/gradient/crypt";
       postgres.enable = true;
       worker.enable = true;
+      proto.public = true;
       s3 = {
         bucket = "nixos";
         enable = true;
