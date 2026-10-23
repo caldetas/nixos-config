@@ -19,6 +19,7 @@ with lib;
       worker.domain = "worker.${vars.domain}";
       #      secrets.jwtFile = "/run/secrets/gradient/jwt";
       #      secrets.cryptFile = "/run/secrets/gradient/crypt";
+      worker.peersFile = "/run/secrets/gradient/gradient-worker-peers";
       worker.enable = true;
       worker.id = "a0a70927-208f-4f58-b3d9-be931ac791de";
       #      worker.serverUrl = "gradient.${vars.domain}";
