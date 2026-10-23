@@ -18,6 +18,7 @@
 
 
   server.enable = true;
+  gradient-ci.enable = true;
 
   #NAS storage mount
   environment.systemPackages = with pkgs; [ nfs-utils ];
