@@ -23,6 +23,7 @@ with lib;
   sops.secrets."gradient/crypt" = { };
   sops.secrets."gradient/jwt" = { };
   sops.secrets."gradient/s3-secret" = { };
+  sops.secrets."gradient/gradient-worker-peers" = { };
   sops.secrets."vpsfreectl/haveapi-client" = {
     owner = "${vars.user}";
   };
