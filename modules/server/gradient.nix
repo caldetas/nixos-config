@@ -1,4 +1,5 @@
-{ config, pkgs, gradient, vars, ... }:
+{ config, pkgs, gradient, vars, lib, ... }:
+with lib;
 {
   imports = [
     gradient.nixosModules.default
