@@ -22,17 +22,13 @@ with lib;
   sops.secrets."curl/netrc" = { };
   sops.secrets."gradient/crypt" = { };
   sops.secrets."gradient/jwt" = { };
+  sops.secrets."gradient/s3-secret" = { };
   sops.secrets."vpsfreectl/haveapi-client" = {
     owner = "${vars.user}";
   };
   sops.secrets."my-secret" = {
     owner = "${vars.user}";
   };
-  sops.secrets."github/deploy-key" = {
-    mode = "0600";
-    owner = vars.user;
-  };
-  sops.secrets."github/deploy-key.pub" = { };
   users.groups.secrets = { };
   # SOPS Configuration Secrets
   sops.defaultSopsFile = ./../../secrets/secrets.yaml;
