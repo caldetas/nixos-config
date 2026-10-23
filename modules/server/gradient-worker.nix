@@ -16,7 +16,7 @@ with lib;
 
   config = mkIf (config.gradient-worker.enable) {
     services.gradient = {
-      #      worker.domain = "worker.${vars.domain}";
+      worker.domain = "worker.${vars.domain}";
       #      secrets.jwtFile = "/run/secrets/gradient/jwt";
       #      secrets.cryptFile = "/run/secrets/gradient/crypt";
       worker.enable = true;
