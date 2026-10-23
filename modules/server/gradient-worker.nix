@@ -21,6 +21,7 @@ with lib;
       #      secrets.cryptFile = "/run/secrets/gradient/crypt";
       worker.enable = true;
       worker.id = "a0a70927-208f-4f58-b3d9-be931ac791de";
+      worker.serverUrl = "wss://gradient.example.com/proto";
     };
   };
 }
