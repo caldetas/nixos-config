@@ -75,7 +75,7 @@ in
       third = "DP-8";
     } [ ];
 
-  papi = makeHost "papi" "papi"
+  ci = makeHost "ci" "ci"
     {
       main = "";
       second = "";

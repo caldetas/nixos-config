@@ -28,6 +28,11 @@ with lib;
   sops.secrets."my-secret" = {
     owner = "${vars.user}";
   };
+  sops.secrets."github/deploy-key" = {
+    mode = "0600";
+    owner = vars.user;
+  };
+  sops.secrets."github/deploy-key.pub" = { };
   users.groups.secrets = { };
   # SOPS Configuration Secrets
   sops.defaultSopsFile = ./../../secrets/secrets.yaml;
