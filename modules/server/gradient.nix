@@ -23,6 +23,7 @@ with lib;
       postgres.enable = true;
       worker.enable = true;
       proto.public = true;
+
       #      s3 = {
       #        bucket = "nix-fleet";
       #        enable = true;
