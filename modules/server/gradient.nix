@@ -24,9 +24,9 @@ with lib;
       worker.enable = true;
       proto.public = true;
       s3 = {
-        bucket = "nixos";
+        bucket = "nix-fleet";
         enable = true;
-        region = "fsn1";
+        #        region = "fsn1";
         endpoint = "https://fsn1.your-objectstorage.com";
         accessKeyId = "KF83P28EQEKPV8JOK6MQ"; #"/run/secrets/gradient/s3-key"; seems not to work
         secretAccessKeyFile = "/run/secrets/gradient/s3-secret";
