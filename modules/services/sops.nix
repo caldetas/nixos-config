@@ -26,8 +26,8 @@ with lib;
   sops.secrets."gradient/s3-secret" = { };
   sops.secrets."gradient/gradient-worker-peers" = { };
 
-  sops.secrets."gradient/gradient/github-app-webhook" = { };
-  sops.secrets."gradient/gradient-app.pem" = { };
+  sops.secrets."gradient/github-app-webhook" = { };
+  sops.secrets."gradient/github-app.pem" = { };
   sops.secrets."gradient/admin-password" = { };
   sops.secrets."vpsfreectl/haveapi-client" = {
     owner = "${vars.user}";
