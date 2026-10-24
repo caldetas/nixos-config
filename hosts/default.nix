@@ -54,12 +54,12 @@ let
 
 in
 {
-  vm = makeHost "vm" "vm"
-    {
-      main = "Virtual-1";
-      second = "";
-      third = "";
-    } [ ];
+  #  vm = makeHost "vm" "vm"
+  #    {
+  #      main = "Virtual-1";
+  #      second = "";
+  #      third = "";
+  #    } [ ];
 
   libelula = makeHost "libelula" "libelula"
     {
@@ -75,12 +75,6 @@ in
       third = "DP-8";
     } [ ];
 
-  papi = makeHost "papi" "papi"
-    {
-      main = "";
-      second = "";
-      third = "";
-    } [ ];
 
   nixcz = makeHost "nixcz" "nixcz"
     {
