@@ -28,7 +28,7 @@ with lib;
         enable = true;
         region = "fsn1";
         endpoint = "https://fsn1.your-objectstorage.com";
-        accessKeyId = "KF83P28EQEKPV8JOK6MQ"; #"/run/secrets/gradient/s3-key";
+        accessKeyId = "KF83P28EQEKPV8JOK6MQ"; #"/run/secrets/gradient/s3-key"; seems not to work
         secretAccessKeyFile = "/run/secrets/gradient/s3-secret";
       };
       state.users.admin = {
@@ -37,12 +37,12 @@ with lib;
         superuser = true;
       };
       #    baseDir = "/mnt/nas/gradient";
-      #      githubApp = {
-      #        enable = true;
-      #        id = 123456;
-      #        privateKeyFile = "/run/secrets/gradient-github-app.pem";
-      #        webhookSecretFile = "/run/secrets/gradient-github-app-webhook";
-      #      };
+      services.gradient.githubApp = {
+        enable = true;
+        id = 5453140;
+        privateKeyFile = "/run/secrets/gradient/github-app.pem";
+        webhookSecretFile = "/run/secrets/gradient/github-app-webhook";
+      };
     };
 
     services.postgresql.package = pkgs.postgresql_18;
