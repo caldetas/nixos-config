@@ -32,6 +32,12 @@ with lib;
         secretAccessKeyFile = "/run/secrets/gradient/s3-secret";
       };
       #    baseDir = "/mnt/nas/gradient";
+      githubApp = {
+        enable = true;
+        #        id = 123456;
+        #        privateKeyFile = "/run/secrets/gradient-github-app.pem";
+        #        webhookSecretFile = "/run/secrets/gradient-github-app-webhook";
+      };
     };
 
     services.postgresql.package = pkgs.postgresql_18;
