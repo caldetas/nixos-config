@@ -30,19 +30,19 @@ with lib;
         endpoint = "https://fsn1.your-objectstorage.com";
         accessKeyId = "KF83P28EQEKPV8JOK6MQ";
         secretAccessKeyFile = "/run/secrets/gradient/s3-secret";
-        services.gradient.state.users.admin = {
-          email = "info@${vars.domain}";
-          password_file = "/run/secrets/gradient/admin-password";
-          superuser = true;
-        };
+      };
+      state.users.admin = {
+        email = "info@${vars.domain}";
+        password_file = "/run/secrets/gradient/admin-password";
+        superuser = true;
       };
       #    baseDir = "/mnt/nas/gradient";
-      githubApp = {
-        enable = true;
-        #        id = 123456;
-        #        privateKeyFile = "/run/secrets/gradient-github-app.pem";
-        #        webhookSecretFile = "/run/secrets/gradient-github-app-webhook";
-      };
+      #      githubApp = {
+      #        enable = true;
+      #        id = 123456;
+      #        privateKeyFile = "/run/secrets/gradient-github-app.pem";
+      #        webhookSecretFile = "/run/secrets/gradient-github-app-webhook";
+      #      };
     };
 
     services.postgresql.package = pkgs.postgresql_18;
