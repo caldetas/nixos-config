@@ -26,8 +26,8 @@ with lib;
       s3 = {
         bucket = "nix-fleet";
         enable = true;
-        #        region = "fsn1";
-        endpoint = "https://fsn1.your-objectstorage.com";
+        region = "hel1";
+        endpoint = "https://hel1.your-objectstorage.com";
         accessKeyId = "KF83P28EQEKPV8JOK6MQ"; #"/run/secrets/gradient/s3-key"; seems not to work
         secretAccessKeyFile = "/run/secrets/gradient/s3-secret";
       };
