@@ -30,6 +30,11 @@ with lib;
         endpoint = "https://fsn1.your-objectstorage.com";
         accessKeyId = "KF83P28EQEKPV8JOK6MQ";
         secretAccessKeyFile = "/run/secrets/gradient/s3-secret";
+        services.gradient.state.users.admin = {
+          email = "info@${vars.domain}";
+          password_file = "/run/secrets/gradient/admin-password";
+          superuser = true;
+        };
       };
       #    baseDir = "/mnt/nas/gradient";
       githubApp = {

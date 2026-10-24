@@ -24,6 +24,7 @@ with lib;
   sops.secrets."gradient/jwt" = { };
   sops.secrets."gradient/s3-secret" = { };
   sops.secrets."gradient/gradient-worker-peers" = { };
+  sops.secrets."gradient/admin-password" = { };
   sops.secrets."vpsfreectl/haveapi-client" = {
     owner = "${vars.user}";
   };
