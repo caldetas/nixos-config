@@ -10,7 +10,7 @@
     trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "public.gradient.ci-main:qmxRE+saUvhNa3jqaCMWje+feVU77TjABchZrPGf7A8="
-      "gradient.caldetas.com-fleet-cache:z2AUe0iSRM+5ixLvYenC+3F4VLKhJU5Y76kwUiLsn24="
+      "gradient.caldetas.com-fleet-cache:xHrfm69PQKuMH3ee6cxAMkQ9BWTRHDTwkGg4J5o3DaQ=="
     ];
 
     fallback = true;
