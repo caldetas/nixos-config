@@ -22,6 +22,7 @@ with lib;
   sops.secrets."curl/netrc" = { };
   sops.secrets."gradient/crypt" = { };
   sops.secrets."gradient/jwt" = { };
+  sops.secrets."gradient/s3-key" = { };
   sops.secrets."gradient/s3-secret" = { };
   sops.secrets."gradient/gradient-worker-peers" = { };
   sops.secrets."gradient/admin-password" = { };

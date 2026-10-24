@@ -28,7 +28,7 @@ with lib;
         enable = true;
         region = "fsn1";
         endpoint = "https://fsn1.your-objectstorage.com";
-        accessKeyId = "KF83P28EQEKPV8JOK6MQ";
+        accessKeyId = "/run/secrets/gradient/s3-key";
         secretAccessKeyFile = "/run/secrets/gradient/s3-secret";
       };
       state.users.admin = {
