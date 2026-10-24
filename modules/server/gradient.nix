@@ -44,32 +44,19 @@ with lib;
         webhookSecretFile = "/run/secrets/gradient/github-app-webhook";
       };
     };
-
-    services.postgresql.package = pkgs.postgresql_18;
-    nix.settings = {
-      substituters = [
-        "https://cache.nixos.org"
-        "https://public.gradient.ci/cache/main"
-      ];
-
-      trusted-public-keys = [
-        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-        "public.gradient.ci-main:qmxRE+saUvhNa3jqaCMWje+feVU77TjABchZrPGf7A8="
-      ];
-    };
   };
-  #    nix.settings = {
-  #      substituters = [
-  #        "https://cache.nixos.org"
-  #        "https://public.gradient.ci/cache/main"
-  #        "https://gradient.caldetas.com/cache/fleet-cache"
-  #      ];
-  #
-  #      trusted-public-keys = [
-  #        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-  #        "public.gradient.ci-main:qmxRE+saUvhNa3jqaCMWje+feVU77TjABchZrPGf7A8="
-  #        "gradient.caldetas.com-fleet-cache:udlCy1R2ILsTR8i8l8/gCh3oQUA+wBCUPpudoGOeRcA="
-  #      ];
-  #    };
-  #  };
+  services.postgresql.package = pkgs.postgresql_18;
+  nix.settings = {
+    substituters = [
+      "https://cache.nixos.org"
+      "https://public.gradient.ci/cache/main"
+      "https://gradient.caldetas.com/cache/fleet-cache"
+    ];
+
+    trusted-public-keys = [
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      "public.gradient.ci-main:qmxRE+saUvhNa3jqaCMWje+feVU77TjABchZrPGf7A8="
+      "gradient.caldetas.com-fleet-cache:z2AUe0iSRM+5ixLvYenC+3F4VLKhJU5Y76kwUiLsn24="
+    ];
+  };
 }
