@@ -32,6 +32,7 @@ with lib;
       #        accessKeyId = "KF83P28EQEKPV8JOK6MQ"; #"/run/secrets/gradient/s3-key"; seems not to work
       #        secretAccessKeyFile = "/run/secrets/gradient/s3-secret";
       #      };
+
       state.users.admin = {
         email = "info@${vars.domain}";
         password_file = "/run/secrets/gradient/admin-password";
