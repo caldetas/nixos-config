@@ -37,7 +37,7 @@ with lib;
         superuser = true;
       };
       #    baseDir = "/mnt/nas/gradient";
-      services.gradient.githubApp = {
+      githubApp = {
         enable = true;
         id = 5453140;
         privateKeyFile = "/run/secrets/gradient/github-app.pem";
