@@ -79,21 +79,22 @@ with lib;
               }
             ];
           };
-          workers.vps = {
-            worker_id = "a0a70927-208f-4f58-b3d9-be931ac791de";
-            projects = [ "nix-fleet" ];
-            token_file = "/run/secrets/gradient/workers-token";
-          };
         };
-
-        #    baseDir = "/mnt/nas/gradient";
-        githubApp = {
-          enable = true;
-          id = 5453140;
-          privateKeyFile = "/run/secrets/gradient/github-app.pem";
-          webhookSecretFile = "/run/secrets/gradient/github-app-webhook";
+        workers.vps = {
+          worker_id = "a0a70927-208f-4f58-b3d9-be931ac791de";
+          projects = [ "nix-fleet" ];
+          token_file = "/run/secrets/gradient/workers-token";
         };
       };
-      services.postgresql.package = pkgs.postgresql_18;
+
+      #    baseDir = "/mnt/nas/gradient";
+      githubApp = {
+        enable = true;
+        id = 5453140;
+        privateKeyFile = "/run/secrets/gradient/github-app.pem";
+        webhookSecretFile = "/run/secrets/gradient/github-app-webhook";
+      };
     };
-  }
+    services.postgresql.package = pkgs.postgresql_18;
+  };
+}
