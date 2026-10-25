@@ -82,6 +82,7 @@ with lib;
           token_file = "/run/secrets/gradient/workers-token";
         };
       };
+
       #    baseDir = "/mnt/nas/gradient";
       githubApp = {
         enable = true;
