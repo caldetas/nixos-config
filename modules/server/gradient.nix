@@ -40,6 +40,7 @@ with lib;
         };
         projects.nix-fleet = { created_by = "admin"; private_key_file = "/run/secrets/gradient/project-ssh-key"; };
         caches.fleet-cache = {
+          public = true;
           created_by = "admin";
           signing_key_file = "/run/secrets/gradient/cache-signing-file";
           projects = [ "nix-fleet" ];
