@@ -33,10 +33,20 @@ with lib;
       #        secretAccessKeyFile = "/run/secrets/gradient/s3-secret";
       #      };
 
-      state.users.admin = {
-        email = "info@${vars.domain}";
-        password_file = "/run/secrets/gradient/admin-password";
-        superuser = true;
+      state = {
+        users.admin = {
+          email = "info@${vars.domain}";
+          password_file = "/run/secrets/gradient/admin-password";
+          superuser = true;
+        };
+        projects.nix-fleet = { created_by = "admin"; private_key_file = "/run/secrets/gradient/project-ssh-key"; };
+        caches.fleet-cache = { created_by = "admin"; signing_key_file = "/run/secrets/gradient/cache-signing-file"; projects = [ "nix-fleet" ]; };
+        tasks."build" = { project = "nix-fleet"; created_by = "admin"; repository = "https://github.com/${vars.user}/nixos-config"; wildcard = "packages.x86_64-linux.**,nixosConfigurations.libelula.config.system.build.toplevel"; };
+        workers.vps = {
+          worker_id = "a0a70927-208f-4f58-b3d9-be931ac791de";
+          projects = [ "nix-fleet" ];
+          token_file = "/run/secrets/gradient/workers-token";
+        };
       };
       #    baseDir = "/mnt/nas/gradient";
       githubApp = {

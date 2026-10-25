@@ -16,15 +16,11 @@ with lib;
 
   config = mkIf (config.gradient-worker.enable) {
     services.gradient = {
-      worker.domain = "worker.${vars.domain}";
-
-      #      secrets.jwtFile = "/run/secrets/gradient/jwt";
-      #      secrets.cryptFile = "/run/secrets/gradient/crypt";
+      worker.domain = "worker.${vars.domain}"; #not necessary, for server connecting to worker
       worker.peersFile = "/run/secrets/gradient/gradient-worker-peers";
       worker.enable = true;
       worker.id = "a0a70927-208f-4f58-b3d9-be931ac791de";
-      #      worker.serverUrl = "gradient.${vars.domain}";
-      worker.serverUrl = "wss://gradient.${vars.domain}/proto";
+      worker.serverUrl = "wss://gradient.${vars.domain}/proto"; #worker connects to server
     };
   };
 }

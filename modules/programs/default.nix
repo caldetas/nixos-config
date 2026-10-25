@@ -14,6 +14,7 @@
   ./alacritty.nix
   ./eww.nix
   ./flatpak.nix
+  ./gradient-local.nix
   ./kitty.nix
   ./rofi.nix
   ./swaylock-effects.nix

@@ -25,7 +25,12 @@ with lib;
   sops.secrets."gradient/s3-key" = { };
   sops.secrets."gradient/s3-secret" = { };
   sops.secrets."gradient/gradient-worker-peers" = { };
-
+  sops.secrets."gradient/cache-signing-file" = { };
+  sops.secrets."gradient/integrations-key-file" = { };
+  sops.secrets."gradient/integrations-git-token_file" = { };
+  sops.secrets."gradient/workers-token" = { };
+  sops.secrets."gradient/project-ssh-key" = { };
+  sops.secrets."gradient/actions-config-token" = { };
   sops.secrets."gradient/github-app-webhook" = { };
   sops.secrets."gradient/github-app.pem" = { };
   sops.secrets."gradient/admin-password" = { };
