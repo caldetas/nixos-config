@@ -40,7 +40,27 @@ with lib;
           superuser = true;
         };
         projects.nix-fleet = { created_by = "admin"; private_key_file = "/run/secrets/gradient/project-ssh-key"; };
-        caches.fleet-cache = { created_by = "admin"; signing_key_file = "/run/secrets/gradient/cache-signing-file"; projects = [ "nix-fleet" ]; };
+        caches.fleet-cache = {
+          created_by = "admin";
+          signing_key_file = "/run/secrets/gradient/cache-signing-file";
+          projects = [ "nix-fleet" ];
+          upstream_caches = [
+            {
+              active = true;
+              display_name = "cache.nixos.org";
+              public_key = "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=";
+              type = "external";
+              url = "https://cache.nixos.org";
+            }
+            {
+              active = true;
+              display_name = "cache.gradient.ci";
+              public_key = "public.gradient.ci-main:qmxRE+saUvhNa3jqaCMWje+feVU77TjABchZrPGf7A8=";
+              type = "external";
+              url = "https://public.gradient.ci/cache/main";
+            }
+          ];
+        };
         tasks."build" = { project = "nix-fleet"; created_by = "admin"; repository = "https://github.com/${vars.user}/nixos-config"; wildcard = "packages.x86_64-linux.**,nixosConfigurations.libelula.config.system.build.toplevel"; };
         workers.vps = {
           worker_id = "a0a70927-208f-4f58-b3d9-be931ac791de";
