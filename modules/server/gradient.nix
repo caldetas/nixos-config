@@ -100,7 +100,6 @@ with lib;
         webhookSecretFile = "/run/secrets/gradient/github-app-webhook";
       };
     };
-    services.gradient.state.tasks.
     services.postgresql.package = pkgs.postgresql_18;
   };
 }
