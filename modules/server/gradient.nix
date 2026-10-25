@@ -63,39 +63,39 @@ with lib;
         };
         tasks = {
           build =
-            { project = "nix-fleet"; created_by = "admin"; repository = "https://github.com/${vars.user}/nixos-config"; wildcard = "packages.x86_64-linux.**,nixosConfigurations.libelula.config.system.build.toplevel"; }
-              app = {
-          project = "nixos-fleet";
-          repository = "https://github.com/${vars.user}/nixos-config";
-          created_by = "admin";
-          triggers = [
-            { type = "reporter_push"; integration = "github-${vars.user}"; }
-            { type = "reporter_pull_request"; integration = "github-${vars.user}"; }
-          ];
-          actions = [
-            {
-              name = "report-status";
-              type = "git_host_status_report";
-              config.integration = "github-${vars.user}";
-            }
-          ];
+            { project = "nix-fleet"; created_by = "admin"; repository = "https://github.com/${vars.user}/nixos-config"; wildcard = "packages.x86_64-linux.**,nixosConfigurations.libelula.config.system.build.toplevel"; };
+          app = {
+            project = "nixos-fleet";
+            repository = "https://github.com/${vars.user}/nixos-config";
+            created_by = "admin";
+            triggers = [
+              { type = "reporter_push"; integration = "github-${vars.user}"; }
+              { type = "reporter_pull_request"; integration = "github-${vars.user}"; }
+            ];
+            actions = [
+              {
+                name = "report-status";
+                type = "git_host_status_report";
+                config.integration = "github-${vars.user}";
+              }
+            ];
+          };
+        };
+        workers.vps = {
+          worker_id = "a0a70927-208f-4f58-b3d9-be931ac791de";
+          projects = [ "nix-fleet" ];
+          token_file = "/run/secrets/gradient/workers-token";
         };
       };
-      workers.vps = {
-        worker_id = "a0a70927-208f-4f58-b3d9-be931ac791de";
-        projects = [ "nix-fleet" ];
-        token_file = "/run/secrets/gradient/workers-token";
+      #    baseDir = "/mnt/nas/gradient";
+      githubApp = {
+        enable = true;
+        id = 5453140;
+        privateKeyFile = "/run/secrets/gradient/github-app.pem";
+        webhookSecretFile = "/run/secrets/gradient/github-app-webhook";
       };
     };
-    #    baseDir = "/mnt/nas/gradient";
-    githubApp = {
-      enable = true;
-      id = 5453140;
-      privateKeyFile = "/run/secrets/gradient/github-app.pem";
-      webhookSecretFile = "/run/secrets/gradient/github-app-webhook";
-    };
+    services.gradient.state.tasks.
+    services.postgresql.package = pkgs.postgresql_18;
   };
-  services.gradient.state.tasks.
-  services.postgresql.package = pkgs.postgresql_18;
-};
 }
