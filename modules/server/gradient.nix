@@ -62,8 +62,12 @@ with lib;
           ];
         };
         tasks = {
-          build =
-            { project = "nix-fleet"; created_by = "admin"; repository = "https://github.com/${vars.user}/nixos-config"; wildcard = "packages.x86_64-linux.**,nixosConfigurations.libelula.config.system.build.toplevel"; };
+          build = {
+            project = "nix-fleet";
+            created_by = "admin";
+            repository = "https://github.com/${vars.user}/nixos-config";
+            wildcard = "packages.x86_64-linux.**,nixosConfigurations.libelula.config.system.build.toplevel";
+          };
           app = {
             project = "nixos-fleet";
             repository = "https://github.com/${vars.user}/nixos-config";
