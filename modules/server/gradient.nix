@@ -70,7 +70,7 @@ with lib;
           };
 
           app = {
-            project = "nixos-fleet";
+            project = "nix-fleet";
             repository = "https://github.com/${vars.user}/nixos-config";
             created_by = "admin";
             triggers = [
