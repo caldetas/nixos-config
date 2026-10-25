@@ -75,7 +75,7 @@ with lib;
               {
                 name = "report-status";
                 type = "git_host_status_report";
-                config.integration = "github-admin";
+                config.integration = "github-${vars.user}";
               }
             ];
           };
