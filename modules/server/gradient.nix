@@ -68,8 +68,8 @@ with lib;
             repository = "https://github.com/${vars.user}/nixos-config.git";
             wildcard = "packages.x86_64-linux.**,nixosConfigurations.libelula.config.system.build.toplevel";
             triggers = [
-              { type = "reporter_push"; integration = "github-admin"; }
-              { type = "reporter_pull_request"; integration = "github-admin"; }
+              { type = "reporter_push"; integration = "github-${vars.user}"; }
+              { type = "reporter_pull_request"; integration = "github-${vars.user}"; }
             ];
             actions = [
               {
