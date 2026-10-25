@@ -64,7 +64,7 @@ with lib;
             project = "nix-fleet";
             created_by = "admin";
             repository = "https://github.com/${vars.user}/nixos-config.git";
-            wildcard = "packages.x86_64-linux.**,nixosConfigurations.libelula.config.system.build.toplevel";
+            wildcard = "packages.x86_64-linux.**,nixosConfigurations.*.config.system.build.toplevel";
             triggers = [
               { type = "reporter_push"; integration = "github-${vars.user}"; }
               { type = "reporter_pull_request"; integration = "github-${vars.user}"; }
@@ -84,8 +84,6 @@ with lib;
           token_file = "/run/secrets/gradient/workers-token";
         };
       };
-
-      #    baseDir = "/mnt/nas/gradient";
       githubApp = {
         enable = true;
         id = 5453140;
