@@ -67,15 +67,6 @@ with lib;
             created_by = "admin";
             repository = "https://github.com/${vars.user}/nixos-config";
             wildcard = "packages.x86_64-linux.**,nixosConfigurations.libelula.config.system.build.toplevel";
-          };
-          app = {
-            project = "nix-fleet";
-            repository = "https://github.com/${vars.user}/nixos-config.git";
-            created_by = "admin";
-            triggers = [
-              { type = "reporter_push"; integration = "github-${vars.user}"; }
-              { type = "reporter_pull_request"; integration = "github-${vars.user}"; }
-            ];
             actions = [
               {
                 name = "report-status";
