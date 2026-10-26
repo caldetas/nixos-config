@@ -1,10 +1,11 @@
-{ config, pkgs, stable, unstable, ... }:
+{ config, pkgs, stable, unstable, gradient, ... }:
 
 {
   environment.systemPackages = with pkgs; [
     google-chrome
     brave
     #    calibre #ebooks
+    claude-code
     discord
     exiftool
     feh
@@ -33,11 +34,12 @@
     vpsfree-client
     yarn
     yq
-
+    gradient.packages.${pkgs.system}.gradient-cli-full
     #spring boot
     maven
   ]
   ++ (with unstable; [ steam ])
+  #  ++ (with gradient; [ gradient-cli ])
   ++ (with stable; [ ]);
 
   flatpak = {

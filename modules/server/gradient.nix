@@ -77,6 +77,11 @@ with lib;
                 type = "git_host_status_report";
                 config.integration = "github-${vars.user}";
               }
+              {
+                name = "flake-update";
+                type = "open_pr";
+                config.integration = "github-${vars.user}";
+              }
             ];
           };
         };
