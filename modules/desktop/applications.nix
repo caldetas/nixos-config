@@ -34,7 +34,7 @@
     vpsfree-client
     yarn
     yq
-    gradient.packages.${pkgs.system}.gradient-cli-full
+    gradient-cli-full
     #spring boot
     maven
   ]
