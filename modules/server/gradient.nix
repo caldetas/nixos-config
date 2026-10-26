@@ -83,6 +83,10 @@ with lib;
                 config.integration = "github-${vars.user}";
               }
             ];
+            flake_input_overrides = {
+              nixpkgs.keep_url = true;
+              "home-manager*".keep_url = true;
+            };
           };
         };
         workers.vps = {
