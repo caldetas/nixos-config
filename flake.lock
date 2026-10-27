@@ -499,11 +499,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1793137393,
-        "narHash": "sha256-yX6ttgkmDLC/zuQRt9PHiZJ+LaN6+x8X7EuPnzjNFtU=",
+        "lastModified": 1793139073,
+        "narHash": "sha256-Q91uo+XVg0k/mtI7ALbtRrS3z+BHT/tVJWJqRAxarHY=",
         "owner": "caldetas",
         "repo": "nixpkgs",
-        "rev": "cdafabdb0d4856ff3add575198e98ac45fe32fdb",
+        "rev": "b7be6ae627ceb0392a9e510be746e7c76aa4c544",
         "type": "github"
       },
       "original": {
@@ -531,11 +531,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1793137393,
-        "narHash": "sha256-yX6ttgkmDLC/zuQRt9PHiZJ+LaN6+x8X7EuPnzjNFtU=",
+        "lastModified": 1793139073,
+        "narHash": "sha256-Q91uo+XVg0k/mtI7ALbtRrS3z+BHT/tVJWJqRAxarHY=",
         "owner": "caldetas",
         "repo": "nixpkgs",
-        "rev": "cdafabdb0d4856ff3add575198e98ac45fe32fdb",
+        "rev": "b7be6ae627ceb0392a9e510be746e7c76aa4c544",
         "type": "github"
       },
       "original": {
