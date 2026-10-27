@@ -1,4 +1,4 @@
-{ config, pkgs, stable, unstable, gradient, ... }:
+{ config, pkgs, stable, unstable, ... }:
 
 {
   environment.systemPackages = with pkgs; [
@@ -36,7 +36,6 @@
     gradient-cli
   ]
   ++ (with unstable; [ steam ])
-  #  ++ (with gradient; [ gradient-cli ])
   ++ (with stable; [ ]);
 
   flatpak = {

@@ -1,4 +1,4 @@
-{ config, pkgs, gradient, vars, lib, ... }:
+{ config, pkgs, vars, lib, ... }:
 with lib;
 {
 
