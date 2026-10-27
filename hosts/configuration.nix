@@ -23,13 +23,5 @@ with lib;
     hostName = host.hostName;
   };
   nixpkgs.overlays = [
-    (final: prev: {
-      "gradient-frontend" =
-        (prev."gradient-frontend").overrideAttrs (old: {
-          pnpmDeps = old.pnpmDeps.overrideAttrs (_: {
-            outputHash = "sha256-7LhcfB/O0p2KipGNe3ixEBe9bYhKRFVdzP8chKwBd3I=";
-          });
-        });
-    })
   ];
 }
