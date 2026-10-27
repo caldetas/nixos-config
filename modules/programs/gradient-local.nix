@@ -45,7 +45,7 @@ with lib;
       };
       #    baseDir = "/mnt/nas/gradient";
       secrets.githubAppPrivateKeyFile = "/run/secrets/gradient/github-app.pem";
-      services.gradient.secrets.githubAppWebhookSecretFile = "/run/secrets/gradient/github-app-webhook";
+      secrets.githubAppWebhookSecretFile = "/run/secrets/gradient/github-app-webhook";
     };
     services.postgresql.package = pkgs.postgresql_18;
     security.acme = {
