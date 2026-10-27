@@ -28,15 +28,12 @@
     seafile-client
     spotify
     telegram-desktop
-    teams-for-linux
     #    terraform
     vlc
     vpsfree-client
     yarn
     yq
-    gradient-cli-full
-    #spring boot
-    maven
+    gradient-cli
   ]
   ++ (with unstable; [ steam ])
   #  ++ (with gradient; [ gradient-cli ])
