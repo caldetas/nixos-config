@@ -531,16 +531,16 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1793111970,
-        "narHash": "sha256-UsLxslyc/R0ObnM62YjRjLtf5teLr/fT2hGyRLzQJzI=",
+        "lastModified": 1793134105,
+        "narHash": "sha256-binh3Jk15HQHWZNrOqJwHKPxDeLDfAxf6Sezt74Ybe8=",
         "owner": "caldetas",
         "repo": "nixpkgs",
-        "rev": "8037125521f4d9079fd832193cdf89b38688456f",
+        "rev": "2376b3b073f2a83821a1b25e8c6d1ad1bd21c954",
         "type": "github"
       },
       "original": {
         "owner": "caldetas",
-        "ref": "gradient-frontend-hash-clean",
+        "ref": "master",
         "repo": "nixpkgs",
         "type": "github"
       }
