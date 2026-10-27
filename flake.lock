@@ -499,16 +499,16 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1793139073,
-        "narHash": "sha256-Q91uo+XVg0k/mtI7ALbtRrS3z+BHT/tVJWJqRAxarHY=",
+        "lastModified": 1793141643,
+        "narHash": "sha256-tVwPSQrIjVyQSpiwvSXkqQI7KzkLKYjcMe2XeVOkWgs=",
         "owner": "caldetas",
         "repo": "nixpkgs",
-        "rev": "b7be6ae627ceb0392a9e510be746e7c76aa4c544",
+        "rev": "f386480ca7f3cda9d007210d95240866b1469911",
         "type": "github"
       },
       "original": {
         "owner": "caldetas",
-        "ref": "master",
+        "ref": "gradient-frontend-clean",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -531,16 +531,16 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1793139073,
-        "narHash": "sha256-Q91uo+XVg0k/mtI7ALbtRrS3z+BHT/tVJWJqRAxarHY=",
+        "lastModified": 1793141643,
+        "narHash": "sha256-tVwPSQrIjVyQSpiwvSXkqQI7KzkLKYjcMe2XeVOkWgs=",
         "owner": "caldetas",
         "repo": "nixpkgs",
-        "rev": "b7be6ae627ceb0392a9e510be746e7c76aa4c544",
+        "rev": "f386480ca7f3cda9d007210d95240866b1469911",
         "type": "github"
       },
       "original": {
         "owner": "caldetas",
-        "ref": "master",
+        "ref": "gradient-frontend-clean",
         "repo": "nixpkgs",
         "type": "github"
       }
