@@ -12,7 +12,7 @@
 { lib, inputs, nixpkgs, nixpkgs-stable, nixpkgs-unstable, home-manager, nur, hyprland, plasma-manager, vars, ... }:
 
 let
-  system = "aarch64-linux";
+  system = "x86_64-linux";
 
   pkgs = import nixpkgs {
     inherit system;

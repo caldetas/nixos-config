@@ -12,7 +12,7 @@
 
   outputs = inputs:
     let
-      pkgs = import inputs.nixpkgs { system = "aarch64-linux"; };
+      pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
       pypi = with pkgs; (ps: with ps; [
         pip
       ]);

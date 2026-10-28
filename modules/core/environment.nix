@@ -42,7 +42,7 @@
     mpv
     pavucontrol
     pipewire
-    usbimager
+    #    usbimager
     file-roller
     p7zip
     rsync
