@@ -38,6 +38,9 @@
   };
   networking.firewall.allowedTCPPorts = [ 22 80 443 ];
 
+  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
+  networking.useDHCP = lib.mkDefault true;
+
   #  systemd.extraConfig = ''
   #    DefaultTimeoutStartSec=900s
   #  '';
@@ -55,26 +58,29 @@
   networking.networkmanager.enable = true;
   #  systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
 
+  #boot.initrd.kernelModules = [ "virtio_gpu" ];
+  #boot.kernelParams = [ "console=tty" ];
+
   boot = {
-    #      # Boot Options
+    #    #      # Boot Options
     loader = {
-      #        systemd-boot.enable = lib.mkForce  false;
-      #  generic-extlinux-compatible.enable = lib.mkForce false;
-      #        grub = {
-      #          enable = true;
-      #          device = "/dev/sda"; #"nodev";  # needed for disk images
-      #          copyKernels = true;
-      #          useOSProber = false;
-      #          gfxmodeEfi = "text";
-      #          gfxmodeBios = "text";
-      #          gfxpayloadEfi = "text";
-      #          gfxpayloadBios = "text";
-      #          extraConfig = ''
-      #            serial --unit=0 --speed=115200
-      #            terminal_input console serial
-      #            terminal_output console serial
-      #          '';
-      #        };
+      #      #        systemd-boot.enable = lib.mkForce  false;
+      #      #  generic-extlinux-compatible.enable = lib.mkForce false;
+      #      #        grub = {
+      #      #          enable = true;
+      #      #          device = "/dev/sda"; #"nodev";  # needed for disk images
+      #      #          copyKernels = true;
+      #      #          useOSProber = false;
+      #      #          gfxmodeEfi = "text";
+      #      #          gfxmodeBios = "text";
+      #      #          gfxpayloadEfi = "text";
+      #      #          gfxpayloadBios = "text";
+      #      #          extraConfig = ''
+      #      #            serial --unit=0 --speed=115200
+      #      #            terminal_input console serial
+      #      #            terminal_output console serial
+      #      #          '';
+      #      #        };
       grub = {
         efiSupport = true;
         efiInstallAsRemovable = true;
@@ -84,7 +90,6 @@
     kernelParams = [ "root=LABEL=nixos" ];
     initrd.availableKernelModules = [ "ahci" "sd_mod" "ext4" ];
   };
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
 }
 

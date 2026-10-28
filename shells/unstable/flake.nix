@@ -12,7 +12,7 @@
 
   outputs = { self, nixpkgs, nixpkgs-unstable }:
     let
-      system = "x86_64-linux";
+      system = "aarch64-linux";
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true; # Allow Proprietary Software

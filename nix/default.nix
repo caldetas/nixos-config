@@ -11,7 +11,7 @@
 { lib, inputs, nixpkgs, home-manager, nixgl, vars, ... }:
 
 let
-  system = "x86_64-linux"; # System Architecture
+  system = "aarch64-linux"; # System Architecture
   pkgs = nixpkgs.legacyPackages.${system};
 in
 {
