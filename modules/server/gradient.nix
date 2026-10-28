@@ -14,11 +14,11 @@ with lib;
   config = mkIf (config.gradient-ci.enable) {
     services.gradient = {
       enable = true;
-      domain = "gradient.${vars.domain}";
+      domain = "aarch-ci.${vars.domain}";
       secrets.jwtFile = "/run/secrets/gradient/jwt";
       secrets.cryptFile = "/run/secrets/gradient/crypt";
       postgres.enable = true;
-      worker.enable = true;
+      #      worker.enable = true;
       nginx.exposeProto = true;
 
       #      s3 = {
