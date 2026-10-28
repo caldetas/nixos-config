@@ -23,8 +23,5 @@ with lib;
     hostName = host.hostName;
   };
   nixpkgs.overlays = [
-    (final: prev: {
-      gradient-frontend = unstable.gradient-frontend;
-    })
   ];
 }
