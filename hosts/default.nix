@@ -9,7 +9,7 @@
 #           └─ default.nix 
 #
 
-{ lib, inputs, nixpkgs, nixpkgs-stable, nixpkgs-unstable, home-manager, nur, hyprland, plasma-manager, vars, ... }:
+{ lib, inputs, nixpkgs, nixpkgs-stable, nixpkgs-unstable, home-manager, nur, hyprland, plasma-manager, vars, gradient, ... }:
 
 let
   system = "x86_64-linux";
@@ -32,7 +32,7 @@ let
     lib.nixosSystem {
       inherit system;
       specialArgs = {
-        inherit inputs system unstable stable hyprland vars;
+        inherit inputs system unstable stable hyprland vars gradient;
         host = {
           hostName = name;
           mainMonitor = monitors.main;
