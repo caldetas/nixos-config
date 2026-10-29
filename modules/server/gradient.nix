@@ -56,13 +56,20 @@ with lib;
               type = "external";
               url = "https://public.gradient.ci/cache/main";
             }
+            {
+              active = true;
+              display_name = "cache.caldetas.com";
+              public_key = "gradient.caldetas.com-fleet-cache:086c1m65/dYEBoZy9gytA2aD5kPq04lH8VFySPDXwG8=";
+              type = "external";
+              url = "https://gradient.caldetas.com/cache/fleet-cache";
+            }
           ];
         };
         tasks = {
           build = {
             project = "nix-fleet";
             created_by = "admin";
-            repository = "https://github.com/${vars.user}/nixos-config.git";
+            repository = "https://github.com/${vars.user}/nixos-config/aar64";
             wildcard = "packages.x86_64-linux.**,nixosConfigurations.*.config.system.build.toplevel";
             #            triggers = [
             #              { type = "reporter_push"; integration = "github-${vars.user}"; }
