@@ -63,6 +63,13 @@ with lib;
               type = "external";
               url = "https://public.gradient.ci/cache/main";
             }
+            {
+              active = true;
+              display_name = "cache.caldetas.com";
+              public_key = "gradient.caldetas.com-fleet-cache:086c1m65/dYEBoZy9gytA2aD5kPq04lH8VFySPDXwG8=";
+              type = "external";
+              url = "https://gradient.caldetas.com/cache/fleet-cache";
+            }
           ];
         };
         tasks = {
