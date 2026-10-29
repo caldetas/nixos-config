@@ -62,19 +62,19 @@ in
   #      third = "";
   #    } [ ];
 
-  libelula = makeHost "libelula" "libelula"
-    {
-      main = "eDP-1";
-      second = "HDMI-A-1";
-      third = "";
-    } [ nur.modules.nixos.default ];
-
-  onsite-gnome = makeHost "onsite-gnome" "onsite-gnome"
-    {
-      main = "eDP-1";
-      second = "DP-6";
-      third = "DP-8";
-    } [ ];
+  #  libelula = makeHost "libelula" "libelula"
+  #    {
+  #      main = "eDP-1";
+  #      second = "HDMI-A-1";
+  #      third = "";
+  #    } [ nur.modules.nixos.default ];
+  #
+  #  onsite-gnome = makeHost "onsite-gnome" "onsite-gnome"
+  #    {
+  #      main = "eDP-1";
+  #      second = "DP-6";
+  #      third = "DP-8";
+  #    } [ ];
 
   ci = makeHost "ci" "ci"
     {
