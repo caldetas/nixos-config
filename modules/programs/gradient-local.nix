@@ -1,6 +1,13 @@
-{ config, pkgs, vars, lib, ... }:
+{ config, pkgs, gradient, vars, lib, ... }:
 with lib;
 {
+  imports = [
+    gradient.nixosModules.default
+  ];
+  disabledModules = [
+    "services/continuous-integration/gradient/default.nix"
+    "services/continuous-integration/gradient/worker.nix"
+  ];
 
   options = {
     gradient-local = {
@@ -19,7 +26,7 @@ with lib;
       secrets.cryptFile = "/run/secrets/gradient/crypt";
       postgres.enable = true;
       worker.enable = true;
-      nginx.exposeProto = true;
+      proto.public = true;
       #      s3 = {
       #        bucket = "nix-fleet";
       #        enable = true;
@@ -44,8 +51,12 @@ with lib;
         };
       };
       #    baseDir = "/mnt/nas/gradient";
-      secrets.githubAppPrivateKeyFile = "/run/secrets/gradient/github-app.pem";
-      secrets.githubAppWebhookSecretFile = "/run/secrets/gradient/github-app-webhook";
+      githubApp = {
+        enable = true;
+        id = 5453140;
+        privateKeyFile = "/run/secrets/gradient/github-app.pem";
+        webhookSecretFile = "/run/secrets/gradient/github-app-webhook";
+      };
     };
     services.postgresql.package = pkgs.postgresql_18;
     security.acme = {

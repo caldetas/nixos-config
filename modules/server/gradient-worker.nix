@@ -1,6 +1,13 @@
-{ config, pkgs, vars, lib, ... }:
+{ config, pkgs, vars, lib, gradient, ... }:
 with lib;
 {
+  imports = [
+    gradient.nixosModules.default
+  ];
+  disabledModules = [
+    "services/continuous-integration/gradient/default.nix"
+    "services/continuous-integration/gradient/worker.nix"
+  ];
 
   options = {
     gradient-worker = {

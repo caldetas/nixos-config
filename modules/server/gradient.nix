@@ -19,7 +19,7 @@ with lib;
       secrets.cryptFile = "/run/secrets/gradient/crypt";
       postgres.enable = true;
       #      worker.enable = true;
-      nginx.exposeProto = true;
+      proto.public = true;
 
       #      s3 = {
       #        bucket = "nix-fleet";
@@ -69,7 +69,7 @@ with lib;
           build = {
             project = "nix-fleet";
             created_by = "admin";
-            repository = "https://github.com/${vars.user}/nixos-config/aar64";
+            repository = "https://github.com/${vars.user}/nixos-config/gradient.aar64";
             wildcard = "packages.x86_64-linux.**,nixosConfigurations.*.config.system.build.toplevel";
             #            triggers = [
             #              { type = "reporter_push"; integration = "github-${vars.user}"; }
@@ -98,8 +98,12 @@ with lib;
           projects = [ "nix-fleet" ];
           token_file = "/run/secrets/gradient/workers-token";
         };
-        #        secrets.githubAppPrivateKeyFile = "/run/secrets/gradient/github-app.pem";
-        #        secrets.githubAppWebhookSecretFile = "/run/secrets/gradient/github-app-webhook";
+      };
+      githubApp = {
+        enable = true;
+        id = 5453140;
+        privateKeyFile = "/run/secrets/gradient/github-app.pem";
+        webhookSecretFile = "/run/secrets/gradient/github-app-webhook";
       };
     };
     services.postgresql.package = pkgs.postgresql_18;
