@@ -22,7 +22,7 @@ with lib;
   config = mkIf (config.gradient-ci.enable) {
     services.gradient = {
       enable = true;
-      domain = "gradient.${vars.domain}";
+      domain = "aarch-ci.${vars.domain}";
       secrets.jwtFile = "/run/secrets/gradient/jwt";
       secrets.cryptFile = "/run/secrets/gradient/crypt";
       postgres.enable = true;
@@ -72,26 +72,26 @@ with lib;
             created_by = "admin";
             repository = "https://github.com/${vars.user}/nixos-config.git";
             wildcard = "packages.x86_64-linux.**,nixosConfigurations.*.config.system.build.toplevel";
-            triggers = [
-              { type = "reporter_push"; integration = "github-${vars.user}"; }
-              { type = "reporter_pull_request"; integration = "github-${vars.user}"; }
-            ];
-            actions = [
-              {
-                name = "report-status";
-                type = "git_host_status_report";
-                config.integration = "github-${vars.user}";
-              }
-              {
-                name = "flake-update";
-                type = "open_pr";
-                config.integration = "github-${vars.user}";
-              }
-            ];
-            flake_input_overrides = {
-              nixpkgs.keep_url = true;
-              "home-manager*".keep_url = true;
-            };
+            #            triggers = [
+            #              { type = "reporter_push"; integration = "github-${vars.user}"; }
+            #              { type = "reporter_pull_request"; integration = "github-${vars.user}"; }
+            #            ];
+            #            actions = [
+            #              {
+            #                name = "report-status";
+            #                type = "git_host_status_report";
+            #                config.integration = "github-${vars.user}";
+            #              }
+            #              {
+            #                name = "flake-update";
+            #                type = "open_pr";
+            #                config.integration = "github-${vars.user}";
+            #              }
+            #            ];
+            #            flake_input_overrides = {
+            #              nixpkgs.keep_url = true;
+            #              "home-manager*".keep_url = true;
+            #            };
           };
         };
         workers.vps = {
