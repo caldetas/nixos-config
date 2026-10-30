@@ -89,8 +89,9 @@ with lib;
               }
             ];
             flake_input_overrides = {
-              nixpkgs.keep_url = true;
-              "home-manager*".keep_url = true;
+              "*".keep_url = true;
+              #              nixpkgs.keep_url = true;
+              #              "home-manager*".keep_url = true;
             };
           };
         };
