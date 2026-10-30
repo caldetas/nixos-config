@@ -3,6 +3,7 @@ with lib;
 {
   imports = [
     gradient.nixosModules.default
+    gradient.nixosModules.client # for pull-deploy
   ];
   disabledModules = [
     "services/continuous-integration/gradient/default.nix"
@@ -107,6 +108,13 @@ with lib;
         privateKeyFile = "/run/secrets/gradient/github-app.pem";
         webhookSecretFile = "/run/secrets/gradient/github-app-webhook";
       };
+    };
+    system.gradient-deploy = {
+      enable = true;
+      server = "https://gradient.${vars.domain}";
+      task = "nix-fleet/build";
+      apiKeyFile = "/run/secrets/gradient/deploy-key";
+      dates = "04:00";
     };
     services.postgresql.package = pkgs.postgresql_18;
   };
