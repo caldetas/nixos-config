@@ -3,6 +3,7 @@ with lib;
 {
   imports = [
     gradient.nixosModules.default
+    gradient.nixosModules.client # for pull-deploy
   ];
   disabledModules = [
     "services/continuous-integration/gradient/default.nix"
