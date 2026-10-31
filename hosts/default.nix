@@ -54,7 +54,6 @@ let
 
 in
 {
-
   #  vm = makeHost "vm" "vm"
   #    {
   #      main = "Virtual-1";

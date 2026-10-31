@@ -16,6 +16,7 @@
     gimp
     glmark2
     gparted
+    gradient-cli
     hypnotix
     nodejs
     openvpn
@@ -27,13 +28,13 @@
     remmina
     seafile-client
     spotify
+    stremio-linux-shell
     telegram-desktop
     #    terraform
     vlc
     vpsfree-client
     yarn
     yq
-    gradient-cli
   ]
   ++ (with unstable; [ steam ])
   ++ (with stable; [ ]);
@@ -45,7 +46,6 @@
       "com.rtosta.zapzap"
       "org.signal.Signal"
       "ro.go.hmlendea.DL-Desktop"
-      "com.stremio.Stremio"
       "com.surfshark.Surfshark"
     ];
   };
