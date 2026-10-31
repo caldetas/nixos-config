@@ -15,6 +15,7 @@
       file.".config/wall.mp4".source = ./wall.mp4;
       pointerCursor = {
         # System-Wide Cursor
+        enable = true;
         gtk.enable = true;
         #        name = "Dracula-cursors";
         name = "catppuccin-mocha-dark-cursors";

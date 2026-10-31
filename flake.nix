@@ -11,10 +11,11 @@
 
   inputs = # References Used by Flake
     {
-      nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable"; # Stable Nix Packages
-      nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11"; # Unstable Nix Packages (Default)
-      nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable"; # Unstable Nix Packages (Default)
+      nixpkgs.url = "github:nixos/nixpkgs/master";
+      nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
+      nixpkgs-unstable.url = "github:nixos/nixpkgs/master";
       sops-nix.url = "github:Mic92/sops-nix"; # Sops Nix Secure Secretes Manager
+      disko.url = "github:nix-community/disko";
 
       home-manager = {
         # User Environment Manager
@@ -44,9 +45,12 @@
         inputs.nixpkgs.follows = "nixpkgs";
         inputs.home-manager.follows = "nixpkgs";
       };
+      gradient = {
+        url = "github:wavelens/gradient/latest";
+      };
     };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-stable, nixpkgs-unstable, home-manager, nur, nixgl, hyprland, plasma-manager, sops-nix, ... }: # Function telling flake which inputs to use
+  outputs = inputs @ { self, nixpkgs, nixpkgs-stable, nixpkgs-unstable, home-manager, nur, nixgl, hyprland, plasma-manager, sops-nix, gradient, disko, ... }: # Function telling flake which inputs to use
     let
       vars = {
         # Variables Used In Flake
@@ -63,7 +67,7 @@
         # NixOS Configurations
         import ./hosts {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-unstable nixpkgs-stable home-manager nur hyprland plasma-manager vars sops-nix; # Inherit inputs
+          inherit inputs nixpkgs nixpkgs-unstable nixpkgs-stable home-manager nur hyprland plasma-manager vars sops-nix gradient disko; # Inherit inputs
         }
       );
 

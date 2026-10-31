@@ -3,12 +3,7 @@
 #
 
 { config, lib, pkgs, unstable, inputs, vars, sops-nix, host, ... }:
-
-
 with lib;
-let
-  args = { inherit config lib pkgs unstable inputs vars sops-nix host; };
-in
 {
   imports =
     [
@@ -27,4 +22,6 @@ in
   networking = {
     hostName = host.hostName;
   };
+  nixpkgs.overlays = [
+  ];
 }

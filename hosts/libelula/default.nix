@@ -82,6 +82,7 @@
   #  vaultwarden.enable = true;
   #    kde.enable = true;
   #  hyprland.enable = true;
+  #    gradient-local.enable = true;
 
 
   #  environment.systemPackages = with unstable; [

@@ -1,0 +1,95 @@
+#
+#  Specific system configuration settings for server
+#
+{ pkgs, config, lib, unstable, inputs, vars, host, modulesPath, ... }:
+{
+  imports =
+    [
+      # Include the results of the hardware scan.
+      ./disko.nix
+      ./nginx.nix
+      ../configuration-server.nix
+      ../../modules/desktops/virtualisation/docker.nix
+      (modulesPath + "/profiles/qemu-guest.nix")
+    ];
+
+
+  # This is the server's hostname you chose during the order process. Feel free to change it.
+
+
+  server.enable = true;
+  gradient-ci.enable = true;
+
+  #NAS storage mount
+  environment.systemPackages = with pkgs; [ nfs-utils ];
+
+  # To allow you to properly use and access your VPS via SSH, we enable the OpenSSH server and
+  # grant you root access. This is just our default configuration, you are free to remove root
+  # access, create your own users and further secure your server.
+
+  services.openssh = {
+
+    # Allow root login with password, needed for passwords set through vpsAdmin
+    settings.PermitRootLogin = "yes";
+
+    # Needed for public keys deployed through vpsAdmin, can be disabled if you
+    # authorize your keys in configuration
+    authorizedKeysInHomedir = true;
+  };
+  networking.firewall.allowedTCPPorts = [ 22 80 443 ];
+
+  #  systemd.extraConfig = ''
+  #    DefaultTimeoutStartSec=900s
+  #  '';
+  #  # Under normal circumstances we would listen to your server's cloud-init callback and mark the server
+  #  # as installed at this point. As we don't deliver cloud-init with NixOS we have to use a workaround
+  #  # to indicate that your server is successfully installed. You can remove the cronjob after the server
+  #  # has been started the first time. It's no longer needed.
+
+  services.cron.enable = true;
+
+  # Please remove the hardcoded password from the configuration and set
+  # the password using the " passwd " command after the first boot.
+
+
+  networking.networkmanager.enable = true;
+  #  systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
+
+  boot = {
+    #      # Boot Options
+    loader = {
+      #        systemd-boot.enable = lib.mkForce  false;
+      #  generic-extlinux-compatible.enable = lib.mkForce false;
+      #        grub = {
+      #          enable = true;
+      #          device = "/dev/sda"; #"nodev";  # needed for disk images
+      #          copyKernels = true;
+      #          useOSProber = false;
+      #          gfxmodeEfi = "text";
+      #          gfxmodeBios = "text";
+      #          gfxpayloadEfi = "text";
+      #          gfxpayloadBios = "text";
+      #          extraConfig = ''
+      #            serial --unit=0 --speed=115200
+      #            terminal_input console serial
+      #            terminal_output console serial
+      #          '';
+      #        };
+      grub = {
+        efiSupport = true;
+        efiInstallAsRemovable = true;
+      };
+    };
+    kernelPackages = lib.mkForce pkgs.linuxPackages_6_6;
+    kernelParams = [ "root=LABEL=nixos" ];
+    initrd.availableKernelModules = [ "ahci" "sd_mod" "ext4" ];
+  };
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+}
+
+
+
+
+
+

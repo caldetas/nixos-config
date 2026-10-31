@@ -4,7 +4,8 @@
   environment.systemPackages = with pkgs; [
     google-chrome
     brave
-    calibre #ebooks
+    #    calibre #ebooks
+    claude-code
     discord
     exiftool
     feh
@@ -15,6 +16,7 @@
     gimp
     glmark2
     gparted
+    gradient-cli
     hypnotix
     nodejs
     openvpn
@@ -26,16 +28,13 @@
     remmina
     seafile-client
     spotify
+    stremio-linux-shell
     telegram-desktop
-    teams-for-linux
     #    terraform
     vlc
     vpsfree-client
     yarn
     yq
-
-    #spring boot
-    maven
   ]
   ++ (with unstable; [ steam ])
   ++ (with stable; [ ]);
@@ -47,7 +46,6 @@
       "com.rtosta.zapzap"
       "org.signal.Signal"
       "ro.go.hmlendea.DL-Desktop"
-      "com.stremio.Stremio"
       "com.surfshark.Surfshark"
     ];
   };
