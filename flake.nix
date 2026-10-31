@@ -13,7 +13,7 @@
     {
       nixpkgs.url = "github:nixos/nixpkgs/master";
       nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
-      nixpkgs-unstable.follows = "nixpkgs";
+      nixpkgs-unstable.url = "github:nixos/nixpkgs/master";
       sops-nix.url = "github:Mic92/sops-nix"; # Sops Nix Secure Secretes Manager
       disko.url = "github:nix-community/disko";
 
