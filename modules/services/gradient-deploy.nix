@@ -1,4 +1,4 @@
-{ config, pkgs, vars, lib, gradient, ... }:
+{ config, pkgs, vars, lib, gradient, networking, host, ... }:
 with lib;
 {
   imports = [
@@ -9,9 +9,10 @@ with lib;
   #gradient deploy runs on all systems
   config.system.gradient-deploy = {
     enable = true;
+    deployFor = host.hostName;
     server = "https://gradient.${vars.domain}";
     task = "nix-fleet/build";
     apiKeyFile = "/run/secrets/gradient/deploy-key";
-    dates = "04:00";
+    dates = "00:00";
   };
 }
