@@ -3,4 +3,5 @@
   ./idea.nix
   ./services.nix
   ./theming.nix
+  ./work.nix
 ]
