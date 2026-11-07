@@ -77,6 +77,7 @@
   # Enable Desktop Environment.
   #      bspwm.enable = true;
   gnome.enable = true;
+  #  gradient-deploy-on-boot.enable = true;
   #  immich.enable = true;
   #  seafile.enable = true;
   #  vaultwarden.enable = true;

@@ -7,6 +7,15 @@ with lib;
 
 
   #gradient deploy runs on all systems
+  options = {
+    gradient-deploy-on-boot = {
+      enable = mkOption {
+        type = types.bool;
+        default = false;
+      };
+    };
+  };
+
   config = {
     system.gradient-deploy = {
       enable = true;
@@ -17,13 +26,13 @@ with lib;
       dates = "00:00";
     };
     #on boot wait 60 seconds and pull
-    systemd.services.gradient-deploy-on-boot = {
+    systemd.services.gradient-deploy-on-boot = mkIf (config.gradient-deploy-on-boot.enable) {
       description = "Pull latest Gradient deployment after boot";
-
+      wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         Type = "oneshot";
-        ExecStartPre = "${pkgs.coreutils}/bin/sleep 60";
-        ExecStart = "/run/current-system/sw/bin/gradient-update";
+        #        ExecStartPre = "${pkgs.coreutils}/bin/sleep 60";
+        ExecStart = "${pkgs.systemd}/bin/systemctl start gradient-deploy.service";
       };
     };
   };
