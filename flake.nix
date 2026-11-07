@@ -12,7 +12,7 @@
   inputs = # References Used by Flake
     {
       nixpkgs.url = "github:nixos/nixpkgs/master";
-      nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
+      nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
       nixpkgs-unstable.url = "github:nixos/nixpkgs/master";
       sops-nix.url = "github:Mic92/sops-nix"; # Sops Nix Secure Secretes Manager
       disko.url = "github:nix-community/disko";

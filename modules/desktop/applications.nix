@@ -3,7 +3,6 @@
 {
   environment.systemPackages = with pkgs; [
     google-chrome
-    brave
     #    calibre #ebooks
     claude-code
     discord
@@ -37,7 +36,7 @@
     yq
   ]
   ++ (with unstable; [ steam ])
-  ++ (with stable; [ ]);
+  ++ (with stable; [ brave ]);
 
   flatpak = {
     enable = true;
