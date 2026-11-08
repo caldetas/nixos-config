@@ -10,7 +10,6 @@ with lib;
       "immich.${vars.domain}" = {
         serverName = "immich.${vars.domain}";
         serverAliases = [
-          "foto.${vars.domain}"
           "foto.wurstix.com"
         ];
         enableACME = true;
