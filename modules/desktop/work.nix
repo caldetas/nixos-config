@@ -15,6 +15,8 @@ in
   sops.secrets."ic/user" = { };
   sops.secrets."ic/password" = { };
   sops.secrets."ic/domain" = { };
+  sops.secrets."ic/dns" = { };
+  sops.secrets."ic/shared" = { };
 
   systemd.services.ic-vpn = {
     description = "OpenFortiVPN with DNS routing";
@@ -44,17 +46,20 @@ in
       '';
 
       ExecStartPost = pkgs.writeShellScript "ic-vpn-dns" ''
-        for i in $(seq 1 60); do
-          if ${pkgs.iproute2}/bin/ip link show ppp0 >/dev/null 2>&1; then
-            ${pkgs.systemd}/bin/resolvectl dns ppp0 10.0.16.11 10.0.16.12
-            ${pkgs.systemd}/bin/resolvectl domain ppp0 '~icag.local'
-            echo "dns rerouting succeeded"
-            exit 0
-          fi
-          sleep 1
-        done
-        echo "ppp0 did not appear" >&2
-        exit 1
+        set -eu
+        dns_servers="$(${pkgs.coreutils}/bin/cat ${config.sops.secrets."ic/dns".path})"
+        dns_suffix="$(${pkgs.coreutils}/bin/cat ${config.sops.secrets."ic/shared".path})"
+          for i in $(seq 1 60); do
+            if ${pkgs.iproute2}/bin/ip link show ppp0 >/dev/null 2>&1; then
+              ${pkgs.systemd}/bin/resolvectl dns ppp0 $dns_servers
+              ${pkgs.systemd}/bin/resolvectl domain ppp0 "~$dns_suffix"
+              echo "dns rerouting succeeded"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "ppp0 did not appear" >&2
+          exit 1
       '';
     };
   };

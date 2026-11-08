@@ -8,7 +8,7 @@
     TERM = vars.term;
   };
 
-  environment.systemPackages = with unstable; [
+  environment.systemPackages = with pkgs; [
     borgbackup
     borgmatic
     btop
