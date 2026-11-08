@@ -4,7 +4,6 @@
   environment.systemPackages = with pkgs; [
     google-chrome
     #    calibre #ebooks
-    claude-code
     discord
     exiftool
     feh
@@ -35,8 +34,8 @@
     yarn
     yq
   ]
-  ++ (with unstable; [ steam ])
-  ++ (with stable; [ brave ]);
+  ++ (with unstable; [ brave steam ])
+  ++ (with stable; [ ]);
 
   flatpak = {
     enable = true;

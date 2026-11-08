@@ -11,13 +11,14 @@
 
   inputs = # References Used by Flake
     {
-      nixpkgs.url = "github:nixos/nixpkgs/master";
+      nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
       nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
       nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable-small";
       sops-nix.url = "github:Mic92/sops-nix"; # Sops Nix Secure Secretes Manager
       disko.url = "github:nix-community/disko";
 
       home-manager = {
+
         # User Environment Manager
         url = "github:nix-community/home-manager";
         inputs.nixpkgs.follows = "nixpkgs";
