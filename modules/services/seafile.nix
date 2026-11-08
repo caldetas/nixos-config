@@ -173,6 +173,14 @@ in
     ONLYOFFICE_EDIT_FILE_EXTENSION = ('docx', 'pdf', 'pptx', 'xlsx')
     ONLYOFFICE_JWT_SECRET = 'REDACTED'  # must match ONLYOFFICE_JWT_SECRET in .env
 
+    EMAIL_USE_TLS = True
+    EMAIL_HOST = 'smtp.example.com'        # smpt server
+    EMAIL_HOST_USER = 'username@example.com'    # username and domain
+    EMAIL_HOST_PASSWORD = 'password'    # password
+    EMAIL_PORT = 587
+    DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+    SERVER_EMAIL = EMAIL_HOST_USER
+
 
     #and to doker-compose.yml
 
@@ -190,5 +198,6 @@ in
       - JWT_SECRET=${ONLYOFFICE_JWT_SECRET:-Supers3cr3t}
     networks:
       - seafile-net
+
   */
 }

@@ -1,0 +1,18 @@
+#todo: auto deploy this file
+services:
+  dovecot-mailcow:
+    volumes:
+      - /var/lib/acme/mail.caldetas.com/fullchain.pem:/etc/ssl/mail/mail.caldetas.com/cert.pem:ro
+      - /var/lib/acme/mail.caldetas.com/key.pem:/etc/ssl/mail/mail.caldetas.com/key.pem:ro
+
+  postfix-mailcow:
+    volumes:
+      - /var/lib/acme/mail.caldetas.com/fullchain.pem:/etc/ssl/mail/cert.pem:ro
+      - /var/lib/acme/mail.caldetas.com/key.pem:/etc/ssl/mail/key.pem:ro
+      - /var/lib/acme/mail.caldetas.com/fullchain.pem:/etc/ssl/mail/mail.caldetas.com/cert.pem:ro
+      - /var/lib/acme/mail.caldetas.com/key.pem:/etc/ssl/mail/mail.caldetas.com/key.pem:ro
+
+  nginx-mailcow:
+    volumes:
+      - /var/lib/acme/mail.caldetas.com/fullchain.pem:/etc/ssl/mail/cert.pem:ro
+      - /var/lib/acme/mail.caldetas.com/key.pem:/etc/ssl/mail/key.pem:ro
