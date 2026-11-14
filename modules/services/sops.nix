@@ -35,7 +35,7 @@ with lib;
   sops.secrets."gradient/github-app.pem" = { };
   sops.secrets."gradient/admin-password" = { };
   sops.secrets."gradient/deploy-key" = { };
-  sops.secrets."test" = { sopsFile = ./../../secrets/nixcz.yaml; };
+  sops.secrets."test" = { sopsFile = ./../../secrets/hosts/nixcz.yaml; };
 
 
   sops.secrets."vpsfreectl/haveapi-client" = {
@@ -48,7 +48,6 @@ with lib;
   # SOPS Configuration Secrets
   sops.defaultSopsFile = ./../../secrets/secrets.yaml;
   sops.defaultSopsFormat = "yaml";
-  sops.age.keyFile = "/home/${vars.user}/.config/sops/age/keys.txt";
   sops.age.keyFile = "/var/lib/sops-nix/key.txt";
   sops.age.generateKey = true;
   system.activationScripts = {
