@@ -3,16 +3,20 @@
 keys:
   - &admin age17nkqp3y45q4yrlp3xsje2ec6nwk2tywudt3kss2um6rde7ld9fuqkf904u
   - &libelula age103q5xw46s8px5jeh20whaj5aumjplzamuvhsqgj2pgpgup2py38qu27a2c
+  - &ci age13260gfg8q9s074250d6kl33d6jrrdkkwpl0e4grceg5jm25xl92sgyjhm4
+
 creation_rules:
   - path_regex: secrets/secrets\.yaml$
     key_groups:
       - age:
           - *admin
           - *libelula
+          - *ci
 
   - path_regex: secrets/hosts/nixcz\.yaml$
     key_groups:
       - age:
           - *admin
           - *libelula
+          - *ci
 
