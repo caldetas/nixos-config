@@ -19,28 +19,30 @@ with lib;
   sops.secrets."ic/domain" = { sopsFile = ./../../secrets/desktops.yaml; };
   sops.secrets."ic/dns" = { sopsFile = ./../../secrets/desktops.yaml; };
   sops.secrets."ic/shared" = { sopsFile = ./../../secrets/desktops.yaml; };
-  #
-  #  #nixcz
-  #  sops.secrets."borg/password" = { };
-  #  sops.secrets."borg/repo" = { };
-  #  sops.secrets."borg/rsh" = { };
-  #  sops.secrets."server/db-password" = { };
-  #  sops.secrets."vaultwarden/env" = { };
-  #  sops.secrets."gradient/crypt" = { };
-  #  sops.secrets."gradient/jwt" = { };
-  #  sops.secrets."gradient/s3-key" = { };
-  #  sops.secrets."gradient/s3-secret" = { };
-  #  sops.secrets."gradient/gradient-worker-peers" = { };
-  #  sops.secrets."gradient/cache-signing-file" = { };
-  #  sops.secrets."gradient/integrations-key-file" = { };
-  #  sops.secrets."gradient/integrations-git-token_file" = { };
-  #  sops.secrets."gradient/workers-token" = { };
-  #  sops.secrets."gradient/project-ssh-key" = { };
-  #  sops.secrets."gradient/actions-config-token" = { };
-  #  sops.secrets."gradient/github-app-webhook" = { };
-  #  sops.secrets."gradient/github-app.pem" = { };
-  #  sops.secrets."gradient/admin-password" = { };
-  #  sops.secrets."gradient/deploy-key" = { };
+
+  #nixcz
+  sops.secrets."borg/password" = { sopsFile = ./../../secrets/hosts/nixcz.yaml; };
+  sops.secrets."borg/repo" = { sopsFile = ./../../secrets/hosts/nixcz.yaml; };
+  sops.secrets."borg/rsh" = { sopsFile = ./../../secrets/hosts/nixcz.yaml; };
+  sops.secrets."server/db-password" = { sopsFile = ./../../secrets/hosts/nixcz.yaml; };
+  sops.secrets."vaultwarden/env" = { sopsFile = ./../../secrets/hosts/nixcz.yaml; };
+
+  #gradient
+  sops.secrets."gradient/crypt" = { sopsFile = ./../../secrets/services/gradient.yaml; };
+  sops.secrets."gradient/jwt" = { sopsFile = ./../../secrets/services/gradient.yaml; };
+  sops.secrets."gradient/s3-key" = { sopsFile = ./../../secrets/services/gradient.yaml; };
+  sops.secrets."gradient/s3-secret" = { sopsFile = ./../../secrets/services/gradient.yaml; };
+  sops.secrets."gradient/gradient-worker-peers" = { sopsFile = ./../../secrets/services/gradient.yaml; };
+  sops.secrets."gradient/cache-signing-file" = { sopsFile = ./../../secrets/services/gradient.yaml; };
+  sops.secrets."gradient/integrations-key-file" = { sopsFile = ./../../secrets/services/gradient.yaml; };
+  sops.secrets."gradient/integrations-git-token_file" = { sopsFile = ./../../secrets/services/gradient.yaml; };
+  sops.secrets."gradient/workers-token" = { sopsFile = ./../../secrets/services/gradient.yaml; };
+  sops.secrets."gradient/project-ssh-key" = { sopsFile = ./../../secrets/services/gradient.yaml; };
+  sops.secrets."gradient/actions-config-token" = { sopsFile = ./../../secrets/services/gradient.yaml; };
+  sops.secrets."gradient/github-app-webhook" = { sopsFile = ./../../secrets/services/gradient.yaml; };
+  sops.secrets."gradient/github-app.pem" = { sopsFile = ./../../secrets/services/gradient.yaml; };
+  sops.secrets."gradient/admin-password" = { sopsFile = ./../../secrets/services/gradient.yaml; };
+  sops.secrets."gradient/deploy-key" = { sopsFile = ./../../secrets/services/gradient.yaml; };
 
 
   # SOPS Configuration Secrets

@@ -22,10 +22,18 @@ creation_rules:
       - age:
           - *admin
           - *nixcz
+
   - path_regex: secrets/desktops\.yaml$
     key_groups:
       - age:
           - *admin
           - *libelula
           - *onsite-gnome
+
+  - path_regex: secrets/services/gradient\.yaml$
+    key_groups:
+      - age:
+          - *admin
+          - *nixcz
+          - *ci
 
