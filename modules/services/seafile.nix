@@ -42,6 +42,7 @@ in
 
     # SOPS secret for .env
     sops.secrets."seafile/.env" = {
+      sopsFile = ./../../secrets/hosts/nixcz.yaml;
       group = "users";
       owner = "${vars.user}";
     };

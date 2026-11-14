@@ -17,7 +17,8 @@ with lib;
       import ../modules/programs ++
       import ../modules/services ++
       import ../modules/shell ++
-      import ../modules/theming
+      import ../modules/theming ++
+      import ../modules/secrets { inherit host; }
     );
   networking = {
     hostName = host.hostName;
