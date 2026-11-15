@@ -21,7 +21,7 @@ with lib;
       enable = true;
       deployFor = host.hostName;
       server = "https://gradient.${vars.domain}";
-      task = "nix-fleet/build";
+      task = "nix-fleet/deploy";
       apiKeyFile = "/run/secrets/gradient/deploy-key";
       dates = "00:00";
     };

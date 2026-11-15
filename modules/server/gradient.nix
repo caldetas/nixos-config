@@ -58,7 +58,7 @@ with lib;
           ];
         };
         tasks = {
-          build = {
+          deploy = {
             project = "nix-fleet";
             created_by = "admin";
             repository = "https://github.com/${vars.user}/nixos-config.git";
@@ -74,7 +74,7 @@ with lib;
               }
             ];
           };
-          preBuild = {
+          build = {
             project = "nix-fleet";
             created_by = "admin";
             repository = "https://github.com/${vars.user}/nixos-config.git";
