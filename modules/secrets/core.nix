@@ -5,4 +5,5 @@
   sops.secrets."curl/netrc" = { };
   sops.secrets."hetzner-id/storage" = { };
   sops.secrets."hetzner-id/backup" = { };
+  sops.secrets."gradient/deploy-key" = { };
 }

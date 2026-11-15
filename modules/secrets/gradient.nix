@@ -17,7 +17,6 @@ let
     "gradient/github-app-webhook"
     "gradient/github-app.pem"
     "gradient/admin-password"
-    "gradient/deploy-key"
   ];
 in
 {
