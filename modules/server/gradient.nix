@@ -28,15 +28,6 @@ with lib;
       postgres.enable = true;
       worker.enable = true;
       proto.public = true;
-
-      #      s3 = {
-      #        bucket = "nix-fleet";
-      #        enable = true;
-      #        region = "hel1";
-      #        endpoint = "https://hel1.your-objectstorage.com";
-      #        accessKeyId = "KF83P28EQEKPV8JOK6MQ"; #"/run/secrets/gradient/s3-key"; seems not to work
-      #        secretAccessKeyFile = "/run/secrets/gradient/s3-secret";
-      #      };
       state = {
         users.admin = {
           email = "info@${vars.domain}";
@@ -106,8 +97,6 @@ with lib;
             ];
             flake_input_overrides = {
               "*".keep_url = true;
-              #              nixpkgs.keep_url = true;
-              #              "home-manager*".keep_url = true;
             };
           };
         };
