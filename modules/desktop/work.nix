@@ -12,12 +12,6 @@ in
     openfortivpn
   ];
 
-  sops.secrets."ic/user" = { };
-  sops.secrets."ic/password" = { };
-  sops.secrets."ic/domain" = { };
-  sops.secrets."ic/dns" = { };
-  sops.secrets."ic/shared" = { };
-
   systemd.services.ic-vpn = {
     description = "OpenFortiVPN with DNS routing";
     serviceConfig = {
