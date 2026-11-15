@@ -73,8 +73,24 @@ with lib;
             repository = "https://github.com/${vars.user}/nixos-config.git";
             wildcard = "packages.x86_64-linux.**,nixosConfigurations.*.config.system.build.toplevel";
             triggers = [
-              { type = "reporter_push"; integration = "github-${vars.user}"; }
-              { type = "reporter_pull_request"; integration = "github-${vars.user}"; }
+              { type = "reporter_push"; integration = "github-${vars.user}"; config.branches = [ "master" ]; }
+            ];
+            actions = [
+              {
+                name = "report-status";
+                type = "git_host_status_report";
+                config.integration = "github-${vars.user}";
+              }
+            ];
+          };
+          preBuild = {
+            project = "nix-fleet";
+            created_by = "admin";
+            repository = "https://github.com/${vars.user}/nixos-config.git";
+            wildcard = "packages.x86_64-linux.**,nixosConfigurations.*.config.system.build.toplevel";
+            triggers = [
+              { type = "reporter_push"; integration = "github-${vars.user}"; config.branches = [ ]; }
+              { type = "reporter_pull_request"; integration = "github-${vars.user}"; config.branches = [ ]; }
             ];
             actions = [
               {
