@@ -1,5 +1,8 @@
 # .sops.yaml
 
+# update all yaml
+# find . -iname '*.yaml' | egrep -v '.sops.yaml' | xargs -I {} sh -c "sops updatekeys {}"
+
 keys:
   - &admin age17nkqp3y45q4yrlp3xsje2ec6nwk2tywudt3kss2um6rde7ld9fuqkf904u
   - &libelula age103q5xw46s8px5jeh20whaj5aumjplzamuvhsqgj2pgpgup2py38qu27a2c
