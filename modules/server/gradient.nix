@@ -80,7 +80,6 @@ with lib;
             repository = "https://github.com/${vars.user}/nixos-config.git";
             wildcard = "packages.x86_64-linux.**,nixosConfigurations.*.config.system.build.toplevel";
             triggers = [
-              #              { type = "reporter_push"; integration = "github-${vars.user}"; config.branches = [ ]; }
               { type = "reporter_pull_request"; integration = "github-${vars.user}"; config.branches = [ ]; }
             ];
             actions = [
