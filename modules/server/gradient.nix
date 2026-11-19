@@ -63,37 +63,37 @@ with lib;
             created_by = "admin";
             repository = "https://github.com/${vars.user}/nixos-config.git";
             wildcard = "packages.x86_64-linux.**,nixosConfigurations.*.config.system.build.toplevel";
-            #            triggers = [
-            #              { type = "reporter_push"; integration = "github-${vars.user}"; config.branches = [ "master" ]; }
-            #            ];
-            #            actions = [
-            #              {
-            #                name = "report-status";
-            #                type = "git_host_status_report";
-            #                config.integration = "github-${vars.user}";
-            #              }
-            #            ];
+            triggers = [
+              { type = "reporter_push"; integration = "github-${vars.user}"; config.branches = [ "master" ]; }
+            ];
+            actions = [
+              {
+                name = "report-status";
+                type = "git_host_status_report";
+                config.integration = "github-${vars.user}";
+              }
+            ];
           };
           build = {
             project = "nix-fleet";
             created_by = "admin";
             repository = "https://github.com/${vars.user}/nixos-config.git";
             wildcard = "packages.x86_64-linux.**,nixosConfigurations.*.config.system.build.toplevel";
-            #            triggers = [
-            #              { type = "reporter_pull_request"; integration = "github-${vars.user}"; config.branches = [ ]; }
-            #            ];
-            #            actions = [
-            #              {
-            #                name = "report-status";
-            #                type = "git_host_status_report";
-            #                config.integration = "github-${vars.user}";
-            #              }
-            #              {
-            #                name = "flake-update";
-            #                type = "open_pr";
-            #                config.integration = "github-${vars.user}";
-            #              }
-            #            ];
+            triggers = [
+              { type = "reporter_pull_request"; integration = "github-${vars.user}"; config.branches = [ ]; }
+            ];
+            actions = [
+              {
+                name = "report-status";
+                type = "git_host_status_report";
+                config.integration = "github-${vars.user}";
+              }
+              {
+                name = "flake-update";
+                type = "open_pr";
+                config.integration = "github-${vars.user}";
+              }
+            ];
             flake_input_overrides = {
               "*".keep_url = true;
             };
