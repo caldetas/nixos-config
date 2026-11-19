@@ -48,7 +48,7 @@
   # Please remove the hardcoded password from the configuration and set
   # the password using the " passwd " command after the first boot.
 
-  server.enable = true;
+  #  server.enable = true;
   #  gradient-ci.enable = true;
 
   networking.wireless.enable = lib.mkForce false; #todo delete, wpa was blocking rebuild
