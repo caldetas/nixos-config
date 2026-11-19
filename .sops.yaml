@@ -8,6 +8,7 @@ keys:
   - &libelula age103q5xw46s8px5jeh20whaj5aumjplzamuvhsqgj2pgpgup2py38qu27a2c
   - &onsite-gnome age1ttzke88jfkj2fg2qvt8nrqw9xh3nqk6kupzt2f2v4szz44vaucsqr43u56
   - &nixcz age1d2cyv97zczxw6vgughw5z6d9sea0la4f58tjyk5q9n0vfkz63upsed8swz
+  - &nixcz-staging-ci age1d2cyv97zczxw6vgughw5z6d9sea0la4f58tjyk5q9n0vfkz63upsed8swz
   - &ci age13260gfg8q9s074250d6kl33d6jrrdkkwpl0e4grceg5jm25xl92sgyjhm4
 
 creation_rules:
@@ -18,6 +19,7 @@ creation_rules:
           - *libelula
           - *onsite-gnome
           - *nixcz
+          - *nixcz-staging-ci
           - *ci
 
   - path_regex: secrets/hosts/nixcz\.yaml$
@@ -39,4 +41,5 @@ creation_rules:
           - *admin
           - *nixcz
           - *ci
+          - *nixcz-staging-ci
 
