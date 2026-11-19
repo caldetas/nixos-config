@@ -30,11 +30,7 @@
   # access, create your own users and further secure your server.
 
   services.openssh = {
-    # Allow root login with password, needed for passwords set through vpsAdmin
-    settings.PermitRootLogin = "yes";
-
-    # Needed for public keys deployed through vpsAdmin, can be disabled if you
-    # authorize your keys in configuration
+    settings.PermitRootLogin = "prohibit-password";
     authorizedKeysInHomedir = true;
   };
   networking.firewall.allowedTCPPorts = [ 22 80 443 ];
