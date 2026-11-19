@@ -61,6 +61,13 @@ in
   #      third = "";
   #    } [ ];
 
+  nixcz-ci-staging = makeHost "nixcz-ci-staging" "nixcz-ci-staging"
+    {
+      main = "";
+      second = "";
+      third = "";
+    } [ nur.modules.nixos.default ];
+
   libelula = makeHost "libelula" "libelula"
     {
       main = "eDP-1";
