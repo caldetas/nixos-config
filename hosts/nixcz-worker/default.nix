@@ -3,14 +3,13 @@
 #
 
 
-{ pkgs, config, lib, unstable, inputs, vars, host, vpsadminos, ... }:
+{ pkgs, config, lib, unstable, inputs, vars, host, ... }:
 
 {
   imports =
     [
       # Include the results of the hardware scan.
-      #      ./hardware-configuration.nix
-      (inputs.vpsadminos + "/os/lib/nixos-container/unstable/vpsadminos.nix")
+      ./hardware-configuration.nix
       ../configuration-server.nix
       ../../modules/desktops/virtualisation/docker.nix
     ]
