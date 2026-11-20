@@ -9,7 +9,8 @@
   imports =
     [
       # Include the results of the hardware scan.
-      ./hardware-configuration.nix
+      #      ./hardware-configuration.nix
+      (inputs.vpsadminos + "/os/lib/nixos-container/unstable/vpsadminos.nix")
       ../configuration-server.nix
       ../../modules/desktops/virtualisation/docker.nix
     ]
