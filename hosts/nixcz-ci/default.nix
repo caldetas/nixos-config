@@ -11,15 +11,10 @@
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../modules/desktops/virtualisation/docker.nix
-      ../configuration-server.nix
-    ] ++
-    (import ../../modules/desktops ++
-    import ../../modules/editors ++
-    import ../../modules/hardware ++
-    import ../../modules/programs ++
-    import ../../modules/services ++
-    import ../../modules/shell ++
-    import ../../modules/theming);
+    ]
+    #    ++
+    #    ()
+  ;
 
 
   #NAS storage mount
@@ -45,7 +40,7 @@
   # the password using the " passwd " command after the first boot.
 
   server.enable = true;
-  gradient-ci.enable = true;
+  #  gradient-ci.enable = true;
 
   networking.wireless.enable = lib.mkForce false; #todo delete, wpa was blocking rebuild
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;

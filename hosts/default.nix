@@ -61,7 +61,7 @@ in
   #      third = "";
   #    } [ ];
 
-  nixcz-ci-staging = makeHost "nixcz-ci-staging" "nixcz-ci-staging"
+  nixcz-ci = makeHost "nixcz-ci" "nixcz-ci"
     {
       main = "";
       second = "";
