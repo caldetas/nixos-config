@@ -9,7 +9,7 @@
   imports =
     [
       # Include the results of the hardware scan.
-      #      ./hardware-configuration.nix
+      ./hardware-configuration.nix
       ../../modules/desktops/virtualisation/docker.nix
     ]
     #    ++
