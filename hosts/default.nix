@@ -66,14 +66,20 @@ in
       main = "";
       second = "";
       third = "";
-    } [ nur.modules.nixos.default ];
+    } [ ];
+  nixcz-worker = makeHost "nixcz-worker" "nixcz-worker"
+    {
+      main = "";
+      second = "";
+      third = "";
+    } [ ];
 
   libelula = makeHost "libelula" "libelula"
     {
       main = "eDP-1";
       second = "HDMI-A-1";
       third = "";
-    } [ nur.modules.nixos.default ];
+    } [ ];
 
   onsite-gnome = makeHost "onsite-gnome" "onsite-gnome"
     {
