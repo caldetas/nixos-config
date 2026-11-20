@@ -1,12 +1,12 @@
 #
 #  These are the different profiles that can be used when building NixOS.
 #
-#  flake.nix 
-#   └─ ./hosts  
+#  flake.nix
+#   └─ ./hosts
 #       ├─ default.nix *
 #       ├─ configuration.nix
 #       └─ ./<host>.nix
-#           └─ default.nix 
+#           └─ default.nix
 #
 
 { lib, inputs, nixpkgs, nixpkgs-stable, nixpkgs-unstable, home-manager, nur, hyprland, plasma-manager, vars, gradient, ... }:
@@ -61,12 +61,20 @@ in
   #      third = "";
   #    } [ ];
 
+  nixcz-ci = makeHost "nixcz-ci" "nixcz-ci"
+    {
+      main = "";
+      second = "";
+      third = "";
+    } [ ];
+
+
   libelula = makeHost "libelula" "libelula"
     {
       main = "eDP-1";
       second = "HDMI-A-1";
       third = "";
-    } [ nur.modules.nixos.default ];
+    } [ ];
 
   onsite-gnome = makeHost "onsite-gnome" "onsite-gnome"
     {

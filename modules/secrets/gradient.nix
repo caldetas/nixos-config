@@ -24,7 +24,7 @@ in
   config = lib.mkIf
     (
       # or false omits undefined variables
-      config.server.enable or false || config.gradient-worker.enable  or false || config.gradient-ci.enable   or false
+      config.gradient-worker.enable  or false || config.gradient-ci.enable   or false
     )
     {
       sops.secrets =

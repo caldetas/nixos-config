@@ -6,6 +6,7 @@
       "https://public.gradient.ci/cache/main"
       "https://gradient.caldetas.com/cache/fleet-cache"
       "https://hyprland.cachix.org"
+      "https://cache.vpsadminos.org"
     ];
 
     trusted-public-keys = [
@@ -13,9 +14,10 @@
       "public.gradient.ci-main:qmxRE+saUvhNa3jqaCMWje+feVU77TjABchZrPGf7A8="
       "gradient.caldetas.com-fleet-cache:086c1m65/dYEBoZy9gytA2aD5kPq04lH8VFySPDXwG8="
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+      "cache.vpsadminos.org:wpIJlNZQIhS+0gFf1U3MC9sLZdLW3sh5qakOWGDoDrE="
     ];
 
     fallback = true;
-    connect-timeout = 10;
+    connect-timeout = 15;
   };
 }
