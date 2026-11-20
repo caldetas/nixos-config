@@ -3,7 +3,7 @@
 #
 
 
-{ pkgs, config, lib, unstable, inputs, vars, host, ... }:
+{ pkgs, config, lib, unstable, inputs, vars, host, vpsadminos, ... }:
 
 {
   imports =
