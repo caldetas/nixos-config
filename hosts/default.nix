@@ -67,12 +67,7 @@ in
       second = "";
       third = "";
     } [ ];
-  nixcz-worker = makeHost "nixcz-worker" "nixcz-worker"
-    {
-      main = "";
-      second = "";
-      third = "";
-    } [ ];
+
 
   libelula = makeHost "libelula" "libelula"
     {
