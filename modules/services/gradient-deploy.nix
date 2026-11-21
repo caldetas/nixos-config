@@ -32,4 +32,6 @@ with lib;
         Type = "oneshot";
         ExecStart = "${pkgs.systemd}/bin/systemctl start gradient-deploy.service";
       };
-    }
+    };
+  };
+}
