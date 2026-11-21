@@ -25,15 +25,13 @@ with lib;
       apiKeyFile = "/run/secrets/gradient/deploy-key";
       dates = "00:00";
     };
-    #on boot wait 60 seconds and pull
-    #    systemd.services.gradient-deploy-on-boot = mkIf (config.gradient-deploy-on-boot.enable) {
-    #      description = "Pull latest Gradient deployment after boot";
-    #      wantedBy = [ "multi-user.target" ];
-    #      serviceConfig = {
-    #        Type = "oneshot";
-    #        #        ExecStartPre = "${pkgs.coreutils}/bin/sleep 60";
-    #        ExecStart = "${pkgs.systemd}/bin/systemctl start gradient-deploy.service";
-    #      };
-    #    };
+    systemd.services.gradient-deploy-on-boot = mkIf (!config.server.enable) {
+      description = "Pull latest Gradient deployment after boot";
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "${pkgs.systemd}/bin/systemctl start gradient-deploy.service";
+      };
+    };
   };
 }
