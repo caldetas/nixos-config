@@ -25,7 +25,7 @@ with lib;
       apiKeyFile = "/run/secrets/gradient/deploy-key";
       dates = "00:00";
     };
-    systemd.services.gradient-deploy-on-boot = mkIf (!server.enable) {
+    systemd.services.gradient-deploy-on-boot = mkIf (!config.server.enable) {
       description = "Pull latest Gradient deployment after boot";
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
