@@ -16,25 +16,20 @@ with lib;
     };
   };
 
-
-  system.gradient-deploy = {
-    enable = true;
-    deployFor = host.hostName;
-    server = "https://gradient.${vars.domain}";
-    task = "nix-fleet/deploy";
-    apiKeyFile = "/run/secrets/gradient/deploy-key";
-    dates = "00:00";
-  };
-  config =
-    mkIf (!config.server.enable) {
-      systemd.services.gradient-deploy-on-boot = mkIf (config.gradient-deploy-on-boot.enable) {
-        description = "Pull latest Gradient deployment after boot";
-        wantedBy = [ "multi-user.target" ];
-        serviceConfig = {
-          Type = "oneshot";
-          #        ExecStartPre = "${pkgs.coreutils}/bin/sleep 60";
-          ExecStart = "${pkgs.systemd}/bin/systemctl start gradient-deploy.service";
-        };
-      };
+  config = {
+    system.gradient-deploy = {
+      enable = true;
+      deployFor = host.hostName;
+      server = "https://gradient.${vars.domain}";
+      task = "nix-fleet/deploy";
+      apiKeyFile = "/run/secrets/gradient/deploy-key";
+      dates = "00:00";
     };
-}
+    systemd.services.gradient-deploy-on-boot = mkIf (!server.enable) {
+      description = "Pull latest Gradient deployment after boot";
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "${pkgs.systemd}/bin/systemctl start gradient-deploy.service";
+      };
+    }
