@@ -10,6 +10,7 @@
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ../configuration-desktop.nix
       ../../modules/desktops/virtualisation/docker.nix
     ];
 
