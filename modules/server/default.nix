@@ -1,6 +1,6 @@
 [
   ./gradient.nix
   ./gradient-worker.nix
-  #  ./jitsi.nix
+  ./jitsi.nix
   ./services.nix
 ]
