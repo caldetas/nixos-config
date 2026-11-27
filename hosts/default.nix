@@ -61,12 +61,12 @@ in
   #      third = "";
   #    } [ ];
 
-  nixcz-ci = makeHost "nixcz-ci" "nixcz-ci"
-    {
-      main = "";
-      second = "";
-      third = "";
-    } [ ];
+  #  nixcz-ci = makeHost "nixcz-ci" "nixcz-ci"
+  #    {
+  #      main = "";
+  #      second = "";
+  #      third = "";
+  #    } [ ];
 
   pad = makeHost "pad" "pad"
     {

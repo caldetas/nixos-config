@@ -54,6 +54,5 @@
     tmux
   ] ++ (with stable; [ audacity ]);
   nixpkgs.config.permittedInsecurePackages = [
-    "jitsi-meet-1.0.9365"
   ];
 }
