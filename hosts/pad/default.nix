@@ -16,9 +16,22 @@
 
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
+  # Use the GRUB UEFI boot loader.
+  boot.loader.systemd-boot.enable = false;
+  boot.loader.efi = {
+    canTouchEfiVariables = true;
+    efiSysMountPoint = "/boot";
+  };
+  boot.loader.grub = {
+    enable = true;
+    efiSupport = true;
+    device = "nodev";
+    enableCryptodisk = true;
+    useOSProber = true;
+    configurationLimit = 20;
+    default = 0;
+  };
   boot.consoleLogLevel = 7;
-  boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelParams = [
     "fbcon=rotate:1"
     "ignore_loglevel"

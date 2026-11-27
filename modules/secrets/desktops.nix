@@ -6,7 +6,7 @@
 
   config = lib.mkIf
     (
-      builtins.elem host.hostName [ "libelula" "onsite-gnome" "pad" ]
+      !config.server.enable
     )
     {
       #destops

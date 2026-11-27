@@ -14,7 +14,7 @@
   ./vaultwarden.nix
   ./dunst.nix
   ./gnupg.nix
-  #  ./gradient-deploy.nix
+  ./gradient-deploy.nix
   ./immich.nix
   ./mailcow.nix
   ./nginx.nix

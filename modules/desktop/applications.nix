@@ -14,7 +14,7 @@
     gimp
     glmark2
     gparted
-    #    gradient-cli
+    gradient-cli
     hypnotix
     nodejs
     openvpn
