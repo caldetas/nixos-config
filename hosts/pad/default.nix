@@ -17,6 +17,9 @@
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelParams = [
+    "fbcon=rotate:3"
+  ];
 
 
   # Enable Desktop Environment.
