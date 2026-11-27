@@ -3,7 +3,7 @@
 #
 
 
-{ pkgs, config, lib, unstable, inputs, vars, host, lib, ... }:
+{ pkgs, config, lib, unstable, inputs, vars, host, ... }:
 
 {
   imports =
