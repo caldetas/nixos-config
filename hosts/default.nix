@@ -12,7 +12,7 @@
 { lib, inputs, nixpkgs, nixpkgs-stable, nixpkgs-unstable, home-manager, nur, hyprland, plasma-manager, vars, gradient, ... }:
 
 let
-  system = "x86_64-linux";
+  system = "aarch64-linux";
 
   pkgs = import nixpkgs {
     inherit system;
@@ -75,39 +75,39 @@ in
       third = "";
     } [ ];
 
-
-  libelula = makeHost "libelula" "libelula"
-    {
-      main = "eDP-1";
-      second = "HDMI-A-1";
-      third = "";
-    } [ ];
-
-  onsite-gnome = makeHost "onsite-gnome" "onsite-gnome"
-    {
-      main = "eDP-1";
-      second = "DP-6";
-      third = "DP-8";
-    } [ ];
-
-  ci = makeHost "ci" "ci"
-    {
-      main = "";
-      second = "";
-      third = "";
-    } [ ];
-
-  ci-worker = makeHost "ci-worker" "ci-worker"
-    {
-      main = "";
-      second = "";
-      third = "";
-    } [ ];
-
-  nixcz = makeHost "nixcz" "nixcz"
-    {
-      main = "";
-      second = "";
-      third = "";
-    } [ ];
+  #
+  #  libelula = makeHost "libelula" "libelula"
+  #    {
+  #      main = "eDP-1";
+  #      second = "HDMI-A-1";
+  #      third = "";
+  #    } [ ];
+  #
+  #  onsite-gnome = makeHost "onsite-gnome" "onsite-gnome"
+  #    {
+  #      main = "eDP-1";
+  #      second = "DP-6";
+  #      third = "DP-8";
+  #    } [ ];
+  #
+  #  ci = makeHost "ci" "ci"
+  #    {
+  #      main = "";
+  #      second = "";
+  #      third = "";
+  #    } [ ];
+  #
+  #  ci-worker = makeHost "ci-worker" "ci-worker"
+  #    {
+  #      main = "";
+  #      second = "";
+  #      third = "";
+  #    } [ ];
+  #
+  #  nixcz = makeHost "nixcz" "nixcz"
+  #    {
+  #      main = "";
+  #      second = "";
+  #      third = "";
+  #    } [ ];
 }
