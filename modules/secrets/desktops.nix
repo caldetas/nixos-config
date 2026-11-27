@@ -1,12 +1,12 @@
 #
 #  Secrets for hosts with gui
 #
-{ sops-nix, host, lib, vars, ... }:
+{ sops-nix, host, lib, vars, config, ... }:
 {
 
   config = lib.mkIf
     (
-      !server.enable
+      !config.server.enable
     )
     {
       #destops
