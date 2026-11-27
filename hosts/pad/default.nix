@@ -32,6 +32,7 @@
     default = 0;
   };
   boot.consoleLogLevel = 7;
+  environment.etc."xdg/monitors.xml".source = /home/${vars.user}/.config/monitors.xml;
   boot.kernelParams = [
     "fbcon=rotate:1"
     "ignore_loglevel"
