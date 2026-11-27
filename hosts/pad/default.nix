@@ -22,6 +22,7 @@
   ];
   console.packages = [ pkgs.terminus_font ];
   console.font = lib.mkForce "ter-v32n";
+  console.earlySetup = true;
 
 
   # Enable Desktop Environment.
