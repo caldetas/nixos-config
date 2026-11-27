@@ -24,7 +24,7 @@
   ];
   console.earlySetup = true;
   console.packages = with pkgs; [ terminus_font ];
-  console.font = "ter-v32n";
+  console.font = lib.mkForce "ter-v32n";
 
   boot.initrd.luks.devices."luks-9f6e46ed-c2e8-4f75-986f-11cfdda386e4".device = "/dev/disk/by-uuid/9f6e46ed-c2e8-4f75-986f-11cfdda386e4";
 
