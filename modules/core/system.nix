@@ -14,11 +14,11 @@
   };
 
   home-manager.users.${vars.user} = {
-    home.stateVersion = "26.05";
+    home.stateVersion = "26.11";
     programs.home-manager.enable = true;
   };
 
-  system.stateVersion = "26.05";
+  system.stateVersion = "26.11";
 
   environment.interactiveShellInit = ''
     alias buildVm='echo cd ${vars.location} && git pull && sudo nixos-rebuild build-vm --flake ${vars.location}#vm --show-trace'

@@ -9,7 +9,7 @@ keys:
   - &onsite-gnome age1ttzke88jfkj2fg2qvt8nrqw9xh3nqk6kupzt2f2v4szz44vaucsqr43u56
   - &nixcz age1d2cyv97zczxw6vgughw5z6d9sea0la4f58tjyk5q9n0vfkz63upsed8swz
   - &nixcz-ci age13m5e5xd5q00fg4jjmzjr5jq4aut0whqcha20y988ssgvpzlgegkqysqf5y
-  - &pad age1p2ymc09rz0ecy2w56sdah7tpqstf36udncvth9f3w3zwqlufgedqwjcwzl
+  - &pad age1tcsyfr0sdeuyw23csvtgxr2eg9cc9v7cwxmf456c9nwakz0fc59q2jr4at
   - &ci age13260gfg8q9s074250d6kl33d6jrrdkkwpl0e4grceg5jm25xl92sgyjhm4
 
 creation_rules:
