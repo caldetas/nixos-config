@@ -3,7 +3,7 @@
 #
 
 
-{ pkgs, config, lib, unstable, inputs, vars, host, ... }:
+{ pkgs, config, lib, unstable, inputs, vars, host, lib, ... }:
 
 {
   imports =
@@ -21,7 +21,7 @@
     "fbcon=rotate:3"
   ];
   console.packages = [ pkgs.terminus_font ];
-  console.font = "ter-v32n";
+  console.font = lib.mkForce "ter-v32n";
 
 
   # Enable Desktop Environment.
