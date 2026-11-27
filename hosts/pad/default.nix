@@ -19,14 +19,14 @@
   boot.consoleLogLevel = 7;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelParams = [
-    "fbcon=rotate:3"
+    "fbcon=rotate:1"
     "ignore_loglevel"
   ];
   console.earlySetup = true;
   console.packages = with pkgs; [ terminus_font ];
   console.font = lib.mkForce "ter-v32n";
 
-  boot.initrd.luks.devices."luks-9f6e46ed-c2e8-4f75-986f-11cfdda386e4".device = "/dev/disk/by-uuid/9f6e46ed-c2e8-4f75-986f-11cfdda386e4";
+  boot.initrd.luks.devices."luks-c013d73a-37ec-4a8c-9eb9-55a489a50c93".device = "/dev/disk/by-uuid/c013d73a-37ec-4a8c-9eb9-55a489a50c93";
 
   # Enable Desktop Environment.
   gnome.enable = true;
