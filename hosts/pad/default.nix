@@ -20,6 +20,8 @@
   boot.kernelParams = [
     "fbcon=rotate:3"
   ];
+  console.packages = [ pkgs.terminus_font ];
+  console.font = "ter-v32n";
 
 
   # Enable Desktop Environment.
