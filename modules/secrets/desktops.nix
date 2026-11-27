@@ -6,7 +6,7 @@
 
   config = lib.mkIf
     (
-      !config.server.enable
+      !server.enable
     )
     {
       #destops
