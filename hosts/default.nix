@@ -68,6 +68,13 @@ in
       third = "";
     } [ ];
 
+  pad = makeHost "pad" "pad"
+    {
+      main = "";
+      second = "";
+      third = "";
+    } [ ];
+
 
   libelula = makeHost "libelula" "libelula"
     {

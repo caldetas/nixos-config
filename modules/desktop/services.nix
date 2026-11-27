@@ -2,9 +2,6 @@
 
 {
   programs = {
-    gamemode.enable = true;
-    java.enable = true;
-    obs-studio.enable = true;
     steam.enable = true;
   };
 
