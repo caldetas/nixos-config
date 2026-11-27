@@ -1,12 +1,12 @@
 #
 #  Secrets for hosts with gui
 #
-{ sops-nix, host, lib, vars, ... }:
+{ sops-nix, host, lib, vars, config, ... }:
 {
 
   config = lib.mkIf
     (
-      builtins.elem host.hostName [ "libelula" "onsite-gnome" ]
+      !config.server.enable
     )
     {
       #destops

@@ -13,7 +13,7 @@
     {
       nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
       nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
-      nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+      nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-26.05";
       sops-nix.url = "github:Mic92/sops-nix"; # Sops Nix Secure Secretes Manager
       disko.url = "github:nix-community/disko";
 

@@ -103,4 +103,11 @@ in
       second = "";
       third = "";
     } [ ];
+
+  pad = makeHost "pad" "pad"
+    {
+      main = "";
+      second = "";
+      third = "";
+    } [ ];
 }
