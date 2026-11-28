@@ -15,6 +15,7 @@ with lib;
   };
 
   config = mkIf (config.vaultwarden.enable) {
+    # db was locked only for systemd’s sandbox: ProtectSystem=strict can make path read only
     systemd.services.vaultwarden.serviceConfig.ReadWritePaths = [
       "/var/lib/bitwarden_rs"
     ];
