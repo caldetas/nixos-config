@@ -2,8 +2,9 @@
 
 {
   environment.systemPackages = with pkgs; [
+    brave
     google-chrome
-    #    calibre #ebooks
+    calibre #ebooks
     discord
     exiftool
     feh
@@ -34,7 +35,7 @@
     yarn
     yq
   ]
-  ++ (with unstable; [ brave steam ])
+  ++ (with unstable; [ ])
   ++ (with stable; [ ]);
 
   flatpak = {

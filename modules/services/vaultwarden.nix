@@ -15,6 +15,9 @@ with lib;
   };
 
   config = mkIf (config.vaultwarden.enable) {
+    systemd.services.vaultwarden.serviceConfig.ReadWritePaths = [
+      "/var/lib/bitwarden_rs"
+    ];
     services.vaultwarden = {
       enable = true;
       environmentFile = config.sops.secrets."vaultwarden/env".path;
