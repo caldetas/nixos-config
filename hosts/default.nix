@@ -83,19 +83,6 @@ in
       third = "DP-8";
     } [ ];
 
-  ci = makeHost "ci" "ci"
-    {
-      main = "";
-      second = "";
-      third = "";
-    } [ ];
-
-  ci-worker = makeHost "ci-worker" "ci-worker"
-    {
-      main = "";
-      second = "";
-      third = "";
-    } [ ];
 
   nixcz = makeHost "nixcz" "nixcz"
     {
